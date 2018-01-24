@@ -54,7 +54,7 @@ func (r BackendPage) IsEmpty() (bool, error) {
 // and extracts the elements into a slice of Listener structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractBackend(r pagination.Page) ([]Backend, error) {
-	var Backends []Backend 
+	var Backends []Backend
 	err := (r.(BackendPage)).ExtractInto(&Backends)
 	return Backends, err
 }
@@ -79,7 +79,6 @@ func (r commonResult) Extract() (*Backend, error) {
 	}
 }
 
-
 // AddResult represents the result of a create operation.
 type AddResult struct {
 	commonResult
@@ -88,6 +87,12 @@ type AddResult struct {
 // GetResult represents the result of a get operation.
 type GetResult struct {
 	commonResult
+}
+
+func (r GetResult) Extract() ([]Backend, error) {
+	var b []Backend
+	err := r.ExtractInto(&b)
+	return b, err
 }
 
 // RemoveResult represents the result of a delete operation.
