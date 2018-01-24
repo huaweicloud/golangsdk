@@ -23,7 +23,7 @@ func (opts ListOpts) ToInstancesListQuery() (string, error) {
 
 //List is a method by which can be able to access the list function that can get
 //instances of a group
-func List(client *gophercloud.ServiceClient, groupID string, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClientExtension, groupID string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, groupID)
 	if opts != nil {
 		q, err := opts.ToInstancesListQuery()
@@ -32,7 +32,7 @@ func List(client *gophercloud.ServiceClient, groupID string, opts ListOptsBuilde
 		}
 		url += q
 	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+	return pagination.NewPager(client.ServiceClient, url, func(r pagination.PageResult) pagination.Page {
 		return InstancePage{pagination.SinglePageBase(r)}
 	})
 }
@@ -53,7 +53,7 @@ func (opts DeleteOpts) ToInstanceDeleteQuery() (string, error) {
 }
 
 //Delete is a method by which can be able to delete an instance from a group
-func Delete(client *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClientExtension, id string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := deleteURL(client, id)
 	if opts != nil {
 		q, err := opts.ToInstanceDeleteQuery()
@@ -84,7 +84,7 @@ func (opts BatchOpts) ToInstanceBatchMap() (map[string]interface{}, error) {
 }
 
 //batch is method which can be able to add/delete numbers instances
-func batch(client *gophercloud.ServiceClient, groupID string, opts BatchOptsBuilder) (r BatchResult) {
+func batch(client *gophercloud.ServiceClientExtension, groupID string, opts BatchOptsBuilder) (r BatchResult) {
 	b, err := opts.ToInstanceBatchMap()
 	if err != nil {
 		r.Err = err
@@ -97,7 +97,7 @@ func batch(client *gophercloud.ServiceClient, groupID string, opts BatchOptsBuil
 }
 
 //BatchAdd is a method by which can add numbers of instances into a group
-func BatchAdd(client *gophercloud.ServiceClient, groupID string, instances []string) (r BatchResult) {
+func BatchAdd(client *gophercloud.ServiceClientExtension, groupID string, instances []string) (r BatchResult) {
 	var opts = BatchOpts{
 		Instances: instances,
 		Action:    "ADD",
@@ -106,7 +106,7 @@ func BatchAdd(client *gophercloud.ServiceClient, groupID string, instances []str
 }
 
 //BatchDelete is a method by which can delete numbers of instances from a group
-func BatchDelete(client *gophercloud.ServiceClient, groupID string, instances []string, deleteEcs string) (r BatchResult) {
+func BatchDelete(client *gophercloud.ServiceClientExtension, groupID string, instances []string, deleteEcs string) (r BatchResult) {
 	var opts = BatchOpts{
 		Instances:   instances,
 		IsDeleteEcs: deleteEcs,

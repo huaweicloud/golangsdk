@@ -110,7 +110,7 @@ type BandwidthOpts struct {
 
 //Create is a method by which can be able to access to create a configuration
 //of autoscaling
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToConfigurationCreateMap()
 	if err != nil {
 		r.Err = err
@@ -124,13 +124,13 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 
 //Get is a method by which can be able to access to get a configuration of
 //autoscaling detailed information
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClientExtension, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
 
 //Delete
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClientExtension, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, id), nil)
 	return
 }
@@ -150,7 +150,7 @@ func (opts ListOpts) ToConfigurationListQuery() (string, error) {
 }
 
 //List is method that can be able to list all configurations of autoscaling service
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClientExtension, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToConfigurationListQuery()
@@ -160,7 +160,7 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 		url += query
 	}
 
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+	return pagination.NewPager(client.ServiceClient, url, func(r pagination.PageResult) pagination.Page {
 		return ConfigurationPage{pagination.SinglePageBase(r)}
 	})
 }

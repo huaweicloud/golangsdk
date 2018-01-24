@@ -6,18 +6,18 @@ import (
 
 const resourcePath = "scaling_configuration"
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *gophercloud.ServiceClientExtension) string {
 	return client.ServiceURL(client.ProjectID, resourcePath)
 }
 
-func getURL(client *gophercloud.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClientExtension, id string) string {
 	return client.ServiceURL(client.ProjectID, resourcePath, id)
 }
 
-func deleteURL(client *gophercloud.ServiceClient, id string) string {
+func deleteURL(client *gophercloud.ServiceClientExtension, id string) string {
 	return client.ServiceURL(client.ProjectID, resourcePath, id)
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClientExtension) string {
 	return client.ServiceURL(client.ProjectID, resourcePath)
 }
