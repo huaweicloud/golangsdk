@@ -32,7 +32,7 @@ Example to Create an Endpoint
 	serviceID := "e629d6e599d9489fb3ae5d9cc12eaea3"
 
 	createOpts := endpoints.CreateOpts{
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 		Name:         "neutron",
 		Region:       "RegionOne",
 		URL:          "https://localhost:9696",

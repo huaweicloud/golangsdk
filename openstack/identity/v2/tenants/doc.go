@@ -31,7 +31,7 @@ Example to Create a Tenant
 	createOpts := tenants.CreateOpts{
 		Name:        "tenant_name",
 		Description: "this is a tenant",
-		Enabled:     gophercloud.Enabled,
+		Enabled:     golangsdk.Enabled,
 	}
 
 	tenant, err := tenants.Create(identityClient, createOpts).Extract()
@@ -45,7 +45,7 @@ Example to Update a Tenant
 
 	updateOpts := tenants.UpdateOpts{
 		Description: "this is a new description",
-		Enabled:     gophercloud.Disabled,
+		Enabled:     golangsdk.Disabled,
 	}
 
 	tenant, err := tenants.Update(identityClient, tenantID, updateOpts).Extract()

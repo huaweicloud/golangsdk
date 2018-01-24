@@ -1,8 +1,8 @@
 package roles
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to
@@ -22,12 +22,12 @@ type ListOpts struct {
 
 // ToRoleListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRoleListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the roles to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToRoleListQuery()
@@ -43,7 +43,7 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single role, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
@@ -68,7 +68,7 @@ type CreateOpts struct {
 
 // ToRoleCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToRoleCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "role")
+	b, err := golangsdk.BuildRequestBody(opts, "role")
 	if err != nil {
 		return nil, err
 	}
@@ -85,13 +85,13 @@ func (opts CreateOpts) ToRoleCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new Role.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRoleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
 	return
@@ -114,7 +114,7 @@ type UpdateOpts struct {
 
 // ToRoleUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToRoleUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "role")
+	b, err := golangsdk.BuildRequestBody(opts, "role")
 	if err != nil {
 		return nil, err
 	}
@@ -131,20 +131,20 @@ func (opts UpdateOpts) ToRoleUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing Role.
-func Update(client *gophercloud.ServiceClient, roleID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, roleID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToRoleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Patch(updateURL(client, roleID), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Patch(updateURL(client, roleID), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete deletes a role.
-func Delete(client *gophercloud.ServiceClient, roleID string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, roleID string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, roleID), nil)
 	return
 }
@@ -182,12 +182,12 @@ type ListAssignmentsOpts struct {
 
 // ToRolesListAssignmentsQuery formats a ListAssignmentsOpts into a query string.
 func (opts ListAssignmentsOpts) ToRolesListAssignmentsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListAssignments enumerates the roles assigned to a specified resource.
-func ListAssignments(client *gophercloud.ServiceClient, opts ListAssignmentsOptsBuilder) pagination.Pager {
+func ListAssignments(client *golangsdk.ServiceClient, opts ListAssignmentsOptsBuilder) pagination.Pager {
 	url := listAssignmentsURL(client)
 	if opts != nil {
 		query, err := opts.ToRolesListAssignmentsQuery()
@@ -241,9 +241,9 @@ type UnassignOpts struct {
 
 // Assign is the operation responsible for assigning a role
 // to a user/group on a project/domain.
-func Assign(client *gophercloud.ServiceClient, roleID string, opts AssignOpts) (r AssignmentResult) {
+func Assign(client *golangsdk.ServiceClient, roleID string, opts AssignOpts) (r AssignmentResult) {
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
+	_, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		r.Err = err
 		return
@@ -270,7 +270,7 @@ func Assign(client *gophercloud.ServiceClient, roleID string, opts AssignOpts) (
 		actorType = "groups"
 	}
 
-	_, r.Err = client.Put(assignURL(client, targetType, targetID, actorType, actorID, roleID), nil, nil, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(assignURL(client, targetType, targetID, actorType, actorID, roleID), nil, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return
@@ -278,9 +278,9 @@ func Assign(client *gophercloud.ServiceClient, roleID string, opts AssignOpts) (
 
 // Unassign is the operation responsible for unassigning a role
 // from a user/group on a project/domain.
-func Unassign(client *gophercloud.ServiceClient, roleID string, opts UnassignOpts) (r UnassignmentResult) {
+func Unassign(client *golangsdk.ServiceClient, roleID string, opts UnassignOpts) (r UnassignmentResult) {
 	// Check xor conditions
-	_, err := gophercloud.BuildRequestBody(opts, "")
+	_, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		r.Err = err
 		return
@@ -307,7 +307,7 @@ func Unassign(client *gophercloud.ServiceClient, roleID string, opts UnassignOpt
 		actorType = "groups"
 	}
 
-	_, r.Err = client.Delete(assignURL(client, targetType, targetID, actorType, actorID, roleID), &gophercloud.RequestOpts{
+	_, r.Err = client.Delete(assignURL(client, targetType, targetID, actorType, actorID, roleID), &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return

@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	fake "github.com/gophercloud/gophercloud/openstack/networking/v2/common"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/lbaas_v2/loadbalancers"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	fake "github.com/huawei-clouds/golangsdk/openstack/networking/v2/common"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/lbaas_v2/loadbalancers"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestListLoadbalancers(t *testing.T) {
@@ -60,7 +60,7 @@ func TestCreateLoadbalancer(t *testing.T) {
 
 	actual, err := loadbalancers.Create(fake.ServiceClient(), loadbalancers.CreateOpts{
 		Name:         "db_lb",
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: golangsdk.Enabled,
 		VipSubnetID:  "9cedb85d-0759-4898-8a4b-fa5a5ea10086",
 		VipAddress:   "10.30.176.48",
 		Flavor:       "medium",

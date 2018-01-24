@@ -1,10 +1,10 @@
 package users
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/groups"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/projects"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/groups"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // Option is a specific option defined at the API to enable features
@@ -51,12 +51,12 @@ type ListOpts struct {
 
 // ToUserListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToUserListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the Users to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToUserListQuery()
@@ -71,7 +71,7 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single user, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
@@ -111,7 +111,7 @@ type CreateOpts struct {
 
 // ToUserCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "user")
+	b, err := golangsdk.BuildRequestBody(opts, "user")
 	if err != nil {
 		return nil, err
 	}
@@ -128,13 +128,13 @@ func (opts CreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new User.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToUserCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
 	return
@@ -175,7 +175,7 @@ type UpdateOpts struct {
 
 // ToUserUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToUserUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "user")
+	b, err := golangsdk.BuildRequestBody(opts, "user")
 	if err != nil {
 		return nil, err
 	}
@@ -192,26 +192,26 @@ func (opts UpdateOpts) ToUserUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing User.
-func Update(client *gophercloud.ServiceClient, userID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, userID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUserUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Patch(updateURL(client, userID), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Patch(updateURL(client, userID), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete deletes a user.
-func Delete(client *gophercloud.ServiceClient, userID string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, userID string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, userID), nil)
 	return
 }
 
 // ListGroups enumerates groups user belongs to.
-func ListGroups(client *gophercloud.ServiceClient, userID string) pagination.Pager {
+func ListGroups(client *golangsdk.ServiceClient, userID string) pagination.Pager {
 	url := listGroupsURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return groups.GroupPage{LinkedPageBase: pagination.LinkedPageBase{PageResult: r}}
@@ -219,7 +219,7 @@ func ListGroups(client *gophercloud.ServiceClient, userID string) pagination.Pag
 }
 
 // ListProjects enumerates groups user belongs to.
-func ListProjects(client *gophercloud.ServiceClient, userID string) pagination.Pager {
+func ListProjects(client *golangsdk.ServiceClient, userID string) pagination.Pager {
 	url := listProjectsURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return projects.ProjectPage{LinkedPageBase: pagination.LinkedPageBase{PageResult: r}}
@@ -227,7 +227,7 @@ func ListProjects(client *gophercloud.ServiceClient, userID string) pagination.P
 }
 
 // ListInGroup enumerates users that belong to a group.
-func ListInGroup(client *gophercloud.ServiceClient, groupID string, opts ListOptsBuilder) pagination.Pager {
+func ListInGroup(client *golangsdk.ServiceClient, groupID string, opts ListOptsBuilder) pagination.Pager {
 	url := listInGroupURL(client, groupID)
 	if opts != nil {
 		query, err := opts.ToUserListQuery()

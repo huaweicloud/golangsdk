@@ -1,15 +1,15 @@
 #!/bin/bash
 #
 # This script helps new contributors set up their local workstation for
-# gophercloud development and contributions.
+# golangsdk development and contributions.
 
 # Create the environment
-export GOPATH=$HOME/go/gophercloud
+export GOPATH=$HOME/go/golangsdk
 mkdir -p $GOPATH
 
-# Download gophercloud into that environment
-go get github.com/gophercloud/gophercloud
-cd $GOPATH/src/github.com/gophercloud/gophercloud
+# Download golangsdk into that environment
+go get github.com/huawei-clouds/golangsdk
+cd $GOPATH/src/github.com/huawei-clouds/golangsdk
 git checkout master
 
 # Write out the env.sh convenience file.
@@ -17,7 +17,7 @@ cd $GOPATH
 cat <<EOF >env.sh
 #!/bin/bash
 export GOPATH=$(pwd)
-export GOPHERCLOUD=$GOPATH/src/github.com/gophercloud/gophercloud
+export GOPHERCLOUD=$GOPATH/src/github.com/huawei-clouds/golangsdk
 EOF
 chmod a+x env.sh
 

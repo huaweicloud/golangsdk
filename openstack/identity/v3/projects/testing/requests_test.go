@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/projects"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestListProjects(t *testing.T) {

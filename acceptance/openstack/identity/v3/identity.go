@@ -3,22 +3,22 @@ package v3
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/acceptance/tools"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/domains"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/groups"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/projects"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/regions"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/roles"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/services"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/users"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/acceptance/tools"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/domains"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/groups"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/regions"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/roles"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/services"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/users"
 )
 
 // CreateProject will create a project with a random name.
 // It takes an optional createOpts parameter since creating a project
 // has so many options. An error will be returned if the project was
 // unable to be created.
-func CreateProject(t *testing.T, client *gophercloud.ServiceClient, c *projects.CreateOpts) (*projects.Project, error) {
+func CreateProject(t *testing.T, client *golangsdk.ServiceClient, c *projects.CreateOpts) (*projects.Project, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create project: %s", name)
 
@@ -45,7 +45,7 @@ func CreateProject(t *testing.T, client *gophercloud.ServiceClient, c *projects.
 // It takes an optional createOpts parameter since creating a user
 // has so many options. An error will be returned if the user was
 // unable to be created.
-func CreateUser(t *testing.T, client *gophercloud.ServiceClient, c *users.CreateOpts) (*users.User, error) {
+func CreateUser(t *testing.T, client *golangsdk.ServiceClient, c *users.CreateOpts) (*users.User, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create user: %s", name)
 
@@ -72,7 +72,7 @@ func CreateUser(t *testing.T, client *gophercloud.ServiceClient, c *users.Create
 // It takes an optional createOpts parameter since creating a group
 // has so many options. An error will be returned if the group was
 // unable to be created.
-func CreateGroup(t *testing.T, client *gophercloud.ServiceClient, c *groups.CreateOpts) (*groups.Group, error) {
+func CreateGroup(t *testing.T, client *golangsdk.ServiceClient, c *groups.CreateOpts) (*groups.Group, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create group: %s", name)
 
@@ -99,7 +99,7 @@ func CreateGroup(t *testing.T, client *gophercloud.ServiceClient, c *groups.Crea
 // It takes an optional createOpts parameter since creating a domain
 // has many options. An error will be returned if the domain was
 // unable to be created.
-func CreateDomain(t *testing.T, client *gophercloud.ServiceClient, c *domains.CreateOpts) (*domains.Domain, error) {
+func CreateDomain(t *testing.T, client *golangsdk.ServiceClient, c *domains.CreateOpts) (*domains.Domain, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create domain: %s", name)
 
@@ -126,7 +126,7 @@ func CreateDomain(t *testing.T, client *gophercloud.ServiceClient, c *domains.Cr
 // It takes an optional createOpts parameter since creating a role
 // has so many options. An error will be returned if the role was
 // unable to be created.
-func CreateRole(t *testing.T, client *gophercloud.ServiceClient, c *roles.CreateOpts) (*roles.Role, error) {
+func CreateRole(t *testing.T, client *golangsdk.ServiceClient, c *roles.CreateOpts) (*roles.Role, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create role: %s", name)
 
@@ -153,7 +153,7 @@ func CreateRole(t *testing.T, client *gophercloud.ServiceClient, c *roles.Create
 // It takes an optional createOpts parameter since creating a region
 // has so many options. An error will be returned if the region was
 // unable to be created.
-func CreateRegion(t *testing.T, client *gophercloud.ServiceClient, c *regions.CreateOpts) (*regions.Region, error) {
+func CreateRegion(t *testing.T, client *golangsdk.ServiceClient, c *regions.CreateOpts) (*regions.Region, error) {
 	id := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create region: %s", id)
 
@@ -180,7 +180,7 @@ func CreateRegion(t *testing.T, client *gophercloud.ServiceClient, c *regions.Cr
 // It takes an optional createOpts parameter since creating a service
 // has so many options. An error will be returned if the service was
 // unable to be created.
-func CreateService(t *testing.T, client *gophercloud.ServiceClient, c *services.CreateOpts) (*services.Service, error) {
+func CreateService(t *testing.T, client *golangsdk.ServiceClient, c *services.CreateOpts) (*services.Service, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create service: %s", name)
 
@@ -206,7 +206,7 @@ func CreateService(t *testing.T, client *gophercloud.ServiceClient, c *services.
 // DeleteProject will delete a project by ID. A fatal error will occur if
 // the project ID failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteProject(t *testing.T, client *gophercloud.ServiceClient, projectID string) {
+func DeleteProject(t *testing.T, client *golangsdk.ServiceClient, projectID string) {
 	err := projects.Delete(client, projectID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete project %s: %v", projectID, err)
@@ -218,7 +218,7 @@ func DeleteProject(t *testing.T, client *gophercloud.ServiceClient, projectID st
 // DeleteUser will delete a user by ID. A fatal error will occur if
 // the user failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteUser(t *testing.T, client *gophercloud.ServiceClient, userID string) {
+func DeleteUser(t *testing.T, client *golangsdk.ServiceClient, userID string) {
 	err := users.Delete(client, userID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete user with ID %s: %v", userID, err)
@@ -230,7 +230,7 @@ func DeleteUser(t *testing.T, client *gophercloud.ServiceClient, userID string) 
 // DeleteGroup will delete a group by ID. A fatal error will occur if
 // the group failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteGroup(t *testing.T, client *gophercloud.ServiceClient, groupID string) {
+func DeleteGroup(t *testing.T, client *golangsdk.ServiceClient, groupID string) {
 	err := groups.Delete(client, groupID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete group %s: %v", groupID, err)
@@ -242,7 +242,7 @@ func DeleteGroup(t *testing.T, client *gophercloud.ServiceClient, groupID string
 // DeleteDomain will delete a domain by ID. A fatal error will occur if
 // the project ID failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteDomain(t *testing.T, client *gophercloud.ServiceClient, domainID string) {
+func DeleteDomain(t *testing.T, client *golangsdk.ServiceClient, domainID string) {
 	err := domains.Delete(client, domainID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete domain %s: %v", domainID, err)
@@ -254,7 +254,7 @@ func DeleteDomain(t *testing.T, client *gophercloud.ServiceClient, domainID stri
 // DeleteRole will delete a role by ID. A fatal error will occur if
 // the role failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteRole(t *testing.T, client *gophercloud.ServiceClient, roleID string) {
+func DeleteRole(t *testing.T, client *golangsdk.ServiceClient, roleID string) {
 	err := roles.Delete(client, roleID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete role %s: %v", roleID, err)
@@ -266,7 +266,7 @@ func DeleteRole(t *testing.T, client *gophercloud.ServiceClient, roleID string) 
 // DeleteRegion will delete a reg by ID. A fatal error will occur if
 // the region failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteRegion(t *testing.T, client *gophercloud.ServiceClient, regionID string) {
+func DeleteRegion(t *testing.T, client *golangsdk.ServiceClient, regionID string) {
 	err := regions.Delete(client, regionID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete region %s: %v", regionID, err)
@@ -278,7 +278,7 @@ func DeleteRegion(t *testing.T, client *gophercloud.ServiceClient, regionID stri
 // DeleteService will delete a reg by ID. A fatal error will occur if
 // the service failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteService(t *testing.T, client *gophercloud.ServiceClient, serviceID string) {
+func DeleteService(t *testing.T, client *golangsdk.ServiceClient, serviceID string) {
 	err := services.Delete(client, serviceID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete service %s: %v", serviceID, err)
@@ -290,7 +290,7 @@ func DeleteService(t *testing.T, client *gophercloud.ServiceClient, serviceID st
 // UnassignRole will delete a role assigned to a user/group on a project/domain
 // A fatal error will occur if it fails to delete the assignment.
 // This works best when using it as a deferred function.
-func UnassignRole(t *testing.T, client *gophercloud.ServiceClient, roleID string, opts *roles.UnassignOpts) {
+func UnassignRole(t *testing.T, client *golangsdk.ServiceClient, roleID string, opts *roles.UnassignOpts) {
 	err := roles.Unassign(client, roleID, *opts).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to unassign a role %v on context %+v: %v", roleID, *opts, err)
@@ -301,7 +301,7 @@ func UnassignRole(t *testing.T, client *gophercloud.ServiceClient, roleID string
 // FindRole finds all roles that the current authenticated client has access
 // to and returns the first one found. An error will be returned if the lookup
 // was unsuccessful.
-func FindRole(t *testing.T, client *gophercloud.ServiceClient) (*roles.Role, error) {
+func FindRole(t *testing.T, client *golangsdk.ServiceClient) (*roles.Role, error) {
 	t.Log("Attempting to find a role")
 	var role *roles.Role
 

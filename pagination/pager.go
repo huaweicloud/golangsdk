@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 var (
@@ -35,7 +35,7 @@ type Page interface {
 
 // Pager knows how to advance through a specific resource collection, one page at a time.
 type Pager struct {
-	client *gophercloud.ServiceClient
+	client *golangsdk.ServiceClient
 
 	initialURL string
 
@@ -49,7 +49,7 @@ type Pager struct {
 
 // NewPager constructs a manually-configured pager.
 // Supply the URL for the first page, a function that requests a specific page given a URL, and a function that counts a page.
-func NewPager(client *gophercloud.ServiceClient, initialURL string, createPage func(r PageResult) Page) Pager {
+func NewPager(client *golangsdk.ServiceClient, initialURL string, createPage func(r PageResult) Page) Pager {
 	return Pager{
 		client:     client,
 		initialURL: initialURL,
@@ -210,7 +210,7 @@ func (p Pager) AllPages() (Page, error) {
 			body.Index(i).Set(reflect.ValueOf(s))
 		}
 	default:
-		err := gophercloud.ErrUnexpectedType{}
+		err := golangsdk.ErrUnexpectedType{}
 		err.Expected = "map[string]interface{}/[]byte/[]interface{}"
 		err.Actual = fmt.Sprintf("%T", pb)
 		return nil, err

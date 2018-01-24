@@ -1,9 +1,9 @@
 package loadbalancer_elbs
 
 import (
-	"github.com/gophercloud/gophercloud"
-	// "github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/elbaas/listeners"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	// "github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/elbaas/listeners"
+	"github.com/huawei-clouds/golangsdk/pagination"
 	//"fmt"
 )
 
@@ -77,7 +77,7 @@ func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a loadbalancer.
@@ -95,7 +95,7 @@ func (r commonResult) Extract() (*LoadBalancer, error) {
 }
 
 type GetStatusesResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // CreateResult represents the result of a create operation.

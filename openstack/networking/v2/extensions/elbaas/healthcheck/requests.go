@@ -3,8 +3,8 @@ package healthcheck
 import (
 	"fmt"
 
-	"github.com/gophercloud/gophercloud"
-	//"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	//"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // Constants that represent approved monitoring types.
@@ -58,7 +58,7 @@ type CreateOpts struct {
 
 // ToHealthCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToHealthCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -95,20 +95,20 @@ func (opts CreateOpts) ToHealthCreateMap() (map[string]interface{}, error) {
  CreateOpts{Type: TypeHTTP, Delay: 20, Timeout: 10, MaxRetries: 3,
  HttpMethod: "HEAD", ExpectedCodes: "200", PoolID: "2c946bfc-1804-43ab-a2ff-58f6a762b505"}
 */
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToHealthCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Post(rootURL(c), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Get retrieves a particular Health Monitor based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
 	return
 }
@@ -150,26 +150,26 @@ type UpdateOpts struct {
 
 // ToHealthpdateMap casts a UpdateOpts struct to a map.
 func (opts UpdateOpts) ToHealthUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update is an operation which modifies the attributes of the specified Monitor.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToHealthUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
 	return
 }
 
 // Delete will permanently delete a particular Health based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	_, r.Err = c.Delete(resourceURL(c, id), &gophercloud.RequestOpts{
+func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
+	_, r.Err = c.Delete(resourceURL(c, id), &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return

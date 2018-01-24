@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/internal"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/internal"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // User represents a User in the OpenStack Identity Service.
@@ -47,7 +47,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 	var s struct {
 		tmp
 		Extra             map[string]interface{}          `json:"extra"`
-		PasswordExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"password_expires_at"`
+		PasswordExpiresAt golangsdk.JSONRFC3339MilliNoZ `json:"password_expires_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -77,7 +77,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 }
 
 type userResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -101,7 +101,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // UserPage is a single page of User results.

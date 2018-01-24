@@ -3,10 +3,10 @@ package openstack
 import (
 	"os"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
-var nilOptions = gophercloud.AuthOptions{}
+var nilOptions = golangsdk.AuthOptions{}
 
 /*
 AuthOptionsFromEnv fills out an identity.AuthOptions structure with the
@@ -29,7 +29,7 @@ by sourcing an `openrc` file), then:
 	opts, err := openstack.AuthOptionsFromEnv()
 	provider, err := openstack.AuthenticatedClient(opts)
 */
-func AuthOptionsFromEnv() (gophercloud.AuthOptions, error) {
+func AuthOptionsFromEnv() (golangsdk.AuthOptions, error) {
 	authURL := os.Getenv("OS_AUTH_URL")
 	username := os.Getenv("OS_USERNAME")
 	userID := os.Getenv("OS_USERID")
@@ -50,21 +50,21 @@ func AuthOptionsFromEnv() (gophercloud.AuthOptions, error) {
 	}
 
 	if authURL == "" {
-		err := gophercloud.ErrMissingInput{Argument: "authURL"}
+		err := golangsdk.ErrMissingInput{Argument: "authURL"}
 		return nilOptions, err
 	}
 
 	if username == "" && userID == "" {
-		err := gophercloud.ErrMissingInput{Argument: "username"}
+		err := golangsdk.ErrMissingInput{Argument: "username"}
 		return nilOptions, err
 	}
 
 	if password == "" {
-		err := gophercloud.ErrMissingInput{Argument: "password"}
+		err := golangsdk.ErrMissingInput{Argument: "password"}
 		return nilOptions, err
 	}
 
-	ao := gophercloud.AuthOptions{
+	ao := golangsdk.AuthOptions{
 		IdentityEndpoint: authURL,
 		UserID:           userID,
 		Username:         username,

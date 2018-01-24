@@ -1,12 +1,12 @@
 package policies
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 //Create Result is a struct which represents the create result of policy
 type CreateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 //Extract of CreateResult will deserialize the result of Creation
@@ -20,7 +20,7 @@ func (r CreateResult) Extract() (string, error) {
 
 //DeleteResult is a struct which represents the delete result.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 //Policy is a struct that represents the result of get policy
@@ -51,7 +51,7 @@ type Action struct {
 
 //GetResult is a struct which represents the get result
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (Policy, error) {
@@ -62,7 +62,7 @@ func (r GetResult) Extract() (Policy, error) {
 
 //UpdateResult is a struct from which can get the result of udpate method
 type UpdateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 //Extract will deserialize the result to group id with string

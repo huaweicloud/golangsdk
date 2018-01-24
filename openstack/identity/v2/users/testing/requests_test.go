@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v2/users"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/users"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestList(t *testing.T) {
@@ -57,7 +57,7 @@ func TestCreateUser(t *testing.T) {
 	opts := users.CreateOpts{
 		Name:     "new_user",
 		TenantID: "12345",
-		Enabled:  gophercloud.Disabled,
+		Enabled:  golangsdk.Disabled,
 		Email:    "new_user@foo.com",
 	}
 
@@ -105,7 +105,7 @@ func TestUpdateUser(t *testing.T) {
 	id := "c39e3de9be2d4c779f1dfd6abacc176d"
 	opts := users.UpdateOpts{
 		Name:    "new_name",
-		Enabled: gophercloud.Enabled,
+		Enabled: golangsdk.Enabled,
 		Email:   "new_email@foo.com",
 	}
 

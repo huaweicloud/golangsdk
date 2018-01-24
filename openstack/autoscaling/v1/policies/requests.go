@@ -1,7 +1,7 @@
 package policies
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 //CreateOptsBuilder is an interface by which can serialize the create parameters
@@ -34,19 +34,19 @@ type ActionOpts struct {
 }
 
 func (opts CreateOpts) ToPolicyCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 //Create is a method which can be able to access to create the policy of autoscaling
 //service.
-func Create(client *gophercloud.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToPolicyCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	_, r.Err = client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -68,32 +68,32 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToPolicyUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 //Update is a method which can be able to update the policy via accessing to the
 //autoscaling service with Put method and parameters
-func Update(client *gophercloud.ServiceClientExtension, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClientExtension, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	body, err := opts.ToPolicyUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 //Delete is a method which can be able to access to delete a policy of autoscaling
-func Delete(client *gophercloud.ServiceClientExtension, id string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClientExtension, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, id), nil)
 	return
 }
 
 //Get is a method which can be able to access to get a policy detailed information
-func Get(client *gophercloud.ServiceClientExtension, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClientExtension, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }

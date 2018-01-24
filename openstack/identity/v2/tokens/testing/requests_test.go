@@ -3,13 +3,13 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v2/tokens"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
-func tokenPost(t *testing.T, options gophercloud.AuthOptions, requestJSON string) tokens.CreateResult {
+func tokenPost(t *testing.T, options golangsdk.AuthOptions, requestJSON string) tokens.CreateResult {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 	HandleTokenPost(t, requestJSON)
@@ -17,7 +17,7 @@ func tokenPost(t *testing.T, options gophercloud.AuthOptions, requestJSON string
 	return tokens.Create(client.ServiceClient(), options)
 }
 
-func tokenPostErr(t *testing.T, options gophercloud.AuthOptions, expectedErr error) {
+func tokenPostErr(t *testing.T, options golangsdk.AuthOptions, expectedErr error) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 	HandleTokenPost(t, "")
@@ -27,7 +27,7 @@ func tokenPostErr(t *testing.T, options gophercloud.AuthOptions, expectedErr err
 }
 
 func TestCreateWithPassword(t *testing.T) {
-	options := gophercloud.AuthOptions{
+	options := golangsdk.AuthOptions{
 		Username: "me",
 		Password: "swordfish",
 	}
@@ -45,7 +45,7 @@ func TestCreateWithPassword(t *testing.T) {
 }
 
 func TestCreateTokenWithTenantID(t *testing.T) {
-	options := gophercloud.AuthOptions{
+	options := golangsdk.AuthOptions{
 		Username: "me",
 		Password: "opensesame",
 		TenantID: "fc394f2ab2df4114bde39905f800dc57",
@@ -65,7 +65,7 @@ func TestCreateTokenWithTenantID(t *testing.T) {
 }
 
 func TestCreateTokenWithTenantName(t *testing.T) {
-	options := gophercloud.AuthOptions{
+	options := golangsdk.AuthOptions{
 		Username:   "me",
 		Password:   "opensesame",
 		TenantName: "demo",
@@ -85,11 +85,11 @@ func TestCreateTokenWithTenantName(t *testing.T) {
 }
 
 func TestRequireUsername(t *testing.T) {
-	options := gophercloud.AuthOptions{
+	options := golangsdk.AuthOptions{
 		Password: "thing",
 	}
 
-	tokenPostErr(t, options, gophercloud.ErrMissingInput{Argument: "Username"})
+	tokenPostErr(t, options, golangsdk.ErrMissingInput{Argument: "Username"})
 }
 
 func tokenGet(t *testing.T, tokenId string) tokens.GetResult {

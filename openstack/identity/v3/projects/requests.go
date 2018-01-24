@@ -1,8 +1,8 @@
 package projects
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to
@@ -32,12 +32,12 @@ type ListOpts struct {
 
 // ToProjectListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToProjectListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the Projects to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToProjectListQuery()
@@ -52,7 +52,7 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single project, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
@@ -86,11 +86,11 @@ type CreateOpts struct {
 
 // ToProjectCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToProjectCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "project")
+	return golangsdk.BuildRequestBody(opts, "project")
 }
 
 // Create creates a new Project.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToProjectCreateMap()
 	if err != nil {
 		r.Err = err
@@ -101,7 +101,7 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 }
 
 // Delete deletes a project.
-func Delete(client *gophercloud.ServiceClient, projectID string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, projectID string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, projectID), nil)
 	return
 }
@@ -135,17 +135,17 @@ type UpdateOpts struct {
 
 // ToUpdateCreateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToProjectUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "project")
+	return golangsdk.BuildRequestBody(opts, "project")
 }
 
 // Update modifies the attributes of a project.
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToProjectUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Patch(updateURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return

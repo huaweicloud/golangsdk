@@ -5,11 +5,11 @@ package v3
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/acceptance/clients"
-	"github.com/gophercloud/gophercloud/acceptance/tools"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/domains"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/roles"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/acceptance/clients"
+	"github.com/huawei-clouds/golangsdk/acceptance/tools"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/domains"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/roles"
 )
 
 func TestRolesList(t *testing.T) {
@@ -159,7 +159,7 @@ func TestRoleAssignToUserOnDomain(t *testing.T) {
 	}
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: gophercloud.Disabled,
+		Enabled: golangsdk.Disabled,
 	})
 	if err != nil {
 		t.Fatal("Unable to create a domain")
@@ -218,7 +218,7 @@ func TestRoleAssignToGroupOnDomain(t *testing.T) {
 	}
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: gophercloud.Disabled,
+		Enabled: golangsdk.Disabled,
 	})
 	if err != nil {
 		t.Fatal("Unable to create a domain")

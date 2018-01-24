@@ -4,11 +4,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
-	tokens2 "github.com/gophercloud/gophercloud/openstack/identity/v2/tokens"
-	tokens3 "github.com/gophercloud/gophercloud/openstack/identity/v3/tokens"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack"
+	tokens2 "github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
+	tokens3 "github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 // Service catalog fixtures take too much vertical space!
@@ -62,14 +62,14 @@ var catalog2 = tokens2.ServiceCatalog{
 }
 
 func TestV2EndpointExact(t *testing.T) {
-	expectedURLs := map[gophercloud.Availability]string{
-		gophercloud.AvailabilityPublic:   "https://public.correct.com/",
-		gophercloud.AvailabilityAdmin:    "https://admin.correct.com/",
-		gophercloud.AvailabilityInternal: "https://internal.correct.com/",
+	expectedURLs := map[golangsdk.Availability]string{
+		golangsdk.AvailabilityPublic:   "https://public.correct.com/",
+		golangsdk.AvailabilityAdmin:    "https://admin.correct.com/",
+		golangsdk.AvailabilityInternal: "https://internal.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
-		actual, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
+		actual, err := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
 			Type:         "same",
 			Name:         "same",
 			Region:       "same",
@@ -81,19 +81,19 @@ func TestV2EndpointExact(t *testing.T) {
 }
 
 func TestV2EndpointNone(t *testing.T) {
-	_, actual := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
+	_, actual := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
 		Type:         "nope",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 	})
-	expected := &gophercloud.ErrEndpointNotFound{}
+	expected := &golangsdk.ErrEndpointNotFound{}
 	th.CheckEquals(t, expected.Error(), actual.Error())
 }
 
 func TestV2EndpointMultiple(t *testing.T) {
-	_, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
+	_, err := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
 		Type:         "same",
 		Region:       "same",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 	})
 	if !strings.HasPrefix(err.Error(), "Discovered 2 matching endpoints:") {
 		t.Errorf("Received unexpected error: %v", err)
@@ -101,7 +101,7 @@ func TestV2EndpointMultiple(t *testing.T) {
 }
 
 func TestV2EndpointBadAvailability(t *testing.T) {
-	_, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
+	_, err := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
 		Type:         "same",
 		Name:         "same",
 		Region:       "same",
@@ -182,14 +182,14 @@ var catalog3 = tokens3.ServiceCatalog{
 }
 
 func TestV3EndpointExact(t *testing.T) {
-	expectedURLs := map[gophercloud.Availability]string{
-		gophercloud.AvailabilityPublic:   "https://public.correct.com/",
-		gophercloud.AvailabilityAdmin:    "https://admin.correct.com/",
-		gophercloud.AvailabilityInternal: "https://internal.correct.com/",
+	expectedURLs := map[golangsdk.Availability]string{
+		golangsdk.AvailabilityPublic:   "https://public.correct.com/",
+		golangsdk.AvailabilityAdmin:    "https://admin.correct.com/",
+		golangsdk.AvailabilityInternal: "https://internal.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
-		actual, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
+		actual, err := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
 			Type:         "same",
 			Name:         "same",
 			Region:       "same",
@@ -201,19 +201,19 @@ func TestV3EndpointExact(t *testing.T) {
 }
 
 func TestV3EndpointNone(t *testing.T) {
-	_, actual := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
+	_, actual := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
 		Type:         "nope",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 	})
-	expected := &gophercloud.ErrEndpointNotFound{}
+	expected := &golangsdk.ErrEndpointNotFound{}
 	th.CheckEquals(t, expected.Error(), actual.Error())
 }
 
 func TestV3EndpointMultiple(t *testing.T) {
-	_, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
+	_, err := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
 		Type:         "same",
 		Region:       "same",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 	})
 	if !strings.HasPrefix(err.Error(), "Discovered 2 matching endpoints:") {
 		t.Errorf("Received unexpected error: %v", err)
@@ -221,7 +221,7 @@ func TestV3EndpointMultiple(t *testing.T) {
 }
 
 func TestV3EndpointBadAvailability(t *testing.T) {
-	_, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
+	_, err := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
 		Type:         "same",
 		Name:         "same",
 		Region:       "same",

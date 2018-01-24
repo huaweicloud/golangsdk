@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	fake "github.com/gophercloud/gophercloud/openstack/networking/v2/common"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/fwaas/policies"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	fake "github.com/huawei-clouds/golangsdk/openstack/networking/v2/common"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/fwaas/policies"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestList(t *testing.T) {
@@ -149,8 +149,8 @@ func TestCreate(t *testing.T) {
 		TenantID:    "9145d91459d248b1b02fdaca97c6a75d",
 		Name:        "policy",
 		Description: "Firewall policy",
-		Shared:      gophercloud.Disabled,
-		Audited:     gophercloud.Enabled,
+		Shared:      golangsdk.Disabled,
+		Audited:     golangsdk.Enabled,
 		Rules: []string{
 			"98a58c87-76be-ae7c-a74e-b77fffb88d95",
 			"11a58c87-76be-ae7c-a74e-b77fffb88a32",

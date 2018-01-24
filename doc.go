@@ -1,5 +1,5 @@
 /*
-Package gophercloud provides a multi-vendor interface to OpenStack-compatible
+Package golangsdk provides a multi-vendor interface to OpenStack-compatible
 clouds. The library has a three-level hierarchy: providers, services, and
 resources.
 
@@ -15,7 +15,7 @@ information provided by the cloud operator. Additionally, the cloud may refer to
 TenantID or TenantName as project_id and project_name. Credentials are
 specified like so:
 
-  opts := gophercloud.AuthOptions{
+  opts := golangsdk.AuthOptions{
     IdentityEndpoint: "https://openstack.example.com:5000/v2.0",
     Username: "{username}",
     Password: "{password}",
@@ -39,7 +39,7 @@ operations for a particular OpenStack service. Examples of services include:
 Compute, Object Storage, Block Storage. In order to define one, you need to
 pass in the parent provider, like so:
 
-  opts := gophercloud.EndpointOpts{Region: "RegionOne"}
+  opts := golangsdk.EndpointOpts{Region: "RegionOne"}
 
   client := openstack.NewComputeV2(provider, opts)
 
@@ -90,4 +90,4 @@ This top-level package contains utility functions and data types that are used
 throughout the provider and service packages. Of particular note for end users
 are the AuthOptions and EndpointOpts structs.
 */
-package gophercloud
+package golangsdk

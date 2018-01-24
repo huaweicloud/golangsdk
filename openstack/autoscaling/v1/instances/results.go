@@ -1,8 +1,8 @@
 package instances
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 //Instance is a struct which represents all the infromation of a instance
@@ -37,10 +37,10 @@ func (r InstancePage) Extract() ([]Instance, error) {
 
 //DeleteResult is a struct which contains the result of deletion instance
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 //BatchResult is a struct which contains the result of batch operations
 type BatchResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }

@@ -1,12 +1,12 @@
 package projects
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 type projectResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // GetResult is the result of a Get request. Call its Extract method to
@@ -24,7 +24,7 @@ type CreateResult struct {
 // DeleteResult is the result of a Delete request. Call its ExtractErr method to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // UpdateResult is the result of an Update request. Call its Extract method to

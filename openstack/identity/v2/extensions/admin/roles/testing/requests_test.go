@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud/openstack/identity/v2/extensions/admin/roles"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/extensions/admin/roles"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestRole(t *testing.T) {

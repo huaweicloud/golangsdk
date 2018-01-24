@@ -1,8 +1,8 @@
 package healthcheck
 
 import (
-	"github.com/gophercloud/gophercloud"
-	//"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	//"github.com/huawei-clouds/golangsdk/pagination"
     //"fmt"
 )
 
@@ -49,7 +49,7 @@ type Health struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a monitor.
@@ -85,5 +85,5 @@ type UpdateResult struct {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }

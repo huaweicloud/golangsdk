@@ -1,23 +1,23 @@
 package configurations
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 const resourcePath = "scaling_configuration"
 
-func createURL(client *gophercloud.ServiceClientExtension) string {
+func createURL(client *golangsdk.ServiceClientExtension) string {
 	return client.ServiceURL(client.ProjectID, resourcePath)
 }
 
-func getURL(client *gophercloud.ServiceClientExtension, id string) string {
+func getURL(client *golangsdk.ServiceClientExtension, id string) string {
 	return client.ServiceURL(client.ProjectID, resourcePath, id)
 }
 
-func deleteURL(client *gophercloud.ServiceClientExtension, id string) string {
+func deleteURL(client *golangsdk.ServiceClientExtension, id string) string {
 	return client.ServiceURL(client.ProjectID, resourcePath, id)
 }
 
-func listURL(client *gophercloud.ServiceClientExtension) string {
+func listURL(client *golangsdk.ServiceClientExtension) string {
 	return client.ServiceURL(client.ProjectID, resourcePath)
 }

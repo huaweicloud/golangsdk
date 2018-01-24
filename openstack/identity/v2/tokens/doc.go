@@ -7,7 +7,7 @@ http://developer.openstack.org/api-ref-identity-v2.html#identity-auth-v2
 
 Example to Create an Unscoped Token from a Password
 
-	authOpts := gophercloud.AuthOptions{
+	authOpts := golangsdk.AuthOptions{
 		Username: "user",
 		Password: "pass"
 	}
@@ -19,7 +19,7 @@ Example to Create an Unscoped Token from a Password
 
 Example to Create a Token from a Tenant ID and Password
 
-	authOpts := gophercloud.AuthOptions{
+	authOpts := golangsdk.AuthOptions{
 		Username: "user",
 		Password: "password",
 		TenantID: "fc394f2ab2df4114bde39905f800dc57"
@@ -32,7 +32,7 @@ Example to Create a Token from a Tenant ID and Password
 
 Example to Create a Token from a Tenant Name and Password
 
-	authOpts := gophercloud.AuthOptions{
+	authOpts := golangsdk.AuthOptions{
 		Username:   "user",
 		Password:   "password",
 		TenantName: "tenantname"

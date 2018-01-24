@@ -2,8 +2,8 @@ package backendmember
 
 import (
 	//"fmt"
-	"github.com/gophercloud/gophercloud"
-	//"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	//"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order
@@ -25,7 +25,7 @@ type AddOpts struct {
 
 // ToBackendAddMap casts a CreateOpts struct to a map.
 func (opts AddOpts) ToBackendAddMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Add is an operation which provisions a new Listeners based on the
@@ -35,7 +35,7 @@ func (opts AddOpts) ToBackendAddMap() (map[string]interface{}, error) {
 //
 // Users with an admin role can create Listeners on behalf of other tenants by
 // specifying a TenantID attribute different than their own.
-func Add(c *gophercloud.ServiceClient, listener_id string, opts AddOptsBuilder) (r AddResult) {
+func Add(c *golangsdk.ServiceClient, listener_id string, opts AddOptsBuilder) (r AddResult) {
 	b, err := opts.ToBackendAddMap()
 	// API takes an array of these...
 	a := make([]map[string]interface{}, 1)
@@ -44,7 +44,7 @@ func Add(c *gophercloud.ServiceClient, listener_id string, opts AddOptsBuilder) 
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Post(addURL(c, listener_id), a, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Post(addURL(c, listener_id), a, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -71,11 +71,11 @@ type RemoveOpts struct {
 
 // ToBackendCreateMap casts a CreateOpts struct to a map.
 func (opts RemoveOpts) ToBackendRemoveMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Remove will permanently remove a particular backend based on its unique ID.
-func Remove(c *gophercloud.ServiceClient, listener_id string, id string) (r RemoveResult) {
+func Remove(c *golangsdk.ServiceClient, listener_id string, id string) (r RemoveResult) {
 	/*lbid := LoadBalancerID{
 		ID: id,
 	}
@@ -96,14 +96,14 @@ func Remove(c *gophercloud.ServiceClient, listener_id string, id string) (r Remo
 		r.Err = err
 		return
 	} */
-	_, r.Err = c.Post(removeURL(c, listener_id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Post(removeURL(c, listener_id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Get retrieves a particular Health Monitor based on its unique ID.
-func Get(c *gophercloud.ServiceClient, listener_id, id string) (r GetResult) {
+func Get(c *golangsdk.ServiceClient, listener_id, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, listener_id, id), &r.Body, nil)
 	return
 }

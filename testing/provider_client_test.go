@@ -8,13 +8,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gophercloud/gophercloud"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestAuthenticatedHeaders(t *testing.T) {
-	p := &gophercloud.ProviderClient{
+	p := &golangsdk.ProviderClient{
 		TokenID: "1234",
 	}
 	expected := map[string]string{"X-Auth-Token": "1234"}
@@ -23,20 +23,20 @@ func TestAuthenticatedHeaders(t *testing.T) {
 }
 
 func TestUserAgent(t *testing.T) {
-	p := &gophercloud.ProviderClient{}
+	p := &golangsdk.ProviderClient{}
 
 	p.UserAgent.Prepend("custom-user-agent/2.4.0")
-	expected := "custom-user-agent/2.4.0 gophercloud/2.0.0"
+	expected := "custom-user-agent/2.4.0 golangsdk/2.0.0"
 	actual := p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 
 	p.UserAgent.Prepend("another-custom-user-agent/0.3.0", "a-third-ua/5.9.0")
-	expected = "another-custom-user-agent/0.3.0 a-third-ua/5.9.0 custom-user-agent/2.4.0 gophercloud/2.0.0"
+	expected = "another-custom-user-agent/0.3.0 a-third-ua/5.9.0 custom-user-agent/2.4.0 golangsdk/2.0.0"
 	actual = p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 
-	p.UserAgent = gophercloud.UserAgent{}
-	expected = "gophercloud/2.0.0"
+	p.UserAgent = golangsdk.UserAgent{}
+	expected = "golangsdk/2.0.0"
 	actual = p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 }
@@ -55,7 +55,7 @@ func TestConcurrentReauth(t *testing.T) {
 	prereauthTok := client.TokenID
 	postreauthTok := "12345678"
 
-	p := new(gophercloud.ProviderClient)
+	p := new(golangsdk.ProviderClient)
 	p.UseTokenLock()
 	p.SetToken(prereauthTok)
 	p.ReauthFunc = func() error {
@@ -89,7 +89,7 @@ func TestConcurrentReauth(t *testing.T) {
 	})
 
 	wg := new(sync.WaitGroup)
-	reqopts := new(gophercloud.RequestOpts)
+	reqopts := new(golangsdk.RequestOpts)
 
 	for i := 0; i < numconc; i++ {
 		wg.Add(1)

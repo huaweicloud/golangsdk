@@ -3,18 +3,18 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestApplyDefaultsToEndpointOpts(t *testing.T) {
-	eo := gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic}
+	eo := golangsdk.EndpointOpts{Availability: golangsdk.AvailabilityPublic}
 	eo.ApplyDefaults("compute")
-	expected := gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic, Type: "compute"}
+	expected := golangsdk.EndpointOpts{Availability: golangsdk.AvailabilityPublic, Type: "compute"}
 	th.CheckDeepEquals(t, expected, eo)
 
-	eo = gophercloud.EndpointOpts{Type: "compute"}
+	eo = golangsdk.EndpointOpts{Type: "compute"}
 	eo.ApplyDefaults("object-store")
-	expected = gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic, Type: "compute"}
+	expected = golangsdk.EndpointOpts{Availability: golangsdk.AvailabilityPublic, Type: "compute"}
 	th.CheckDeepEquals(t, expected, eo)
 }

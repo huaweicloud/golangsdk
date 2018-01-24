@@ -1,9 +1,9 @@
 package openstack
 
 import (
-	"github.com/gophercloud/gophercloud"
-	tokens2 "github.com/gophercloud/gophercloud/openstack/identity/v2/tokens"
-	tokens3 "github.com/gophercloud/gophercloud/openstack/identity/v3/tokens"
+	"github.com/huawei-clouds/golangsdk"
+	tokens2 "github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
+	tokens3 "github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
 )
 
 /*
@@ -16,7 +16,7 @@ criteria and when none do. The minimum that can be specified is a Type, but you
 will also often need to specify a Name and/or a Region depending on what's
 available on your OpenStack deployment.
 */
-func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts gophercloud.EndpointOpts) (string, error) {
+func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts golangsdk.EndpointOpts) (string, error) {
 	// Extract Endpoints from the catalog entries that match the requested Type, Name if provided, and Region if provided.
 	var endpoints = make([]tokens2.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
@@ -39,12 +39,12 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts gophercloud.EndpointOpt
 	// Extract the appropriate URL from the matching Endpoint.
 	for _, endpoint := range endpoints {
 		switch opts.Availability {
-		case gophercloud.AvailabilityPublic:
-			return gophercloud.NormalizeURL(endpoint.PublicURL), nil
-		case gophercloud.AvailabilityInternal:
-			return gophercloud.NormalizeURL(endpoint.InternalURL), nil
-		case gophercloud.AvailabilityAdmin:
-			return gophercloud.NormalizeURL(endpoint.AdminURL), nil
+		case golangsdk.AvailabilityPublic:
+			return golangsdk.NormalizeURL(endpoint.PublicURL), nil
+		case golangsdk.AvailabilityInternal:
+			return golangsdk.NormalizeURL(endpoint.InternalURL), nil
+		case golangsdk.AvailabilityAdmin:
+			return golangsdk.NormalizeURL(endpoint.AdminURL), nil
 		default:
 			err := &ErrInvalidAvailabilityProvided{}
 			err.Argument = "Availability"
@@ -54,7 +54,7 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts gophercloud.EndpointOpt
 	}
 
 	// Report an error if there were no matching endpoints.
-	err := &gophercloud.ErrEndpointNotFound{}
+	err := &golangsdk.ErrEndpointNotFound{}
 	return "", err
 }
 
@@ -68,22 +68,22 @@ criteria and when none do. The minimum that can be specified is a Type, but you
 will also often need to specify a Name and/or a Region depending on what's
 available on your OpenStack deployment.
 */
-func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts gophercloud.EndpointOpts) (string, error) {
+func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts golangsdk.EndpointOpts) (string, error) {
 	// Extract Endpoints from the catalog entries that match the requested Type, Interface,
 	// Name if provided, and Region if provided.
 	var endpoints = make([]tokens3.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
 		if (entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
 			for _, endpoint := range entry.Endpoints {
-				if opts.Availability != gophercloud.AvailabilityAdmin &&
-					opts.Availability != gophercloud.AvailabilityPublic &&
-					opts.Availability != gophercloud.AvailabilityInternal {
+				if opts.Availability != golangsdk.AvailabilityAdmin &&
+					opts.Availability != golangsdk.AvailabilityPublic &&
+					opts.Availability != golangsdk.AvailabilityInternal {
 					err := &ErrInvalidAvailabilityProvided{}
 					err.Argument = "Availability"
 					err.Value = opts.Availability
 					return "", err
 				}
-				if (opts.Availability == gophercloud.Availability(endpoint.Interface)) &&
+				if (opts.Availability == golangsdk.Availability(endpoint.Interface)) &&
 					(opts.Region == "" || endpoint.Region == opts.Region) {
 					endpoints = append(endpoints, endpoint)
 				}
@@ -98,10 +98,10 @@ func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts gophercloud.EndpointOpt
 
 	// Extract the URL from the matching Endpoint.
 	for _, endpoint := range endpoints {
-		return gophercloud.NormalizeURL(endpoint.URL), nil
+		return golangsdk.NormalizeURL(endpoint.URL), nil
 	}
 
 	// Report an error if there were no matching endpoints.
-	err := &gophercloud.ErrEndpointNotFound{}
+	err := &golangsdk.ErrEndpointNotFound{}
 	return "", err
 }

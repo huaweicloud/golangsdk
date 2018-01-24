@@ -2,8 +2,8 @@ package configurations
 
 import (
 	"encoding/base64"
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 	"log"
 )
 
@@ -17,7 +17,7 @@ type CreateOpts struct {
 }
 
 func (opts CreateOpts) ToConfigurationCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := golangsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -110,13 +110,13 @@ type BandwidthOpts struct {
 
 //Create is a method by which can be able to access to create a configuration
 //of autoscaling
-func Create(client *gophercloud.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToConfigurationCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -124,13 +124,13 @@ func Create(client *gophercloud.ServiceClientExtension, opts CreateOptsBuilder) 
 
 //Get is a method by which can be able to access to get a configuration of
 //autoscaling detailed information
-func Get(client *gophercloud.ServiceClientExtension, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClientExtension, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
 
 //Delete
-func Delete(client *gophercloud.ServiceClientExtension, id string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClientExtension, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, id), nil)
 	return
 }
@@ -145,12 +145,12 @@ type ListOpts struct {
 }
 
 func (opts ListOpts) ToConfigurationListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 //List is method that can be able to list all configurations of autoscaling service
-func List(client *gophercloud.ServiceClientExtension, opts ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClientExtension, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToConfigurationListQuery()

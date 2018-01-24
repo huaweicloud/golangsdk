@@ -2,7 +2,7 @@
 
 ## Floating IPs
 
-* `github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/floatingip` is now `github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/floatingips`
+* `github.com/huawei-clouds/golangsdk/openstack/compute/v2/extensions/floatingip` is now `github.com/huawei-clouds/golangsdk/openstack/compute/v2/extensions/floatingips`
 * `floatingips.Associate` and `floatingips.Disassociate` have been removed.
 * `floatingips.DisassociateOpts` is now required to disassociate a Floating IP.
 
@@ -28,5 +28,5 @@
 
 ### Tokens
 
-* `Token.ExpiresAt` is now of type `gophercloud.JSONRFC3339Milli` instead of
+* `Token.ExpiresAt` is now of type `golangsdk.JSONRFC3339Milli` instead of
   `time.Time`

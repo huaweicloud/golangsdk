@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 // LinkedPageBase may be embedded to implement a page that provides navigational "Next" and "Previous" links within its result.
@@ -33,7 +33,7 @@ func (current LinkedPageBase) NextPageURL() (string, error) {
 
 	submap, ok := current.Body.(map[string]interface{})
 	if !ok {
-		err := gophercloud.ErrUnexpectedType{}
+		err := golangsdk.ErrUnexpectedType{}
 		err.Expected = "map[string]interface{}"
 		err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
 		return "", err
@@ -50,7 +50,7 @@ func (current LinkedPageBase) NextPageURL() (string, error) {
 		if len(path) > 0 {
 			submap, ok = value.(map[string]interface{})
 			if !ok {
-				err := gophercloud.ErrUnexpectedType{}
+				err := golangsdk.ErrUnexpectedType{}
 				err.Expected = "map[string]interface{}"
 				err.Actual = fmt.Sprintf("%v", reflect.TypeOf(value))
 				return "", err
@@ -63,7 +63,7 @@ func (current LinkedPageBase) NextPageURL() (string, error) {
 
 			url, ok := value.(string)
 			if !ok {
-				err := gophercloud.ErrUnexpectedType{}
+				err := golangsdk.ErrUnexpectedType{}
 				err.Expected = "string"
 				err.Actual = fmt.Sprintf("%v", reflect.TypeOf(value))
 				return "", err
@@ -79,7 +79,7 @@ func (current LinkedPageBase) IsEmpty() (bool, error) {
 	if b, ok := current.Body.([]interface{}); ok {
 		return len(b) == 0, nil
 	}
-	err := gophercloud.ErrUnexpectedType{}
+	err := golangsdk.ErrUnexpectedType{}
 	err.Expected = "[]interface{}"
 	err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
 	return true, err

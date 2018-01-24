@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/tokens"
-	"github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
+	"github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 const testTokenID = "130f6c17-420e-4a0b-97b0-0c9cf2a05f30"
@@ -110,7 +110,7 @@ const TokenOutput = `
    }
 }`
 
-var expectedTokenTime, _ = time.Parse(gophercloud.RFC3339Milli,
+var expectedTokenTime, _ = time.Parse(golangsdk.RFC3339Milli,
 	"2017-06-03T02:19:49.000000Z")
 var ExpectedToken = tokens.Token{
 	ID:        testTokenID,

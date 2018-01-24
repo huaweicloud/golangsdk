@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/tokens"
-	"github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
+	"github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 // authTokenPost verifies that providing certain AuthOptions and Scope results in an expected JSON structure.
@@ -16,8 +16,8 @@ func authTokenPost(t *testing.T, options tokens.AuthOptions, scope *tokens.Scope
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 
@@ -51,8 +51,8 @@ func authTokenPostErr(t *testing.T, options tokens.AuthOptions, scope *tokens.Sc
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 	if includeToken {
@@ -279,8 +279,8 @@ func TestCreateExtractsTokenFromResponse(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 
@@ -307,28 +307,28 @@ func TestCreateExtractsTokenFromResponse(t *testing.T) {
 }
 
 func TestCreateFailureEmptyAuth(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{}, nil, false, gophercloud.ErrMissingPassword{})
+	authTokenPostErr(t, tokens.AuthOptions{}, nil, false, golangsdk.ErrMissingPassword{})
 }
 
 func TestCreateFailureTokenIDUsername(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{Username: "something", TokenID: "12345"}, nil, true, gophercloud.ErrUsernameWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{Username: "something", TokenID: "12345"}, nil, true, golangsdk.ErrUsernameWithToken{})
 }
 
 func TestCreateFailureTokenIDUserID(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{UserID: "something", TokenID: "12345"}, nil, true, gophercloud.ErrUserIDWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{UserID: "something", TokenID: "12345"}, nil, true, golangsdk.ErrUserIDWithToken{})
 }
 
 func TestCreateFailureTokenIDDomainID(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainID: "something", TokenID: "12345"}, nil, true, gophercloud.ErrDomainIDWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{DomainID: "something", TokenID: "12345"}, nil, true, golangsdk.ErrDomainIDWithToken{})
 }
 
 func TestCreateFailureTokenIDDomainName(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainName: "something", TokenID: "12345"}, nil, true, gophercloud.ErrDomainNameWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{DomainName: "something", TokenID: "12345"}, nil, true, golangsdk.ErrDomainNameWithToken{})
 }
 
 func TestCreateFailureMissingUser(t *testing.T) {
 	options := tokens.AuthOptions{Password: "supersecure"}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrUsernameOrUserID{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrUsernameOrUserID{})
 }
 
 func TestCreateFailureBothUser(t *testing.T) {
@@ -337,7 +337,7 @@ func TestCreateFailureBothUser(t *testing.T) {
 		Username: "oops",
 		UserID:   "redundancy",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrUsernameOrUserID{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrUsernameOrUserID{})
 }
 
 func TestCreateFailureMissingDomain(t *testing.T) {
@@ -345,7 +345,7 @@ func TestCreateFailureMissingDomain(t *testing.T) {
 		Password: "supersecure",
 		Username: "notuniqueenough",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDOrDomainName{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrDomainIDOrDomainName{})
 }
 
 func TestCreateFailureBothDomain(t *testing.T) {
@@ -355,7 +355,7 @@ func TestCreateFailureBothDomain(t *testing.T) {
 		DomainID:   "hurf",
 		DomainName: "durf",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDOrDomainName{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrDomainIDOrDomainName{})
 }
 
 func TestCreateFailureUserIDDomainID(t *testing.T) {
@@ -364,7 +364,7 @@ func TestCreateFailureUserIDDomainID(t *testing.T) {
 		Password: "stuff",
 		DomainID: "oops",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDWithUserID{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrDomainIDWithUserID{})
 }
 
 func TestCreateFailureUserIDDomainName(t *testing.T) {
@@ -373,44 +373,44 @@ func TestCreateFailureUserIDDomainName(t *testing.T) {
 		Password:   "sssh",
 		DomainName: "oops",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainNameWithUserID{})
+	authTokenPostErr(t, options, nil, false, golangsdk.ErrDomainNameWithUserID{})
 }
 
 func TestCreateFailureScopeProjectNameAlone(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectName: "notenough"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeDomainIDOrDomainName{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeDomainIDOrDomainName{})
 }
 
 func TestCreateFailureScopeProjectNameAndID(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectName: "whoops", ProjectID: "toomuch", DomainID: "1234"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDOrProjectName{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeProjectIDOrProjectName{})
 }
 
 func TestCreateFailureScopeProjectIDAndDomainID(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectID: "toomuch", DomainID: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDAlone{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeProjectIDAlone{})
 }
 
 func TestCreateFailureScopeProjectIDAndDomainNAme(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectID: "toomuch", DomainName: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDAlone{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeProjectIDAlone{})
 }
 
 func TestCreateFailureScopeDomainIDAndDomainName(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{DomainID: "toomuch", DomainName: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeDomainIDOrDomainName{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeDomainIDOrDomainName{})
 }
 
 /*
 func TestCreateFailureEmptyScope(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeEmpty{})
+	authTokenPostErr(t, options, scope, false, golangsdk.ErrScopeEmpty{})
 }
 */
 
@@ -418,8 +418,8 @@ func TestGetRequest(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{
 			TokenID: "12345abcdef",
 		},
 		Endpoint: testhelper.Endpoint(),
@@ -449,9 +449,9 @@ func TestGetRequest(t *testing.T) {
 	}
 }
 
-func prepareAuthTokenHandler(t *testing.T, expectedMethod string, status int) gophercloud.ServiceClient {
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{
+func prepareAuthTokenHandler(t *testing.T, expectedMethod string, status int) golangsdk.ServiceClient {
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{
 			TokenID: "12345abcdef",
 		},
 		Endpoint: testhelper.Endpoint(),
@@ -535,8 +535,8 @@ func TestNoTokenInResponse(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 

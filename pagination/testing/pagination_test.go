@@ -1,13 +1,13 @@
 package testing
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/testhelper"
 )
 
-func createClient() *gophercloud.ServiceClient {
-	return &gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{TokenID: "abc123"},
+func createClient() *golangsdk.ServiceClient {
+	return &golangsdk.ServiceClient{
+		ProviderClient: &golangsdk.ProviderClient{TokenID: "abc123"},
 		Endpoint:       testhelper.Endpoint(),
 	}
 }

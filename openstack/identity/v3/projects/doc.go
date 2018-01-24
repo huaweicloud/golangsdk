@@ -5,7 +5,7 @@ Service.
 Example to List Projects
 
 	listOpts := projects.ListOpts{
-		Enabled: gophercloud.Enabled,
+		Enabled: golangsdk.Enabled,
 	}
 
 	allPages, err := projects.List(identityClient, listOpts).AllPages()
@@ -39,7 +39,7 @@ Example to Update a Project
 	projectID := "966b3c7d36a24facaf20b7e458bf2192"
 
 	updateOpts := projects.UpdateOpts{
-		Enabled: gophercloud.Disabled,
+		Enabled: golangsdk.Disabled,
 	}
 
 	project, err := projects.Update(identityClient, projectID, updateOpts).Extract()

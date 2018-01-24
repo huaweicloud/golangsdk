@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	fake "github.com/gophercloud/gophercloud/openstack/networking/v2/common"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/fwaas_v2/firewall_groups"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/fwaas_v2/routerinsertion"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	fake "github.com/huawei-clouds/golangsdk/openstack/networking/v2/common"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/fwaas_v2/firewall_groups"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/fwaas_v2/routerinsertion"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestList(t *testing.T) {
@@ -195,7 +195,7 @@ func TestCreate(t *testing.T) {
 		TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
 		Name:         		"fw",
 		Description:  		"OpenStack firewall",
-		AdminStateUp: 		gophercloud.Enabled,
+		AdminStateUp: 		golangsdk.Enabled,
 		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 		EgressPolicyID:		"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
@@ -333,7 +333,7 @@ func TestUpdate(t *testing.T) {
 	options := firewall_groups.UpdateOpts{
 		Name:         		"fw",
 		Description:  		"updated fw",
-		AdminStateUp: 		gophercloud.Disabled,
+		AdminStateUp: 		golangsdk.Disabled,
 		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 		EgressPolicyID:     "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}

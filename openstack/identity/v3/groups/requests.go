@@ -1,8 +1,8 @@
 package groups
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to
@@ -22,12 +22,12 @@ type ListOpts struct {
 
 // ToGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the Groups to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToGroupListQuery()
@@ -42,7 +42,7 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single group, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
@@ -70,7 +70,7 @@ type CreateOpts struct {
 
 // ToGroupCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToGroupCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "group")
+	b, err := golangsdk.BuildRequestBody(opts, "group")
 	if err != nil {
 		return nil, err
 	}
@@ -87,13 +87,13 @@ func (opts CreateOpts) ToGroupCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new Group.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToGroupCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
 	return
@@ -122,7 +122,7 @@ type UpdateOpts struct {
 
 // ToGroupUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToGroupUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "group")
+	b, err := golangsdk.BuildRequestBody(opts, "group")
 	if err != nil {
 		return nil, err
 	}
@@ -139,20 +139,20 @@ func (opts UpdateOpts) ToGroupUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing Group.
-func Update(client *gophercloud.ServiceClient, groupID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, groupID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToGroupUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Patch(updateURL(client, groupID), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Patch(updateURL(client, groupID), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete deletes a group.
-func Delete(client *gophercloud.ServiceClient, groupID string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, groupID string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, groupID), nil)
 	return
 }

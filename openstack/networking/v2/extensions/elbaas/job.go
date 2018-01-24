@@ -1,7 +1,7 @@
 package elbaas
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 type Job struct {
@@ -10,7 +10,7 @@ type Job struct {
 }
 
 type JobResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r JobResult) Extract() (*Job, error) {
@@ -29,7 +29,7 @@ type JobInfo struct {
 }
 
 type JobInfoResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r JobInfoResult) Extract() (*JobInfo, error) {
@@ -38,7 +38,7 @@ func (r JobInfoResult) Extract() (*JobInfo, error) {
 	return j, err
 }
 
-func QueryJobInfo(c *gophercloud.ServiceClient, jobId string) (r JobInfoResult) {
+func QueryJobInfo(c *golangsdk.ServiceClient, jobId string) (r JobInfoResult) {
 	_, r.Err = c.Get(c.ServiceURL("jobs", jobId), &r.Body, nil)
 	return
 }

@@ -1,12 +1,12 @@
 # Gophercloud: an OpenStack SDK for Go
-[![Build Status](https://travis-ci.org/gophercloud/gophercloud.svg?branch=master)](https://travis-ci.org/gophercloud/gophercloud)
-[![Coverage Status](https://coveralls.io/repos/github/gophercloud/gophercloud/badge.svg?branch=master)](https://coveralls.io/github/gophercloud/gophercloud?branch=master)
+[![Build Status](https://travis-ci.org/huawei-clouds/golangsdk.svg?branch=master)](https://travis-ci.org/huawei-clouds/golangsdk)
+[![Coverage Status](https://coveralls.io/repos/github/huawei-clouds/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/huawei-clouds/golangsdk?branch=master)
 
 Gophercloud is an OpenStack Go SDK.
 
 ## Useful links
 
-* [Reference documentation](http://godoc.org/github.com/gophercloud/gophercloud)
+* [Reference documentation](http://godoc.org/github.com/huawei-clouds/golangsdk)
 * [Effective Go](https://golang.org/doc/effective_go.html)
 
 ## How to install
@@ -25,9 +25,9 @@ your projects, such as [godep](https://github.com/tools/godep). Once this is set
 Gophercloud as a dependency like so:
 
 ```bash
-go get github.com/gophercloud/gophercloud
+go get github.com/huawei-clouds/golangsdk
 
-# Edit your code to import relevant packages from "github.com/gophercloud/gophercloud"
+# Edit your code to import relevant packages from "github.com/huawei-clouds/golangsdk"
 
 godep save ./...
 ```
@@ -67,13 +67,13 @@ explicitly, or tell Gophercloud to use environment variables:
 
 ```go
 import (
-  "github.com/gophercloud/gophercloud"
-  "github.com/gophercloud/gophercloud/openstack"
-  "github.com/gophercloud/gophercloud/openstack/utils"
+  "github.com/huawei-clouds/golangsdk"
+  "github.com/huawei-clouds/golangsdk/openstack"
+  "github.com/huawei-clouds/golangsdk/openstack/utils"
 )
 
 // Option 1: Pass in the values yourself
-opts := gophercloud.AuthOptions{
+opts := golangsdk.AuthOptions{
   IdentityEndpoint: "https://openstack.example.com:5000/v2.0",
   Username: "{username}",
   Password: "{password}",
@@ -101,7 +101,7 @@ service. In order to work with the Compute API, we need a Compute service
 client; which can be created like so:
 
 ```go
-client, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
+client, err := openstack.NewComputeV2(provider, golangsdk.EndpointOpts{
   Region: os.Getenv("OS_REGION_NAME"),
 })
 ```
@@ -112,7 +112,7 @@ in the flavor ID (hardware specification) and image ID (operating system) we're
 interested in:
 
 ```go
-import "github.com/gophercloud/gophercloud/openstack/compute/v2/servers"
+import "github.com/huawei-clouds/golangsdk/openstack/compute/v2/servers"
 
 server, err := servers.Create(client, servers.CreateOpts{
   Name:      "My new server!",
@@ -123,7 +123,7 @@ server, err := servers.Create(client, servers.CreateOpts{
 
 The above code sample creates a new server with the parameters, and embodies the
 new resource in the `server` variable (a
-[`servers.Server`](http://godoc.org/github.com/gophercloud/gophercloud) struct).
+[`servers.Server`](http://godoc.org/github.com/huawei-clouds/golangsdk) struct).
 
 ## Advanced Usage
 

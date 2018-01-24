@@ -1,4 +1,4 @@
-package gophercloud
+package golangsdk
 
 // Availability indicates to whom a specific service endpoint is accessible:
 // the internet at large, internal networks only, or only to administrators.

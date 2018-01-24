@@ -1,19 +1,19 @@
 package services
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL("services")
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL("services")
 }
 
-func serviceURL(client *gophercloud.ServiceClient, serviceID string) string {
+func serviceURL(client *golangsdk.ServiceClient, serviceID string) string {
 	return client.ServiceURL("services", serviceID)
 }
 
-func updateURL(client *gophercloud.ServiceClient, serviceID string) string {
+func updateURL(client *golangsdk.ServiceClient, serviceID string) string {
 	return client.ServiceURL("services", serviceID)
 }

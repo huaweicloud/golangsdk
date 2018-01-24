@@ -3,13 +3,13 @@ package services
 import (
 	"encoding/json"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/internal"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/internal"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 type serviceResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a concrete
@@ -43,7 +43,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete request. Call its ExtractErr
 // method to interpret it as a Service.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // Service represents an OpenStack Service.

@@ -1,9 +1,9 @@
 package extensions
 
 import (
-	"github.com/gophercloud/gophercloud"
-	common "github.com/gophercloud/gophercloud/openstack/common/extensions"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	common "github.com/huawei-clouds/golangsdk/openstack/common/extensions"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // ExtensionPage is a single page of Extension results.
@@ -31,13 +31,13 @@ func ExtractExtensions(page pagination.Page) ([]common.Extension, error) {
 }
 
 // Get retrieves information for a specific extension using its alias.
-func Get(c *gophercloud.ServiceClient, alias string) common.GetResult {
+func Get(c *golangsdk.ServiceClient, alias string) common.GetResult {
 	return common.Get(c, alias)
 }
 
 // List returns a Pager which allows you to iterate over the full collection of extensions.
 // It does not accept query parameters.
-func List(c *gophercloud.ServiceClient) pagination.Pager {
+func List(c *golangsdk.ServiceClient) pagination.Pager {
 	return common.List(c).WithPageCreator(func(r pagination.PageResult) pagination.Page {
 		return ExtensionPage{
 			ExtensionPage: common.ExtensionPage{SinglePageBase: pagination.SinglePageBase(r)},

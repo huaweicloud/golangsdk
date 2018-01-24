@@ -8,9 +8,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack"
-	"github.com/gophercloud/gophercloud/openstack/blockstorage/noauth"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack"
+	"github.com/huawei-clouds/golangsdk/openstack/blockstorage/noauth"
 )
 
 // AcceptanceTestChoices contains image and flavor selections for use by the acceptance tests.
@@ -112,7 +112,7 @@ func AcceptanceTestChoicesFromEnv() (*AcceptanceTestChoices, error) {
 // NewBlockStorageV1Client returns a *ServiceClient for making calls
 // to the OpenStack Block Storage v1 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewBlockStorageV1Client() (*gophercloud.ServiceClient, error) {
+func NewBlockStorageV1Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -123,7 +123,7 @@ func NewBlockStorageV1Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewBlockStorageV1(client, gophercloud.EndpointOpts{
+	return openstack.NewBlockStorageV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -131,7 +131,7 @@ func NewBlockStorageV1Client() (*gophercloud.ServiceClient, error) {
 // NewBlockStorageV2Client returns a *ServiceClient for making calls
 // to the OpenStack Block Storage v2 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewBlockStorageV2Client() (*gophercloud.ServiceClient, error) {
+func NewBlockStorageV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -142,7 +142,7 @@ func NewBlockStorageV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewBlockStorageV2(client, gophercloud.EndpointOpts{
+	return openstack.NewBlockStorageV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -150,7 +150,7 @@ func NewBlockStorageV2Client() (*gophercloud.ServiceClient, error) {
 // NewBlockStorageV3Client returns a *ServiceClient for making calls
 // to the OpenStack Block Storage v3 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewBlockStorageV3Client() (*gophercloud.ServiceClient, error) {
+func NewBlockStorageV3Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func NewBlockStorageV3Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewBlockStorageV3(client, gophercloud.EndpointOpts{
+	return openstack.NewBlockStorageV3(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -169,8 +169,8 @@ func NewBlockStorageV3Client() (*gophercloud.ServiceClient, error) {
 // NewBlockStorageV2NoAuthClient returns a noauth *ServiceClient for
 // making calls to the OpenStack Block Storage v2 API. An error will be
 // returned if client creation was not possible.
-func NewBlockStorageV2NoAuthClient() (*gophercloud.ServiceClient, error) {
-	client, err := noauth.NewClient(gophercloud.AuthOptions{
+func NewBlockStorageV2NoAuthClient() (*golangsdk.ServiceClient, error) {
+	client, err := noauth.NewClient(golangsdk.AuthOptions{
 		Username:   os.Getenv("OS_USERNAME"),
 		TenantName: os.Getenv("OS_TENANT_NAME"),
 	})
@@ -186,8 +186,8 @@ func NewBlockStorageV2NoAuthClient() (*gophercloud.ServiceClient, error) {
 // NewBlockStorageV3NoAuthClient returns a noauth *ServiceClient for
 // making calls to the OpenStack Block Storage v2 API. An error will be
 // returned if client creation was not possible.
-func NewBlockStorageV3NoAuthClient() (*gophercloud.ServiceClient, error) {
-	client, err := noauth.NewClient(gophercloud.AuthOptions{
+func NewBlockStorageV3NoAuthClient() (*golangsdk.ServiceClient, error) {
+	client, err := noauth.NewClient(golangsdk.AuthOptions{
 		Username:   os.Getenv("OS_USERNAME"),
 		TenantName: os.Getenv("OS_TENANT_NAME"),
 	})
@@ -203,7 +203,7 @@ func NewBlockStorageV3NoAuthClient() (*gophercloud.ServiceClient, error) {
 // NewComputeV2Client returns a *ServiceClient for making calls
 // to the OpenStack Compute v2 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewComputeV2Client() (*gophercloud.ServiceClient, error) {
+func NewComputeV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -214,7 +214,7 @@ func NewComputeV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewComputeV2(client, gophercloud.EndpointOpts{
+	return openstack.NewComputeV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -222,7 +222,7 @@ func NewComputeV2Client() (*gophercloud.ServiceClient, error) {
 // NewDBV1Client returns a *ServiceClient for making calls
 // to the OpenStack Database v1 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewDBV1Client() (*gophercloud.ServiceClient, error) {
+func NewDBV1Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -233,7 +233,7 @@ func NewDBV1Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewDBV1(client, gophercloud.EndpointOpts{
+	return openstack.NewDBV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -241,7 +241,7 @@ func NewDBV1Client() (*gophercloud.ServiceClient, error) {
 // NewDNSV2Client returns a *ServiceClient for making calls
 // to the OpenStack Compute v2 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewDNSV2Client() (*gophercloud.ServiceClient, error) {
+func NewDNSV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -252,7 +252,7 @@ func NewDNSV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewDNSV2(client, gophercloud.EndpointOpts{
+	return openstack.NewDNSV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -260,7 +260,7 @@ func NewDNSV2Client() (*gophercloud.ServiceClient, error) {
 // NewIdentityV2Client returns a *ServiceClient for making calls
 // to the OpenStack Identity v2 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewIdentityV2Client() (*gophercloud.ServiceClient, error) {
+func NewIdentityV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -271,7 +271,7 @@ func NewIdentityV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewIdentityV2(client, gophercloud.EndpointOpts{
+	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -279,7 +279,7 @@ func NewIdentityV2Client() (*gophercloud.ServiceClient, error) {
 // NewIdentityV2AdminClient returns a *ServiceClient for making calls
 // to the Admin Endpoint of the OpenStack Identity v2 API. An error
 // will be returned if authentication or client creation was not possible.
-func NewIdentityV2AdminClient() (*gophercloud.ServiceClient, error) {
+func NewIdentityV2AdminClient() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -290,16 +290,16 @@ func NewIdentityV2AdminClient() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewIdentityV2(client, gophercloud.EndpointOpts{
+	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{
 		Region:       os.Getenv("OS_REGION_NAME"),
-		Availability: gophercloud.AvailabilityAdmin,
+		Availability: golangsdk.AvailabilityAdmin,
 	})
 }
 
 // NewIdentityV2UnauthenticatedClient returns an unauthenticated *ServiceClient
 // for the OpenStack Identity v2 API. An error  will be returned if
 // authentication or client creation was not possible.
-func NewIdentityV2UnauthenticatedClient() (*gophercloud.ServiceClient, error) {
+func NewIdentityV2UnauthenticatedClient() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -310,13 +310,13 @@ func NewIdentityV2UnauthenticatedClient() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewIdentityV2(client, gophercloud.EndpointOpts{})
+	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{})
 }
 
 // NewIdentityV3Client returns a *ServiceClient for making calls
 // to the OpenStack Identity v3 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewIdentityV3Client() (*gophercloud.ServiceClient, error) {
+func NewIdentityV3Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -327,7 +327,7 @@ func NewIdentityV3Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewIdentityV3(client, gophercloud.EndpointOpts{
+	return openstack.NewIdentityV3(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -335,7 +335,7 @@ func NewIdentityV3Client() (*gophercloud.ServiceClient, error) {
 // NewIdentityV3UnauthenticatedClient returns an unauthenticated *ServiceClient
 // for the OpenStack Identity v3 API. An error  will be returned if
 // authentication or client creation was not possible.
-func NewIdentityV3UnauthenticatedClient() (*gophercloud.ServiceClient, error) {
+func NewIdentityV3UnauthenticatedClient() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -346,13 +346,13 @@ func NewIdentityV3UnauthenticatedClient() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewIdentityV3(client, gophercloud.EndpointOpts{})
+	return openstack.NewIdentityV3(client, golangsdk.EndpointOpts{})
 }
 
 // NewImageServiceV2Client returns a *ServiceClient for making calls to the
 // OpenStack Image v2 API. An error will be returned if authentication or
 // client creation was not possible.
-func NewImageServiceV2Client() (*gophercloud.ServiceClient, error) {
+func NewImageServiceV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -363,7 +363,7 @@ func NewImageServiceV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewImageServiceV2(client, gophercloud.EndpointOpts{
+	return openstack.NewImageServiceV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -371,7 +371,7 @@ func NewImageServiceV2Client() (*gophercloud.ServiceClient, error) {
 // NewNetworkV2Client returns a *ServiceClient for making calls to the
 // OpenStack Networking v2 API. An error will be returned if authentication
 // or client creation was not possible.
-func NewNetworkV2Client() (*gophercloud.ServiceClient, error) {
+func NewNetworkV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -382,7 +382,7 @@ func NewNetworkV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewNetworkV2(client, gophercloud.EndpointOpts{
+	return openstack.NewNetworkV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -390,7 +390,7 @@ func NewNetworkV2Client() (*gophercloud.ServiceClient, error) {
 // NewObjectStorageV1Client returns a *ServiceClient for making calls to the
 // OpenStack Object Storage v1 API. An error will be returned if authentication
 // or client creation was not possible.
-func NewObjectStorageV1Client() (*gophercloud.ServiceClient, error) {
+func NewObjectStorageV1Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -401,7 +401,7 @@ func NewObjectStorageV1Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewObjectStorageV1(client, gophercloud.EndpointOpts{
+	return openstack.NewObjectStorageV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }
@@ -409,7 +409,7 @@ func NewObjectStorageV1Client() (*gophercloud.ServiceClient, error) {
 // NewSharedFileSystemV2Client returns a *ServiceClient for making calls
 // to the OpenStack Shared File System v2 API. An error will be returned
 // if authentication or client creation was not possible.
-func NewSharedFileSystemV2Client() (*gophercloud.ServiceClient, error) {
+func NewSharedFileSystemV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
 	if err != nil {
 		return nil, err
@@ -420,7 +420,7 @@ func NewSharedFileSystemV2Client() (*gophercloud.ServiceClient, error) {
 		return nil, err
 	}
 
-	return openstack.NewSharedFileSystemV2(client, gophercloud.EndpointOpts{
+	return openstack.NewSharedFileSystemV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 }

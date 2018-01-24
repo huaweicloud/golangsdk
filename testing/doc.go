@@ -1,2 +1,2 @@
-// gophercloud
+// golangsdk
 package testing

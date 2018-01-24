@@ -7,12 +7,12 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 // PageResult stores the HTTP response that returned the current page of results.
 type PageResult struct {
-	gophercloud.Result
+	golangsdk.Result
 	url.URL
 }
 
@@ -43,7 +43,7 @@ func PageResultFrom(resp *http.Response) (PageResult, error) {
 // body parsed as JSON (and closed).
 func PageResultFromParsed(resp *http.Response, body interface{}) PageResult {
 	return PageResult{
-		Result: gophercloud.Result{
+		Result: golangsdk.Result{
 			Body:   body,
 			Header: resp.Header,
 		},
@@ -52,8 +52,8 @@ func PageResultFromParsed(resp *http.Response, body interface{}) PageResult {
 }
 
 // Request performs an HTTP request and extracts the http.Response from the result.
-func Request(client *gophercloud.ServiceClient, headers map[string]string, url string) (*http.Response, error) {
-	return client.Get(url, nil, &gophercloud.RequestOpts{
+func Request(client *golangsdk.ServiceClient, headers map[string]string, url string) (*http.Response, error) {
+	return client.Get(url, nil, &golangsdk.RequestOpts{
 		MoreHeaders: headers,
 		OkCodes:     []int{200, 204, 300},
 	})

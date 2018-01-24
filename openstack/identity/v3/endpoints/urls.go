@@ -1,11 +1,11 @@
 package endpoints
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL("endpoints")
 }
 
-func endpointURL(client *gophercloud.ServiceClient, endpointID string) string {
+func endpointURL(client *golangsdk.ServiceClient, endpointID string) string {
 	return client.ServiceURL("endpoints", endpointID)
 }

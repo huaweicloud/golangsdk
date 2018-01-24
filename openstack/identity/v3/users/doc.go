@@ -29,7 +29,7 @@ Example to Create a User
 		Name:             "username",
 		DomainID:         "default",
 		DefaultProjectID: projectID,
-		Enabled:          gophercloud.Enabled,
+		Enabled:          golangsdk.Enabled,
 		Password:         "supersecret",
 		Extra: map[string]interface{}{
 			"email": "username@example.com",
@@ -46,7 +46,7 @@ Example to Update a User
 	userID := "0fe36e73809d46aeae6705c39077b1b3"
 
 	updateOpts := users.UpdateOpts{
-		Enabled: gophercloud.Disabled,
+		Enabled: golangsdk.Disabled,
 	}
 
 	user, err := users.Update(identityClient, userID, updateOpts).Extract()

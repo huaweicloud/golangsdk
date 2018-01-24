@@ -1,8 +1,8 @@
 package roles
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // Role represents an API role resource.
@@ -44,5 +44,5 @@ func ExtractRoles(r pagination.Page) ([]Role, error) {
 // a DeleteUserRole operation. Call its ExtractErr method to determine
 // if the request succeeded or failed.
 type UserRoleResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }

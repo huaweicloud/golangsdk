@@ -5,31 +5,31 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestMaybeString(t *testing.T) {
 	testString := ""
 	var expected *string
-	actual := gophercloud.MaybeString(testString)
+	actual := golangsdk.MaybeString(testString)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testString = "carol"
 	expected = &testString
-	actual = gophercloud.MaybeString(testString)
+	actual = golangsdk.MaybeString(testString)
 	th.CheckDeepEquals(t, expected, actual)
 }
 
 func TestMaybeInt(t *testing.T) {
 	testInt := 0
 	var expected *int
-	actual := gophercloud.MaybeInt(testInt)
+	actual := golangsdk.MaybeInt(testInt)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testInt = 4
 	expected = &testInt
-	actual = gophercloud.MaybeInt(testInt)
+	actual = golangsdk.MaybeInt(testInt)
 	th.CheckDeepEquals(t, expected, actual)
 }
 
@@ -56,7 +56,7 @@ func TestBuildQueryString(t *testing.T) {
 		M:  map[string]string{"k1": "success1"},
 	}
 	expected := &url.URL{RawQuery: "c=true&f=false&j=2&m=%7B%27k1%27%3A%27success1%27%7D&r=red&s=one&s=two&s=three&ti=1&ti=2&ts=a&ts=b"}
-	actual, err := gophercloud.BuildQueryString(&opts)
+	actual, err := golangsdk.BuildQueryString(&opts)
 	if err != nil {
 		t.Errorf("Error building query string: %v", err)
 	}
@@ -75,13 +75,13 @@ func TestBuildQueryString(t *testing.T) {
 		J: 2,
 		C: true,
 	}
-	_, err = gophercloud.BuildQueryString(&opts)
+	_, err = golangsdk.BuildQueryString(&opts)
 	if err == nil {
 		t.Errorf("Expected error: 'Required field not set'")
 	}
 	th.CheckDeepEquals(t, expected, actual)
 
-	_, err = gophercloud.BuildQueryString(map[string]interface{}{"Number": 4})
+	_, err = golangsdk.BuildQueryString(map[string]interface{}{"Number": 4})
 	if err == nil {
 		t.Errorf("Expected error: 'Options type is not a struct'")
 	}
@@ -98,17 +98,17 @@ func TestBuildHeaders(t *testing.T) {
 		Style:  true,
 	}
 	expected := map[string]string{"Accept": "application/json", "Number": "4", "Style": "true"}
-	actual, err := gophercloud.BuildHeaders(&testStruct)
+	actual, err := golangsdk.BuildHeaders(&testStruct)
 	th.CheckNoErr(t, err)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testStruct.Num = 0
-	_, err = gophercloud.BuildHeaders(&testStruct)
+	_, err = golangsdk.BuildHeaders(&testStruct)
 	if err == nil {
 		t.Errorf("Expected error: 'Required header not set'")
 	}
 
-	_, err = gophercloud.BuildHeaders(map[string]interface{}{"Number": 4})
+	_, err = golangsdk.BuildHeaders(map[string]interface{}{"Number": 4})
 	if err == nil {
 		t.Errorf("Expected error: 'Options type is not a struct'")
 	}
@@ -122,7 +122,7 @@ func TestQueriesAreEscaped(t *testing.T) {
 
 	expected := &url.URL{RawQuery: "else=Triangl+e&something=blah%2B%3F%21%21foo"}
 
-	actual, err := gophercloud.BuildQueryString(foo{Name: "blah+?!!foo", Shape: "Triangl e"})
+	actual, err := golangsdk.BuildQueryString(foo{Name: "blah+?!!foo", Shape: "Triangl e"})
 	th.AssertNoErr(t, err)
 
 	th.AssertDeepEquals(t, expected, actual)
@@ -144,7 +144,7 @@ func TestBuildRequestBody(t *testing.T) {
 		F2     int `json:"f2,omitempty" or:"F1"`
 	}
 
-	// AuthOptions wraps a gophercloud AuthOptions in order to adhere to the AuthOptionsBuilder
+	// AuthOptions wraps a golangsdk AuthOptions in order to adhere to the AuthOptionsBuilder
 	// interface.
 	type AuthOptions struct {
 		PasswordCredentials *PasswordCredentials `json:"passwordCredentials,omitempty" xor:"TokenCredentials"`
@@ -200,7 +200,7 @@ func TestBuildRequestBody(t *testing.T) {
 	}
 
 	for _, successCase := range successCases {
-		actual, err := gophercloud.BuildRequestBody(successCase.opts, "auth")
+		actual, err := golangsdk.BuildRequestBody(successCase.opts, "auth")
 		th.AssertNoErr(t, err)
 		th.AssertDeepEquals(t, successCase.expected, actual)
 	}
@@ -214,7 +214,7 @@ func TestBuildRequestBody(t *testing.T) {
 				TenantID:   "987654321",
 				TenantName: "me",
 			},
-			gophercloud.ErrMissingInput{},
+			golangsdk.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -226,7 +226,7 @@ func TestBuildRequestBody(t *testing.T) {
 					Password: "swordfish",
 				},
 			},
-			gophercloud.ErrMissingInput{},
+			golangsdk.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -234,7 +234,7 @@ func TestBuildRequestBody(t *testing.T) {
 					Password: "swordfish",
 				},
 			},
-			gophercloud.ErrMissingInput{},
+			golangsdk.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -246,12 +246,12 @@ func TestBuildRequestBody(t *testing.T) {
 					Filler: 2,
 				},
 			},
-			gophercloud.ErrMissingInput{},
+			golangsdk.ErrMissingInput{},
 		},
 	}
 
 	for _, failCase := range failCases {
-		_, err := gophercloud.BuildRequestBody(failCase.opts, "auth")
+		_, err := golangsdk.BuildRequestBody(failCase.opts, "auth")
 		th.AssertDeepEquals(t, reflect.TypeOf(failCase.expected), reflect.TypeOf(err))
 	}
 }

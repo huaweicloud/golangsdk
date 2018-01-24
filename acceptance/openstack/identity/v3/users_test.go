@@ -5,11 +5,11 @@ package v3
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud/acceptance/clients"
-	"github.com/gophercloud/gophercloud/acceptance/tools"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/groups"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/projects"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/users"
+	"github.com/huawei-clouds/golangsdk/acceptance/clients"
+	"github.com/huawei-clouds/golangsdk/acceptance/tools"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/groups"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/users"
 )
 
 func TestUsersList(t *testing.T) {

@@ -1,8 +1,8 @@
 package backendmember
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // Backend is the primary load balancing configuration object that specifies
@@ -60,7 +60,7 @@ func ExtractBackend(r pagination.Page) ([]Backend, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a router.
@@ -97,5 +97,5 @@ func (r GetResult) Extract() ([]Backend, error) {
 
 // RemoveResult represents the result of a delete operation.
 type RemoveResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }

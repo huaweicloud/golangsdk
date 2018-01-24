@@ -3,7 +3,7 @@ package tokens
 import (
 	"time"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 // Endpoint represents a single API endpoint offered by a service.
@@ -78,7 +78,7 @@ type Project struct {
 // commonResult is the response from a request. A commonResult has various
 // methods which can be used to extract different details about the result.
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract is a shortcut for ExtractToken.

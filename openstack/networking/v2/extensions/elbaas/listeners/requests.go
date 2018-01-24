@@ -1,8 +1,8 @@
 package listeners
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 type Protocol string
@@ -31,7 +31,7 @@ type ListOpts struct {
 
 // ToListenerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToListenerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -41,7 +41,7 @@ func (opts ListOpts) ToListenerListQuery() (string, error) {
 //
 // Default policy settings return only those routers that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToListenerListQuery()
@@ -152,7 +152,7 @@ type CreateOpts struct {
 
 // ToListenerCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToListenerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Create is an operation which provisions a new Listeners based on the
@@ -162,20 +162,20 @@ func (opts CreateOpts) ToListenerCreateMap() (map[string]interface{}, error) {
 //
 // Users with an admin role can create Listeners on behalf of other tenants by
 // specifying a TenantID attribute different than their own.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToListenerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Post(rootURL(c), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Get retrieves a particular Listeners based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
 	return
 }
@@ -242,27 +242,27 @@ type UpdateOpts struct {
 
 // ToListenerUpdateMap casts a UpdateOpts struct to a map.
 func (opts UpdateOpts) ToListenerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update is an operation which modifies the attributes of the specified Listener.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
+func Update(c *golangsdk.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
 	b, err := opts.ToListenerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
 	return
 }
 
 // Delete will permanently delete a particular Listeners based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
 	url := resourceURL(c, id)
 	//fmt.Printf("Delete listener url: %s.\n", url)
-	_, r.Err = c.Delete(url, &gophercloud.RequestOpts{
+	_, r.Err = c.Delete(url, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return

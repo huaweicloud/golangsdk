@@ -1,4 +1,4 @@
-package gophercloud
+package golangsdk
 
 import (
 	"io"

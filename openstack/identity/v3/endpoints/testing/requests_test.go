@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/endpoints"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/endpoints"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestCreateSuccessful(t *testing.T) {
@@ -50,7 +50,7 @@ func TestCreateSuccessful(t *testing.T) {
 	})
 
 	actual, err := endpoints.Create(client.ServiceClient(), endpoints.CreateOpts{
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 		Name:         "the-endiest-of-points",
 		Region:       "underground",
 		URL:          "https://1.2.3.4:9000/",
@@ -60,7 +60,7 @@ func TestCreateSuccessful(t *testing.T) {
 
 	expected := &endpoints.Endpoint{
 		ID:           "12",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 		Name:         "the-endiest-of-points",
 		Region:       "underground",
 		ServiceID:    "asdfasdfasdfasdf",
@@ -125,7 +125,7 @@ func TestListEndpoints(t *testing.T) {
 		expected := []endpoints.Endpoint{
 			{
 				ID:           "12",
-				Availability: gophercloud.AvailabilityPublic,
+				Availability: golangsdk.AvailabilityPublic,
 				Name:         "the-endiest-of-points",
 				Region:       "underground",
 				ServiceID:    "asdfasdfasdfasdf",
@@ -133,7 +133,7 @@ func TestListEndpoints(t *testing.T) {
 			},
 			{
 				ID:           "13",
-				Availability: gophercloud.AvailabilityInternal,
+				Availability: golangsdk.AvailabilityInternal,
 				Name:         "shhhh",
 				Region:       "underground",
 				ServiceID:    "asdfasdfasdfasdf",
@@ -189,7 +189,7 @@ func TestUpdateEndpoint(t *testing.T) {
 
 	expected := &endpoints.Endpoint{
 		ID:           "12",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 		Name:         "renamed",
 		Region:       "somewhere-else",
 		ServiceID:    "asdfasdfasdfasdf",

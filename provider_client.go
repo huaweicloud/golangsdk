@@ -1,4 +1,4 @@
-package gophercloud
+package golangsdk
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ import (
 )
 
 // DefaultUserAgent is the default User-Agent string set in the request header.
-const DefaultUserAgent = "gophercloud/2.0.0"
+const DefaultUserAgent = "golangsdk/2.0.0"
 
 // UserAgent represents a User-Agent header.
 type UserAgent struct {
@@ -162,7 +162,7 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 	// io.ReadSeeker as-is. Default the content-type to application/json.
 	if options.JSONBody != nil {
 		if options.RawBody != nil {
-			panic("Please provide only one of JSONBody or RawBody to gophercloud.Request().")
+			panic("Please provide only one of JSONBody or RawBody to golangsdk.Request().")
 		}
 
 		rendered, err := json.Marshal(options.JSONBody)

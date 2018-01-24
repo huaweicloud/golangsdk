@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	fake "github.com/gophercloud/gophercloud/openstack/networking/v2/common"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/fwaas/rules"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	fake "github.com/huawei-clouds/golangsdk/openstack/networking/v2/common"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/fwaas/rules"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestList(t *testing.T) {
@@ -359,7 +359,7 @@ func TestUpdate(t *testing.T) {
 		DestinationPort:      &newDestintionPort,
 		Name:                 &newName,
 		Action:               &newAction,
-		Enabled:              gophercloud.Disabled,
+		Enabled:              golangsdk.Disabled,
 	}
 
 	_, err := rules.Update(fake.ServiceClient(), "f03bd950-6c56-4f5e-a307-45967078f507", options).Extract()

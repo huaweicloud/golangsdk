@@ -1,13 +1,13 @@
 package groups
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 //CreateGroupResult is a struct retured by CreateGroup request
 type CreateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 //Extract the create group result as a string type.
@@ -21,12 +21,12 @@ func (r CreateResult) Extract() (string, error) {
 
 //DeleteGroupResult contains the body of the deleting group request
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 //GetGroupResult contains the body of getting detailed group request
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 //Extract method will parse the result body into Group struct
@@ -91,7 +91,7 @@ func (r GroupPage) Extract() ([]Group, error) {
 
 //UpdateResult is a struct from which can get the result of udpate method
 type UpdateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 //Extract will deserialize the result to group id with string
@@ -105,5 +105,5 @@ func (r UpdateResult) Extract() (string, error) {
 
 //this is the action result which is the result of enable or disable operations
 type ActionResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }

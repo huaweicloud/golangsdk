@@ -1,13 +1,13 @@
 package configurations
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 //CreateResult is a struct that contains all the return parameters of creation
 type CreateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r CreateResult) Extract() (string, error) {
@@ -20,7 +20,7 @@ func (r CreateResult) Extract() (string, error) {
 }
 
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (Configuration, error) {
@@ -78,7 +78,7 @@ type Bandwidth struct {
 }
 
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 type ConfigurationPage struct {

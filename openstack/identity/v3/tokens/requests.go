@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
 // Scope allows a created token to be limited to a specific domain or project.
 type Scope struct {
@@ -57,7 +57,7 @@ type AuthOptions struct {
 
 // ToTokenV3CreateMap builds a request body from AuthOptions.
 func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]interface{}) (map[string]interface{}, error) {
-	gophercloudAuthOpts := gophercloud.AuthOptions{
+	golangsdkAuthOpts := golangsdk.AuthOptions{
 		Username:    opts.Username,
 		UserID:      opts.UserID,
 		Password:    opts.Password,
@@ -67,7 +67,7 @@ func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]interface{}) (map[s
 		TokenID:     opts.TokenID,
 	}
 
-	return gophercloudAuthOpts.ToTokenV3CreateMap(scope)
+	return golangsdkAuthOpts.ToTokenV3CreateMap(scope)
 }
 
 // ToTokenV3CreateMap builds a scope request body from AuthOptions.
@@ -76,10 +76,10 @@ func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]interface{}, error) {
 		// ProjectName provided: either DomainID or DomainName must also be supplied.
 		// ProjectID may not be supplied.
 		if opts.Scope.DomainID == "" && opts.Scope.DomainName == "" {
-			return nil, gophercloud.ErrScopeDomainIDOrDomainName{}
+			return nil, golangsdk.ErrScopeDomainIDOrDomainName{}
 		}
 		if opts.Scope.ProjectID != "" {
-			return nil, gophercloud.ErrScopeProjectIDOrProjectName{}
+			return nil, golangsdk.ErrScopeProjectIDOrProjectName{}
 		}
 
 		if opts.Scope.DomainID != "" {
@@ -104,10 +104,10 @@ func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]interface{}, error) {
 	} else if opts.Scope.ProjectID != "" {
 		// ProjectID provided. ProjectName, DomainID, and DomainName may not be provided.
 		if opts.Scope.DomainID != "" {
-			return nil, gophercloud.ErrScopeProjectIDAlone{}
+			return nil, golangsdk.ErrScopeProjectIDAlone{}
 		}
 		if opts.Scope.DomainName != "" {
-			return nil, gophercloud.ErrScopeProjectIDAlone{}
+			return nil, golangsdk.ErrScopeProjectIDAlone{}
 		}
 
 		// ProjectID
@@ -119,7 +119,7 @@ func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]interface{}, error) {
 	} else if opts.Scope.DomainID != "" {
 		// DomainID provided. ProjectID, ProjectName, and DomainName may not be provided.
 		if opts.Scope.DomainName != "" {
-			return nil, gophercloud.ErrScopeDomainIDOrDomainName{}
+			return nil, golangsdk.ErrScopeDomainIDOrDomainName{}
 		}
 
 		// DomainID
@@ -144,7 +144,7 @@ func (opts *AuthOptions) CanReauth() bool {
 	return opts.AllowReauth
 }
 
-func subjectTokenHeaders(c *gophercloud.ServiceClient, subjectToken string) map[string]string {
+func subjectTokenHeaders(c *golangsdk.ServiceClient, subjectToken string) map[string]string {
 	return map[string]string{
 		"X-Subject-Token": subjectToken,
 	}
@@ -152,7 +152,7 @@ func subjectTokenHeaders(c *gophercloud.ServiceClient, subjectToken string) map[
 
 // Create authenticates and either generates a new token, or changes the Scope
 // of an existing token.
-func Create(c *gophercloud.ServiceClient, opts AuthOptionsBuilder) (r CreateResult) {
+func Create(c *golangsdk.ServiceClient, opts AuthOptionsBuilder) (r CreateResult) {
 	scope, err := opts.ToTokenV3ScopeMap()
 	if err != nil {
 		r.Err = err
@@ -165,7 +165,7 @@ func Create(c *gophercloud.ServiceClient, opts AuthOptionsBuilder) (r CreateResu
 		return
 	}
 
-	resp, err := c.Post(tokenURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(tokenURL(c), b, &r.Body, &golangsdk.RequestOpts{
 		MoreHeaders: map[string]string{"X-Auth-Token": ""},
 	})
 	r.Err = err
@@ -176,8 +176,8 @@ func Create(c *gophercloud.ServiceClient, opts AuthOptionsBuilder) (r CreateResu
 }
 
 // Get validates and retrieves information about another token.
-func Get(c *gophercloud.ServiceClient, token string) (r GetResult) {
-	resp, err := c.Get(tokenURL(c), &r.Body, &gophercloud.RequestOpts{
+func Get(c *golangsdk.ServiceClient, token string) (r GetResult) {
+	resp, err := c.Get(tokenURL(c), &r.Body, &golangsdk.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(c, token),
 		OkCodes:     []int{200, 203},
 	})
@@ -189,8 +189,8 @@ func Get(c *gophercloud.ServiceClient, token string) (r GetResult) {
 }
 
 // Validate determines if a specified token is valid or not.
-func Validate(c *gophercloud.ServiceClient, token string) (bool, error) {
-	resp, err := c.Request("HEAD", tokenURL(c), &gophercloud.RequestOpts{
+func Validate(c *golangsdk.ServiceClient, token string) (bool, error) {
+	resp, err := c.Request("HEAD", tokenURL(c), &golangsdk.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(c, token),
 		OkCodes:     []int{200, 204, 404},
 	})
@@ -202,8 +202,8 @@ func Validate(c *gophercloud.ServiceClient, token string) (bool, error) {
 }
 
 // Revoke immediately makes specified token invalid.
-func Revoke(c *gophercloud.ServiceClient, token string) (r RevokeResult) {
-	_, r.Err = c.Delete(tokenURL(c), &gophercloud.RequestOpts{
+func Revoke(c *golangsdk.ServiceClient, token string) (r RevokeResult) {
+	_, r.Err = c.Delete(tokenURL(c), &golangsdk.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(c, token),
 	})
 	return

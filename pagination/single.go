@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 // SinglePageBase may be embedded in a Page that contains all of the results from an operation at once.
@@ -20,7 +20,7 @@ func (current SinglePageBase) IsEmpty() (bool, error) {
 	if b, ok := current.Body.([]interface{}); ok {
 		return len(b) == 0, nil
 	}
-	err := gophercloud.ErrUnexpectedType{}
+	err := golangsdk.ErrUnexpectedType{}
 	err.Expected = "[]interface{}"
 	err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
 	return true, err

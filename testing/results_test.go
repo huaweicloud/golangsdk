@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	th "github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 var singleResponse = `
@@ -102,7 +102,7 @@ func TestUnmarshalAnonymousStructs(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var singleResult = gophercloud.Result{
+	var singleResult = golangsdk.Result{
 		Body: dejson,
 	}
 
@@ -125,7 +125,7 @@ func TestUnmarshalSliceOfAnonymousStructs(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var multiResult = gophercloud.Result{
+	var multiResult = golangsdk.Result{
 		Body: dejson,
 	}
 
@@ -150,7 +150,7 @@ func TestUnmarshalSliceofStruct(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var multiResult = gophercloud.Result{
+	var multiResult = golangsdk.Result{
 		Body: dejson,
 	}
 
@@ -172,7 +172,7 @@ func TestUnmarshalNamedStructs(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var singleResult = gophercloud.Result{
+	var singleResult = golangsdk.Result{
 		Body: dejson,
 	}
 
@@ -194,7 +194,7 @@ func TestUnmarshalSliceOfNamedStructs(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var multiResult = gophercloud.Result{
+	var multiResult = golangsdk.Result{
 		Body: dejson,
 	}
 

@@ -88,10 +88,10 @@ From the root directory, run:
 Alternatively, add the following to your `.bashrc`:
 
 ```bash
-gophercloudtest() {
+golangsdktest() {
   if [[ -n $1 ]] && [[ -n $2 ]]; then
-    pushd  $GOPATH/src/github.com/gophercloud/gophercloud
-    go test -v -tags "fixtures acceptance" -run "$1" github.com/gophercloud/gophercloud/acceptance/openstack/$2 | tee ~/gophercloud.log
+    pushd  $GOPATH/src/github.com/huawei-clouds/golangsdk
+    go test -v -tags "fixtures acceptance" -run "$1" github.com/huawei-clouds/golangsdk/acceptance/openstack/$2 | tee ~/golangsdk.log
     popd
 fi
 }
@@ -100,9 +100,9 @@ fi
 Then run either groups or individual tests by doing:
 
 ```shell
-$ gophercloudtest TestFlavorsList compute/v2
-$ gophercloudtest TestFlavors compute/v2
-$ gophercloudtest Test compute/v2
+$ golangsdktest TestFlavorsList compute/v2
+$ golangsdktest TestFlavors compute/v2
+$ golangsdktest Test compute/v2
 ```
 
 ### 4. Notes

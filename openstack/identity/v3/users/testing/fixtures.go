@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/groups"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/projects"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/users"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/groups"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/users"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 // ListOutput provides a single page of User results.
@@ -249,7 +249,7 @@ var FirstUser = users.User{
 }
 
 // SecondUser is the second user in the List request.
-var SecondUserPasswordExpiresAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2016-11-06T15:32:17.000000")
+var SecondUserPasswordExpiresAt, _ = time.Parse(golangsdk.RFC3339MilliNoZ, "2016-11-06T15:32:17.000000")
 var SecondUser = users.User{
 	DefaultProjectID: "263fd9",
 	DomainID:         "1789d1",

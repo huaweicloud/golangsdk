@@ -3,9 +3,9 @@ package regions
 import (
 	"encoding/json"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/internal"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/internal"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // Region helps manage related users.
@@ -57,7 +57,7 @@ func (r *Region) UnmarshalJSON(b []byte) error {
 }
 
 type regionResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -81,7 +81,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // RegionPage is a single page of Region results.

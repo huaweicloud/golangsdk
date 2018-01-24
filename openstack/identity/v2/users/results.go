@@ -1,8 +1,8 @@
 package users
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 // User represents a user resource that exists on the API.
@@ -77,7 +77,7 @@ func ExtractRoles(r pagination.Page) ([]Role, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract interprets any commonResult as a User, if possible.

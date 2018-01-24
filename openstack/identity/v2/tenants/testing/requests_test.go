@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v2/tenants"
-	"github.com/gophercloud/gophercloud/pagination"
-	th "github.com/gophercloud/gophercloud/testhelper"
-	"github.com/gophercloud/gophercloud/testhelper/client"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tenants"
+	"github.com/huawei-clouds/golangsdk/pagination"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huawei-clouds/golangsdk/testhelper/client"
 )
 
 func TestListTenants(t *testing.T) {
@@ -39,7 +39,7 @@ func TestCreateTenant(t *testing.T) {
 	opts := tenants.CreateOpts{
 		Name:        "new_tenant",
 		Description: "This is new tenant",
-		Enabled:     gophercloud.Enabled,
+		Enabled:     golangsdk.Enabled,
 	}
 
 	tenant, err := tenants.Create(client.ServiceClient(), opts).Extract()
@@ -76,7 +76,7 @@ func TestUpdateTenant(t *testing.T) {
 	opts := tenants.UpdateOpts{
 		Name:        "new_name",
 		Description: "This is new name",
-		Enabled:     gophercloud.Enabled,
+		Enabled:     golangsdk.Enabled,
 	}
 
 	tenant, err := tenants.Update(client.ServiceClient(), id, opts).Extract()

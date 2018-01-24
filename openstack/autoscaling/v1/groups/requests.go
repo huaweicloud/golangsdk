@@ -1,8 +1,8 @@
 package groups
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 //CreateGroupBuilder is an interface from which can build the request of creating group
@@ -39,30 +39,30 @@ type SecurityGroupOpts struct {
 }
 
 func (opts CreateOpts) ToGroupCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 //CreateGroup is a method of creating group
-func Create(client *gophercloud.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClientExtension, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToGroupCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 //DeleteGroup is a method of deleting a group by group id
-func Delete(client *gophercloud.ServiceClientExtension, id string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClientExtension, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(deleteURL(client, id), nil)
 	return
 }
 
 //GetGroup is a method of getting the detailed information of the group by id
-func Get(client *gophercloud.ServiceClientExtension, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClientExtension, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
 	return
 }
@@ -79,11 +79,11 @@ type ListOpts struct {
 
 // ToGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
-func List(client *gophercloud.ServiceClientExtension, ops ListOptsBuilder) pagination.Pager {
+func List(client *golangsdk.ServiceClientExtension, ops ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if ops != nil {
 		q, err := ops.ToGroupListQuery()
@@ -123,19 +123,19 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToGroupUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 //Update is a method which can be able to update the group via accessing to the
 //autoscaling service with Put method and parameters
-func Update(client *gophercloud.ServiceClientExtension, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClientExtension, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	body, err := opts.ToGroupUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -150,23 +150,23 @@ type ActionOpts struct {
 }
 
 func (opts ActionOpts) ToActionMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
-func doAction(client *gophercloud.ServiceClientExtension, id string, opts ActionOptsBuilder) (r ActionResult) {
+func doAction(client *golangsdk.ServiceClientExtension, id string, opts ActionOptsBuilder) (r ActionResult) {
 	b, err := opts.ToActionMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(enableURL(client, id), &b, nil, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(enableURL(client, id), &b, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return
 }
 
 //Enable is an operation by which can make the group enable service
-func Enable(client *gophercloud.ServiceClientExtension, id string) (r ActionResult) {
+func Enable(client *golangsdk.ServiceClientExtension, id string) (r ActionResult) {
 	opts := ActionOpts{
 		Action: "resume",
 	}
@@ -174,7 +174,7 @@ func Enable(client *gophercloud.ServiceClientExtension, id string) (r ActionResu
 }
 
 //Disable is an operation by which can be able to pause the group
-func Disable(client *gophercloud.ServiceClientExtension, id string) (r ActionResult) {
+func Disable(client *golangsdk.ServiceClientExtension, id string) (r ActionResult) {
 	opts := ActionOpts{
 		Action: "pause",
 	}

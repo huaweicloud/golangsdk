@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/utils"
-	"github.com/gophercloud/gophercloud/testhelper"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/utils"
+	"github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func setupVersionHandler() {
@@ -45,7 +45,7 @@ func TestChooseVersion(t *testing.T) {
 	v2 := &utils.Version{ID: "v2.0", Priority: 2, Suffix: "blarg"}
 	v3 := &utils.Version{ID: "v3.0", Priority: 3, Suffix: "hargl"}
 
-	c := &gophercloud.ProviderClient{
+	c := &golangsdk.ProviderClient{
 		IdentityBase:     testhelper.Endpoint(),
 		IdentityEndpoint: "",
 	}
@@ -73,7 +73,7 @@ func TestChooseVersionOpinionatedLink(t *testing.T) {
 	v2 := &utils.Version{ID: "v2.0", Priority: 2, Suffix: "nope"}
 	v3 := &utils.Version{ID: "v3.0", Priority: 3, Suffix: "northis"}
 
-	c := &gophercloud.ProviderClient{
+	c := &golangsdk.ProviderClient{
 		IdentityBase:     testhelper.Endpoint(),
 		IdentityEndpoint: testhelper.Endpoint() + "v2.0/",
 	}
@@ -99,7 +99,7 @@ func TestChooseVersionFromSuffix(t *testing.T) {
 	v2 := &utils.Version{ID: "v2.0", Priority: 2, Suffix: "/v2.0/"}
 	v3 := &utils.Version{ID: "v3.0", Priority: 3, Suffix: "/v3.0/"}
 
-	c := &gophercloud.ProviderClient{
+	c := &golangsdk.ProviderClient{
 		IdentityBase:     testhelper.Endpoint(),
 		IdentityEndpoint: testhelper.Endpoint() + "v2.0/",
 	}

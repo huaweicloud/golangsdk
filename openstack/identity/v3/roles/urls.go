@@ -1,35 +1,35 @@
 package roles
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
 const (
 	rolePath = "roles"
 )
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL(rolePath)
 }
 
-func getURL(client *gophercloud.ServiceClient, roleID string) string {
+func getURL(client *golangsdk.ServiceClient, roleID string) string {
 	return client.ServiceURL(rolePath, roleID)
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL(rolePath)
 }
 
-func updateURL(client *gophercloud.ServiceClient, roleID string) string {
+func updateURL(client *golangsdk.ServiceClient, roleID string) string {
 	return client.ServiceURL(rolePath, roleID)
 }
 
-func deleteURL(client *gophercloud.ServiceClient, roleID string) string {
+func deleteURL(client *golangsdk.ServiceClient, roleID string) string {
 	return client.ServiceURL(rolePath, roleID)
 }
 
-func listAssignmentsURL(client *gophercloud.ServiceClient) string {
+func listAssignmentsURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL("role_assignments")
 }
 
-func assignURL(client *gophercloud.ServiceClient, targetType, targetID, actorType, actorID, roleID string) string {
+func assignURL(client *golangsdk.ServiceClient, targetType, targetID, actorType, actorID, roleID string) string {
 	return client.ServiceURL(targetType, targetID, actorType, actorID, rolePath, roleID)
 }

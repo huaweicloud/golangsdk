@@ -5,11 +5,11 @@ package v3
 import (
 	"testing"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/acceptance/clients"
-	"github.com/gophercloud/gophercloud/acceptance/tools"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/endpoints"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/services"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/acceptance/clients"
+	"github.com/huawei-clouds/golangsdk/acceptance/tools"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/endpoints"
+	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/services"
 )
 
 func TestEndpointsList(t *testing.T) {
@@ -63,7 +63,7 @@ func TestEndpointsNavigateCatalog(t *testing.T) {
 
 	// Enumerate the endpoints available for this service.
 	endpointListOpts := endpoints.ListOpts{
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: golangsdk.AvailabilityPublic,
 		ServiceID:    computeService.ID,
 	}
 
