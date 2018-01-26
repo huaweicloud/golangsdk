@@ -1,8 +1,8 @@
 package keys
 
 import (
-	"github.com/gophercloud/gophercloud"
-	//"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	//"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 type CreateOpts struct {
@@ -73,37 +73,37 @@ type ListOpts struct {
 // ToKeyCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToKeyCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // ToKeyDeleteMap assembles a request body based on the contents of a
 // DeleteOpts.
 func (opts DeleteOpts) ToKeyDeleteMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // ToKeyUpdateAliasMap assembles a request body based on the contents of a
 // UpdateAliasOpts.
 func (opts UpdateAliasOpts) ToKeyUpdateAliasMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // ToKeyUpdateDesMap assembles a request body based on the contents of a
 // UpdateDesOpts.
 func (opts UpdateDesOpts) ToKeyUpdateDesMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 func (opts DataEncryptOpts) ToDataEncryptMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 func (opts EncryptDEKOpts) ToEncryptDEKMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 func (opts ListOpts) ToKeyListMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 type CreateOptsBuilder interface {
@@ -137,13 +137,13 @@ type ListOptsBuilder interface {
 // Create will create a new key based on the values in CreateOpts. To ExtractKeyInfo
 // the key object from the response, call the ExtractKeyInfo method on the
 // CreateResult.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToKeyCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
@@ -151,131 +151,131 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 
 // Get retrieves the key with the provided ID. To extract the key object
 // from the response, call the Extract method on the GetResult.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	b := map[string]interface{}{"key_id": id}
-	_, r.Err = client.Post(getURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(getURL(client), &b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete will delete the existing key with the provided ID.
-func Delete(client *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, opts DeleteOptsBuilder) (r DeleteResult) {
 	b, err := opts.ToKeyDeleteMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(deleteURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(deleteURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 		JSONResponse: &r.Body,
 	})
 	return
 }
 
-func UpdateAlias(client *gophercloud.ServiceClient, opts UpdateAliasOptsBuilder) (r UpdateAliasResult) {
+func UpdateAlias(client *golangsdk.ServiceClient, opts UpdateAliasOptsBuilder) (r UpdateAliasResult) {
 	b, err := opts.ToKeyUpdateAliasMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(updateAliasURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(updateAliasURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func UpdateDes(client *gophercloud.ServiceClient, opts UpdateDesOptsBuilder) (r UpdateDesResult) {
+func UpdateDes(client *golangsdk.ServiceClient, opts UpdateDesOptsBuilder) (r UpdateDesResult) {
 	b, err := opts.ToKeyUpdateDesMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(updateDesURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(updateDesURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func DataEncryptGet(client *gophercloud.ServiceClient, opts DataEncryptOptsBuilder) (r DataEncryptResult) {
+func DataEncryptGet(client *golangsdk.ServiceClient, opts DataEncryptOptsBuilder) (r DataEncryptResult) {
 	b, err := opts.ToDataEncryptMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(dataEncryptURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(dataEncryptURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func DataEncryptGetWithoutPlaintext(client *gophercloud.ServiceClient, opts DataEncryptOptsBuilder) (r DataEncryptResult) {
+func DataEncryptGetWithoutPlaintext(client *golangsdk.ServiceClient, opts DataEncryptOptsBuilder) (r DataEncryptResult) {
 	b, err := opts.ToDataEncryptMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(dataEncryptURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(dataEncryptURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func EncryptDEKGet(client *gophercloud.ServiceClient, opts EncryptDEKOptsBuilder) (r EncryptDEKResult) {
+func EncryptDEKGet(client *golangsdk.ServiceClient, opts EncryptDEKOptsBuilder) (r EncryptDEKResult) {
 	b, err := opts.ToEncryptDEKMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(encryptDEKURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(encryptDEKURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func EnableKey(client *gophercloud.ServiceClient, id string) (r ExtractUpdateKeyStateResult) {
+func EnableKey(client *golangsdk.ServiceClient, id string) (r ExtractUpdateKeyStateResult) {
 	b := map[string]interface{}{"key_id": id}
-	_, r.Err = client.Post(enableKeyURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(enableKeyURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func DisableKey(client *gophercloud.ServiceClient, id string) (r ExtractUpdateKeyStateResult) {
+func DisableKey(client *golangsdk.ServiceClient, id string) (r ExtractUpdateKeyStateResult) {
 	b := map[string]interface{}{"key_id": id}
-	_, r.Err = client.Post(disableKeyURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(disableKeyURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r ListResult) {
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) (r ListResult) {
 	b, err := opts.ToKeyListMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(listURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(listURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
-func ListAllKeys(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r ListResult) {
+func ListAllKeys(client *golangsdk.ServiceClient, opts ListOptsBuilder) (r ListResult) {
 	b, err := opts.ToKeyListMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(listURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(listURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 
-//func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r GetResult) {
+//func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) (r GetResult) {
 //	//url := listURL(client)
 //	//if opts != nil {
 //	//	query, err := opts.ToKeyListQuery()
@@ -289,7 +289,7 @@ func ListAllKeys(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r Lis
 //		r.Err = err
 //		return
 //	}
-//	_, r.Err = client.Post(listURL(client), b, &r.Body, &gophercloud.RequestOpts{
+//	_, r.Err = client.Post(listURL(client), b, &r.Body, &golangsdk.RequestOpts{
 //		OkCodes: []int{200},
 //	})
 //	return

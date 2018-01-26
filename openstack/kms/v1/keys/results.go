@@ -1,13 +1,13 @@
 package keys
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/pagination"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/pagination"
 )
 
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Key contains all the information associated with a CMK.

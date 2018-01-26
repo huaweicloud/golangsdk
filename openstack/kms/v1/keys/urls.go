@@ -1,43 +1,43 @@
 package keys
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
-func getURL(c *gophercloud.ServiceClient) string {
+func getURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("describe-key")
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
+func createURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("create-key")
 }
 
-func deleteURL(c *gophercloud.ServiceClient) string {
+func deleteURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("schedule-key-deletion")
 }
 
-func updateAliasURL(c *gophercloud.ServiceClient) string {
+func updateAliasURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("update-key-alias")
 }
 
-func updateDesURL(c *gophercloud.ServiceClient) string {
+func updateDesURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("update-key-description")
 }
 
-func dataEncryptURL(c *gophercloud.ServiceClient) string {
+func dataEncryptURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("create-datakey")
 }
 
-func encryptDEKURL(c *gophercloud.ServiceClient) string {
+func encryptDEKURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("encrypt-datakey")
 }
 
-func enableKeyURL(c *gophercloud.ServiceClient) string {
+func enableKeyURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("enable-key")
 }
 
-func disableKeyURL(c *gophercloud.ServiceClient) string {
+func disableKeyURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("disable-key")
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("list-keys")
 }
