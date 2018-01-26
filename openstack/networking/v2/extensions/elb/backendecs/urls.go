@@ -1,6 +1,6 @@
 package backendecs
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huawei-clouds/golangsdk"
 
 const (
 	rootPath     = "elbaas"
@@ -8,10 +8,10 @@ const (
 	memberPath   = "members"
 )
 
-func rootURL(c *gophercloud.ServiceClient1, lId string) string {
+func rootURL(c *golangsdk.ServiceClientExtension, lId string) string {
 	return c.ServiceURL(c.ProjectID, rootPath, resourcePath, lId, memberPath)
 }
 
-func actionURL(c *gophercloud.ServiceClient1, lId string) string {
+func actionURL(c *golangsdk.ServiceClientExtension, lId string) string {
 	return c.ServiceURL(c.ProjectID, rootPath, resourcePath, lId, memberPath, "action")
 }

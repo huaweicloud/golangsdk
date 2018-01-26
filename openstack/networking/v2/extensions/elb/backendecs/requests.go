@@ -3,8 +3,8 @@ package backendecs
 import (
 	"log"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/elb"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/elb"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order
@@ -24,7 +24,7 @@ type CreateOpts struct {
 
 // ToBackendECSCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToBackendECSCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Create is an operation which provisions a new loadbalancer based on the
@@ -34,7 +34,7 @@ func (opts CreateOpts) ToBackendECSCreateMap() (map[string]interface{}, error) {
 //
 // Users with an admin role can create loadbalancers on behalf of other tenants by
 // specifying a TenantID attribute different than their own.
-func Create(c *gophercloud.ServiceClient1, opts CreateOptsBuilder, lId string) (r elb.JobResult) {
+func Create(c *golangsdk.ServiceClientExtension, opts CreateOptsBuilder, lId string) (r elb.JobResult) {
 	b, err := opts.ToBackendECSCreateMap()
 	if err != nil {
 		r.Err = err
@@ -49,7 +49,7 @@ func Create(c *gophercloud.ServiceClient1, opts CreateOptsBuilder, lId string) (
 	body := []map[string]interface{}{b}
 	log.Printf("[DEBUG] create ELB-BackendECS url:%q, body=%#v", rootURL(c, lId), body)
 
-	reqOpt := &gophercloud.RequestOpts{OkCodes: []int{200}}
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Post(rootURL(c, lId), body, &r.Body, reqOpt)
 	return
 }
@@ -63,12 +63,12 @@ type getOpts struct {
 }
 
 func (opts getOpts) ToBackendECSListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Get retrieves a particular Loadbalancer based on its unique ID.
-func Get(c *gophercloud.ServiceClient1, lId string, backendId string) (r GetResult) {
+func Get(c *golangsdk.ServiceClientExtension, lId string, backendId string) (r GetResult) {
 	url := rootURL(c, lId)
 	opts := getOpts{ID: backendId}
 	query, err := opts.ToBackendECSListQuery()
@@ -106,17 +106,17 @@ type DeleteOpts struct {
 // ToBackendECSUpdateMap casts a UpdateOpts struct to a map.
 func (opts DeleteOpts) ToBackendECSDeleteMap() (map[string]interface{}, error) {
 	/*
-		o, err := gophercloud.BuildRequestBody(opts, "")
+		o, err := golangsdk.BuildRequestBody(opts, "")
 		if err != nil {
 			return nil, err
 		}
 		rm = removeMeber{RemoveMember: []map[string]string{o.([string]string)}}
 	*/
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update is an operation which modifies the attributes of the specified BackendECS.
-func Delete(c *gophercloud.ServiceClient1, lId string, opts DeleteOpts) (r elb.JobResult) {
+func Delete(c *golangsdk.ServiceClientExtension, lId string, opts DeleteOpts) (r elb.JobResult) {
 	b, err := opts.ToBackendECSDeleteMap()
 	if err != nil {
 		r.Err = err
@@ -124,7 +124,7 @@ func Delete(c *gophercloud.ServiceClient1, lId string, opts DeleteOpts) (r elb.J
 	}
 	log.Printf("[DEBUG] deleting ELB-BackendECS, request opts=%#v", b)
 
-	_, r.Err = c.Post(actionURL(c, lId), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Post(actionURL(c, lId), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return

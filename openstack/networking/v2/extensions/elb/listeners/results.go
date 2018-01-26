@@ -1,7 +1,7 @@
 package listeners
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 type CreateResponse struct {
@@ -80,7 +80,7 @@ type Listener struct {
 }
 
 type CreateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r CreateResult) Extract() (*CreateResponse, error) {
@@ -90,12 +90,12 @@ func (r CreateResult) Extract() (*CreateResponse, error) {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (*Listener, error) {
@@ -104,7 +104,7 @@ func (r GetResult) Extract() (*Listener, error) {
 }
 
 type UpdateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r UpdateResult) Extract() (*UpdateResponse, error) {

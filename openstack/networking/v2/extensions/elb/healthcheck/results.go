@@ -1,7 +1,7 @@
 package healthcheck
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 type HealthCheck struct {
@@ -19,7 +19,7 @@ type HealthCheck struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r commonResult) Extract() (*HealthCheck, error) {
@@ -33,7 +33,7 @@ type CreateResult struct {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 // GetResult represents the result of a get operation.

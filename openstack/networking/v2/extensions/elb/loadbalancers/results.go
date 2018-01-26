@@ -1,7 +1,7 @@
 package loadbalancers
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 type LoadBalancer struct {
@@ -21,7 +21,7 @@ type LoadBalancer struct {
 }
 
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a router.

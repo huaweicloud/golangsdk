@@ -3,8 +3,8 @@ package loadbalancers
 import (
 	"log"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/elb"
+	"github.com/huawei-clouds/golangsdk"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/elb"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order
@@ -35,7 +35,7 @@ type CreateOpts struct {
 
 // ToLoadBalancerCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Create is an operation which provisions a new loadbalancer based on the
@@ -45,7 +45,7 @@ func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error)
 //
 // Users with an admin role can create loadbalancers on behalf of other tenants by
 // specifying a TenantID attribute different than their own.
-func Create(c *gophercloud.ServiceClient1, opts CreateOptsBuilder) (r elb.JobResult) {
+func Create(c *golangsdk.ServiceClientExtension, opts CreateOptsBuilder) (r elb.JobResult) {
 	b, err := opts.ToLoadBalancerCreateMap()
 	if err != nil {
 		r.Err = err
@@ -56,13 +56,13 @@ func Create(c *gophercloud.ServiceClient1, opts CreateOptsBuilder) (r elb.JobRes
 		b["tenantId"] = v
 	}
 	log.Printf("[DEBUG] create ELB-LoadBalancer url:%q, body=%#v", rootURL(c), b)
-	reqOpt := &gophercloud.RequestOpts{OkCodes: []int{200}}
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Post(rootURL(c), b, &r.Body, reqOpt)
 	return
 }
 
 // Get retrieves a particular Loadbalancer based on its unique ID.
-func Get(c *gophercloud.ServiceClient1, id string) (r GetResult) {
+func Get(c *golangsdk.ServiceClientExtension, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
 	return
 }
@@ -99,25 +99,25 @@ func (u UpdateOpts) IsNeedUpdate() (bool, error) {
 
 // ToLoadBalancerUpdateMap casts a UpdateOpts struct to a map.
 func (opts UpdateOpts) ToLoadBalancerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update is an operation which modifies the attributes of the specified LoadBalancer.
-func Update(c *gophercloud.ServiceClient1, id string, opts UpdateOpts) (r elb.JobResult) {
+func Update(c *golangsdk.ServiceClientExtension, id string, opts UpdateOpts) (r elb.JobResult) {
 	b, err := opts.ToLoadBalancerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete will permanently delete a particular LoadBalancer based on its unique ID.
-func Delete(c *gophercloud.ServiceClient1, id string) (r elb.JobResult) {
-	reqOpt := &gophercloud.RequestOpts{OkCodes: []int{200}}
-	_, r.Err = c.DeleteAndGetResponse(resourceURL(c, id), &r.Body, reqOpt)
+func Delete(c *golangsdk.ServiceClientExtension, id string) (r elb.JobResult) {
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
+	_, r.Err = c.Delete2(resourceURL(c, id), &r.Body, reqOpt)
 	return
 }

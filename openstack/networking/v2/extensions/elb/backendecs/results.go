@@ -3,7 +3,7 @@ package backendecs
 import (
 	"fmt"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/huawei-clouds/golangsdk"
 )
 
 type Listener struct {
@@ -38,7 +38,7 @@ type Backend struct {
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (*Backend, error) {
