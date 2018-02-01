@@ -10,7 +10,6 @@ import (
 
 	"github.com/huawei-clouds/golangsdk"
 	"github.com/huawei-clouds/golangsdk/openstack"
-	"github.com/huawei-clouds/golangsdk/openstack/blockstorage/noauth"
 )
 
 // AcceptanceTestChoices contains image and flavor selections for use by the acceptance tests.
@@ -166,39 +165,6 @@ func NewBlockStorageV3Client() (*golangsdk.ServiceClient, error) {
 	})
 }
 
-// NewBlockStorageV2NoAuthClient returns a noauth *ServiceClient for
-// making calls to the OpenStack Block Storage v2 API. An error will be
-// returned if client creation was not possible.
-func NewBlockStorageV2NoAuthClient() (*golangsdk.ServiceClient, error) {
-	client, err := noauth.NewClient(golangsdk.AuthOptions{
-		Username:   os.Getenv("OS_USERNAME"),
-		TenantName: os.Getenv("OS_TENANT_NAME"),
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	return noauth.NewBlockStorageNoAuth(client, noauth.EndpointOpts{
-		CinderEndpoint: os.Getenv("CINDER_ENDPOINT"),
-	})
-}
-
-// NewBlockStorageV3NoAuthClient returns a noauth *ServiceClient for
-// making calls to the OpenStack Block Storage v2 API. An error will be
-// returned if client creation was not possible.
-func NewBlockStorageV3NoAuthClient() (*golangsdk.ServiceClient, error) {
-	client, err := noauth.NewClient(golangsdk.AuthOptions{
-		Username:   os.Getenv("OS_USERNAME"),
-		TenantName: os.Getenv("OS_TENANT_NAME"),
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	return noauth.NewBlockStorageNoAuth(client, noauth.EndpointOpts{
-		CinderEndpoint: os.Getenv("CINDER_ENDPOINT"),
-	})
-}
 
 // NewComputeV2Client returns a *ServiceClient for making calls
 // to the OpenStack Compute v2 API. An error will be returned
