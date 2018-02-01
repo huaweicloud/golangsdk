@@ -1,8 +1,9 @@
 package groups
 
 import (
-	"github.com/huawei-clouds/golangsdk"
 	"log"
+
+	"github.com/huawei-clouds/golangsdk"
 )
 
 const resourcePath = "scaling_group"

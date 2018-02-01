@@ -2,9 +2,10 @@ package configurations
 
 import (
 	"encoding/base64"
+	"log"
+
 	"github.com/huawei-clouds/golangsdk"
 	"github.com/huawei-clouds/golangsdk/pagination"
-	"log"
 )
 
 type CreateOptsBuilder interface {

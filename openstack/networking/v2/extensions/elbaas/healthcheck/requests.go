@@ -63,20 +63,6 @@ func (opts CreateOpts) ToHealthCreateMap() (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	/*
-	      switch opts.Type {
-		case TypeHTTP, TypeHTTPS:
-			switch opts.URLPath {
-			case "":
-				return nil, fmt.Errorf("URLPath must be provided for HTTP and HTTPS")
-			}
-			switch opts.ExpectedCodes {
-			case "":
-				return nil, fmt.Errorf("ExpectedCodes must be provided for HTTP and HTTPS")
-			}
-	    }
-	*/
-
 	return b, nil
 }
 
