@@ -8,7 +8,7 @@ import (
 )
 
 type Job struct {
-	Uri   string `json: "uri"`
+	Uri   string `json:"uri"`
 	JobId string `json:"job_id"`
 }
 

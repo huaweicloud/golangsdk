@@ -78,25 +78,25 @@ type CreateOptsBuilder interface {
 type CreateOpts struct {
 	// Required. Specifies the load balancer name.
 	// The name is a string of 1 to 64 characters that consist of letters, digits, underscores (_), and hyphens (-).
-	Name string `json:"name", required:"true"`
+	Name string `json:"name" required:"true"`
 	// Optional. Provides supplementary information about the load balancer.
 	// The value is a string of 0 to 128 characters and cannot contain angle brackets (<>).
 	Description string `json:"description,omitempty"`
 	// Required. Specifies the VPC ID.
-	VpcID string `json:"vpc_id",required:"true"`
+	VpcID string `json:"vpc_id" required:"true"`
 	// Optional. Specifies the bandwidth (Mbit/s). This parameter is mandatory when type is
 	// set to External, and it is invalid when type is set to Internal.
 	// The value ranges from 1 to 300.
 	Bandwidth int `json:"bandwidth,omitempty"`
 	// Required. Specifies the load balancer type.
 	// The value can be Internal or External.
-	Type string `json:"type", required:"true"`
+	Type string `json:"type" required:"true"`
 	// Required.  Specifies the status of the load balancer.
 	// Optional values:
 	// 0 or false: indicates that the load balancer is stopped. Only tenants are allowed to enter these two values.
 	// 1 or true: indicates that the load balancer is running properly.
 	// 2 or false: indicates that the load balancer is frozen. Only tenants are allowed to enter these two values.
-	AdminStateUp *bool `json:"admin_state_up", required:"true"`
+	AdminStateUp *bool `json:"admin_state_up" required:"true"`
 	// Optional.  Specifies the subnet ID of backend ECSs. This parameter is mandatory when type is set to Internal.
 	VipSubnetID string `json:"vip_subnet_id,omitempty"`
 	// Optional.  Specifies the ID of the availability zone (AZ). This parameter is mandatory when type

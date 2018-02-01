@@ -68,7 +68,7 @@ type CreateOptsBuilder interface {
 type CreateOpts struct {
 	// Required.  Specifies the load balancer name.
 	// The name is a string of 1 to 64 characters that consist of letters, digits, underscores (_), and hyphens (-).
-	Name string `json:"name", required:"true"`
+	Name string `json:"name" required:"true"`
 	// Optional. Provides supplementary information about the listener.
 	// The value is a string of 0 to 128 characters and cannot contain angle brackets (<>).
 	Description string `json:"description,omitempty"`

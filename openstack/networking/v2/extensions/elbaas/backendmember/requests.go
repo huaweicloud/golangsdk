@@ -18,7 +18,7 @@ type AddOptsBuilder interface {
 // operation.
 type AddOpts struct {
 	// server_id
-	ServerId string `json:"server_id",required:"true"`
+	ServerId string `json:"server_id" required:"true"`
 	// The load balancer on which to provision this listener.
 	Address string `json:"address" required:"true"`
 }
@@ -60,13 +60,13 @@ type RemoveOptsBuilder interface {
 
 type LoadBalancerID struct {
 	// backend member id to remove
-	ID string `json:"id", required:"true"`
+	ID string `json:"id" required:"true"`
 }
 
 // RemoveOpts is the common options struct used in this package's Remove
 // operation.
 type RemoveOpts struct {
-	removeMember []LoadBalancerID `json:"removeMember", required:"true"`
+	RemoveMember []LoadBalancerID `json:"removeMember" required:"true"`
 }
 
 // ToBackendCreateMap casts a CreateOpts struct to a map.
