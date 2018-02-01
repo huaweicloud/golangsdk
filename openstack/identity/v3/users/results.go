@@ -46,7 +46,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 	type tmp User
 	var s struct {
 		tmp
-		Extra             map[string]interface{}          `json:"extra"`
+		Extra             map[string]interface{}        `json:"extra"`
 		PasswordExpiresAt golangsdk.JSONRFC3339MilliNoZ `json:"password_expires_at"`
 	}
 	err := json.Unmarshal(b, &s)

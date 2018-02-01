@@ -12,7 +12,7 @@ import (
 // as other details such as the load balancing method to be use, protocol, etc.
 type LoadBalancer struct {
 	// Specifies the IP address used by ELB for providing services.
-	VipAddress         string `json:"vip_address"`
+	VipAddress string `json:"vip_address"`
 	// Specifies the time when information about the load balancer was updated.
 	UpdateTime string `json:"update_time"`
 	// Specifies the time when the load balancer was created.
@@ -23,7 +23,7 @@ type LoadBalancer struct {
 	// The value can be ACTIVE, PENDING_CREATE, or ERROR.
 	Status string `json:"status"`
 	// Specifies the bandwidth (Mbit/s).
-	Bandwidth   int    `json:"bandwidth"`
+	Bandwidth int `json:"bandwidth"`
 	// Specifies the VPC ID.
 	VpcID string `json:"vpc_id"`
 	// Specifies the status of the load balancer.
@@ -35,15 +35,15 @@ type LoadBalancer struct {
 	// Specifies the subnet ID of backend ECSs.
 	VipSubnetID string `json:"vip_subnet_id"`
 	// Specifies the load balancer type.
-	Type        string `json:"type"`
+	Type string `json:"type"`
 	// Specifies the load balancer name.
 	Name string `json:"name"`
 	// Provides supplementary information about the load balancer.
 	Description string `json:"description"`
 	// Specifies the security group ID.
-	SecurityGroupID    string `json:"security_group_id"`
+	SecurityGroupID string `json:"security_group_id"`
 	// Specifies the ID of the availability zone (AZ).
-	AZ          string `json:"az"`
+	AZ string `json:"az"`
 }
 
 // LoadBalancerPage is the page returned by a pager when traversing over a

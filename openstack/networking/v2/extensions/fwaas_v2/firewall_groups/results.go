@@ -8,14 +8,14 @@ import (
 
 // FirewallGroup is an OpenStack firewall_group.
 type FirewallGroup struct {
-	ID           	string `json:"id"`
-	Name         	string `json:"name"`
-	Description  	string `json:"description"`
-	AdminStateUp 	bool   `json:"admin_state_up"`
-	Status       	string `json:"status"`
-	IngressPolicyID	string `json:"ingress_firewall_policy_id"`
+	ID              string `json:"id"`
+	Name            string `json:"name"`
+	Description     string `json:"description"`
+	AdminStateUp    bool   `json:"admin_state_up"`
+	Status          string `json:"status"`
+	IngressPolicyID string `json:"ingress_firewall_policy_id"`
 	EgressPolicyID  string `json:"egress_firewall_policy_id"`
-	TenantID     	string `json:"tenant_id"`
+	TenantID        string `json:"tenant_id"`
 }
 
 type commonResult struct {

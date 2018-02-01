@@ -18,18 +18,18 @@ type ListOptsBuilder interface {
 // by a particular firewall attribute. SortDir sets the direction, and is either
 // `asc' or `desc'. Marker and Limit are used for pagination.
 type ListOpts struct {
-	TenantID     	string `q:"tenant_id"`
-	Name         	string `q:"name"`
-	Description  	string `q:"description"`
-	AdminStateUp 	bool   `q:"admin_state_up"`
-	Shared       	bool   `q:"public"`
-	IngressPolicyID	string `q:"ingress_firewall_policy_id"`
+	TenantID        string `q:"tenant_id"`
+	Name            string `q:"name"`
+	Description     string `q:"description"`
+	AdminStateUp    bool   `q:"admin_state_up"`
+	Shared          bool   `q:"public"`
+	IngressPolicyID string `q:"ingress_firewall_policy_id"`
 	EgressPolicyID  string `q:"egress_firewall_policy_id"`
-	ID           	string `q:"id"`
-	Limit        	int    `q:"limit"`
-	Marker       	string `q:"marker"`
-	SortKey      	string `q:"sort_key"`
-	SortDir      	string `q:"sort_dir"`
+	ID              string `q:"id"`
+	Limit           int    `q:"limit"`
+	Marker          string `q:"marker"`
+	SortKey         string `q:"sort_key"`
+	SortDir         string `q:"sort_dir"`
 }
 
 // ToFirewallListQuery formats a ListOpts into a query string.
@@ -68,15 +68,15 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new firewall_group.
 type CreateOpts struct {
-	IngressPolicyID	string `json:"ingress_firewall_policy_id,omitempty"`
-	EgressPolicyID	string `json:"egress_firewall_policy_id,omitempty"`
+	IngressPolicyID string `json:"ingress_firewall_policy_id,omitempty"`
+	EgressPolicyID  string `json:"egress_firewall_policy_id,omitempty"`
 	// Only required if the caller has an admin role and wants to create a firewall
 	// for another tenant.
-	TenantID     	string `json:"tenant_id,omitempty"`
-	Name         	string `json:"name,omitempty"`
-	Description  	string `json:"description,omitempty"`
-	AdminStateUp 	*bool  `json:"admin_state_up,omitempty"`
-	Shared       	*bool  `json:"public,omitempty"`
+	TenantID     string `json:"tenant_id,omitempty"`
+	Name         string `json:"name,omitempty"`
+	Description  string `json:"description,omitempty"`
+	AdminStateUp *bool  `json:"admin_state_up,omitempty"`
+	Shared       *bool  `json:"public,omitempty"`
 }
 
 // ToFirewallGroupCreateMap casts a CreateOpts struct to a map.
@@ -113,12 +113,12 @@ type UpdateOptsBuilder interface {
 
 // UpdateOpts contains the values used when updating a firewall.
 type UpdateOpts struct {
-	IngressPolicyID	string `json:"ingress_firewall_policy_id,omitempty"`
+	IngressPolicyID string `json:"ingress_firewall_policy_id,omitempty"`
 	EgressPolicyID  string `json:"egress_firewall_policy_id,omitempty"`
-	Name         	string `json:"name,omitempty"`
-	Description  	string `json:"description,omitempty"`
-	AdminStateUp 	*bool  `json:"admin_state_up,omitempty"`
-	Shared       	*bool  `json:"public,omitempty"`
+	Name            string `json:"name,omitempty"`
+	Description     string `json:"description,omitempty"`
+	AdminStateUp    *bool  `json:"admin_state_up,omitempty"`
+	Shared          *bool  `json:"public,omitempty"`
 }
 
 // ToFirewallGroupUpdateMap casts a CreateOpts struct to a map.

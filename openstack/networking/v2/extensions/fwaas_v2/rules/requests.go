@@ -95,18 +95,18 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new firewall rule.
 type CreateOpts struct {
-	Protocol             Protocol              `json:"protocol" required:"true"`
-	Action               string                `json:"action" required:"true"`
-	TenantID             string                `json:"tenant_id,omitempty"`
-	Name                 string                `json:"name,omitempty"`
-	Description          string                `json:"description,omitempty"`
+	Protocol             Protocol            `json:"protocol" required:"true"`
+	Action               string              `json:"action" required:"true"`
+	TenantID             string              `json:"tenant_id,omitempty"`
+	Name                 string              `json:"name,omitempty"`
+	Description          string              `json:"description,omitempty"`
 	IPVersion            golangsdk.IPVersion `json:"ip_version,omitempty"`
-	SourceIPAddress      string                `json:"source_ip_address,omitempty"`
-	DestinationIPAddress string                `json:"destination_ip_address,omitempty"`
-	SourcePort           string                `json:"source_port,omitempty"`
-	DestinationPort      string                `json:"destination_port,omitempty"`
-	Shared               *bool                 `json:"shared,omitempty"`
-	Enabled              *bool                 `json:"enabled,omitempty"`
+	SourceIPAddress      string              `json:"source_ip_address,omitempty"`
+	DestinationIPAddress string              `json:"destination_ip_address,omitempty"`
+	SourcePort           string              `json:"source_port,omitempty"`
+	DestinationPort      string              `json:"destination_port,omitempty"`
+	Shared               *bool               `json:"shared,omitempty"`
+	Enabled              *bool               `json:"enabled,omitempty"`
 }
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
@@ -150,17 +150,17 @@ type UpdateOptsBuilder interface {
 
 // UpdateOpts contains the values used when updating a firewall rule.
 type UpdateOpts struct {
-	Protocol             *string                `json:"protocol,omitempty"`
-	Action               *string                `json:"action,omitempty"`
-	Name                 *string                `json:"name,omitempty"`
-	Description          *string                `json:"description,omitempty"`
+	Protocol             *string              `json:"protocol,omitempty"`
+	Action               *string              `json:"action,omitempty"`
+	Name                 *string              `json:"name,omitempty"`
+	Description          *string              `json:"description,omitempty"`
 	IPVersion            *golangsdk.IPVersion `json:"ip_version,omitempty"`
-	SourceIPAddress      *string                `json:"source_ip_address,omitempty"`
-	DestinationIPAddress *string                `json:"destination_ip_address,omitempty"`
-	SourcePort           *string                `json:"source_port,omitempty"`
-	DestinationPort      *string                `json:"destination_port,omitempty"`
-	Shared               *bool                  `json:"shared,omitempty"`
-	Enabled              *bool                  `json:"enabled,omitempty"`
+	SourceIPAddress      *string              `json:"source_ip_address,omitempty"`
+	DestinationIPAddress *string              `json:"destination_ip_address,omitempty"`
+	SourcePort           *string              `json:"source_port,omitempty"`
+	DestinationPort      *string              `json:"destination_port,omitempty"`
+	Shared               *bool                `json:"shared,omitempty"`
+	Enabled              *bool                `json:"enabled,omitempty"`
 }
 
 // ToRuleUpdateMap casts a UpdateOpts struct to a map.

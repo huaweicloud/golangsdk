@@ -3,7 +3,7 @@ package healthcheck
 import (
 	"github.com/huawei-clouds/golangsdk"
 	//"github.com/huawei-clouds/golangsdk/pagination"
-    //"fmt"
+	//"fmt"
 )
 
 // Health represents a load balancer health check. A health monitor is used
@@ -65,8 +65,6 @@ func (r commonResult) Extract() (*Health, error) {
 		return l, nil
 	}
 }
-
-
 
 // CreateResult represents the result of a create operation.
 type CreateResult struct {

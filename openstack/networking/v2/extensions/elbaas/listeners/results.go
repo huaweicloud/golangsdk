@@ -91,7 +91,7 @@ func (r ListenerPage) IsEmpty() (bool, error) {
 // and extracts the elements into a slice of Listener structs. In other words,
 // a generic collection is mapped into a relevant slice.
 func ExtractListeners(r pagination.Page) ([]Listener, error) {
-	var Listeners []Listener 
+	var Listeners []Listener
 	err := (r.(ListenerPage)).ExtractInto(&Listeners)
 	return Listeners, err
 }
@@ -113,7 +113,6 @@ func (r commonResult) Extract() (*Listener, error) {
 		return l, nil
 	}
 }
-
 
 // CreateResult represents the result of a create operation.
 type CreateResult struct {

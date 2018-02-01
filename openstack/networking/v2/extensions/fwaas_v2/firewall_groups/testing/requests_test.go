@@ -64,24 +64,24 @@ func TestList(t *testing.T) {
 
 		expected := []firewall_groups.FirewallGroup{
 			{
-				Status:       		"ACTIVE",
-				Name:         		"fw1",
-				AdminStateUp: 		false,
-				TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
-				IngressPolicyID:	"34be8c83-4d42-4dca-a74e-b77fffb8e28a",
-				EgressPolicyID:     "34be8c83-4d42-4dca-a74e-b77fffb8e28a",
-				ID:           		"fb5b5315-64f6-4ea3-8e58-981cc37c6f61",
-				Description:  		"OpenStack firewall 1",
+				Status:          "ACTIVE",
+				Name:            "fw1",
+				AdminStateUp:    false,
+				TenantID:        "b4eedccc6fb74fa8a7ad6b08382b852b",
+				IngressPolicyID: "34be8c83-4d42-4dca-a74e-b77fffb8e28a",
+				EgressPolicyID:  "34be8c83-4d42-4dca-a74e-b77fffb8e28a",
+				ID:              "fb5b5315-64f6-4ea3-8e58-981cc37c6f61",
+				Description:     "OpenStack firewall 1",
 			},
 			{
-				Status:       		"PENDING_UPDATE",
-				Name:         		"fw2",
-				AdminStateUp: 		true,
-				TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
-				IngressPolicyID:	"34be8c83-4d42-4dca-a74e-b77fffb8e299",
-				EgressPolicyID:     "34be8c83-4d42-4dca-a74e-b77fffb8e299",
-				ID:           		"fb5b5315-64f6-4ea3-8e58-981cc37c6f99",
-				Description:  		"OpenStack firewall 2",
+				Status:          "PENDING_UPDATE",
+				Name:            "fw2",
+				AdminStateUp:    true,
+				TenantID:        "b4eedccc6fb74fa8a7ad6b08382b852b",
+				IngressPolicyID: "34be8c83-4d42-4dca-a74e-b77fffb8e299",
+				EgressPolicyID:  "34be8c83-4d42-4dca-a74e-b77fffb8e299",
+				ID:              "fb5b5315-64f6-4ea3-8e58-981cc37c6f99",
+				Description:     "OpenStack firewall 2",
 			},
 		}
 
@@ -192,12 +192,12 @@ func TestCreate(t *testing.T) {
 	})
 
 	options := firewall_groups.CreateOpts{
-		TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
-		Name:         		"fw",
-		Description:  		"OpenStack firewall",
-		AdminStateUp: 		golangsdk.Enabled,
-		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:		"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		TenantID:        "b4eedccc6fb74fa8a7ad6b08382b852b",
+		Name:            "fw",
+		Description:     "OpenStack firewall",
+		AdminStateUp:    golangsdk.Enabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 	_, err := firewall_groups.Create(fake.ServiceClient(), options).Extract()
 	th.AssertNoErr(t, err)
@@ -331,11 +331,11 @@ func TestUpdate(t *testing.T) {
 	})
 
 	options := firewall_groups.UpdateOpts{
-		Name:         		"fw",
-		Description:  		"updated fw",
-		AdminStateUp: 		golangsdk.Disabled,
-		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:     "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		Name:            "fw",
+		Description:     "updated fw",
+		AdminStateUp:    golangsdk.Disabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 
 	_, err := firewall_groups.Update(fake.ServiceClient(), "ea5b5315-64f6-4ea3-8e58-981cc37c6576", options).Extract()

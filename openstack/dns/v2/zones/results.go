@@ -135,7 +135,7 @@ func (r *Zone) UnmarshalJSON(b []byte) error {
 		CreatedAt     golangsdk.JSONRFC3339MilliNoZ `json:"created_at"`
 		UpdatedAt     golangsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
 		TransferredAt golangsdk.JSONRFC3339MilliNoZ `json:"transferred_at"`
-		Serial        interface{}                     `json:"serial"`
+		Serial        interface{}                   `json:"serial"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

@@ -56,16 +56,16 @@ func TestCreate(t *testing.T) {
 	})
 
 	firewallCreateOpts := firewall_groups.CreateOpts{
-		TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
-		Name:         		"fw",
-		Description:  		"OpenStack firewall",
-		AdminStateUp: 		golangsdk.Enabled,
-		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:		"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		TenantID:        "b4eedccc6fb74fa8a7ad6b08382b852b",
+		Name:            "fw",
+		Description:     "OpenStack firewall",
+		AdminStateUp:    golangsdk.Enabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 	createOpts := routerinsertion.CreateOptsExt{
-		CreateOptsBuilder:	firewallCreateOpts,
-		PortIDs:			[]string{"8a3a0d6a-34b5-4a92-b65d-6375a4c1e9e8"},
+		CreateOptsBuilder: firewallCreateOpts,
+		PortIDs:           []string{"8a3a0d6a-34b5-4a92-b65d-6375a4c1e9e8"},
 	}
 
 	_, err := firewall_groups.Create(fake.ServiceClient(), createOpts).Extract()
@@ -114,16 +114,16 @@ func TestCreateWithNoRouters(t *testing.T) {
 	})
 
 	firewallCreateOpts := firewall_groups.CreateOpts{
-		TenantID:     		"b4eedccc6fb74fa8a7ad6b08382b852b",
-		Name:         		"fw",
-		Description:  		"OpenStack firewall group",
-		AdminStateUp: 		golangsdk.Enabled,
-		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:		"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		TenantID:        "b4eedccc6fb74fa8a7ad6b08382b852b",
+		Name:            "fw",
+		Description:     "OpenStack firewall group",
+		AdminStateUp:    golangsdk.Enabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 	createOpts := routerinsertion.CreateOptsExt{
 		CreateOptsBuilder: firewallCreateOpts,
-		PortIDs:         []string{},
+		PortIDs:           []string{},
 	}
 
 	_, err := firewall_groups.Create(fake.ServiceClient(), createOpts).Extract()
@@ -174,15 +174,15 @@ func TestUpdate(t *testing.T) {
 	})
 
 	firewallUpdateOpts := firewall_groups.UpdateOpts{
-		Name:         		"fw",
-		Description:  		"updated fw",
-		AdminStateUp: 		golangsdk.Disabled,
-		IngressPolicyID:	"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:     "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		Name:            "fw",
+		Description:     "updated fw",
+		AdminStateUp:    golangsdk.Disabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 	updateOpts := routerinsertion.UpdateOptsExt{
 		UpdateOptsBuilder: firewallUpdateOpts,
-		PortIDs:         	[]string{"8a3a0d6a-34b5-4a92-b65d-6375a4c1e9e8"},
+		PortIDs:           []string{"8a3a0d6a-34b5-4a92-b65d-6375a4c1e9e8"},
 	}
 
 	_, err := firewall_groups.Update(fake.ServiceClient(), "ea5b5315-64f6-4ea3-8e58-981cc37c6576", updateOpts).Extract()
@@ -231,15 +231,15 @@ func TestUpdateWithNoRouters(t *testing.T) {
 	})
 
 	firewallUpdateOpts := firewall_groups.UpdateOpts{
-		Name:         		"fw",
-		Description:  		"updated fw",
-		AdminStateUp: 		golangsdk.Disabled,
-		IngressPolicyID:    "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
-		EgressPolicyID:		"19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		Name:            "fw",
+		Description:     "updated fw",
+		AdminStateUp:    golangsdk.Disabled,
+		IngressPolicyID: "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
+		EgressPolicyID:  "19ab8c87-4a32-4e6a-a74e-b77fffb89a0c",
 	}
 	updateOpts := routerinsertion.UpdateOptsExt{
 		UpdateOptsBuilder: firewallUpdateOpts,
-		PortIDs:         	[]string{},
+		PortIDs:           []string{},
 	}
 
 	_, err := firewall_groups.Update(fake.ServiceClient(), "ea5b5315-64f6-4ea3-8e58-981cc37c6576", updateOpts).Extract()

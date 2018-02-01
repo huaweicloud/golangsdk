@@ -165,7 +165,6 @@ func NewBlockStorageV3Client() (*golangsdk.ServiceClient, error) {
 	})
 }
 
-
 // NewComputeV2Client returns a *ServiceClient for making calls
 // to the OpenStack Compute v2 API. An error will be returned
 // if authentication or client creation was not possible.
