@@ -3,34 +3,34 @@ package instances
 import "github.com/huawei-clouds/golangsdk"
 
 type Instance struct {
-    ID               string                 `json:"id"`
-    Status           string                 `json:"status"`
-    Name             string                 `json:"name"`
-    Created          string                 `json:"created"`
-    HostName         string                 `json:"hostname"`
-    Type             string                 `json:"type"`
-    Region           string                 `json:"region"`
-    Updated          string                 `json:"updated"`
-    AvailabilityZone string                 `json:"availabilityZone"`
-    Vpc              string                 `json:"vpc"`
-    Nics             NicsInfor              `json:"nics"`
-    SecurityGroup    SecurityGroupInfor     `json:"securityGroup"`
-    Flavor           FlavorInfo             `json:"flavor"`
-    Volume           VolumeInfor            `json:"volume"`
-    DbPort           int                    `json:"dbPort"`
-    DataStore        DataStoreInfo          `json:"dataStoreInfo"`
-    ExtendParameters ExtendParamInfo        `json:"extendparam"`
-    BackupStrategy   BackupStrategyInfor    `json:"backupStrategy"`
-    Ha               HaInfor                `json:"ha"`
-    SlaveId          string                 `json:"slaveId"`
+	ID               string              `json:"id"`
+	Status           string              `json:"status"`
+	Name             string              `json:"name"`
+	Created          string              `json:"created"`
+	HostName         string              `json:"hostname"`
+	Type             string              `json:"type"`
+	Region           string              `json:"region"`
+	Updated          string              `json:"updated"`
+	AvailabilityZone string              `json:"availabilityZone"`
+	Vpc              string              `json:"vpc"`
+	Nics             NicsInfor           `json:"nics"`
+	SecurityGroup    SecurityGroupInfor  `json:"securityGroup"`
+	Flavor           FlavorInfo          `json:"flavor"`
+	Volume           VolumeInfor         `json:"volume"`
+	DbPort           int                 `json:"dbPort"`
+	DataStore        DataStoreInfo       `json:"dataStoreInfo"`
+	ExtendParameters ExtendParamInfo     `json:"extendparam"`
+	BackupStrategy   BackupStrategyInfor `json:"backupStrategy"`
+	Ha               HaInfor             `json:"ha"`
+	SlaveId          string              `json:"slaveId"`
 }
 
 type ExtendParamInfo struct {
-    Jobs            []Job                   `json:"jobs"`
+	Jobs []Job `json:"jobs"`
 }
 
 type FlavorInfo struct {
-    Id              string                  `json:"id"`
+	Id string `json:"id"`
 }
 
 type DataStoreInfo struct {
@@ -64,6 +64,7 @@ type HaInfor struct {
 type Job struct {
 	ID string `json:"id"`
 }
+
 // Extract will get the Instance object out of the commonResult object.
 func (r commonResult) Extract() (*Instance, error) {
 	var s Instance

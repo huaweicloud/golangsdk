@@ -17,18 +17,16 @@ type CreateOpsBuilder interface {
 //CreateOps is a struct that contains all the parameters.
 type CreateOps struct {
 	//Message endpoint
-	Endpoint            string         `json:"endpoint" required:"true"`
-    //Protocol of the message endpoint
-	Protocol            string         `json:"protocol" required:"true"`
+	Endpoint string `json:"endpoint" required:"true"`
+	//Protocol of the message endpoint
+	Protocol string `json:"protocol" required:"true"`
 	//Description of the subscription
-	Remark              string         `json:"remark,omitempty"`
+	Remark string `json:"remark,omitempty"`
 }
-
 
 func (ops CreateOps) ToSubscriptionCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(ops, "")
 }
-
 
 //Create a subscription with given parameters.
 func Create(client *golangsdk.ServiceClient, ops CreateOpsBuilder, topicUrn string) (r CreateResult) {

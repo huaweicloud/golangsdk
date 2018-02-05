@@ -19,11 +19,11 @@ type UpdateOpsBuilder interface {
 }
 
 type UpdatePolicyOpsBuilder interface {
-    ToInstanceUpdatePolicyMap() (map[string]interface{}, error)
+	ToInstanceUpdatePolicyMap() (map[string]interface{}, error)
 }
 
 type UpdateFlavorOpsBuilder interface {
-    ToInstanceFlavorUpdateMap() (map[string]interface{}, error)
+	ToInstanceFlavorUpdateMap() (map[string]interface{}, error)
 }
 
 type UpdateOps struct {
@@ -31,8 +31,8 @@ type UpdateOps struct {
 }
 
 type UpdatePolicyOps struct {
-    StartTime string `json:"starttime"`
-    KeepDays  int    `json:"keepday"`
+	StartTime string `json:"starttime"`
+	KeepDays  int    `json:"keepday"`
 }
 
 type UpdateFlavorOps struct {
@@ -41,7 +41,6 @@ type UpdateFlavorOps struct {
 
 //CreateOps is a struct that contains all the parameters.
 type CreateOps struct {
-
 	Name string `json:"name" required:"true"`
 
 	DataStore DataStoreOps `json:"datastore,omitempty"`
@@ -99,7 +98,6 @@ type HaOps struct {
 	ReplicationMode string `json:"replicationMode" required:"true"`
 }
 
-
 func (ops CreateOps) ToInstanceCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(ops, "instance")
 }
@@ -109,11 +107,11 @@ func (ops UpdateOps) ToInstanceUpdateMap() (map[string]interface{}, error) {
 }
 
 func (ops UpdatePolicyOps) ToInstanceUpdatePolicyMap() (map[string]interface{}, error) {
-    return golangsdk.BuildRequestBody(ops, "policy")
+	return golangsdk.BuildRequestBody(ops, "policy")
 }
 
 func (ops UpdateFlavorOps) ToInstanceFlavorUpdateMap() (map[string]interface{}, error) {
-    return golangsdk.BuildRequestBody(ops, "resize")
+	return golangsdk.BuildRequestBody(ops, "resize")
 }
 
 //Create a instance with given parameters.
@@ -147,19 +145,18 @@ func UpdateVolumeSize(client *golangsdk.ServiceClient, ops UpdateOpsBuilder, id 
 }
 
 func UpdatePolicy(client *golangsdk.ServiceClient, ops UpdatePolicyOpsBuilder, id string) (r UpdateResult) {
-    b, err := ops.ToInstanceUpdatePolicyMap()
-    if err != nil {
-        r.Err = err
-        return
-    }
+	b, err := ops.ToInstanceUpdatePolicyMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
 
-    _, r.Err = client.Put(updatePolicyURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
-        OkCodes:     []int{200},
-        MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
-    })
-    return
+	_, r.Err = client.Put(updatePolicyURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
+	})
+	return
 }
-
 
 func UpdateFlavorRef(client *golangsdk.ServiceClient, ops UpdateFlavorOpsBuilder, id string) (r UpdateResult) {
 	b, err := ops.ToInstanceFlavorUpdateMap()

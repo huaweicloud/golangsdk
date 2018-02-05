@@ -5,21 +5,19 @@ import (
 )
 
 type Subscription struct {
-	RequestId        string        `json:"request_id"`
-	SubscriptionUrn  string        `json:"subscription_urn"`
+	RequestId       string `json:"request_id"`
+	SubscriptionUrn string `json:"subscription_urn"`
 }
-
 
 type SubscriptionGet struct {
-	TopicUrn         string         `json:"topic_urn"`
-	Protocol         string         `json:"protocol"`
-	SubscriptionUrn  string         `json:"subscription_urn"`
-	Owner            string         `json:"owner"`
-	Endpoint         string         `json:"endpoint"`
-	Remark           string         `json:"remark"`
-	Status           int            `json:"status"`
+	TopicUrn        string `json:"topic_urn"`
+	Protocol        string `json:"protocol"`
+	SubscriptionUrn string `json:"subscription_urn"`
+	Owner           string `json:"owner"`
+	Endpoint        string `json:"endpoint"`
+	Remark          string `json:"remark"`
+	Status          int    `json:"status"`
 }
-
 
 // Extract will get the subscription object out of the commonResult object.
 func (r commonResult) Extract() (*Subscription, error) {
