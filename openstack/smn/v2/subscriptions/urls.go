@@ -3,7 +3,7 @@ package subscriptions
 import "github.com/huawei-clouds/golangsdk"
 
 func createURL(c *golangsdk.ServiceClient, topicUrn string) string {
-	return c.ServiceURL("topics", topicUrn, "subscriptions" )
+	return c.ServiceURL("topics", topicUrn, "subscriptions")
 }
 
 func deleteURL(c *golangsdk.ServiceClient, subscriptionUrn string) string {

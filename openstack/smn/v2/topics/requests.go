@@ -23,7 +23,6 @@ type CreateOps struct {
 	DisplayName string `json:"display_name,omitempty"`
 }
 
-
 func (ops CreateOps) ToTopicCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(ops, "")
 }
@@ -40,12 +39,9 @@ type UpdateOps struct {
 	DisplayName string `json:"display_name,omitempty"`
 }
 
-
 func (ops UpdateOps) ToTopicUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(ops, "")
 }
-
-
 
 //Create a topic with given parameters.
 func Create(client *golangsdk.ServiceClient, ops CreateOpsBuilder) (r CreateResult) {
