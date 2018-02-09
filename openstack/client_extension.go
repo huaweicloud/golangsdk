@@ -97,10 +97,6 @@ func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.Endpoi
 // kms key service.
 func NewKmsKeyV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "kms")
-	if err != nil {
-		return sc, err
-	}
-	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
 
