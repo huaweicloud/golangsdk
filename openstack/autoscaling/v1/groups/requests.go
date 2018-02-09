@@ -93,7 +93,7 @@ func List(client *golangsdk.ServiceClient, ops ListOptsBuilder) pagination.Pager
 		url += q
 	}
 
-	return pagination.NewPager(client.ServiceClient, url, func(r pagination.PageResult) pagination.Page {
+	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return GroupPage{pagination.SinglePageBase(r)}
 	})
 }
