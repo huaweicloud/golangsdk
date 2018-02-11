@@ -1,4 +1,4 @@
-# Contributing to Gophercloud
+# Contributing to Golangsdk
 
 - [3 ways to get involved](#3-ways-to-get-involved)
 - [Getting started](#getting-started)
@@ -14,15 +14,15 @@ each is described briefly below.
 
 If you want to start fixing open bugs, we'd really appreciate that! Bug fixing
 is central to any project. The best way to get started is by heading to our
-[bug tracker](https://github.com/gophercloud/gophercloud/issues) and finding open
+[bug tracker](https://github.com/huawei-clouds/golangsdk/issues) and finding open
 bugs that you think nobody is working on. It might be useful to comment on the
 thread to see the current state of the issue and if anybody has made any
 breakthroughs on it so far.
 
 ### 2. Improving documentation
 
-Gophercloud's documentation is automatically generated from the source code
-and can be read online at [godoc.org](https://godoc.org/github.com/gophercloud/gophercloud).
+Golangsdk's documentation is automatically generated from the source code
+and can be read online at [godoc.org](https://godoc.org/github.com/huawei-clouds/golangsdk).
 
 If you feel that a certain section could be improved - whether it's to clarify
 ambiguity, correct a technical mistake, or to fix a grammatical error - please
@@ -40,7 +40,7 @@ that might not ever work. One tip is to prefix your Pull Request issue title
 with [wip] - then people know it's a work in progress.
 
 We ask that you do not submit a feature that you have not spent time researching
-and testing first-hand in an actual OpenStack environment. While we appreciate
+and testing first-hand in an actual Huawei clouds environment. While we appreciate
 the contribution, submitting code which you are unfamiliar with is a risk to the
 users who will ultimately use it. See our [acceptance tests readme](/acceptance)
 for information about how you can create a local development environment to
@@ -60,22 +60,22 @@ way than just downloading it. Here are the basic instructions:
 get dependencies for unit and acceptance tests.
 
    ```bash
-   go get -tags "fixtures acceptance" github.com/gophercloud/gophercloud
+   go get -tags "fixtures acceptance" github.com/huawei-clouds/golangsdk
    ```
 
 2. Move into the directory that houses your local repository:
 
    ```bash
-   cd ${GOPATH}/src/github.com/gophercloud/gophercloud
+   cd ${GOPATH}/src/github.com/huawei-clouds/golangsdk
    ```
 
-3. Fork the `gophercloud/gophercloud` repository and update your remote refs. You
+3. Fork the `huawei-clouds/golangsdk` repository and update your remote refs. You
 will need to rename the `origin` remote branch to `upstream`, and add your
 fork as `origin` instead:
 
    ```bash
    git remote rename origin upstream
-   git remote add origin git@github.com:<my_username>/gophercloud.git
+   git remote add origin git@github.com:<my_username>/golangsdk.git
    ```
 
 4. Checkout the latest development branch:
@@ -99,7 +99,7 @@ need to checkout a new feature branch:
    git commit
    ```
 
-7. Submit your branch as a [Pull Request](https://help.github.com/articles/creating-a-pull-request/). When submitting a Pull Request, please follow our [Style Guide](https://github.com/gophercloud/gophercloud/blob/master/STYLEGUIDE.md).
+7. Submit your branch as a [Pull Request](https://help.github.com/articles/creating-a-pull-request/). When submitting a Pull Request, please follow our [Style Guide](https://github.com/huawei-clouds/golangsdk/blob/master/STYLEGUIDE.md).
 
 > Further information about using Git can be found [here](https://git-scm.com/book/en/v2).
 
@@ -128,7 +128,7 @@ process of testing expectations with assertions:
 import (
   "testing"
 
-  "github.com/gophercloud/gophercloud/testhelper"
+  "github.com/huawei-clouds/golangsdk/testhelper"
 )
 
 func TestSomething(t *testing.T) {
@@ -154,9 +154,9 @@ Here is a truncated example of mocked HTTP responses:
 import (
 	"testing"
 
-	th "github.com/gophercloud/gophercloud/testhelper"
-	fake "github.com/gophercloud/gophercloud/testhelper/client"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/networks"
+	th "github.com/huawei-clouds/golangsdk/testhelper"
+	fake "github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/networks"
 )
 
 func TestGet(t *testing.T) {
