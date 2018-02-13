@@ -1,7 +1,8 @@
-Golangsdk: a Huawei clouds SDK for Golang
+# Golangsdk: a Huawei clouds SDK for Golang
 [![Go Report Card](https://goreportcard.com/badge/github.com/huawei-clouds/golangsdk?branch=master)](https://goreportcard.com/badge/github.com/huawei-clouds/golangsdk)
 [![Build Status](https://travis-ci.org/huawei-clouds/golangsdk.svg?branch=master)](https://travis-ci.org/huawei-clouds/golangsdk)
 [![Coverage Status](https://coveralls.io/repos/github/huawei-clouds/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/huawei-clouds/golangsdk?branch=master)
+[![LICENSE](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/huawei-clouds/golangsdk/blob/master/LICENSE)
 
 Golangsdk is a Huawei clouds Go SDK.
 Golangsdk is based on [Gophercloud](https://github.com/gophercloud/gophercloud)
@@ -171,4 +172,8 @@ OpenLab is providing a full CI environment to test each PR and merge for a varie
 <a href="https://vexxhost.com/"><img src="assets/vexxhost.png" width="600px"></a>
 
 VEXXHOST is providing their services to assist with the development and testing of Golangsdk.
+
+## License
+
+Golangsdk is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
 
