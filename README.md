@@ -7,16 +7,16 @@
 Golangsdk is a Huawei clouds Go SDK.
 Golangsdk is based on [Gophercloud](https://github.com/gophercloud/gophercloud)
 which is an OpenStack Go SDK and has a great design.
-Golangsdk has increased and decreased some features to support Huawei clouds.
+Golangsdk has added and removed some features to support Huawei clouds.
 
-## Increased features
+## Added features
 
 - **autoscaling**: auto scaling service
 - **kms**: key management service
 - **rds**: relational database service
 - **smn**: simple message notification service
 
-## Decreased features
+## Removed features
 
 - **blockstorage**: block storage service
 - **cdn**: content delivery network service
