@@ -1,9 +1,16 @@
-Prior to a PR being reviewed, there needs to be a Github issue that the PR
-addresses. Replace the brackets and text below with that issue number.
+<!-- Thanks for sending a pull request! -->
 
-For #[PUT ISSUE NUMBER HERE]
+**What this PR does / why we need it**:
 
-Links to the line numbers/files in the OpenStack source code that support the
-code in this PR:
+**Which issue this PR fixes** *(optional, in `fixes #<issue number>(, fixes #<issue_number>, ...)` format, will close that issue when PR gets merged)*: fixes #
 
-[PUT URLS HERE]
+**Special notes for your reviewer**:
+
+**Release note**:
+<!--  Steps to write your release note:
+1. Use the release-note-* labels to set the release note state (if you have access)
+2. Enter your extended release note in the below block; leaving it blank means using the PR title as the release note. If no release note is required, just write `NONE`.
+-->
+```release-note
+```
+
