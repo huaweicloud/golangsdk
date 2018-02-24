@@ -11,7 +11,7 @@ go:
 - tip
 env:
   global:
-  - secure: "ssT2hpDBo4CtwHtPbkoHmeT0bmUKz39gr"
+  - secure: "5XfjlctyrfCccnP8hSUFv3bmGsYTS912L"
 before_script:
 - go vet ./...
 script:
