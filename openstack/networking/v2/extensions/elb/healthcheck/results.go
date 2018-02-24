@@ -1,7 +1,7 @@
 package healthcheck
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type HealthCheck struct {

@@ -3,7 +3,7 @@ package healthcheck
 import (
 	"log"
 
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order

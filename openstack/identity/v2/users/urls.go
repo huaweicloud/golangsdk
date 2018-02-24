@@ -1,6 +1,6 @@
 package users
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const (
 	tenantPath = "tenants"

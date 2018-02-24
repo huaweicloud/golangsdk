@@ -1,8 +1,8 @@
 package zones
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // ListOptsBuilder allows extensions to add parameters to the List request.

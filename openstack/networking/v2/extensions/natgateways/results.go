@@ -1,7 +1,7 @@
 package natgateways
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 // NatGateway is a struct that represents a nat gateway

@@ -1,7 +1,7 @@
 package policies
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 //CreateOptsBuilder is an interface by which can serialize the create parameters

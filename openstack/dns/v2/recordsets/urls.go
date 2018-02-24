@@ -1,6 +1,6 @@
 package recordsets
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 func baseURL(c *golangsdk.ServiceClient, zoneID string) string {
 	return c.ServiceURL("zones", zoneID, "recordsets")

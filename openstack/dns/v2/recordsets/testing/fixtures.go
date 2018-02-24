@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/dns/v2/recordsets"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/dns/v2/recordsets"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 // ListByZoneOutput is a sample response to a ListByZone call.

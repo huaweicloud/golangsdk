@@ -1,7 +1,7 @@
 package routerinsertion
 
 import (
-	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/fwaas_v2/firewall_groups"
+	"github.com/huaweicloud/golangsdk/openstack/networking/v2/extensions/fwaas_v2/firewall_groups"
 )
 
 // CreateOptsExt adds a PortIDs option to the base CreateOpts.

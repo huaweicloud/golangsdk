@@ -1,8 +1,8 @@
 package groups
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 //CreateGroupBuilder is an interface from which can build the request of creating group

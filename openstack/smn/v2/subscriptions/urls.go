@@ -1,6 +1,6 @@
 package subscriptions
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 func createURL(c *golangsdk.ServiceClient, topicUrn string) string {
 	return c.ServiceURL("topics", topicUrn, "subscriptions")

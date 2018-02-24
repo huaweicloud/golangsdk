@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/internal"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/internal"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // User represents a User in the OpenStack Identity Service.

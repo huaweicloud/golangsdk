@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type Job struct {

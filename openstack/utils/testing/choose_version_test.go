@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/utils"
-	"github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/utils"
+	"github.com/huaweicloud/golangsdk/testhelper"
 )
 
 func setupVersionHandler() {

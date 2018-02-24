@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 var (

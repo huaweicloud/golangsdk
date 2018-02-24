@@ -1,6 +1,6 @@
 package groups
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 func listURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL("groups")

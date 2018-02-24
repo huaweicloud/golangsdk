@@ -1,7 +1,7 @@
 package topics
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{

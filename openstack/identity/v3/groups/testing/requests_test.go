@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/groups"
-	"github.com/huawei-clouds/golangsdk/pagination"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/groups"
+	"github.com/huaweicloud/golangsdk/pagination"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 func TestListGroups(t *testing.T) {

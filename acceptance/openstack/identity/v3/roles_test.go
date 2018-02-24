@@ -5,11 +5,11 @@ package v3
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/acceptance/clients"
-	"github.com/huawei-clouds/golangsdk/acceptance/tools"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/domains"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/roles"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/acceptance/clients"
+	"github.com/huaweicloud/golangsdk/acceptance/tools"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/domains"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/roles"
 )
 
 func TestRolesList(t *testing.T) {

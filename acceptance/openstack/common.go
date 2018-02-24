@@ -5,7 +5,7 @@ package openstack
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/openstack/common/extensions"
+	"github.com/huaweicloud/golangsdk/openstack/common/extensions"
 )
 
 // PrintExtension prints an extension and all of its attributes.

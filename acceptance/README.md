@@ -90,8 +90,8 @@ Alternatively, add the following to your `.bashrc`:
 ```bash
 golangsdktest() {
   if [[ -n $1 ]] && [[ -n $2 ]]; then
-    pushd  $GOPATH/src/github.com/huawei-clouds/golangsdk
-    go test -v -tags "fixtures acceptance" -run "$1" github.com/huawei-clouds/golangsdk/acceptance/openstack/$2 | tee ~/golangsdk.log
+    pushd  $GOPATH/src/github.com/huaweicloud/golangsdk
+    go test -v -tags "fixtures acceptance" -run "$1" github.com/huaweicloud/golangsdk/acceptance/openstack/$2 | tee ~/golangsdk.log
     popd
 fi
 }

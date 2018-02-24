@@ -1,6 +1,6 @@
 package instances
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 type Instance struct {
 	ID               string              `json:"id"`

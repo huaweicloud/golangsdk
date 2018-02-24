@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tenants"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	thclient "github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tenants"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	thclient "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 // ExpectedToken is the token that should be parsed from TokenCreationResponse.

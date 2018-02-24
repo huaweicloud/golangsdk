@@ -3,8 +3,8 @@ package backendecs
 import (
 	"log"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/extensions/elb"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/networking/v2/extensions/elb"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order

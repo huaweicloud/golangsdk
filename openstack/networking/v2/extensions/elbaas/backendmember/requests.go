@@ -2,8 +2,8 @@ package backendmember
 
 import (
 	//"fmt"
-	"github.com/huawei-clouds/golangsdk"
-	//"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	//"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // CreateOptsBuilder is the interface options structs have to satisfy in order

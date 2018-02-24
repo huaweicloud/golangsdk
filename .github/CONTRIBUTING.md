@@ -14,7 +14,7 @@ each is described briefly below.
 
 If you want to start fixing open bugs, we'd really appreciate that! Bug fixing
 is central to any project. The best way to get started is by heading to our
-[bug tracker](https://github.com/huawei-clouds/golangsdk/issues) and finding open
+[bug tracker](https://github.com/huaweicloud/golangsdk/issues) and finding open
 bugs that you think nobody is working on. It might be useful to comment on the
 thread to see the current state of the issue and if anybody has made any
 breakthroughs on it so far.
@@ -22,7 +22,7 @@ breakthroughs on it so far.
 ### 2. Improving documentation
 
 Golangsdk's documentation is automatically generated from the source code
-and can be read online at [godoc.org](https://godoc.org/github.com/huawei-clouds/golangsdk).
+and can be read online at [godoc.org](https://godoc.org/github.com/huaweicloud/golangsdk).
 
 If you feel that a certain section could be improved - whether it's to clarify
 ambiguity, correct a technical mistake, or to fix a grammatical error - please
@@ -60,16 +60,16 @@ way than just downloading it. Here are the basic instructions:
 get dependencies for unit and acceptance tests.
 
    ```bash
-   go get -tags "fixtures acceptance" github.com/huawei-clouds/golangsdk
+   go get -tags "fixtures acceptance" github.com/huaweicloud/golangsdk
    ```
 
 2. Move into the directory that houses your local repository:
 
    ```bash
-   cd ${GOPATH}/src/github.com/huawei-clouds/golangsdk
+   cd ${GOPATH}/src/github.com/huaweicloud/golangsdk
    ```
 
-3. Fork the `huawei-clouds/golangsdk` repository and update your remote refs. You
+3. Fork the `huaweicloud/golangsdk` repository and update your remote refs. You
 will need to rename the `origin` remote branch to `upstream`, and add your
 fork as `origin` instead:
 
@@ -99,7 +99,7 @@ need to checkout a new feature branch:
    git commit
    ```
 
-7. Submit your branch as a [Pull Request](https://help.github.com/articles/creating-a-pull-request/). When submitting a Pull Request, please follow our [Style Guide](https://github.com/huawei-clouds/golangsdk/blob/master/STYLEGUIDE.md).
+7. Submit your branch as a [Pull Request](https://help.github.com/articles/creating-a-pull-request/). When submitting a Pull Request, please follow our [Style Guide](https://github.com/huaweicloud/golangsdk/blob/master/STYLEGUIDE.md).
 
 > Further information about using Git can be found [here](https://git-scm.com/book/en/v2).
 
@@ -128,7 +128,7 @@ process of testing expectations with assertions:
 import (
   "testing"
 
-  "github.com/huawei-clouds/golangsdk/testhelper"
+  "github.com/huaweicloud/golangsdk/testhelper"
 )
 
 func TestSomething(t *testing.T) {
@@ -154,9 +154,9 @@ Here is a truncated example of mocked HTTP responses:
 import (
 	"testing"
 
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	fake "github.com/huawei-clouds/golangsdk/testhelper/client"
-	"github.com/huawei-clouds/golangsdk/openstack/networking/v2/networks"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	fake "github.com/huaweicloud/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/networking/v2/networks"
 )
 
 func TestGet(t *testing.T) {

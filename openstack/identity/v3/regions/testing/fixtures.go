@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/regions"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/regions"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 // ListOutput provides a single page of Region results.

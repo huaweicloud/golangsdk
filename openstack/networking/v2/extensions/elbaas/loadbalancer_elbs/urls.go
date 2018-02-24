@@ -1,6 +1,6 @@
 package loadbalancer_elbs
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const (
 	rootPath     = "elbaas"

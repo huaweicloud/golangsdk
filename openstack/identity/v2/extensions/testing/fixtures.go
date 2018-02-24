@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 // ListOutput provides a single Extension result. It differs from the delegated implementation

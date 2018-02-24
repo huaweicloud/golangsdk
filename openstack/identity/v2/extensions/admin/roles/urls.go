@@ -1,6 +1,6 @@
 package roles
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const (
 	ExtPath  = "OS-KSADM"

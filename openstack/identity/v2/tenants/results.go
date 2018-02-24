@@ -1,8 +1,8 @@
 package tenants
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // Tenant is a grouping of users in the identity service.

@@ -1,8 +1,8 @@
 # Golangsdk: a Huawei clouds SDK for Golang
-[![Go Report Card](https://goreportcard.com/badge/github.com/huawei-clouds/golangsdk?branch=master)](https://goreportcard.com/badge/github.com/huawei-clouds/golangsdk)
-[![Build Status](https://travis-ci.org/huawei-clouds/golangsdk.svg?branch=master)](https://travis-ci.org/huawei-clouds/golangsdk)
-[![Coverage Status](https://coveralls.io/repos/github/huawei-clouds/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/huawei-clouds/golangsdk?branch=master)
-[![LICENSE](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/huawei-clouds/golangsdk/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/huaweicloud/golangsdk?branch=master)](https://goreportcard.com/badge/github.com/huaweicloud/golangsdk)
+[![Build Status](https://travis-ci.org/huaweicloud/golangsdk.svg?branch=master)](https://travis-ci.org/huaweicloud/golangsdk)
+[![Coverage Status](https://coveralls.io/repos/github/huaweicloud/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/huaweicloud/golangsdk?branch=master)
+[![LICENSE](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/huaweicloud/golangsdk/blob/master/LICENSE)
 
 Golangsdk is a Huawei clouds Go SDK.
 Golangsdk is based on [Gophercloud](https://github.com/gophercloud/gophercloud)
@@ -29,7 +29,7 @@ Golangsdk has added and removed some features to support Huawei clouds.
 
 ## Useful links
 
-* [Reference documentation](http://godoc.org/github.com/huawei-clouds/golangsdk)
+* [Reference documentation](http://godoc.org/github.com/huaweicloud/golangsdk)
 * [Effective Go](https://golang.org/doc/effective_go.html)
 
 ## How to install
@@ -48,9 +48,9 @@ your projects, such as [godep](https://github.com/tools/godep). Once this is set
 golangsdk as a dependency like so:
 
 ```bash
-go get github.com/huawei-clouds/golangsdk
+go get github.com/huaweicloud/golangsdk
 
-# Edit your code to import relevant packages from "github.com/huawei-clouds/golangsdk"
+# Edit your code to import relevant packages from "github.com/huaweicloud/golangsdk"
 
 godep save ./...
 ```
@@ -83,9 +83,9 @@ explicitly, or tell Golangsdk to use environment variables:
 
 ```go
 import (
-  "github.com/huawei-clouds/golangsdk"
-  "github.com/huawei-clouds/golangsdk/openstack"
-  "github.com/huawei-clouds/golangsdk/openstack/utils"
+  "github.com/huaweicloud/golangsdk"
+  "github.com/huaweicloud/golangsdk/openstack"
+  "github.com/huaweicloud/golangsdk/openstack/utils"
 )
 
 // Option 1: Pass in the values yourself
@@ -128,7 +128,7 @@ in the name and the flavor ID (database specification) we're
 interested in:
 
 ```go
-import "github.com/huawei-clouds/golangsdk/openstack/rds/v1/instances"
+import "github.com/huaweicloud/golangsdk/openstack/rds/v1/instances"
 
 instance, err := instances.Create(client, instances.CreateOpts{
   Name:      "My new rds instance!",
@@ -138,7 +138,7 @@ instance, err := instances.Create(client, instances.CreateOpts{
 
 The above code sample creates a new rds instance with the parameters, and embodies the
 new resource in the `instance` variable (a
-[`instances.Instance`](http://godoc.org/github.com/huawei-clouds/golangsdk) struct).
+[`instances.Instance`](http://godoc.org/github.com/huaweicloud/golangsdk) struct).
 
 ## Advanced Usage
 
@@ -155,7 +155,7 @@ See the [contributing guide](./.github/CONTRIBUTING.md).
 ## Help and feedback
 
 If you're struggling with something or have spotted a potential bug, feel free
-to submit an issue to our [bug tracker](https://github.com/huawei-clouds/golangsdk/issues).
+to submit an issue to our [bug tracker](https://github.com/huaweicloud/golangsdk/issues).
 
 ## Thank You
 

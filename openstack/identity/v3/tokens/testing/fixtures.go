@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
-	"github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
+	"github.com/huaweicloud/golangsdk/testhelper"
 )
 
 const testTokenID = "130f6c17-420e-4a0b-97b0-0c9cf2a05f30"

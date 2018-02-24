@@ -1,6 +1,6 @@
 package datastores
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 type DataStore struct {
 	ID        string `json:"id"`

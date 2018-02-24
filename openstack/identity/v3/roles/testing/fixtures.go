@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/roles"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	fake "github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/roles"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	fake "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 // ListOutput provides a single page of Role results.

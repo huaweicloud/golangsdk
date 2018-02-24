@@ -1,8 +1,8 @@
 package configurations
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 //CreateResult is a struct that contains all the return parameters of creation

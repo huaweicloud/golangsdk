@@ -1,6 +1,6 @@
 package keys
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const (
 	resourcePath = "kms"

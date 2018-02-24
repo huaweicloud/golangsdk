@@ -1,6 +1,6 @@
 package instances
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 func createURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("instances")

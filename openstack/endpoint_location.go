@@ -1,9 +1,9 @@
 package openstack
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	tokens2 "github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
-	tokens3 "github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
+	"github.com/huaweicloud/golangsdk"
+	tokens2 "github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
+	tokens3 "github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
 )
 
 /*

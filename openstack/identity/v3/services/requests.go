@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // CreateOptsBuilder allows extensions to add additional parameters to

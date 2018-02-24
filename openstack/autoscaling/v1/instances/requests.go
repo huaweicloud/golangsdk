@@ -1,8 +1,8 @@
 package instances
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 //ListOptsBuilder is an interface by which can be able to build the query string

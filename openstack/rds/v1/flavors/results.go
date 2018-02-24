@@ -1,6 +1,6 @@
 package flavors
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 type Flavor struct {
 	ID       string `json:"id"`

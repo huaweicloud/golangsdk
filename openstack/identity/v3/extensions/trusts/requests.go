@@ -1,6 +1,6 @@
 package trusts
 
-import "github.com/huawei-clouds/golangsdk/openstack/identity/v3/tokens"
+import "github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
 
 // AuthOptsExt extends the base Identity v3 tokens AuthOpts with a TrustID.
 type AuthOptsExt struct {

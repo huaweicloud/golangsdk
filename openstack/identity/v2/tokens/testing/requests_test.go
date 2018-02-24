@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tokens"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 func tokenPost(t *testing.T, options golangsdk.AuthOptions, requestJSON string) tokens.CreateResult {

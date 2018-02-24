@@ -1,6 +1,6 @@
 package snatrules
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const resourcePath = "snat_rules"
 

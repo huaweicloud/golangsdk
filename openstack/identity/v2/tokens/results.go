@@ -3,8 +3,8 @@ package tokens
 import (
 	"time"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tenants"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tenants"
 )
 
 // Token provides only the most basic information related to an authentication

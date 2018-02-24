@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/testhelper"
 )
 
 // Fake token to use.

@@ -1,8 +1,8 @@
 package common
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 const TokenID = client.TokenID

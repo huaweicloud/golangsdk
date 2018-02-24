@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 // CreateURL generates the URL used to create new Tokens.
 func CreateURL(client *golangsdk.ServiceClient) string {

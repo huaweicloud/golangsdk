@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 // Version is a supported API version, corresponding to a vN package within the appropriate service.

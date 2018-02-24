@@ -3,7 +3,7 @@ package backendecs
 import (
 	"fmt"
 
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type Listener struct {

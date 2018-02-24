@@ -5,11 +5,11 @@ package v2
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/acceptance/tools"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/extensions/admin/roles"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tenants"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/users"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/acceptance/tools"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/extensions/admin/roles"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tenants"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/users"
 )
 
 // AddUserRole will grant a role to a user in a tenant. An error will be

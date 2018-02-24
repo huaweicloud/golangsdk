@@ -5,9 +5,9 @@ package v2
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/acceptance/clients"
-	"github.com/huawei-clouds/golangsdk/acceptance/tools"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/tenants"
+	"github.com/huaweicloud/golangsdk/acceptance/clients"
+	"github.com/huaweicloud/golangsdk/acceptance/tools"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/tenants"
 )
 
 func TestTenantsList(t *testing.T) {

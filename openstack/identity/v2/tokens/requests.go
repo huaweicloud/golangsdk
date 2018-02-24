@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 // PasswordCredentialsV2 represents the required options to authenticate
 // with a username and password.

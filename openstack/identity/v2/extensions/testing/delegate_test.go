@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	common "github.com/huawei-clouds/golangsdk/openstack/common/extensions/testing"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v2/extensions"
-	"github.com/huawei-clouds/golangsdk/pagination"
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	"github.com/huawei-clouds/golangsdk/testhelper/client"
+	common "github.com/huaweicloud/golangsdk/openstack/common/extensions/testing"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v2/extensions"
+	"github.com/huaweicloud/golangsdk/pagination"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 func TestList(t *testing.T) {

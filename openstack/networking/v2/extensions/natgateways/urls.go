@@ -1,6 +1,6 @@
 package natgateways
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 const resourcePath = "nat_gateways"
 

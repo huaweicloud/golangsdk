@@ -1,7 +1,7 @@
 package subscriptions
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type Subscription struct {

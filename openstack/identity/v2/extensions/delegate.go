@@ -1,9 +1,9 @@
 package extensions
 
 import (
-	"github.com/huawei-clouds/golangsdk"
-	common "github.com/huawei-clouds/golangsdk/openstack/common/extensions"
-	"github.com/huawei-clouds/golangsdk/pagination"
+	"github.com/huaweicloud/golangsdk"
+	common "github.com/huaweicloud/golangsdk/openstack/common/extensions"
+	"github.com/huaweicloud/golangsdk/pagination"
 )
 
 // ExtensionPage is a single page of Extension results.

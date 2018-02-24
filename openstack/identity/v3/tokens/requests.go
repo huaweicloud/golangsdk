@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/huawei-clouds/golangsdk"
+import "github.com/huaweicloud/golangsdk"
 
 // Scope allows a created token to be limited to a specific domain or project.
 type Scope struct {

@@ -5,9 +5,9 @@ package v3
 import (
 	"testing"
 
-	"github.com/huawei-clouds/golangsdk/acceptance/clients"
-	"github.com/huawei-clouds/golangsdk/acceptance/tools"
-	"github.com/huawei-clouds/golangsdk/openstack/identity/v3/projects"
+	"github.com/huaweicloud/golangsdk/acceptance/clients"
+	"github.com/huaweicloud/golangsdk/acceptance/tools"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/projects"
 )
 
 func TestProjectsList(t *testing.T) {

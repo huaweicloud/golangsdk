@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	th "github.com/huawei-clouds/golangsdk/testhelper"
-	fake "github.com/huawei-clouds/golangsdk/testhelper/client"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	fake "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 func MockListRoleResponse(t *testing.T) {

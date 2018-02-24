@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/huawei-clouds/golangsdk"
-	"github.com/huawei-clouds/golangsdk/openstack"
+	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack"
 )
 
 // AcceptanceTestChoices contains image and flavor selections for use by the acceptance tests.

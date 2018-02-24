@@ -1,7 +1,7 @@
 package listeners
 
 import (
-	"github.com/huawei-clouds/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type CreateResponse struct {
