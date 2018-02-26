@@ -107,7 +107,7 @@ func (g GetResult) Extract() (*AlarmRule, error) {
 		return nil, err
 	}
 	if len(r.MetricAlarms) != 1 {
-		return nil, fmt.Errorf("get %s alarm rules", len(r.MetricAlarms))
+		return nil, fmt.Errorf("get %d alarm rules", len(r.MetricAlarms))
 	}
 	ar0 := r.MetricAlarms[0]
 	ar := AlarmRule{
