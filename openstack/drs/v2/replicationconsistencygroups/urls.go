@@ -29,3 +29,8 @@ func listURL(client *golangsdk.ServiceClient) string {
 func updateURL(c *golangsdk.ServiceClient, id string) string {
 	return c.ServiceURL(resourcePath, id)
 }
+
+// actionURL will build the url of action
+func actionURL(c *golangsdk.ServiceClient, id string) string {
+	return c.ServiceURL(resourcePath, id, "action")
+}

@@ -98,3 +98,8 @@ func (r UpdateResult) Extract() (*ReplicationConsistencyGroupCreateorUpdate, err
 	err := r.Result.ExtractInto(&s)
 	return s.ReplicationConsistencyGroup, err
 }
+
+// ActionResult is the result of action operations
+type ActionResult struct {
+	golangsdk.ErrResult
+}

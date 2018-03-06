@@ -153,3 +153,132 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 	})
 	return
 }
+
+const (
+	// OsFailoverReplicationConsistencyGroup is performing a failover for a replication consistency group.
+	OsFailoverReplicationConsistencyGroup = "os-failover-replication-consistency-group"
+
+	// OsSyncReplicationConsistencyGroup is synchronizing a replication consistency group.
+	OsSyncReplicationConsistencyGroup = "os-sync-replication-consistency-group"
+
+	// OsReverseReplicationConsistencyGroup is performing a primary/secondary switchover for a replication consistency group.
+	OsReverseReplicationConsistencyGroup = "os-reverse-replication-consistency-group"
+
+	// OsStopReplicationConsistencyGroup is pausing a replication consistency group.
+	OsStopReplicationConsistencyGroup = "os-stop-replication-consistency-group"
+
+	// OsReprotectReplicationConsistencyGroup is reprotecting a replication consistency group.
+	OsReprotectReplicationConsistencyGroup = "os-reprotect-replication-consistency-group"
+
+	// OsExtendReplicationVolume is expanding EVS disks in a replication consistency group.
+	OsExtendReplicationVolume = "os-extend-replication-volumes"
+)
+
+// FailOver is performing a failover for a replication consistency group.
+func FailOver(client *golangsdk.ServiceClient, id string) (r ActionResult) {
+	_, r.Err = client.Post(
+		actionURL(client, id),
+		map[string]interface{}{OsFailoverReplicationConsistencyGroup: nil},
+		&r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+
+	return
+}
+
+// Sync is synchronizing a replication consistency group.
+func Sync(client *golangsdk.ServiceClient, id string) (r ActionResult) {
+	_, r.Err = client.Post(
+		actionURL(client, id),
+		map[string]interface{}{OsSyncReplicationConsistencyGroup: nil},
+		&r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+
+	return
+}
+
+// Reverse is performing a primary/secondary switchover for a replication consistency group.
+func Reverse(client *golangsdk.ServiceClient, id string) (r ActionResult) {
+	_, r.Err = client.Post(
+		actionURL(client, id),
+		map[string]interface{}{OsReverseReplicationConsistencyGroup: nil},
+		&r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+
+	return
+}
+
+// Stop is pausing a replication consistency group.
+func Stop(client *golangsdk.ServiceClient, id string) (r ActionResult) {
+	_, r.Err = client.Post(
+		actionURL(client, id),
+		map[string]interface{}{OsStopReplicationConsistencyGroup: nil},
+		&r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+
+	return
+}
+
+// Reprotect is reprotecting a replication consistency group.
+func Reprotect(client *golangsdk.ServiceClient, id string) (r ActionResult) {
+	_, r.Err = client.Post(
+		actionURL(client, id),
+		map[string]interface{}{OsReprotectReplicationConsistencyGroup: nil},
+		&r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+
+	return
+}
+
+// ExtendReplicationVolumesOpsBuilder is used for expanding
+// EVS disks in a replication consistency group parameters.
+// any struct providing the parameters should implement this interface
+type ExtendReplicationVolumesOpsBuilder interface {
+	ToExtendReplicationVolumesMap() (map[string]interface{}, error)
+}
+
+// ReplicationsOps specifies the expansion information
+// of one or multiple EVS replication pairs.
+type ReplicationsOps struct {
+	// The IDs of EVS replication pairs
+	ID string `json:"id" required:"true"`
+
+	// The disk capacity after expansion in the EVS replication pair.
+	// The unit is GB.
+	NewSize int `json:"new_size" required:"true"`
+}
+
+// ExtendReplicationVolumesOps is a struct that contains all the parameters.
+type ExtendReplicationVolumesOps struct {
+	// The expansion information of one or multiple EVS replication pairs.
+	Replications []ReplicationsOps `json:"replications" required:"true"`
+}
+
+// ToExtendReplicationVolumesMap is used for type convert
+func (ops ReplicationsOps) ToExtendReplicationVolumesMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(ops, OsExtendReplicationVolume)
+}
+
+// Extend is expanding EVS disks in a replication consistency group.
+func Extend(client *golangsdk.ServiceClient, id string, ops ExtendReplicationVolumesOpsBuilder) (r ActionResult) {
+	b, err := ops.ToExtendReplicationVolumesMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(actionURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{200},
+	})
+
+	return
+}
