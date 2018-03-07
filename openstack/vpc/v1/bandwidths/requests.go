@@ -1,7 +1,7 @@
 package bandwidths
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huaweicloud/golangsdk"
 )
 
 //UpdateOptsBuilder is an interface by which can be able to build the request
@@ -17,23 +17,23 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToBWUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "bandwidth")
+	return golangsdk.BuildRequestBody(opts, "bandwidth")
 }
 
 //Get is a method by which can get the detailed information of a bandwidth
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
 }
 
 //Update is a method which can be able to update the port of public ip
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToBWUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(resourceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(resourceURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return

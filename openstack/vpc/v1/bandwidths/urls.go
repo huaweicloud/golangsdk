@@ -1,10 +1,10 @@
 package bandwidths
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huaweicloud/golangsdk"
 
 const resourcePath = "bandwidths"
 const apiVersion = "v1"
 
-func resourceURL(client *gophercloud.ServiceClient, id string) string {
+func resourceURL(client *golangsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, client.ProjectID, resourcePath, id)
 }

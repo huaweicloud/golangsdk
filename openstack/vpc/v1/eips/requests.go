@@ -1,7 +1,7 @@
 package eips
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huaweicloud/golangsdk"
 )
 
 //ApplyOptsBuilder is an interface by which can build the request body of public ip
@@ -29,30 +29,30 @@ type BandwidthOpts struct {
 }
 
 func (opts ApplyOpts) ToPublicIpApplyMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return golangsdk.BuildRequestBody(opts, "")
 }
 
 //Apply is a method by which can access to apply the public ip
-func Apply(client *gophercloud.ServiceClient, opts ApplyOptsBuilder) (r ApplyResult) {
+func Apply(client *golangsdk.ServiceClient, opts ApplyOptsBuilder) (r ApplyResult) {
 	b, err := opts.ToPublicIpApplyMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(rootURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Post(rootURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 //Get is a method by which can get the detailed information of public ip
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
 }
 
 //Delete is a method by which can be able to delete a private ip
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *golangsdk.ServiceClient, id string) (r DeleteResult) {
 	_, r.Err = client.Delete(resourceURL(client, id), nil)
 	return
 }
@@ -69,17 +69,17 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToPublicIpUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "publicip")
+	return golangsdk.BuildRequestBody(opts, "publicip")
 }
 
 //Update is a method which can be able to update the port of public ip
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToPublicIpUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(resourceURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = client.Put(resourceURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return

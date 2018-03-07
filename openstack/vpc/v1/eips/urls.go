@@ -1,14 +1,14 @@
 package eips
 
-import "github.com/gophercloud/gophercloud"
+import "github.com/huaweicloud/golangsdk"
 
 const resourcePath = "publicips"
 const apiVersion = "v1"
 
-func rootURL(client *gophercloud.ServiceClient) string {
+func rootURL(client *golangsdk.ServiceClient) string {
 	return client.ServiceURL(apiVersion, client.ProjectID, resourcePath)
 }
 
-func resourceURL(client *gophercloud.ServiceClient, id string) string {
+func resourceURL(client *golangsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, client.ProjectID, resourcePath, id)
 }

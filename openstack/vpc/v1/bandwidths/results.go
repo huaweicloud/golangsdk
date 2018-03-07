@@ -1,7 +1,7 @@
 package bandwidths
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huaweicloud/golangsdk"
 )
 
 //BandWidth is a struct that represents a bandwidth
@@ -18,7 +18,7 @@ type BandWidth struct {
 
 //GetResult is a return struct of get method
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (BandWidth, error) {
@@ -31,7 +31,7 @@ func (r GetResult) Extract() (BandWidth, error) {
 
 //UpdateResult is a struct which contains the result of update method
 type UpdateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r UpdateResult) Extract() (BandWidth, error) {

@@ -1,12 +1,12 @@
 package eips
 
 import (
-	"github.com/gophercloud/gophercloud"
+	"github.com/huaweicloud/golangsdk"
 )
 
 //ApplyResult is a struct which represents the result of apply public ip
 type ApplyResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r ApplyResult) Extract() (PublicIp, error) {
@@ -34,7 +34,7 @@ type PublicIp struct {
 
 //GetResult is a return struct of get method
 type GetResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r GetResult) Extract() (PublicIp, error) {
@@ -47,12 +47,12 @@ func (r GetResult) Extract() (PublicIp, error) {
 
 //DeleteResult is a struct of delete result
 type DeleteResult struct {
-	gophercloud.ErrResult
+	golangsdk.ErrResult
 }
 
 //UpdateResult is a struct which contains the result of update method
 type UpdateResult struct {
-	gophercloud.Result
+	golangsdk.Result
 }
 
 func (r UpdateResult) Extract() (PublicIp, error) {
