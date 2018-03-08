@@ -413,3 +413,11 @@ func NewDRSServiceV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 	sc, err := initClientOpts(client, eo, "volumev2")
 	return sc, err
 }
+
+func NewComputeV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "compute")
+	e := strings.Replace(sc.Endpoint, "v2", "v1", 1)
+	sc.Endpoint = e
+	sc.ResourceBase = e
+	return sc, err
+}
