@@ -37,17 +37,17 @@ type DeleteResult struct {
 
 // ReplicationConsistencyGroup response
 type ReplicationConsistencyGroup struct {
-	ID                string `json:"id"`
-	Name              string `json:"name"`
-	Description       string `json:"description"`
-	Status            string `json:"status"`
-	PriorityStation   string `json:"priority_station"`
-	ReplicationModel  string `json:"replication_model"`
-	ReplicationStatus string `json:"replication_status"`
-	ReplicationIDs    string `json:"replication_ids"`
-	CreatedAt         string `json:"created_at"`
-	UpdatedAt         string `json:"updated_at"`
-	FailureDetail     string `json:"failure_detail"`
+	ID                string   `json:"id"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Status            string   `json:"status"`
+	PriorityStation   string   `json:"priority_station"`
+	ReplicationModel  string   `json:"replication_model"`
+	ReplicationStatus string   `json:"replication_status"`
+	ReplicationIDs    []string `json:"replication_ids"`
+	CreatedAt         string   `json:"created_at"`
+	UpdatedAt         string   `json:"updated_at"`
+	FailureDetail     string   `json:"failure_detail"`
 }
 
 // GetResult contains the body of getting detailed
