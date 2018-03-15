@@ -267,7 +267,7 @@ func UpdatePasswd(client *golangsdk.ServiceClient,
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(updatePasswdURL(client, userID), &b, &r.Body,
+	_, r.Err = client.Post(updatePasswdURL(client, userID), &b, nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{204},
 		},

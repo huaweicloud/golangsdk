@@ -490,7 +490,7 @@ func HandleListInGroupSuccessfully(t *testing.T) {
 // HandleUpdateUserPasswdSuccessfully creates an HTTP handler at
 // "/users/{user_id}/password" on the test handler mux.
 func HandleUpdateUserPasswdSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/users/9fe1d3",
+	th.Mux.HandleFunc("/users/9fe1d3/password",
 		func(w http.ResponseWriter, r *http.Request) {
 
 			th.TestMethod(t, r, "POST")
