@@ -62,5 +62,13 @@ Example to Delete a Service
 		panic(err)
 	}
 
+Example to Get a service
+
+	serviceID := "3c7bbe9a6ecb453ca1789586291380ed"
+	service, err := services.Get(identityClient, serviceID).Extract()
+	if err != nil {
+		panic(err)
+	}
+
 */
 package services

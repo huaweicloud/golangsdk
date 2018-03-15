@@ -46,7 +46,7 @@ func TestListServices(t *testing.T) {
 		return true, nil
 	})
 	th.AssertNoErr(t, err)
-	th.CheckEquals(t, count, 1)
+	th.CheckEquals(t, count, 2)
 }
 
 func TestListServicesAllPages(t *testing.T) {
@@ -59,8 +59,6 @@ func TestListServicesAllPages(t *testing.T) {
 	actual, err := services.ExtractServices(allPages)
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, ExpectedServicesSlice, actual)
-	th.AssertEquals(t, ExpectedServicesSlice[0].Extra["name"], "service-one")
-	th.AssertEquals(t, ExpectedServicesSlice[1].Extra["email"], "service@example.com")
 }
 
 func TestGetSuccessful(t *testing.T) {
@@ -68,11 +66,10 @@ func TestGetSuccessful(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleGetServiceSuccessfully(t)
 
-	actual, err := services.Get(client.ServiceClient(), "9876").Extract()
+	actual, err := services.Get(client.ServiceClient(), "c2474183dca7453bbd73123a0b78feae").Extract()
 
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, SecondService, *actual)
-	th.AssertEquals(t, SecondService.Extra["email"], "service@example.com")
 }
 
 func TestUpdateSuccessful(t *testing.T) {
@@ -86,22 +83,21 @@ func TestUpdateSuccessful(t *testing.T) {
 			"description": "Service Two Updated",
 		},
 	}
-	actual, err := services.Update(client.ServiceClient(), "9876", updateOpts).Extract()
+	actual, err := services.Update(client.ServiceClient(), "c2474183dca7453bbd73123a0b78feae", updateOpts).Extract()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, SecondServiceUpdated, *actual)
-	th.AssertEquals(t, SecondServiceUpdated.Extra["description"], "Service Two Updated")
 }
 
 func TestDeleteSuccessful(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 
-	th.Mux.HandleFunc("/services/12345", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/services/053d21d488d1463c818132d9d08fb617", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "DELETE")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	res := services.Delete(client.ServiceClient(), "12345")
+	res := services.Delete(client.ServiceClient(), "053d21d488d1463c818132d9d08fb617")
 	th.AssertNoErr(t, res.Err)
 }

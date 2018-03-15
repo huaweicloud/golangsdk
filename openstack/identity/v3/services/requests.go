@@ -64,9 +64,6 @@ type ListOptsBuilder interface {
 type ListOpts struct {
 	// ServiceType filter the response by a type of service.
 	ServiceType string `q:"type"`
-
-	// Name filters the response by a service name.
-	Name string `q:"name"`
 }
 
 // ToServiceListMap builds a list query from the list options.

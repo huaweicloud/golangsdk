@@ -62,6 +62,12 @@ type Service struct {
 
 	// Extra is a collection of miscellaneous key/values.
 	Extra map[string]interface{} `json:"-"`
+
+	// Description is the description of the service.
+	Description string `json:"description"`
+
+	// Name is the name of the service.
+	Name string `json:"name"`
 }
 
 func (r *Service) UnmarshalJSON(b []byte) error {
