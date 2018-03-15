@@ -137,3 +137,9 @@ func Delete(client *golangsdk.ServiceClient, endpointID string) (r DeleteResult)
 	_, r.Err = client.Delete(endpointURL(client, endpointID), nil)
 	return
 }
+
+// Get retrieves details on a single Endpoint, by endpointID
+func Get(client *golangsdk.ServiceClient, endpointID string) (r GetResult) {
+	_, r.Err = client.Get(endpointURL(client, endpointID), &r.Body, nil)
+	return
+}

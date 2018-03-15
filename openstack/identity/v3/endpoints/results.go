@@ -37,6 +37,12 @@ type DeleteResult struct {
 	golangsdk.ErrResult
 }
 
+// GetResult is the response from a Get operation. Call its Extract
+// method to interpret it as an Endpoint.
+type GetResult struct {
+	commonResult
+}
+
 // Endpoint describes the entry point for another service's API.
 type Endpoint struct {
 	// ID is the unique ID of the endpoint.
@@ -57,6 +63,15 @@ type Endpoint struct {
 
 	// URL is the url of the Endpoint.
 	URL string `json:"url"`
+
+	// RegionID is the ID of the region the Endpoint is located in.
+	RegionID string `json:"region_id"`
+
+	// Enabled is the availablity of the Endpoint.
+	Enabled bool `json:"enabled"`
+
+	// Links is the links of the Endpoint
+	Links map[string]string `json:"links"`
 }
 
 // EndpointPage is a single page of Endpoint results.

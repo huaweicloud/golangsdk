@@ -65,5 +65,12 @@ Example to Delete an Endpoint
 	if err != nil {
 		panic(err)
 	}
+
+Example to Get an Endpoint
+	endpointID := "ad59deeec5154d1fa0dcff518596f499"
+	endpoint, err := endpoints.Get(identityClient, endpointID).ExtractErr()
+	if err != nil {
+		panic(err)
+	}
 */
 package endpoints
