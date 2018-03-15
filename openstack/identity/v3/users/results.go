@@ -164,3 +164,8 @@ type CheckGroupUserResult struct {
 type DeleteGroupUserResult struct {
 	golangsdk.ErrResult
 }
+
+// AddUserToGroupResult is the response of adding a user to a group.
+type AddUserToGroupResult struct {
+	golangsdk.ErrResult
+}

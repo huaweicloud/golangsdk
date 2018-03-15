@@ -1,6 +1,8 @@
 package users
 
 import (
+	"net/http"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/identity/v3/groups"
 	"github.com/huaweicloud/golangsdk/openstack/identity/v3/projects"
@@ -294,6 +296,19 @@ func DeleteGroupUser(client *golangsdk.ServiceClient,
 	_, r.Err = client.Delete(operateOnGroupUserURL(client, groupID, userID),
 		&golangsdk.RequestOpts{
 			OkCodes: []int{204},
+		},
+	)
+	return
+}
+
+// AddUserToGroup add a user to a group
+func AddUserToGroup(client *golangsdk.ServiceClient,
+	groupID, userID string) (r AddUserToGroupResult) {
+
+	_, r.Err = client.Put(operateOnGroupUserURL(client, groupID, userID),
+		nil, nil,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{http.StatusNoContent},
 		},
 	)
 	return
