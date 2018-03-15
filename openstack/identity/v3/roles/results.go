@@ -24,6 +24,21 @@ type Role struct {
 
 	// Extra is a collection of miscellaneous key/values.
 	Extra map[string]interface{} `json:"-"`
+
+	// Type is type of the role.
+	Type string `json:"type"`
+
+	// DisplayName is the displayed name of the role
+	DisplayName string `json:"display_name"`
+
+	// Catalog is the catelog of the role.
+	Catalog string `json:"catalog"`
+
+	// Policy contains detail policies of the role
+	Policy map[string]interface{} `json:"policy"`
+
+	// Description is the description of the role
+	Description string `json:"description"`
 }
 
 func (r *Role) UnmarshalJSON(b []byte) error {
