@@ -71,7 +71,7 @@ type Endpoint struct {
 	Enabled bool `json:"enabled"`
 
 	// Links is the links of the Endpoint
-	Links map[string]string `json:"links"`
+	Links map[string]interface{} `json:"links"`
 }
 
 // EndpointPage is a single page of Endpoint results.
