@@ -240,3 +240,37 @@ func ListInGroup(client *golangsdk.ServiceClient, groupID string, opts ListOptsB
 		return UserPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
+
+// UpdatePasswdOptsBuilder is the interface for password updating parameters
+type UpdatePasswdOptsBuilder interface {
+	ToPasswdUpdateMap() (map[string]interface{}, error)
+}
+
+// UpdatePasswdOpts provides options used to update user password
+type UpdatePasswdOpts struct {
+	OriginalPassword string `json:"original_password"`
+	Password         string `json:"password"`
+}
+
+// ToPasswdUpdateMap formats a UpdatePasswdOpts into an http request
+func (opts UpdatePasswdOpts) ToPasswdUpdateMap() (
+	map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "user")
+}
+
+// UpdatePasswd update password by user itself
+func UpdatePasswd(client *golangsdk.ServiceClient,
+	userID string, opts UpdatePasswdOptsBuilder) (r UpdatePasswdResult) {
+
+	b, err := opts.ToPasswdUpdateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = client.Post(updatePasswdURL(client, userID), &b, &r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{204},
+		},
+	)
+	return
+}

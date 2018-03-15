@@ -147,3 +147,9 @@ func (r userResult) Extract() (*User, error) {
 	err := r.ExtractInto(&s)
 	return s.User, err
 }
+
+// UpdatePasswordResult is the response from updating password operation. Call
+// its ExtractErr to determine the http response status.
+type UpdatePasswdResult struct {
+	golangsdk.ErrResult
+}

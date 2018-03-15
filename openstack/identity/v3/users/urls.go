@@ -30,6 +30,10 @@ func listProjectsURL(client *golangsdk.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "projects")
 }
 
+func updatePasswdURL(client *golangsdk.ServiceClient, userID string) string {
+	return client.ServiceURL("users", userID, "password")
+}
+
 func listInGroupURL(client *golangsdk.ServiceClient, groupID string) string {
 	return client.ServiceURL("groups", groupID, "users")
 }

@@ -121,6 +121,15 @@ func TestUserCRUD(t *testing.T) {
 
 	tools.PrintResource(t, newUser)
 	tools.PrintResource(t, newUser.Extra)
+
+	updatePasswdOpts := users.UpdatePasswdOpts{
+		OriginalPassword: "foobar",
+		Password:         "barfoo",
+	}
+	err = users.UpdatePasswd(client, user.ID, updatePasswdOpts).ExtractErr()
+	if err != nil {
+		t.Fatalf("Unable to update user password: %v", err)
+	}
 }
 
 func TestUsersListGroups(t *testing.T) {

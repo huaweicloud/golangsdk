@@ -119,5 +119,19 @@ Example to List Users in a Group
 		fmt.Printf("%+v\n", user)
 	}
 
+Example to Update User Password
+
+	userID := "0fe36e73809d46aeae6705c39077b1b3"
+
+	opts := users.UpdatePasswdOpts {
+		OriginalPassword: "old-user-password",
+		Password: "new-user-password",
+	}
+
+	err := users.UpdatePasswd(identityClient, userID, opts).ExtractErr()
+	if err != nil {
+		panic(err)
+	}
+
 */
 package users

@@ -231,6 +231,17 @@ const ListProjectsOutput = `
 }
 `
 
+// UpdatePasswdReUpdatePasswdRequest provides a demo update password request
+// body.
+const UpdatePasswdRequest = `
+{
+	"user": {
+		"original_password": "secretsecret",
+		"password": "notthatsecret"
+	}
+}
+`
+
 // FirstUser is the first user in the List request.
 var nilTime time.Time
 var FirstUser = users.User{
@@ -474,4 +485,19 @@ func HandleListInGroupSuccessfully(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, ListOutput)
 	})
+}
+
+// HandleUpdateUserPasswdSuccessfully creates an HTTP handler at
+// "/users/{user_id}/password" on the test handler mux.
+func HandleUpdateUserPasswdSuccessfully(t *testing.T) {
+	th.Mux.HandleFunc("/users/9fe1d3",
+		func(w http.ResponseWriter, r *http.Request) {
+
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			th.TestJSONRequest(t, r, UpdatePasswdRequest)
+
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
 }

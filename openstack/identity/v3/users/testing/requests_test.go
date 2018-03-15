@@ -175,3 +175,16 @@ func TestListInGroup(t *testing.T) {
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, ExpectedUsersSlice, actual)
 }
+
+func TestUpdateUserPasswd(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleUpdateUserPasswdSuccessfully(t)
+
+	opts := users.UpdatePasswdOpts{
+		OriginalPassword: "secretsecret",
+		Password:         "notthatsecret",
+	}
+	res := users.UpdatePasswd(client.ServiceClient(), "9fe1d3", opts)
+	th.AssertNoErr(t, res.Err)
+}
