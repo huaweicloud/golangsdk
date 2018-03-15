@@ -24,7 +24,9 @@ func Update(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) error
 		return err
 	}
 	log.Printf("[DEBUG] update url:%q, body=%#v", updateURL(c, id), b)
-	_, err = c.Put(updateURL(c, id), b, nil, nil)
+	_, err = c.Put(updateURL(c, id), b, nil, &golangsdk.RequestOpts{
+		OkCodes: []int{204},
+	})
 	return err
 }
 
