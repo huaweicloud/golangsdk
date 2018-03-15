@@ -286,3 +286,15 @@ func CheckGroupUser(client *golangsdk.ServiceClient,
 	)
 	return
 }
+
+// DeleteGroupUser deletes a user from a group.
+func DeleteGroupUser(client *golangsdk.ServiceClient,
+	groupID string, userID string) (r DeleteGroupUserResult) {
+
+	_, r.Err = client.Delete(operateOnGroupUserURL(client, groupID, userID),
+		&golangsdk.RequestOpts{
+			OkCodes: []int{204},
+		},
+	)
+	return
+}

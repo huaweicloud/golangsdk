@@ -197,3 +197,12 @@ func TestCheckGroupUser(t *testing.T) {
 	res := users.CheckGroupUser(client.ServiceClient(), "ea167b", "9fe1d3")
 	th.AssertNoErr(t, res.Err)
 }
+
+func TestDeleteGroupUser(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleDeleteGroupUserSuccessfully(t)
+
+	res := users.DeleteGroupUser(client.ServiceClient(), "ea167b", "9fe1d3")
+	th.AssertNoErr(t, res.Err)
+}

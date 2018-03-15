@@ -514,3 +514,16 @@ func HandleCheckGroupUserSuccessfully(t *testing.T) {
 		},
 	)
 }
+
+// HandleDeleteGroupUserSuccessfully creates an HTTP handler at
+// "/groups/{group_id}/users/{user_id}" on the test handler mux.
+func HandleDeleteGroupUserSuccessfully(t *testing.T) {
+	th.Mux.HandleFunc("/groups/ea167b/users/9fe1d3",
+		func(w http.ResponseWriter, r *http.Request) {
+
+			th.TestMethod(t, r, "DELETE")
+
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
+}

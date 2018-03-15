@@ -143,5 +143,15 @@ Example to Check User in a Group
 		panic(err)
 	}
 
+Example to Delete User from a Group
+
+	groupID := "bede500ee1124ae9b0006ff859758b3a"
+	userID := "0fe36e73809d46aeae6705c39077b1b3"
+
+	err := users.DeleteGroupUser(identityClient, groupID, userID).ExtractErr()
+	if err != nil {
+		panic(err)
+	}
+
 */
 package users

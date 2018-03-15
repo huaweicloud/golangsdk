@@ -159,3 +159,8 @@ type UpdatePasswdResult struct {
 type CheckGroupUserResult struct {
 	golangsdk.ErrResult
 }
+
+// DeleteGroupUserResult is the response of deleting the user from a group.
+type DeleteGroupUserResult struct {
+	golangsdk.ErrResult
+}
