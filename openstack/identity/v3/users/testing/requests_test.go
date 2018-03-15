@@ -188,3 +188,12 @@ func TestUpdateUserPasswd(t *testing.T) {
 	res := users.UpdatePasswd(client.ServiceClient(), "9fe1d3", opts)
 	th.AssertNoErr(t, res.Err)
 }
+
+func TestCheckGroupUser(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleCheckGroupUserSuccessfully(t)
+
+	res := users.CheckGroupUser(client.ServiceClient(), "ea167b", "9fe1d3")
+	th.AssertNoErr(t, res.Err)
+}

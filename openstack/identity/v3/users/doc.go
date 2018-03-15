@@ -133,5 +133,15 @@ Example to Update User Password
 		panic(err)
 	}
 
+Example to Check User in a Group
+
+	groupID := "bede500ee1124ae9b0006ff859758b3a"
+	userID := "0fe36e73809d46aeae6705c39077b1b3"
+
+	err := users.CheckGroupUser(identityClient, groupID, userID).ExtractErr()
+	if err != nil {
+		panic(err)
+	}
+
 */
 package users

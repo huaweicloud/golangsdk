@@ -501,3 +501,16 @@ func HandleUpdateUserPasswdSuccessfully(t *testing.T) {
 		},
 	)
 }
+
+// HandleCheckGroupUserSuccessfully creates an HTTP handler at
+// "/groups/{group_id}/users/{user_id}" on the test handler mux.
+func HandleCheckGroupUserSuccessfully(t *testing.T) {
+	th.Mux.HandleFunc("/groups/ea167b/users/9fe1d3",
+		func(w http.ResponseWriter, r *http.Request) {
+
+			th.TestMethod(t, r, "HEAD")
+
+			w.WriteHeader(http.StatusNoContent)
+		},
+	)
+}

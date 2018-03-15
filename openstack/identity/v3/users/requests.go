@@ -274,3 +274,15 @@ func UpdatePasswd(client *golangsdk.ServiceClient,
 	)
 	return
 }
+
+// CheckGroupUser check if the user does exist in the group
+func CheckGroupUser(client *golangsdk.ServiceClient,
+	groupID string, userID string) (r CheckGroupUserResult) {
+
+	_, r.Err = client.Head(operateOnGroupUserURL(client, groupID, userID),
+		&golangsdk.RequestOpts{
+			OkCodes: []int{204},
+		},
+	)
+	return
+}

@@ -153,3 +153,9 @@ func (r userResult) Extract() (*User, error) {
 type UpdatePasswdResult struct {
 	golangsdk.ErrResult
 }
+
+// CheckGroupUserResult is the response from checking the user is existed in
+// the group.
+type CheckGroupUserResult struct {
+	golangsdk.ErrResult
+}
