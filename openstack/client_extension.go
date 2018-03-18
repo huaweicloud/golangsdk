@@ -98,10 +98,10 @@ func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.Endpoi
 func NewKmsKeyV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "compute")
 	sc.Endpoint = strings.Replace(sc.Endpoint, "ecs", "kms", 1)
+	sc.Endpoint = sc.Endpoint[:strings.LastIndex(sc.Endpoint, "v2")+3]
 	sc.Endpoint = strings.Replace(sc.Endpoint, "v2", "v1.0", 1)
-	sc.ResourceBase = sc.Endpoint + "kms/"
+	sc.ResourceBase = sc.Endpoint
 	sc.Type = "kms"
-
 	return sc, err
 }
 
