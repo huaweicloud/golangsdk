@@ -33,3 +33,23 @@ func listAssignmentsURL(client *golangsdk.ServiceClient) string {
 func assignURL(client *golangsdk.ServiceClient, targetType, targetID, actorType, actorID, roleID string) string {
 	return client.ServiceURL(targetType, targetID, actorType, actorID, rolePath, roleID)
 }
+
+func checkRoleOfURL(client *golangsdk.ServiceClient,
+	targetType, targetID, actorType, actorID, roleID string) string {
+
+	return client.ServiceURL(
+		targetType, targetID,
+		actorType, actorID,
+		"roles", roleID,
+	)
+}
+
+func listRolesOfURL(client *golangsdk.ServiceClient,
+	targetType, targetID, actorType, actorID string) string {
+
+	return client.ServiceURL(
+		targetType, targetID,
+		actorType, actorID,
+		"roles",
+	)
+}

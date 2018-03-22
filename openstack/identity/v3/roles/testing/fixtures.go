@@ -331,3 +331,91 @@ func HandleListRoleAssignmentsSuccessfully(t *testing.T) {
 		fmt.Fprintf(w, ListAssignmentOutput)
 	})
 }
+
+// HandleCheckRoleOfSuccessfully creates an HTTP handler for CheckRoleOf api
+func HandleCheckRoleOfSuccessfully(t *testing.T) {
+
+	th.Mux.HandleFunc(
+		"/domains/{domain_id}/groups/{group_id}/roles/{role_id}",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "HEAD")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+			w.WriteHeader(http.StatusNoContent)
+		})
+
+	th.Mux.HandleFunc(
+		"/domains/{domain_id}/users/{user_id}/roles/{role_id}",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "HEAD")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+			w.WriteHeader(http.StatusNoContent)
+		})
+
+	th.Mux.HandleFunc(
+		"/projects/{project_id}/groups/{group_id}/roles/{role_id}",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "HEAD")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+			w.WriteHeader(http.StatusNoContent)
+		})
+
+	th.Mux.HandleFunc(
+		"/projects/{project_id}/users/{user_id}/roles/{role_id}",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "HEAD")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+			w.WriteHeader(http.StatusNoContent)
+		})
+}
+
+// HandleListRolesOfSuccessfully creates an HTTP handler for ListRolesOf api
+func HandleListRolesOfSuccessfully(t *testing.T) {
+
+	th.Mux.HandleFunc(
+		"/domains/{domain_id}/groups/{group_id}/roles",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "Accept", "application/json")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, ListOutput)
+		})
+
+	th.Mux.HandleFunc(
+		"/domains/{domain_id}/users/{user_id}/roles",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "Accept", "application/json")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, ListOutput)
+		})
+
+	th.Mux.HandleFunc(
+		"/projects/{project_id}/groups/{group_id}/roles",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "Accept", "application/json")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, ListOutput)
+		})
+
+	th.Mux.HandleFunc(
+		"/projects/{project_id}/users/{user_id}/roles",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "Accept", "application/json")
+			th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			fmt.Fprintf(w, ListOutput)
+		})
+}

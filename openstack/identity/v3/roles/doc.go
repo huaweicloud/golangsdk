@@ -108,5 +108,43 @@ Example to Unassign a Role From a User in a Project
 	if err != nil {
 		panic(err)
 	}
+
+Example to List Role of a User in a Project
+
+	projectID := "a99e9b4e620e4db09a2dfb6e42a01e66"
+	userID := "9df1a02f5eb2416a9781e8b0c022d3ae"
+	roleID := "9fe2ff9ee4384b1894a90878d3e92bab"
+
+	allPages, err := roles.ListRolesOf(identityClient, roles.ListRolesOfOpts{
+		UserID: userID,
+		ProjectID: projectID,
+	}).AllPages()
+	if err != nil {
+		panic(err)
+	}
+
+	allRoles, err := roles.ExtractRoles(allPages)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, role := range allRoles {
+		fmt.Printf("%+v\n", role)
+	}
+
+Example to Check a Role Of a User in a Project
+
+	projectID := "a99e9b4e620e4db09a2dfb6e42a01e66"
+	userID := "9df1a02f5eb2416a9781e8b0c022d3ae"
+	roleID := "9fe2ff9ee4384b1894a90878d3e92bab"
+
+	err := roles.CheckRoleOf(identityClient, roleID, roles.CheckRoleOfOpts{
+		UserID:    userID,
+		ProjectID: projectID,
+	}).ExtractErr()
+
+	if err != nil {
+		panic(err)
+	}
 */
 package roles

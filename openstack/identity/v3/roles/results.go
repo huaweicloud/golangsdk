@@ -227,3 +227,9 @@ type AssignmentResult struct {
 type UnassignmentResult struct {
 	golangsdk.ErrResult
 }
+
+// CheckRoleOfResult is the response of checking a role existed in a group
+// of a domain or project request.
+type CheckRoleOfResult struct {
+	golangsdk.ErrResult
+}

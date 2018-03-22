@@ -268,6 +268,30 @@ func TestRoleAssignToGroupOnDomain(t *testing.T) {
 	for _, roleAssignment := range allRoleAssignments {
 		tools.PrintResource(t, roleAssignment)
 	}
+
+	err = roles.CheckRoleOf(client, role.ID, roles.CheckRoleOfOpts{
+		GroupID:  group.ID,
+		DomainID: domain.ID,
+	}).ExtractErr()
+	if err != nil {
+		t.Fatalf("Unable to check role of domain: %v", err)
+	}
+
+	allPages, err := roles.ListRolesOf(client, roles.CheckRoleOfOpts{
+		GroupID:  group.ID,
+		DomainID: domain.ID,
+	}).AllPages()
+	if err != nil {
+		t.Fatalf("Unable to list roles of domain: %v", err)
+	}
+	allRoles, err := roles.ExtractRoles(allPages)
+	if err != nil {
+		t.Fatalf("Unable to extract roles: %v", err)
+	}
+
+	for _, role := range allRoles {
+		tools.PrintResource(t, role)
+	}
 }
 
 func TestRoleAssignToGroupOnProject(t *testing.T) {
@@ -324,5 +348,29 @@ func TestRoleAssignToGroupOnProject(t *testing.T) {
 	t.Logf("Role assignments of group %s on project %s:", group.Name, project.Name)
 	for _, roleAssignment := range allRoleAssignments {
 		tools.PrintResource(t, roleAssignment)
+	}
+
+	err = roles.CheckRoleOf(client, role.ID, roles.CheckRoleOfOpts{
+		GroupID:   group.ID,
+		ProjectID: project.ID,
+	}).ExtractErr()
+	if err != nil {
+		t.Fatalf("Unable to check role of project: %v", err)
+	}
+
+	allPages, err := roles.ListRolesOf(client, roles.CheckRoleOfOpts{
+		GroupID:   group.ID,
+		ProjectID: project.ID,
+	}).AllPages()
+	if err != nil {
+		t.Fatalf("Unable to list roles of project: %v", err)
+	}
+	allRoles, err := roles.ExtractRoles(allPages)
+	if err != nil {
+		t.Fatalf("Unable to extract roles: %v", err)
+	}
+
+	for _, role := range allRoles {
+		tools.PrintResource(t, role)
 	}
 }

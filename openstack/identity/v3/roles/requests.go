@@ -312,3 +312,123 @@ func Unassign(client *golangsdk.ServiceClient, roleID string, opts UnassignOpts)
 	})
 	return
 }
+
+// ListRolesOfOpts provides options to list roles
+type ListRolesOfOpts struct {
+	// UserID is the ID of a user to unassign a role
+	// Note: exactly one of UserID or GroupID must be provided
+	UserID string `xor:"GroupID"`
+
+	// GroupID is the ID of a group to unassign a role
+	// Note: exactly one of UserID or GroupID must be provided
+	GroupID string `xor:"UserID"`
+
+	// ProjectID is the ID of a project to unassign a role on
+	// Note: exactly one of ProjectID or DomainID must be provided
+	ProjectID string `xor:"DomainID"`
+
+	// DomainID is the ID of a domain to unassign a role on
+	// Note: exactly one of ProjectID or DomainID must be provided
+	DomainID string `xor:"ProjectID"`
+}
+
+// GetRolesFromGroup list all roles assigned to the group
+func ListRolesOf(
+	client *golangsdk.ServiceClient, opts ListRolesOfOpts) pagination.Pager {
+
+	// Check xor conditions
+	_, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		return pagination.Pager{Err: err}
+	}
+
+	// Get corresponding URL
+	var targetID string
+	var targetType string
+	if opts.ProjectID != "" {
+		targetID = opts.ProjectID
+		targetType = "projects"
+	} else {
+		targetID = opts.DomainID
+		targetType = "domains"
+	}
+
+	var actorID string
+	var actorType string
+	if opts.UserID != "" {
+		actorID = opts.UserID
+		actorType = "users"
+	} else {
+		actorID = opts.GroupID
+		actorType = "groups"
+	}
+
+	return pagination.NewPager(
+		client,
+		listRolesOfURL(client, targetType, targetID, actorType, actorID),
+		func(r pagination.PageResult) pagination.Page {
+			return RolePage{pagination.LinkedPageBase{PageResult: r}}
+		},
+	)
+}
+
+// CheckRoleOfOpts provides options to check role existed
+type CheckRoleOfOpts struct {
+	// UserID is the ID of a user to unassign a role
+	// Note: exactly one of UserID or GroupID must be provided
+	UserID string `xor:"GroupID"`
+
+	// GroupID is the ID of a group to unassign a role
+	// Note: exactly one of UserID or GroupID must be provided
+	GroupID string `xor:"UserID"`
+
+	// ProjectID is the ID of a project to unassign a role on
+	// Note: exactly one of ProjectID or DomainID must be provided
+	ProjectID string `xor:"DomainID"`
+
+	// DomainID is the ID of a domain to unassign a role on
+	// Note: exactly one of ProjectID or DomainID must be provided
+	DomainID string `xor:"ProjectID"`
+}
+
+// CheckRoleOf check a role existed in a group of a domain or project
+func CheckRoleOf(client *golangsdk.ServiceClient,
+	roleID string, opts CheckRoleOfOpts) (r CheckRoleOfResult) {
+
+	// Check xor conditions
+	_, err := golangsdk.BuildRequestBody(opts, "")
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	// Get corresponding URL
+	var targetID string
+	var targetType string
+	if opts.ProjectID != "" {
+		targetID = opts.ProjectID
+		targetType = "projects"
+	} else {
+		targetID = opts.DomainID
+		targetType = "domains"
+	}
+
+	var actorID string
+	var actorType string
+	if opts.UserID != "" {
+		actorID = opts.UserID
+		actorType = "users"
+	} else {
+		actorID = opts.GroupID
+		actorType = "groups"
+	}
+
+	_, r.Err = client.Head(
+		checkRoleOfURL(client,
+			targetType, targetID, actorType, actorID, roleID),
+		&golangsdk.RequestOpts{
+			OkCodes: []int{204},
+		},
+	)
+	return
+}
