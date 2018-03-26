@@ -53,7 +53,7 @@ type Replication struct {
 	Progress                      string `json:"progress"`
 	FailureDetail                 string `json:"failure_detail"`
 	// RecordMetadata includes volume_type and multiattach currently.
-	RecordMetadata map[string]string `json:"record_metadata"`
+	RecordMetadata string `json:"record_metadata"`
 }
 
 // GetResult contains the body of getting detailed
