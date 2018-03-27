@@ -21,6 +21,9 @@ type Domain struct {
 
 	// Name is the name of the domain.
 	Name string `json:"name"`
+
+	// EnterpriseName is the name of company user.
+	EnterpriseName string `json:"enterpriseName"`
 }
 
 type domainResult struct {
