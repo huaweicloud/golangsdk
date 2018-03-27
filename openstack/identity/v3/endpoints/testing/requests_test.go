@@ -65,6 +65,9 @@ func TestCreateSuccessful(t *testing.T) {
 		Region:       "underground",
 		ServiceID:    "asdfasdfasdfasdf",
 		URL:          "https://1.2.3.4:9000/",
+		Links: map[string]interface{}{
+			"self": "https://localhost:5000/v3/endpoints/12",
+		},
 	}
 
 	th.AssertDeepEquals(t, expected, actual)
@@ -130,6 +133,9 @@ func TestListEndpoints(t *testing.T) {
 				Region:       "underground",
 				ServiceID:    "asdfasdfasdfasdf",
 				URL:          "https://1.2.3.4:9000/",
+				Links: map[string]interface{}{
+					"self": "https://localhost:5000/v3/endpoints/12",
+				},
 			},
 			{
 				ID:           "13",
@@ -138,6 +144,9 @@ func TestListEndpoints(t *testing.T) {
 				Region:       "underground",
 				ServiceID:    "asdfasdfasdfasdf",
 				URL:          "https://1.2.3.4:9001/",
+				Links: map[string]interface{}{
+					"self": "https://localhost:5000/v3/endpoints/13",
+				},
 			},
 		}
 		th.AssertDeepEquals(t, expected, actual)
@@ -194,6 +203,9 @@ func TestUpdateEndpoint(t *testing.T) {
 		Region:       "somewhere-else",
 		ServiceID:    "asdfasdfasdfasdf",
 		URL:          "https://1.2.3.4:9000/",
+		Links: map[string]interface{}{
+			"self": "https://localhost:5000/v3/endpoints/12",
+		},
 	}
 	th.AssertDeepEquals(t, expected, actual)
 }
@@ -254,7 +266,7 @@ func TestGetEnpoint(t *testing.T) {
 		URL:          "https://1.2.3.4:9000/",
 		RegionID:     "qwerqwerqwer",
 		Enabled:      true,
-		Links: map[string]string{
+		Links: map[string]interface{}{
 			"self": "https://localhost:5000/v3/endpoints/12",
 		},
 	}
