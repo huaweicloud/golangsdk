@@ -22,7 +22,11 @@ const ListOutput = `
             "enabled": true, 
             "type": "compute", 
             "id": "053d21d488d1463c818132d9d08fb617", 
-            "description": "Service One" 
+            "description": "Service One",
+            "extra": {
+                "name": "service-one",
+                "description": "Service One"
+            }
         }, 
         { 
             "name": "service-two", 
@@ -32,7 +36,11 @@ const ListOutput = `
             "enabled": true, 
             "type": "compute", 
             "id": "c2474183dca7453bbd73123a0b78feae", 
-            "description": "Service Two" 
+            "description": "Service Two",
+            "extra": {
+                "name": "service-two",
+                "description": "Service Two"
+            }
         }
     ], 
     "links": { 
@@ -48,13 +56,18 @@ const ListOutput = `
 const GetOutput = `
 { 
     "service": { 
-        "enabled": true, 
-        "type": "compute", 
-        "name": "nova", 
-        "links": { 
-            "self": "10.10.10.10/v3/services/5a4ed456d228428c800ed2b67b4363a7" 
-        }, 
-        "id": "5a4ed456d228428c800ed2b67b4363a7" 
+		"name": "service-two", 
+		"links": { 
+			"self": "https://iamcore_links.com/v3/services/c2474183dca7453bbd73123a0b78feae" 
+		}, 
+		"enabled": true, 
+		"type": "compute", 
+		"id": "c2474183dca7453bbd73123a0b78feae", 
+		"description": "Service Two",
+		"extra": {
+			"name": "service-two",
+			"description": "Service Two"
+		}
     } 
 }
 
@@ -66,7 +79,8 @@ const CreateRequest = `
     "service": {
         "description": "Service Two",
         "name": "service-two",
-        "type": "compute"
+        "type": "compute",
+        "email": "service@example.com"
     }
 }
 `
@@ -92,7 +106,11 @@ const UpdateOutput = `
          "enabled": true, 
          "type": "compute2", 
          "id": "c2474183dca7453bbd73123a0b78feae", 
-         "description": "Service Two Updated" 
+         "description": "Service Two Updated",
+		"extra": {
+			"name": "service-two",
+			"description": "Service Two Updated"
+		}
     }
 }
 `
@@ -103,10 +121,14 @@ var FirstService = services.Service{
 	Links: map[string]interface{}{
 		"self": "https://iamcore_links.com/v3/services/053d21d488d1463c818132d9d08fb617",
 	},
-	Type:    "compute",
-	Enabled: true,
-	Name: "service-one",
+	Type:        "compute",
+	Enabled:     true,
+	Name:        "service-one",
 	Description: "Service One",
+	Extra: map[string]interface{}{
+		"name":        "service-one",
+		"description": "Service One",
+	},
 }
 
 // SecondService is the second service in the List request.
@@ -115,10 +137,14 @@ var SecondService = services.Service{
 	Links: map[string]interface{}{
 		"self": "https://iamcore_links.com/v3/services/c2474183dca7453bbd73123a0b78feae",
 	},
-	Type:    "compute",
-	Enabled: true,
-	Name: "service-two",
+	Type:        "compute",
+	Enabled:     true,
+	Name:        "service-two",
 	Description: "Service Two",
+	Extra: map[string]interface{}{
+		"name":        "service-two",
+		"description": "Service Two",
+	},
 }
 
 // SecondServiceUpdated is the SecondService should look after an Update.
@@ -127,10 +153,14 @@ var SecondServiceUpdated = services.Service{
 	Links: map[string]interface{}{
 		"self": "https://iamcore_links.com/v3/services/c2474183dca7453bbd73123a0b78feae",
 	},
-	Type:    "compute2",
-	Enabled: true,
-	Name: "service-two",
+	Type:        "compute2",
+	Enabled:     true,
+	Name:        "service-two",
 	Description: "Service Two Updated",
+	Extra: map[string]interface{}{
+		"name":        "service-two",
+		"description": "Service Two Updated",
+	},
 }
 
 // ExpectedServicesSlice is the slice of services to be returned from ListOutput.

@@ -46,7 +46,7 @@ func TestListServices(t *testing.T) {
 		return true, nil
 	})
 	th.AssertNoErr(t, err)
-	th.CheckEquals(t, count, 2)
+	th.CheckEquals(t, count, 1)
 }
 
 func TestListServicesAllPages(t *testing.T) {

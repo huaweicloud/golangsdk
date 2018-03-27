@@ -61,7 +61,7 @@ type Service struct {
 	Links map[string]interface{} `json:"links"`
 
 	// Extra is a collection of miscellaneous key/values.
-	Extra map[string]interface{} `json:"-"`
+	Extra map[string]interface{} `json:"-,omitempty"`
 
 	// Description is the description of the service.
 	Description string `json:"description"`
