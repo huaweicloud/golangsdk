@@ -352,11 +352,59 @@ func NewNetworkV1Client() (*golangsdk.ServiceClient, error) {
 	})
 }
 
+// NewPeerNetworkV1Client returns a *ServiceClient for making calls to the
+// OpenStack Networking v1 API for VPC peer. An error will be returned if authentication
+// or client creation was not possible.
+func NewPeerNetworkV1Client() (*golangsdk.ServiceClient, error) {
+	ao, err := openstack.AuthOptionsFromEnv()
+	if err != nil {
+		return nil, err
+	}
+
+	err = UpdatePeerTenantDetails(&ao)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := openstack.AuthenticatedClient(ao)
+	if err != nil {
+		return nil, err
+	}
+
+	return openstack.NewNetworkV1(client, golangsdk.EndpointOpts{
+		Region: os.Getenv("OS_REGION_NAME"),
+	})
+}
+
 // NewNetworkV2Client returns a *ServiceClient for making calls to the
 // OpenStack Networking v2 API. An error will be returned if authentication
 // or client creation was not possible.
 func NewNetworkV2Client() (*golangsdk.ServiceClient, error) {
 	ao, err := openstack.AuthOptionsFromEnv()
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := openstack.AuthenticatedClient(ao)
+	if err != nil {
+		return nil, err
+	}
+
+	return openstack.NewNetworkV2(client, golangsdk.EndpointOpts{
+		Region: os.Getenv("OS_REGION_NAME"),
+	})
+}
+
+// NewPeerNetworkV2Client returns a *ServiceClient for making calls to the
+// OpenStack Networking v2 API for Peer. An error will be returned if authentication
+// or client creation was not possible.
+func NewPeerNetworkV2Client() (*golangsdk.ServiceClient, error) {
+	ao, err := openstack.AuthOptionsFromEnv()
+	if err != nil {
+		return nil, err
+	}
+
+	err = UpdatePeerTenantDetails(&ao)
 	if err != nil {
 		return nil, err
 	}
@@ -407,4 +455,21 @@ func NewSharedFileSystemV2Client() (*golangsdk.ServiceClient, error) {
 	return openstack.NewSharedFileSystemV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
+}
+
+func UpdatePeerTenantDetails(ao *golangsdk.AuthOptions) error {
+
+	if peerTenantID := os.Getenv("OS_Peer_Tenant_ID"); peerTenantID != "" {
+		ao.TenantID = peerTenantID
+		ao.TenantName = ""
+		return nil
+
+	} else if peerTenantName := os.Getenv("OS_Peer_Tenant_Name"); peerTenantName != "" {
+		ao.TenantID = ""
+		ao.TenantName = peerTenantName
+		return nil
+
+	} else {
+		return fmt.Errorf("You're missing some important setup:\n OS_Peer_Tenant_ID or OS_Peer_Tenant_Name env variables must be provided.")
+	}
 }
