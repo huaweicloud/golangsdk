@@ -262,8 +262,8 @@ func TestAcceptVpcPeering(t *testing.T) {
 	th.AssertEquals(t, "22a3e5b1-1150-408e-99f7-5e25a391cead", n.ID)
 	th.AssertEquals(t, "test_peering", n.Name)
 	th.AssertEquals(t, "ACTIVE", n.Status)
-	th.AssertDeepEquals(t, peerings.VpcInfo{"c6efbdb7-dca4-4178-b3ec-692f125c1e25","17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
-	th.AssertDeepEquals(t, peerings.VpcInfo{"3127e30b-5f8e-42d1-a3cc-fdadf412c5bf","87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
+	th.AssertDeepEquals(t, peerings.VpcInfo{VpcId:"c6efbdb7-dca4-4178-b3ec-692f125c1e25",TenantId:"17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
+	th.AssertDeepEquals(t, peerings.VpcInfo{VpcId:"3127e30b-5f8e-42d1-a3cc-fdadf412c5bf",TenantId:"87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
 
 }
 
@@ -303,8 +303,8 @@ func TestRejectVpcPeering(t *testing.T) {
 	th.AssertEquals(t, "22a3e5b1-1150-408e-99f7-5e25a391cead", n.ID)
 	th.AssertEquals(t, "test_peering", n.Name)
 	th.AssertEquals(t, "ACTIVE", n.Status)
-	th.AssertDeepEquals(t, peerings.VpcInfo{"c6efbdb7-dca4-4178-b3ec-692f125c1e25","17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
-	th.AssertDeepEquals(t, peerings.VpcInfo{"3127e30b-5f8e-42d1-a3cc-fdadf412c5bf","87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
+	th.AssertDeepEquals(t, peerings.VpcInfo{VpcId:"c6efbdb7-dca4-4178-b3ec-692f125c1e25",TenantId:"17fbda95add24720a4038ba4b1c705ed"}, n.AcceptVpcInfo)
+	th.AssertDeepEquals(t, peerings.VpcInfo{VpcId:"3127e30b-5f8e-42d1-a3cc-fdadf412c5bf",TenantId:"87a56a48977e42068f70ad3280c50f0e"}, n.RequestVpcInfo)
 
 }
 

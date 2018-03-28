@@ -43,7 +43,7 @@ func CreateSubnetNResources(t *testing.T, client *golangsdk.ServiceClient) (*sub
 	if err != nil {
 		return subnet, err
 	}
-	t.Logf("Created subnet: %s", subnet)
+	t.Logf("Created subnet: %v", subnet)
 
 	return subnet, nil
 }

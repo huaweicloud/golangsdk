@@ -39,7 +39,7 @@ func CreatePeeringResourcesNConn(t *testing.T, clientV2 *golangsdk.ServiceClient
 	peerCreateOpts := peerings.CreateOpts{
 		Name:           peeringConnName,
 		RequestVpcInfo: peerings.VpcInfo{VpcId: vpc.ID},
-		AcceptVpcInfo:  peerings.VpcInfo{peerVpc.ID, peerClientV2.ProjectID},
+		AcceptVpcInfo:  peerings.VpcInfo{VpcId: peerVpc.ID, TenantId: peerClientV2.ProjectID},
 	}
 
 	t.Logf("Attempting to create vpc peering connection: %s", peeringConnName)
