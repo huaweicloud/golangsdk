@@ -179,7 +179,7 @@ func FailOver(client *golangsdk.ServiceClient, id string) (r ActionResult) {
 	_, r.Err = client.Post(
 		actionURL(client, id),
 		map[string]interface{}{OsFailoverReplicationConsistencyGroup: nil},
-		&r.Body,
+		nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{200},
 		})
@@ -192,7 +192,7 @@ func Sync(client *golangsdk.ServiceClient, id string) (r ActionResult) {
 	_, r.Err = client.Post(
 		actionURL(client, id),
 		map[string]interface{}{OsSyncReplicationConsistencyGroup: nil},
-		&r.Body,
+		nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{200},
 		})
@@ -205,7 +205,7 @@ func Reverse(client *golangsdk.ServiceClient, id string) (r ActionResult) {
 	_, r.Err = client.Post(
 		actionURL(client, id),
 		map[string]interface{}{OsReverseReplicationConsistencyGroup: nil},
-		&r.Body,
+		nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{200},
 		})
@@ -218,7 +218,7 @@ func Stop(client *golangsdk.ServiceClient, id string) (r ActionResult) {
 	_, r.Err = client.Post(
 		actionURL(client, id),
 		map[string]interface{}{OsStopReplicationConsistencyGroup: nil},
-		&r.Body,
+		nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{200},
 		})
@@ -231,7 +231,7 @@ func Reprotect(client *golangsdk.ServiceClient, id string) (r ActionResult) {
 	_, r.Err = client.Post(
 		actionURL(client, id),
 		map[string]interface{}{OsReprotectReplicationConsistencyGroup: nil},
-		&r.Body,
+		nil,
 		&golangsdk.RequestOpts{
 			OkCodes: []int{200},
 		})
@@ -276,7 +276,7 @@ func Extend(client *golangsdk.ServiceClient, id string, ops ExtendReplicationVol
 		return
 	}
 
-	_, r.Err = client.Post(actionURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Post(actionURL(client, id), b, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 
