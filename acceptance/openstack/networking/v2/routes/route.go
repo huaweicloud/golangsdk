@@ -1,10 +1,11 @@
 package routes
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/peerings"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/routes"
-	"testing"
 )
 
 func CreateRoute(t *testing.T, clientV2 *golangsdk.ServiceClient, peeringConn *peerings.Peering) (*routes.Route, error) {

@@ -1,12 +1,13 @@
 package peering
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
 	"github.com/huaweicloud/golangsdk/acceptance/tools"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v1/vpcs"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/peerings"
-	"testing"
 )
 
 func CreatePeeringResourcesNConn(t *testing.T, clientV2 *golangsdk.ServiceClient, peerClientV2 *golangsdk.ServiceClient,

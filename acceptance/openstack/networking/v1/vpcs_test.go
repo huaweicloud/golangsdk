@@ -1,10 +1,11 @@
 package v1
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
 	"github.com/huaweicloud/golangsdk/acceptance/tools"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v1/vpcs"
-	"testing"
 )
 
 func TestVpcList(t *testing.T) {

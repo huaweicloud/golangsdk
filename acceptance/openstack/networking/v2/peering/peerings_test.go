@@ -1,10 +1,11 @@
 package peering
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
 	"github.com/huaweicloud/golangsdk/acceptance/tools"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/peerings"
-	"testing"
 )
 
 func TestPeeringList(t *testing.T) {

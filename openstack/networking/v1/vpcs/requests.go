@@ -1,9 +1,10 @@
 package vpcs
 
 import (
+	"reflect"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
-	"reflect"
 )
 
 // ListOpts allows the filtering and sorting of paginated collections through

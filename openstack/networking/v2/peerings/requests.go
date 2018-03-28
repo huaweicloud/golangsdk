@@ -1,9 +1,10 @@
 package peerings
 
 import (
+	"reflect"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
-	"reflect"
 )
 
 // ListOpts allows the filtering  of paginated collections through

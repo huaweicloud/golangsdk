@@ -1,12 +1,13 @@
 package routes
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
 	"github.com/huaweicloud/golangsdk/acceptance/openstack/networking/v2/peering"
 	"github.com/huaweicloud/golangsdk/acceptance/tools"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/peerings"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v2/routes"
-	"testing"
 )
 
 func TestRouteList(t *testing.T) {

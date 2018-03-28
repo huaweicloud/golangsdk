@@ -1,10 +1,11 @@
 package subnets
 
 import (
+	"testing"
+
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
 	"github.com/huaweicloud/golangsdk/acceptance/tools"
 	"github.com/huaweicloud/golangsdk/openstack/networking/v1/subnets"
-	"testing"
 )
 
 func TestSubnetList(t *testing.T) {
