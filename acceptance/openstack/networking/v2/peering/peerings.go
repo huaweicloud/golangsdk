@@ -1,4 +1,4 @@
-package v2
+package peering
 
 import (
 	"github.com/huaweicloud/golangsdk"
@@ -84,7 +84,7 @@ func DeletePeeringConnNResources(t *testing.T, clientV2 *golangsdk.ServiceClient
 	t.Logf("Deleted vpcs: %s and %s", peeringConn.RequestVpcInfo.VpcId, peeringConn.AcceptVpcInfo.VpcId)
 }
 
-func initiatePeeringConnCommonTasks(t *testing.T) (*golangsdk.ServiceClient, *golangsdk.ServiceClient,
+func InitiatePeeringConnCommonTasks(t *testing.T) (*golangsdk.ServiceClient, *golangsdk.ServiceClient,
 	*golangsdk.ServiceClient, *golangsdk.ServiceClient, *peerings.Peering) {
 
 	clientV2, err := clients.NewNetworkV2Client()

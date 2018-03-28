@@ -1,4 +1,4 @@
-package v1
+package subnets
 
 import (
 	"github.com/huaweicloud/golangsdk/acceptance/clients"

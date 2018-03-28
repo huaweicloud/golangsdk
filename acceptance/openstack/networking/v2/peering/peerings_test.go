@@ -1,4 +1,4 @@
-package v2
+package peering
 
 import (
 	"github.com/huaweicloud/golangsdk/acceptance/clients"
@@ -25,7 +25,7 @@ func TestPeeringList(t *testing.T) {
 
 func TestAcceptPeering(t *testing.T) {
 
-	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := initiatePeeringConnCommonTasks(t)
+	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := InitiatePeeringConnCommonTasks(t)
 
 	// Delete a vpc peering connection
 	defer DeletePeeringConnNResources(t, clientV2, clientV1, peerClientV1, peeringConn)
@@ -40,7 +40,7 @@ func TestAcceptPeering(t *testing.T) {
 
 func TestRejectPeering(t *testing.T) {
 
-	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := initiatePeeringConnCommonTasks(t)
+	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := InitiatePeeringConnCommonTasks(t)
 
 	// Delete a vpc peering connection
 	defer DeletePeeringConnNResources(t, clientV2, clientV1, peerClientV1, peeringConn)
@@ -55,7 +55,7 @@ func TestRejectPeering(t *testing.T) {
 
 func TestPeeringCRUD(t *testing.T) {
 
-	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := initiatePeeringConnCommonTasks(t)
+	clientV2, peerClientV2, clientV1, peerClientV1, peeringConn := InitiatePeeringConnCommonTasks(t)
 
 	// Delete a vpc peering connection
 	defer DeletePeeringConnNResources(t, clientV2, clientV1, peerClientV1, peeringConn)
