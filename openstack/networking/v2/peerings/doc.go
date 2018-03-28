@@ -1,4 +1,3 @@
-
 /*
 Package peerings enables management and retrieval of vpc peering connections from the Open Telekom Cloud VPC service.
 

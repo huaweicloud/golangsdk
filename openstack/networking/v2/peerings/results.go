@@ -5,10 +5,9 @@ import (
 	"github.com/huaweicloud/golangsdk/pagination"
 )
 
-type VpcInfo  struct {
+type VpcInfo struct {
 	VpcId    string `json:"vpc_id" required:"true"`
-	TenantId string  `json:"tenant_id,omitempty"`
-
+	TenantId string `json:"tenant_id,omitempty"`
 }
 
 // Peering represents a Neutron VPC peering connection.
@@ -17,11 +16,11 @@ type VpcInfo  struct {
 // creating, querying, deleting, and updating a VPC peering connection.
 type Peering struct {
 	// ID is the unique identifier for the vpc_peering_connection.
-	ID    string `json:"id"`
+	ID string `json:"id"`
 
 	// Name is the human readable name for the vpc_peering_connection. It does not have to be
 	// unique.
-	Name  string `json:"name"`
+	Name string `json:"name"`
 
 	// Status indicates whether or not a vpc_peering_connections is currently operational.
 	Status string `json:"status"`
@@ -30,7 +29,7 @@ type Peering struct {
 	RequestVpcInfo VpcInfo `json:"request_vpc_info"`
 
 	// AcceptVpcInfo indicates information about the peer  VPC
-	AcceptVpcInfo  VpcInfo `json:"accept_vpc_info"`
+	AcceptVpcInfo VpcInfo `json:"accept_vpc_info"`
 }
 
 // PeeringConnectionPage is the page returned by a pager when traversing over a
@@ -87,10 +86,10 @@ func (r commonResult) Extract() (*Peering, error) {
 func (r commonResult) ExtractResult() (Peering, error) {
 	var s struct {
 		// ID is the unique identifier for the vpc.
-		ID    string `json:"id"`
+		ID string `json:"id"`
 		// Name is the human readable name for the vpc. It does not have to be
 		// unique.
-		Name  string `json:"name"`
+		Name string `json:"name"`
 
 		// Status indicates whether or not a vpc is currently operational.
 		Status string `json:"status"`
@@ -99,7 +98,7 @@ func (r commonResult) ExtractResult() (Peering, error) {
 		RequestVpcInfo VpcInfo `json:"request_vpc_info"`
 
 		//Provides informaion about shared snat
-		AcceptVpcInfo  VpcInfo `json:"accept_vpc_info"`
+		AcceptVpcInfo VpcInfo `json:"accept_vpc_info"`
 	}
 	err1 := r.ExtractInto(&s)
 	return s, err1
@@ -140,5 +139,3 @@ type UpdateResult struct {
 type DeleteResult struct {
 	golangsdk.ErrResult
 }
-
-

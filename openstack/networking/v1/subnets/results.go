@@ -17,7 +17,7 @@ type Subnet struct {
 	CIDR string `json:"cidr"`
 
 	//Specifies the IP address list of DNS servers on the subnet.
-	DnsList []string  `json:"dnsList"`
+	DnsList []string `json:"dnsList"`
 
 	// Status indicates whether or not a subnet is currently operational.
 	Status string `json:"status"`
@@ -39,7 +39,6 @@ type Subnet struct {
 
 	//Specifies the ID of the VPC to which the subnet belongs.
 	VPC_ID string `json:"vpc_id"`
-
 }
 
 // SubnetPage is the page returned by a pager when traversing over a
@@ -115,4 +114,3 @@ type UpdateResult struct {
 type DeleteResult struct {
 	golangsdk.ErrResult
 }
-

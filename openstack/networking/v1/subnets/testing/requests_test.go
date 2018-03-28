@@ -10,7 +10,6 @@ import (
 	th "github.com/huaweicloud/golangsdk/testhelper"
 )
 
-
 func TestListSubnet(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
@@ -76,24 +75,20 @@ func TestListSubnet(t *testing.T) {
 			VPC_ID:    "58c24204-170e-4ff0-9b42-c53cdea9239a",
 		},
 		/*{
-			Status: "ACTIVE",
-		DnsList:       []string{"100.125.4.25", "8.8.8.8"},
-		VPC_ID:        "e8fab5a4-61d3-4e84-85fd-0049676f926a",
-		GatewayIP:     "192.168.106.1",
-		PRIMARY_DNS:   "100.125.4.25",
-		SECONDARY_DNS: "8.8.8.8",
-		CIDR:          "192.168.106.0/24",
-		EnableDHCP:    true,
-		Name:          "subnet-a0c9",
-		ID:            "470ef214-acbe-4134-9fbf-1b20f4b8f28d",
-	},*/
+				Status: "ACTIVE",
+			DnsList:       []string{"100.125.4.25", "8.8.8.8"},
+			VPC_ID:        "e8fab5a4-61d3-4e84-85fd-0049676f926a",
+			GatewayIP:     "192.168.106.1",
+			PRIMARY_DNS:   "100.125.4.25",
+			SECONDARY_DNS: "8.8.8.8",
+			CIDR:          "192.168.106.0/24",
+			EnableDHCP:    true,
+			Name:          "subnet-a0c9",
+			ID:            "470ef214-acbe-4134-9fbf-1b20f4b8f28d",
+		},*/
+	}
+	th.AssertDeepEquals(t, expected, actual)
 }
-		th.AssertDeepEquals(t, expected, actual)
-}
-
-
-
-
 
 func TestGetSubnet(t *testing.T) {
 	th.SetupHTTP()
@@ -191,13 +186,13 @@ func TestCreateSubnet(t *testing.T) {
 	})
 
 	options := subnets.CreateOpts{
-		Name: "test_subnets",
-		CIDR: "192.168.0.0/16",
-		GatewayIP: "192.168.0.1",
-		PRIMARY_DNS: "8.8.8.8",
-		SECONDARY_DNS: "8.8.4.4",
+		Name:             "test_subnets",
+		CIDR:             "192.168.0.0/16",
+		GatewayIP:        "192.168.0.1",
+		PRIMARY_DNS:      "8.8.8.8",
+		SECONDARY_DNS:    "8.8.4.4",
 		AvailabilityZone: "eu-de-02",
-		VPC_ID: "3b9740a0-b44d-48f0-84ee-42eb166e54f7",
+		VPC_ID:           "3b9740a0-b44d-48f0-84ee-42eb166e54f7",
 	}
 	n, err := subnets.Create(fake.ServiceClient(), options).Extract()
 	th.AssertNoErr(t, err)
@@ -248,7 +243,7 @@ func TestUpdateSubnet(t *testing.T) {
 
 	options := subnets.UpdateOpts{Name: "testsubnet"}
 
-	n, err := subnets.Update(fake.ServiceClient(), "8f794f06-2275-4d82-9f5a-6d68fbe21a75","83e3bddc-b9ed-4614-a0dc-8a997095a86c", options).Extract()
+	n, err := subnets.Update(fake.ServiceClient(), "8f794f06-2275-4d82-9f5a-6d68fbe21a75", "83e3bddc-b9ed-4614-a0dc-8a997095a86c", options).Extract()
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, "testsubnet", n.Name)
 	th.AssertEquals(t, "83e3bddc-b9ed-4614-a0dc-8a997095a86c", n.ID)
@@ -265,6 +260,6 @@ func TestDeleteSubnet(t *testing.T) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 
-	res := subnets.Delete(fake.ServiceClient(), "8f794f06-2275-4d82-9f5a-6d68fbe21a75","83e3bddc-b9ed-4614-a0dc-8a997095a86c")
+	res := subnets.Delete(fake.ServiceClient(), "8f794f06-2275-4d82-9f5a-6d68fbe21a75", "83e3bddc-b9ed-4614-a0dc-8a997095a86c")
 	th.AssertNoErr(t, res.Err)
 }
