@@ -277,7 +277,7 @@ func TestRoleAssignToGroupOnDomain(t *testing.T) {
 		t.Fatalf("Unable to check role of domain: %v", err)
 	}
 
-	allPages, err := roles.ListRolesOf(client, roles.CheckRoleOfOpts{
+	allPages, err = roles.ListRolesOf(client, roles.ListRolesOfOpts{
 		GroupID:  group.ID,
 		DomainID: domain.ID,
 	}).AllPages()
@@ -358,7 +358,7 @@ func TestRoleAssignToGroupOnProject(t *testing.T) {
 		t.Fatalf("Unable to check role of project: %v", err)
 	}
 
-	allPages, err := roles.ListRolesOf(client, roles.CheckRoleOfOpts{
+	allPages, err = roles.ListRolesOf(client, roles.ListRolesOfOpts{
 		GroupID:   group.ID,
 		ProjectID: project.ID,
 	}).AllPages()

@@ -50,7 +50,7 @@ func TestGroupUsersCRUD(t *testing.T) {
 			"email": "jsmith@example.com",
 		},
 	}
-	user, err := CreateUser(t, client, &createOpts)
+	user, err := CreateUser(t, client, &createUserOpts)
 	if err != nil {
 		t.Fatalf("Unable to create user: %v", err)
 	}

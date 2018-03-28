@@ -13,7 +13,7 @@ import (
 func TestTenantsList(t *testing.T) {
 	client, err := clients.NewIdentityV2Client()
 	if err != nil {
-		t.Fatalf("Unable to obtain an identity client: %v")
+		t.Fatalf("Unable to obtain an identity client: %v", err)
 	}
 
 	allPages, err := tenants.List(client, nil).AllPages()
@@ -34,7 +34,7 @@ func TestTenantsList(t *testing.T) {
 func TestTenantsCRUD(t *testing.T) {
 	client, err := clients.NewIdentityV2AdminClient()
 	if err != nil {
-		t.Fatalf("Unable to obtain an identity client: %v")
+		t.Fatalf("Unable to obtain an identity client: %v", err)
 	}
 
 	tenant, err := CreateTenant(t, client, nil)

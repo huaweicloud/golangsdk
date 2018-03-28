@@ -18,6 +18,8 @@ func TestAuthenticatedClient(t *testing.T) {
 		t.Fatalf("Unable to acquire credentials: %v", err)
 	}
 
+	t.Logf("AuthOptionsFromEnv: %+v", ao)
+
 	client, err := openstack.AuthenticatedClient(ao)
 	if err != nil {
 		t.Fatalf("Unable to authenticate: %v", err)
