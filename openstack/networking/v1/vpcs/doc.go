@@ -1,5 +1,5 @@
 /*
-Package vpcs enables management and retrieval of Vpcs from the Open Telekom Cloud
+Package vpcs enables management and retrieval of Vpcs
 VPC service.
 
 Example to List Vpcs

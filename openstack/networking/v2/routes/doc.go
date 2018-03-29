@@ -1,5 +1,5 @@
 /*
-Package routes enables management and retrieval of Routes from the Open Telekom Cloud
+Package routes enables management and retrieval of Routes
 Route service.
 
 Example to List Routes

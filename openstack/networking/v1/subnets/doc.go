@@ -1,5 +1,5 @@
 /*
-Package Subnets enables management and retrieval of Subnets from the Open Telekom Cloud VPC service.
+Package Subnets enables management and retrieval of Subnets
 
 Example to List Vpcs
 
