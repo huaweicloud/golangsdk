@@ -103,6 +103,6 @@ func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 
 // Delete will permanently delete a particular route based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
-	_, r.Err = c.Delete(deleteURL(c, id), nil)
+	_, r.Err = c.Delete(resourceURL(c, id), nil)
 	return
 }

@@ -103,29 +103,6 @@ func FilterVpcPeeringConns(peerings []Peering, opts ListOpts) ([]Peering, error)
 
 	return refinedPeerings, nil
 
-	/*for _, peering := range peerings {
-		matched = true
-		Peer_VpcId:=getStructNestedField(&peering,"AcceptVpcInfo");
-		VpcId:=getStructNestedField(&peering,"RequestVpcInfo")
-
-		if opts.VpcId != "" || opts.Peer_VpcId != ""  {
-			if opts.VpcId != "" && opts.Peer_VpcId != "" {
-				if  !(Peer_VpcId ==opts.Peer_VpcId ) && !(VpcId ==opts.VpcId ) {
-					matched = false
-				}
-			}
-			if opts.Peer_VpcId != ""{
-				if  !(Peer_VpcId ==opts.Peer_VpcId ){
-					matched = false
-				}
-			}
-		}
-
-		if matched {
-			refinedPeerings = append(refinedPeerings, peering)
-		}
-	}*/
-
 }
 
 func getStructNestedField(v *Peering, field string) string {
