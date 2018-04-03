@@ -64,6 +64,15 @@ func TestGroupUsersCRUD(t *testing.T) {
 		t.Fatalf("Unable to add user to group: %v", err)
 	}
 
+	allPages, err := users.ListInGroup(client, group.ID, nil).AllPages()
+	if err != nil {
+		t.Fatalf("Unable to list users: %v", err)
+	}
+	_, err = users.ExtractUsers(allPages)
+	if err != nil {
+		t.Fatalf("Unable to extract users: %v", err)
+	}
+
 	err = users.CheckGroupUser(client, group.ID, user.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Didn't successfully add user to group")

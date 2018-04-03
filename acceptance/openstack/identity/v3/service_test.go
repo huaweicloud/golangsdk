@@ -36,6 +36,39 @@ func TestServicesList(t *testing.T) {
 
 }
 
+func TestServicesGet(t *testing.T) {
+
+	client, err := clients.NewIdentityV3Client()
+	if err != nil {
+		t.Fatalf("Unable to obtain an identity client: %v", err)
+	}
+
+	listOpts := services.ListOpts{
+		ServiceType: "identity",
+	}
+
+	allPages, err := services.List(client, listOpts).AllPages()
+	if err != nil {
+		t.Fatalf("Unable to list services: %v", err)
+	}
+
+	allServices, err := services.ExtractServices(allPages)
+	if err != nil {
+		t.Fatalf("Unable to extract services: %v", err)
+	}
+
+	if len(allServices) > 0 {
+
+		service := allServices[0]
+		p, err := services.Get(client, service.ID).Extract()
+		if err != nil {
+			t.Fatalf("Unable to get service: %v", err)
+		}
+
+		tools.PrintResource(t, p)
+	}
+}
+
 func TestServicesCRUD(t *testing.T) {
 	client, err := clients.NewIdentityV3Client()
 	if err != nil {
@@ -55,6 +88,11 @@ func TestServicesCRUD(t *testing.T) {
 		t.Fatalf("Unable to create service: %v", err)
 	}
 	defer DeleteService(t, client, service.ID)
+
+	service, err = services.Get(client, service.ID).Extract()
+	if err != nil {
+		t.Fatalf("Unable to read service: %v", err)
+	}
 
 	tools.PrintResource(t, service)
 	tools.PrintResource(t, service.Extra)
