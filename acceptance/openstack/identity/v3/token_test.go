@@ -25,7 +25,7 @@ func TestGetToken(t *testing.T) {
 	authOptions := tokens.AuthOptions{
 		Username:   ao.Username,
 		Password:   ao.Password,
-		DomainName: "default",
+		DomainName: ao.DomainName,
 	}
 
 	token, err := tokens.Create(client, &authOptions).Extract()
