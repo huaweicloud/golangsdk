@@ -48,6 +48,7 @@ type ReplicationConsistencyGroup struct {
 	CreatedAt         string   `json:"created_at"`
 	UpdatedAt         string   `json:"updated_at"`
 	FailureDetail     string   `json:"failure_detail"`
+	FaultLevel        string   `json:"fault_level"`
 }
 
 // GetResult contains the body of getting detailed
