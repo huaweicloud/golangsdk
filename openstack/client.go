@@ -468,6 +468,7 @@ func NewNatV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "nat", 1)
 	sc.Endpoint = strings.Replace(sc.Endpoint, "myhwclouds", "myhuaweicloud", 1)
 	sc.ResourceBase = sc.Endpoint + "v2.0/"
+	return sc, err
 }
 
 // NewMapReduceV1 creates a ServiceClient that may be used with the v1 MapReduce service.
