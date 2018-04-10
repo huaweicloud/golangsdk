@@ -141,14 +141,15 @@ type CreateOptsBuilder interface {
 // CreateOpts contains all the values needed to create a new subnets. There are
 // no required values.
 type CreateOpts struct {
-	Name             string `json:"name" required:"true"`
-	CIDR             string `json:"cidr" required:"true"`
-	GatewayIP        string `json:"gateway_ip" required:"true"`
-	EnableDHCP       bool   `json:"dhcp_enable,omitempty"`
-	PRIMARY_DNS      string `json:"primary_dns,omitempty"`
-	SECONDARY_DNS    string `json:"secondary_dns,omitempty"`
-	AvailabilityZone string `json:"availability_zone"`
-	VPC_ID           string `json:"vpc_id" required:"true"`
+	Name             string   `json:"name" required:"true"`
+	CIDR             string   `json:"cidr" required:"true"`
+	DnsList          []string `json:"dnsList,omitempty"`
+	GatewayIP        string   `json:"gateway_ip" required:"true"`
+	EnableDHCP       bool     `json:"dhcp_enable,omitempty"`
+	PRIMARY_DNS      string   `json:"primary_dns,omitempty"`
+	SECONDARY_DNS    string   `json:"secondary_dns,omitempty"`
+	AvailabilityZone string   `json:"availability_zone"`
+	VPC_ID           string   `json:"vpc_id" required:"true"`
 }
 
 // ToSubnetCreateMap builds a create request body from CreateOpts.
@@ -186,10 +187,11 @@ type UpdateOptsBuilder interface {
 
 // UpdateOpts contains the values used when updating a subnets.
 type UpdateOpts struct {
-	Name          string `json:"name,omitempty"`
-	EnableDHCP    bool   `json:"dhcp_enable,omitempty"`
-	PRIMARY_DNS   string `json:"primary_dns,omitempty"`
-	SECONDARY_DNS string `json:"secondary_dns,omitempty"`
+	Name          string   `json:"name,omitempty"`
+	EnableDHCP    bool     `json:"dhcp_enable,omitempty"`
+	PRIMARY_DNS   string   `json:"primary_dns,omitempty"`
+	SECONDARY_DNS string   `json:"secondary_dns,omitempty"`
+	DnsList       []string `json:"dnsList,omitempty"`
 }
 
 // ToSubnetUpdateMap builds an update body based on UpdateOpts.
