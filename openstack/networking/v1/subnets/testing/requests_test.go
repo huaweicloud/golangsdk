@@ -31,7 +31,13 @@ func TestListSubnet(t *testing.T) {
             "status": "ACTIVE",
             "vpc_id": "58c24204-170e-4ff0-9b42-c53cdea9239a",
             "gateway_ip": "192.168.200.1",
-            "dhcp_enable": true
+            "dhcp_enable": true,
+			"primary_dns": "114.114.114.114",
+		    "secondary_dns": "114.114.115.115",
+		    "dnsList": [
+			  "114.114.114.114",
+			  "114.114.115.115"
+		    ]
         },
         {
             "id": "134ca339-24dc-44f5-ae6a-cf0404216ed2",
@@ -40,7 +46,13 @@ func TestListSubnet(t *testing.T) {
             "status": "ACTIVE",
             "vpc_id": "58c24204-170e-4ff0-9b42-c53cdea9239a",
             "gateway_ip": "192.168.200.1",
-            "dhcp_enable": true
+            "dhcp_enable": true,
+			"primary_dns": "114.114.114.114",
+		    "secondary_dns": "114.114.115.115",
+		    "dnsList": [
+			  "114.114.114.114",
+			  "114.114.115.115"
+		    ]
         }
     ]
 }
@@ -60,9 +72,12 @@ func TestListSubnet(t *testing.T) {
 			EnableDHCP: true,
 			Name:       "openlab-subnet",
 			//DnsList:          []string{},
-			ID:        "134ca339-24dc-44f5-ae6a-cf0404216ed2",
-			GatewayIP: "192.168.200.1",
-			VPC_ID:    "58c24204-170e-4ff0-9b42-c53cdea9239a",
+			ID:            "134ca339-24dc-44f5-ae6a-cf0404216ed2",
+			GatewayIP:     "192.168.200.1",
+			VPC_ID:        "58c24204-170e-4ff0-9b42-c53cdea9239a",
+			PRIMARY_DNS:   "114.114.114.114",
+			SECONDARY_DNS: "114.114.115.115",
+			DnsList:       []string{"114.114.114.114", "114.114.115.115"},
 		},
 		{
 			Status:     "ACTIVE",
@@ -70,22 +85,13 @@ func TestListSubnet(t *testing.T) {
 			EnableDHCP: true,
 			Name:       "openlab-subnet",
 			//DnsList:          []string{},
-			ID:        "134ca339-24dc-44f5-ae6a-cf0404216ed2",
-			GatewayIP: "192.168.200.1",
-			VPC_ID:    "58c24204-170e-4ff0-9b42-c53cdea9239a",
+			ID:            "134ca339-24dc-44f5-ae6a-cf0404216ed2",
+			GatewayIP:     "192.168.200.1",
+			VPC_ID:        "58c24204-170e-4ff0-9b42-c53cdea9239a",
+			PRIMARY_DNS:   "114.114.114.114",
+			SECONDARY_DNS: "114.114.115.115",
+			DnsList:       []string{"114.114.114.114", "114.114.115.115"},
 		},
-		/*{
-				Status: "ACTIVE",
-			DnsList:       []string{"100.125.4.25", "8.8.8.8"},
-			VPC_ID:        "e8fab5a4-61d3-4e84-85fd-0049676f926a",
-			GatewayIP:     "192.168.106.1",
-			PRIMARY_DNS:   "100.125.4.25",
-			SECONDARY_DNS: "8.8.8.8",
-			CIDR:          "192.168.106.0/24",
-			EnableDHCP:    true,
-			Name:          "subnet-a0c9",
-			ID:            "470ef214-acbe-4134-9fbf-1b20f4b8f28d",
-		},*/
 	}
 	th.AssertDeepEquals(t, expected, actual)
 }
@@ -134,6 +140,8 @@ func TestGetSubnet(t *testing.T) {
 	th.AssertEquals(t, "100.125.4.25", n.PRIMARY_DNS)
 	th.AssertEquals(t, "8.8.8.8", n.SECONDARY_DNS)
 	th.AssertEquals(t, true, n.EnableDHCP)
+	th.AssertEquals(t, "100.125.4.25", n.DnsList[0])
+	th.AssertEquals(t, "8.8.8.8", n.DnsList[1])
 
 }
 
@@ -156,7 +164,11 @@ func TestCreateSubnet(t *testing.T) {
           "primary_dns": "8.8.8.8",
           "secondary_dns": "8.8.4.4",
           "availability_zone":"eu-de-02",
-          "vpc_id":"3b9740a0-b44d-48f0-84ee-42eb166e54f7"
+          "vpc_id":"3b9740a0-b44d-48f0-84ee-42eb166e54f7",
+		  "dnsList": [
+             "8.8.8.8",
+            "8.8.4.4"
+          ]
           }
 }
 			`)
@@ -193,6 +205,7 @@ func TestCreateSubnet(t *testing.T) {
 		SECONDARY_DNS:    "8.8.4.4",
 		AvailabilityZone: "eu-de-02",
 		VPC_ID:           "3b9740a0-b44d-48f0-84ee-42eb166e54f7",
+		DnsList:          []string{"8.8.8.8", "8.8.4.4"},
 	}
 	n, err := subnets.Create(fake.ServiceClient(), options).Extract()
 	th.AssertNoErr(t, err)
@@ -206,6 +219,8 @@ func TestCreateSubnet(t *testing.T) {
 	th.AssertEquals(t, "6b0cf733-f496-4159-9df1-d74c3584a9f7", n.ID)
 	th.AssertEquals(t, "UNKNOWN", n.Status)
 	th.AssertEquals(t, "3b9740a0-b44d-48f0-84ee-42eb166e54f7", n.VPC_ID)
+	th.AssertEquals(t, "8.8.8.8", n.DnsList[0])
+	th.AssertEquals(t, "8.8.4.4", n.DnsList[1])
 
 }
 
