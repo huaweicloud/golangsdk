@@ -24,17 +24,11 @@ type ListOpts struct {
 	//Specifies the network segment on which the subnet resides.
 	CIDR string `json:"cidr"`
 
-	//Specifies the IP address list of DNS servers on the subnet.
-	DnsList []string `json:"dnsList"`
-
 	// Status indicates whether or not a subnet is currently operational.
 	Status string `json:"status"`
 
 	//Specifies the gateway of the subnet.
 	GatewayIP string `json:"gateway_ip"`
-
-	//Specifies whether the DHCP function is enabled for the subnet.
-	EnableDHCP bool `json:"dhcp_enable"`
 
 	//Specifies the IP address of DNS server 1 on the subnet.
 	PRIMARY_DNS string `json:"primary_dns"`
@@ -145,10 +139,10 @@ type CreateOpts struct {
 	CIDR             string   `json:"cidr" required:"true"`
 	DnsList          []string `json:"dnsList,omitempty"`
 	GatewayIP        string   `json:"gateway_ip" required:"true"`
-	EnableDHCP       bool     `json:"dhcp_enable,omitempty"`
+	EnableDHCP       bool     `json:"dhcp_enable" no_default:"y"`
 	PRIMARY_DNS      string   `json:"primary_dns,omitempty"`
 	SECONDARY_DNS    string   `json:"secondary_dns,omitempty"`
-	AvailabilityZone string   `json:"availability_zone"`
+	AvailabilityZone string   `json:"availability_zone,omitempty"`
 	VPC_ID           string   `json:"vpc_id" required:"true"`
 }
 
@@ -188,7 +182,7 @@ type UpdateOptsBuilder interface {
 // UpdateOpts contains the values used when updating a subnets.
 type UpdateOpts struct {
 	Name          string   `json:"name,omitempty"`
-	EnableDHCP    bool     `json:"dhcp_enable,omitempty"`
+	EnableDHCP    bool     `json:"dhcp_enable"`
 	PRIMARY_DNS   string   `json:"primary_dns,omitempty"`
 	SECONDARY_DNS string   `json:"secondary_dns,omitempty"`
 	DnsList       []string `json:"dnsList,omitempty"`
