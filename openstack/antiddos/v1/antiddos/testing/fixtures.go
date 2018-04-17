@@ -483,43 +483,43 @@ var WeeklyReportOutput = `
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }, {
     "ddos_intercept_times": 0,
     "ddos_blackhole_times": 0,
     "max_attack_bps": 0,
     "max_attack_conns": 0,
-    "period_start_date": 1519833600000
+    "period_start_date": 1519862400000
   }],
   "top10": [],
   "weeklyCountTableHeader": ["ddos_intercept_times", "max_attack_bps", "max_attack_conns", "period_start_date"],
@@ -537,7 +537,8 @@ var WeeklyReportOutput = `
 }
 `
 
-var responsePeriodTime = time.Date(2018,3,1,0,0,0,0,time.Local)
+//init the loc
+var responsePeriodTime = time.Date(2018,3,1,0,0,0,0,time.UTC)
 
 var WeeklyReportResponse = antiddos.WeeklyReportResponse{
     DdosInterceptTimes: 0,

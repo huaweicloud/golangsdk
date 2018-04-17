@@ -359,7 +359,7 @@ func (r *WeeklyReportResponse) UnmarshalJSON(b []byte) error {
 			DdosBlackholeTimes: val.DdosBlackholeTimes,
 			MaxAttackBps:       val.MaxAttackBps,
 			MaxAttackConns:     val.MaxAttackConns,
-			PeriodStartDate:    time.Unix(val.PeriodStartDate/1000, 0),
+			PeriodStartDate:    time.Unix(val.PeriodStartDate/1000, 0).UTC(),
 		}
 	}
 
