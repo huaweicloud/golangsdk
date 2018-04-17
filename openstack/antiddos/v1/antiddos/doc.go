@@ -10,13 +10,13 @@ Example to update the Anti-DDoS defense policy of a specified EIP.
       CleaningAccessPosId: 3,
       AppTypeId:           1,
     }
-    
+
     floatingIpId := "82abaa86-8518-47db-8d63-ddf152824635"
     actual, err := antiddos.Update(client.ServiceClient(), floatingIpId, updateOpt).Extract()
     if err != nil {
       panic(err)
     }
-Example to enable the Anti-DDoS traffic cleaning defense. 
+Example to enable the Anti-DDoS traffic cleaning defense.
 
     floatingIpId := "82abaa86-8518-47db-8d63-ddf152824635"
     actual, err := antiddos.Create(client.ServiceClient(), floatingIpId, createOpt).Extract()
@@ -59,7 +59,7 @@ Example to query the execution status of a specified Anti-DDoS configuration tas
     if err != nil {
       panic(err)
     }
-Example to query optional Anti-DDoS defense policies. 
+Example to query optional Anti-DDoS defense policies.
 
     actual, err := antiddos.ListConfigs(client.ServiceClient()).Extract()
     if err != nil {
@@ -84,7 +84,7 @@ Example to query the defense statuses of all EIPs.
         Status: "notConfig",
         Ip:     "49.",
     }
-    
+
     actual, err := antiddos.ListStatus(client.ServiceClient(), listOpt).Extract()
     if err != nil {
       panic(err)

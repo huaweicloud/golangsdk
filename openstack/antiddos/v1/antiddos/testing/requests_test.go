@@ -1,10 +1,10 @@
 package testing
 
 import (
-	"testing"
 	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	"github.com/huaweicloud/golangsdk/testhelper/client"
+	"testing"
 )
 
 func TestCreate(t *testing.T) {

@@ -1,12 +1,12 @@
 package testing
 
 import (
-	"testing"
-	"net/http"
-	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
 	"fmt"
-	"github.com/huaweicloud/golangsdk/testhelper/client"
+	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
 	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
+	"net/http"
+	"testing"
 	"time"
 )
 
@@ -295,7 +295,7 @@ var ListConfigsResponse = antiddos.ListConfigsResponse{
 			HttpPacketPerSecond: 20000,
 		},
 	},
-	ConnectionLimitedList: [] struct {
+	ConnectionLimitedList: []struct {
 		CleaningAccessPosId    int `json:"cleaning_access_pos_id,"`
 		NewConnectionLimited   int `json:"new_connection_limited,"`
 		TotalConnectionLimited int `json:"total_connection_limited,"`
@@ -627,7 +627,7 @@ var ListLogsOutput = `
 
 var ListLogsResponse = antiddos.ListLogsResponse{
 	Total: 1,
-	Logs: [] struct {
+	Logs: []struct {
 		StartTime      int `json:"start_time,"`
 		EndTime        int `json:"end_time,"`
 		Status         int `json:"status,"`
@@ -709,7 +709,7 @@ var DailyReportOutput = `
 `
 
 var DailyReportResponse = antiddos.DailyReportResponse{
-	Data: [] struct {
+	Data: []struct {
 		PeriodStart int `json:"period_start,"`
 		BpsIn       int `json:"bps_in,"`
 		BpsAttack   int `json:"bps_attack,"`

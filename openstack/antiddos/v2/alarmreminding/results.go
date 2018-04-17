@@ -1,56 +1,54 @@
 package alarmreminding
 
 import (
-  "github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk"
 )
 
 type commonResult struct {
-    golangsdk.Result
+	golangsdk.Result
 }
 
 type WarnAlertResult struct {
-    commonResult
+	commonResult
 }
 
 func (r WarnAlertResult) Extract() (*WarnAlertResponse, error) {
-    var response WarnAlertResponse
-    err := r.ExtractInto(&response)
-    return &response, err
+	var response WarnAlertResponse
+	err := r.ExtractInto(&response)
+	return &response, err
 }
 
 type WarnAlertResponse struct {
+	// Alarm configuration
+	WarnConfig struct {
+		// DDoS attacks
+		AntiDDoS bool `json:"antiDDoS,"`
 
-    // Alarm configuration
-    WarnConfig struct {
+		// Brute force cracking (system logins, FTP, and DB)
+		BruceForce bool `json:"bruce_force,omitempty"`
 
-    // DDoS attacks
-    AntiDDoS bool `json:"antiDDoS,"`
+		// Alarms about remote logins
+		RemoteLogin bool `json:"remote_login,omitempty"`
 
-    // Brute force cracking (system logins, FTP, and DB)
-    BruceForce bool `json:"bruce_force,omitempty"`
+		// Weak passwords (system and database)
+		WeakPassword bool `json:"weak_password,omitempty"`
 
-    // Alarms about remote logins
-    RemoteLogin bool `json:"remote_login,omitempty"`
+		// Overly high rights of a database process
+		HighPrivilege bool `json:"high_privilege,omitempty"`
 
-    // Weak passwords (system and database)
-    WeakPassword bool `json:"weak_password,omitempty"`
+		// Web page backdoors
+		BackDoors bool `json:"back_doors,omitempty"`
 
-    // Overly high rights of a database process
-    HighPrivilege bool `json:"high_privilege,omitempty"`
+		// Reserved
+		Waf bool `json:"waf,omitempty"`
 
-    // Web page backdoors
-    BackDoors bool `json:"back_doors,omitempty"`
+		// Possible values: 0: indicates that alarms are sent once a day. 1: indicates that alarms are sent once every half hour. This parameter is mandatory for the Host Intrusion Detection (HID) service.
+		SendFrequency int `json:"send_frequency,omitempty"`
+	} `json:"warn_config,"`
 
-    // Reserved
-    Waf bool `json:"waf,omitempty"`
+	// ID of an alarm group
+	TopicUrn string `json:"topic_urn,"`
 
-    // Possible values: 0: indicates that alarms are sent once a day. 1: indicates that alarms are sent once every half hour. This parameter is mandatory for the Host Intrusion Detection (HID) service.
-    SendFrequency int `json:"send_frequency,omitempty"`
-    }`json:"warn_config,"`
-
-    // ID of an alarm group
-    TopicUrn string `json:"topic_urn,"`
-
-    // Description of an alarm group
-    DisplayName string `json:"display_name,"`
+	// Description of an alarm group
+	DisplayName string `json:"display_name,"`
 }

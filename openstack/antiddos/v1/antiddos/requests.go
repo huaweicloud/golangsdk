@@ -2,8 +2,8 @@ package antiddos
 
 import (
 	"github.com/huaweicloud/golangsdk"
-	"time"
 	"strconv"
+	"time"
 )
 
 type CreateOpts struct {
