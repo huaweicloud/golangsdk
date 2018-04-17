@@ -2,12 +2,13 @@ package testing
 
 import (
 	"fmt"
-	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
-	th "github.com/huaweicloud/golangsdk/testhelper"
-	"github.com/huaweicloud/golangsdk/testhelper/client"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 const CreateOutput string = `

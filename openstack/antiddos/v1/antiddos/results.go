@@ -2,8 +2,9 @@ package antiddos
 
 import (
 	"encoding/json"
-	"github.com/huaweicloud/golangsdk"
 	"time"
+
+	"github.com/huaweicloud/golangsdk"
 )
 
 type commonResult struct {
