@@ -1,13 +1,13 @@
 package testing
 
 import (
-    "testing"
-    "net/http"
-    "github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
-    "fmt"
-    "github.com/huaweicloud/golangsdk/testhelper/client"
-    th "github.com/huaweicloud/golangsdk/testhelper"
-    "time"
+	"testing"
+	"net/http"
+	"github.com/huaweicloud/golangsdk/openstack/antiddos/v1/antiddos"
+	"fmt"
+	"github.com/huaweicloud/golangsdk/testhelper/client"
+	th "github.com/huaweicloud/golangsdk/testhelper"
+	"time"
 )
 
 const CreateOutput string = `
@@ -29,26 +29,26 @@ const CreateRequest string = `
 `
 
 var CreateResponse = antiddos.CreateResponse{
-    ErrorCode:        "10000000",
-    ErrorDescription: "The task has been received and is being handled",
-    TaskId:           "82463800-70fe-4cba-9a96-06175e246ab3",
+	ErrorCode:        "10000000",
+	ErrorDescription: "The task has been received and is being handled",
+	TaskId:           "82463800-70fe-4cba-9a96-06175e246ab3",
 }
 
 func HandleCreateSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "POST")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        th.TestJSONRequest(t, r, CreateRequest)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, CreateOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "POST")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		th.TestJSONRequest(t, r, CreateRequest)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, CreateOutput)
+	})
 }
 
 var DeleteResponse = antiddos.DeleteResponse{
-    ErrorCode:        "10000000",
-    ErrorDescription: "The task has been received and is being handled",
-    TaskId:           "f732e7f1-26b2-40f1-85e9-a8a4d3a43038",
+	ErrorCode:        "10000000",
+	ErrorDescription: "The task has been received and is being handled",
+	TaskId:           "f732e7f1-26b2-40f1-85e9-a8a4d3a43038",
 }
 
 const DeleteOutput string = `
@@ -60,21 +60,21 @@ const DeleteOutput string = `
 `
 
 func HandleDeleteSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "DELETE")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, DeleteOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "DELETE")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, DeleteOutput)
+	})
 }
 
 var GetResponse = antiddos.GetResponse{
-    EnableL7:            true,
-    TrafficPosId:        1,
-    HttpRequestPosId:    2,
-    CleaningAccessPosId: 3,
-    AppTypeId:           1,
+	EnableL7:            true,
+	TrafficPosId:        1,
+	HttpRequestPosId:    2,
+	CleaningAccessPosId: 3,
+	AppTypeId:           1,
 }
 
 const GetOutput string = `
@@ -88,13 +88,13 @@ const GetOutput string = `
 `
 
 func HandleGetSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, GetOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, GetOutput)
+	})
 }
 
 const UpdateOutput string = `
@@ -116,24 +116,24 @@ const UpdateRequest string = `
 `
 
 var UpdateResponse = antiddos.UpdateResponse{
-    ErrorCode:        "10000000",
-    ErrorDescription: "The task has been received and is being handled",
-    TaskId:           "82463800-70fe-4cba-9a96-06175e246ab3",
+	ErrorCode:        "10000000",
+	ErrorDescription: "The task has been received and is being handled",
+	TaskId:           "82463800-70fe-4cba-9a96-06175e246ab3",
 }
 
 func HandleUpdateSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "PUT")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        th.TestJSONRequest(t, r, UpdateRequest)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, UpdateOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "PUT")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		th.TestJSONRequest(t, r, UpdateRequest)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, UpdateOutput)
+	})
 }
 
 var ListStatusResponse = antiddos.ListStatusResponse{
-    Total: 2,
+	Total: 2,
 }
 
 const ListStatusOutput string = `
@@ -150,197 +150,197 @@ const ListStatusOutput string = `
 `
 
 func HandleListStatusSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        r.ParseForm()
-        ip := r.Form.Get("ip")
-        limit := r.Form.Get("limit")
-        offset := r.Form.Get("offset")
-        status := r.Form.Get("status")
-        if ip == "49." && limit == "2" && offset == "1" && status == "notConfig" {
-            fmt.Fprintf(w, ListStatusOutput)
-        }
-    })
-    
-    ListStatusResponse.DdosStatus = append(ListStatusResponse.DdosStatus, struct {
-        FloatingIpAddress string `json:"floating_ip_address,"`
-        FloatingIpId      string `json:"floating_ip_id,"`
-        NetworkType       string `json:"network_type,"`
-        Status            string `json:"status,"`
-    }{
-        FloatingIpId:      "4d60bba4-0791-4e82-8262-9bdffaeb1d14",
-        FloatingIpAddress: "49.4.4.36",
-        NetworkType:       "EIP",
-        Status:            "notConfig",
-    })
+	th.Mux.HandleFunc("/antiddos", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		r.ParseForm()
+		ip := r.Form.Get("ip")
+		limit := r.Form.Get("limit")
+		offset := r.Form.Get("offset")
+		status := r.Form.Get("status")
+		if ip == "49." && limit == "2" && offset == "1" && status == "notConfig" {
+			fmt.Fprintf(w, ListStatusOutput)
+		}
+	})
+
+	ListStatusResponse.DdosStatus = append(ListStatusResponse.DdosStatus, struct {
+		FloatingIpAddress string `json:"floating_ip_address,"`
+		FloatingIpId      string `json:"floating_ip_id,"`
+		NetworkType       string `json:"network_type,"`
+		Status            string `json:"status,"`
+	}{
+		FloatingIpId:      "4d60bba4-0791-4e82-8262-9bdffaeb1d14",
+		FloatingIpAddress: "49.4.4.36",
+		NetworkType:       "EIP",
+		Status:            "notConfig",
+	})
 }
 
 var ListConfigsResponse = antiddos.ListConfigsResponse{
-    TrafficLimitedList: []struct {
-        TrafficPosId     int `json:"traffic_pos_id,"`
-        TrafficPerSecond int `json:"traffic_per_second,"`
-        PacketPerSecond  int `json:"packet_per_second,"`
-    }{
-        {
-            TrafficPosId:     1,
-            TrafficPerSecond: 10,
-            PacketPerSecond:  2000,
-        },
-        {
-            TrafficPosId:     2,
-            TrafficPerSecond: 30,
-            PacketPerSecond:  6000,
-        },
-        {
-            TrafficPosId:     3,
-            TrafficPerSecond: 50,
-            PacketPerSecond:  10000,
-        },
-        {
-            TrafficPosId:     4,
-            TrafficPerSecond: 70,
-            PacketPerSecond:  15000,
-        },
-        {
-            TrafficPosId:     5,
-            TrafficPerSecond: 100,
-            PacketPerSecond:  20000,
-        },
-        {
-            TrafficPosId:     6,
-            TrafficPerSecond: 150,
-            PacketPerSecond:  25000,
-        },
-        {
-            TrafficPosId:     7,
-            TrafficPerSecond: 200,
-            PacketPerSecond:  35000,
-        },
-        {
-            TrafficPosId:     8,
-            TrafficPerSecond: 250,
-            PacketPerSecond:  50000,
-        },
-        {
-            TrafficPosId:     9,
-            TrafficPerSecond: 300,
-            PacketPerSecond:  70000,
-        },
-    },
-    HttpLimitedList: []struct {
-        HttpRequestPosId    int `json:"http_request_pos_id,"`
-        HttpPacketPerSecond int `json:"http_packet_per_second,"`
-    }{
-        {
-            HttpRequestPosId:    1,
-            HttpPacketPerSecond: 100,
-        },
-        {
-            HttpRequestPosId:    2,
-            HttpPacketPerSecond: 150,
-        },
-        {
-            HttpRequestPosId:    3,
-            HttpPacketPerSecond: 240,
-        },
-        {
-            HttpRequestPosId:    4,
-            HttpPacketPerSecond: 350,
-        },
-        {
-            HttpRequestPosId:    5,
-            HttpPacketPerSecond: 480,
-        },
-        {
-            HttpRequestPosId:    6,
-            HttpPacketPerSecond: 550,
-        },
-        {
-            HttpRequestPosId:    7,
-            HttpPacketPerSecond: 700,
-        },
-        {
-            HttpRequestPosId:    8,
-            HttpPacketPerSecond: 850,
-        },
-        {
-            HttpRequestPosId:    9,
-            HttpPacketPerSecond: 1000,
-        },
-        {
-            HttpRequestPosId:    10,
-            HttpPacketPerSecond: 1500,
-        },
-        {
-            HttpRequestPosId:    11,
-            HttpPacketPerSecond: 2000,
-        },
-        {
-            HttpRequestPosId:    12,
-            HttpPacketPerSecond: 3000,
-        },
-        {
-            HttpRequestPosId:    13,
-            HttpPacketPerSecond: 5000,
-        },
-        {
-            HttpRequestPosId:    14,
-            HttpPacketPerSecond: 10000,
-        },
-        {
-            HttpRequestPosId:    15,
-            HttpPacketPerSecond: 20000,
-        },
-    },
-    ConnectionLimitedList: [] struct {
-        CleaningAccessPosId    int `json:"cleaning_access_pos_id,"`
-        NewConnectionLimited   int `json:"new_connection_limited,"`
-        TotalConnectionLimited int `json:"total_connection_limited,"`
-    }{
-        {
-            CleaningAccessPosId:    1,
-            NewConnectionLimited:   10,
-            TotalConnectionLimited: 30,
-        },
-        {
-            CleaningAccessPosId:    2,
-            NewConnectionLimited:   20,
-            TotalConnectionLimited: 100,
-        },
-        {
-            CleaningAccessPosId:    3,
-            NewConnectionLimited:   30,
-            TotalConnectionLimited: 200,
-        },
-        {
-            CleaningAccessPosId:    4,
-            NewConnectionLimited:   40,
-            TotalConnectionLimited: 250,
-        },
-        {
-            CleaningAccessPosId:    5,
-            NewConnectionLimited:   50,
-            TotalConnectionLimited: 300,
-        },
-        {
-            CleaningAccessPosId:    6,
-            NewConnectionLimited:   60,
-            TotalConnectionLimited: 500,
-        },
-        {
-            CleaningAccessPosId:    7,
-            NewConnectionLimited:   70,
-            TotalConnectionLimited: 600,
-        },
-        {
-            CleaningAccessPosId:    8,
-            NewConnectionLimited:   80,
-            TotalConnectionLimited: 700,
-        },
-    },
+	TrafficLimitedList: []struct {
+		TrafficPosId     int `json:"traffic_pos_id,"`
+		TrafficPerSecond int `json:"traffic_per_second,"`
+		PacketPerSecond  int `json:"packet_per_second,"`
+	}{
+		{
+			TrafficPosId:     1,
+			TrafficPerSecond: 10,
+			PacketPerSecond:  2000,
+		},
+		{
+			TrafficPosId:     2,
+			TrafficPerSecond: 30,
+			PacketPerSecond:  6000,
+		},
+		{
+			TrafficPosId:     3,
+			TrafficPerSecond: 50,
+			PacketPerSecond:  10000,
+		},
+		{
+			TrafficPosId:     4,
+			TrafficPerSecond: 70,
+			PacketPerSecond:  15000,
+		},
+		{
+			TrafficPosId:     5,
+			TrafficPerSecond: 100,
+			PacketPerSecond:  20000,
+		},
+		{
+			TrafficPosId:     6,
+			TrafficPerSecond: 150,
+			PacketPerSecond:  25000,
+		},
+		{
+			TrafficPosId:     7,
+			TrafficPerSecond: 200,
+			PacketPerSecond:  35000,
+		},
+		{
+			TrafficPosId:     8,
+			TrafficPerSecond: 250,
+			PacketPerSecond:  50000,
+		},
+		{
+			TrafficPosId:     9,
+			TrafficPerSecond: 300,
+			PacketPerSecond:  70000,
+		},
+	},
+	HttpLimitedList: []struct {
+		HttpRequestPosId    int `json:"http_request_pos_id,"`
+		HttpPacketPerSecond int `json:"http_packet_per_second,"`
+	}{
+		{
+			HttpRequestPosId:    1,
+			HttpPacketPerSecond: 100,
+		},
+		{
+			HttpRequestPosId:    2,
+			HttpPacketPerSecond: 150,
+		},
+		{
+			HttpRequestPosId:    3,
+			HttpPacketPerSecond: 240,
+		},
+		{
+			HttpRequestPosId:    4,
+			HttpPacketPerSecond: 350,
+		},
+		{
+			HttpRequestPosId:    5,
+			HttpPacketPerSecond: 480,
+		},
+		{
+			HttpRequestPosId:    6,
+			HttpPacketPerSecond: 550,
+		},
+		{
+			HttpRequestPosId:    7,
+			HttpPacketPerSecond: 700,
+		},
+		{
+			HttpRequestPosId:    8,
+			HttpPacketPerSecond: 850,
+		},
+		{
+			HttpRequestPosId:    9,
+			HttpPacketPerSecond: 1000,
+		},
+		{
+			HttpRequestPosId:    10,
+			HttpPacketPerSecond: 1500,
+		},
+		{
+			HttpRequestPosId:    11,
+			HttpPacketPerSecond: 2000,
+		},
+		{
+			HttpRequestPosId:    12,
+			HttpPacketPerSecond: 3000,
+		},
+		{
+			HttpRequestPosId:    13,
+			HttpPacketPerSecond: 5000,
+		},
+		{
+			HttpRequestPosId:    14,
+			HttpPacketPerSecond: 10000,
+		},
+		{
+			HttpRequestPosId:    15,
+			HttpPacketPerSecond: 20000,
+		},
+	},
+	ConnectionLimitedList: [] struct {
+		CleaningAccessPosId    int `json:"cleaning_access_pos_id,"`
+		NewConnectionLimited   int `json:"new_connection_limited,"`
+		TotalConnectionLimited int `json:"total_connection_limited,"`
+	}{
+		{
+			CleaningAccessPosId:    1,
+			NewConnectionLimited:   10,
+			TotalConnectionLimited: 30,
+		},
+		{
+			CleaningAccessPosId:    2,
+			NewConnectionLimited:   20,
+			TotalConnectionLimited: 100,
+		},
+		{
+			CleaningAccessPosId:    3,
+			NewConnectionLimited:   30,
+			TotalConnectionLimited: 200,
+		},
+		{
+			CleaningAccessPosId:    4,
+			NewConnectionLimited:   40,
+			TotalConnectionLimited: 250,
+		},
+		{
+			CleaningAccessPosId:    5,
+			NewConnectionLimited:   50,
+			TotalConnectionLimited: 300,
+		},
+		{
+			CleaningAccessPosId:    6,
+			NewConnectionLimited:   60,
+			TotalConnectionLimited: 500,
+		},
+		{
+			CleaningAccessPosId:    7,
+			NewConnectionLimited:   70,
+			TotalConnectionLimited: 600,
+		},
+		{
+			CleaningAccessPosId:    8,
+			NewConnectionLimited:   80,
+			TotalConnectionLimited: 700,
+		},
+	},
 }
 
 var ListConfigsOutput = `
@@ -466,13 +466,13 @@ var ListConfigsOutput = `
 `
 
 func HandleListConfigsSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/query_config_list", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, ListConfigsOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/query_config_list", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, ListConfigsOutput)
+	})
 }
 
 var WeeklyReportOutput = `
@@ -538,75 +538,75 @@ var WeeklyReportOutput = `
 `
 
 //init the loc
-var responsePeriodTime = time.Date(2018,3,1,0,0,0,0,time.UTC)
+var responsePeriodTime = time.Date(2018, 3, 1, 0, 0, 0, 0, time.UTC)
 
 var WeeklyReportResponse = antiddos.WeeklyReportResponse{
-    DdosInterceptTimes: 0,
-    Weekdata: []antiddos.WeekData{
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-        {
-            DdosInterceptTimes: 0,
-            DdosBlackholeTimes: 0,
-            MaxAttackBps:       0,
-            MaxAttackConns:     0,
-            PeriodStartDate:    responsePeriodTime,
-        },
-    },
-    Top10: []struct {
-        FloatingIpAddress string `json:"floating_ip_address,"`
-        Times             int    `json:"times,"`
-    }{},
+	DdosInterceptTimes: 0,
+	Weekdata: []antiddos.WeekData{
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+		{
+			DdosInterceptTimes: 0,
+			DdosBlackholeTimes: 0,
+			MaxAttackBps:       0,
+			MaxAttackConns:     0,
+			PeriodStartDate:    responsePeriodTime,
+		},
+	},
+	Top10: []struct {
+		FloatingIpAddress string `json:"floating_ip_address,"`
+		Times             int    `json:"times,"`
+	}{},
 }
 
 func HandleWeeklyReportSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/weekly", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, WeeklyReportOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/weekly", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, WeeklyReportOutput)
+	})
 }
 
 var ListLogsOutput = `
@@ -626,50 +626,50 @@ var ListLogsOutput = `
 `
 
 var ListLogsResponse = antiddos.ListLogsResponse{
-    Total: 1,
-    Logs: [] struct {
-        StartTime      int `json:"start_time,"`
-        EndTime        int `json:"end_time,"`
-        Status         int `json:"status,"`
-        TriggerBps     int `json:"trigger_bps,"`
-        TriggerPps     int `json:"trigger_pps,"`
-        TriggerHttpPps int `json:"trigger_http_pps,"`
-    }{
-        {
-            StartTime:      1473217200000,
-            EndTime:        1473242400000,
-            Status:         1,
-            TriggerBps:     51106,
-            TriggerPps:     2600,
-            TriggerHttpPps: 3589,
-        },
-    },
+	Total: 1,
+	Logs: [] struct {
+		StartTime      int `json:"start_time,"`
+		EndTime        int `json:"end_time,"`
+		Status         int `json:"status,"`
+		TriggerBps     int `json:"trigger_bps,"`
+		TriggerPps     int `json:"trigger_pps,"`
+		TriggerHttpPps int `json:"trigger_http_pps,"`
+	}{
+		{
+			StartTime:      1473217200000,
+			EndTime:        1473242400000,
+			Status:         1,
+			TriggerBps:     51106,
+			TriggerPps:     2600,
+			TriggerHttpPps: 3589,
+		},
+	},
 }
 
 func HandleListLogsSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/logs", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, ListLogsOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/logs", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, ListLogsOutput)
+	})
 }
 
 var GetStatusOutput = `{"status":"normal"}`
 
 var GetStatusResponse = antiddos.GetStatusResponse{
-    Status: "normal",
+	Status: "normal",
 }
 
 func HandleGetStatusSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/status", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, GetStatusOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/status", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, GetStatusOutput)
+	})
 }
 
 var DailyReportOutput = `
@@ -709,53 +709,53 @@ var DailyReportOutput = `
 `
 
 var DailyReportResponse = antiddos.DailyReportResponse{
-    Data: [] struct {
-        PeriodStart int `json:"period_start,"`
-        BpsIn       int `json:"bps_in,"`
-        BpsAttack   int `json:"bps_attack,"`
-        TotalBps    int `json:"total_bps,"`
-        PpsIn       int `json:"pps_in,"`
-        PpsAttack   int `json:"pps_attack,"`
-        TotalPps    int `json:"total_pps,"`
-    }{
-        {
-            PeriodStart: 1521650068727,
-            BpsIn:       0,
-            BpsAttack:   0,
-            TotalBps:    0,
-            PpsIn:       0,
-            PpsAttack:   0,
-            TotalPps:    0,
-        },
-        {
-            PeriodStart: 1521650368727,
-            BpsIn:       0,
-            BpsAttack:   0,
-            TotalBps:    0,
-            PpsIn:       0,
-            PpsAttack:   0,
-            TotalPps:    0,
-        },
-        {
-            PeriodStart: 1521650668727,
-            BpsIn:       1,
-            BpsAttack:   0,
-            TotalBps:    1,
-            PpsIn:       2,
-            PpsAttack:   0,
-            TotalPps:    2,
-        },
-    },
+	Data: [] struct {
+		PeriodStart int `json:"period_start,"`
+		BpsIn       int `json:"bps_in,"`
+		BpsAttack   int `json:"bps_attack,"`
+		TotalBps    int `json:"total_bps,"`
+		PpsIn       int `json:"pps_in,"`
+		PpsAttack   int `json:"pps_attack,"`
+		TotalPps    int `json:"total_pps,"`
+	}{
+		{
+			PeriodStart: 1521650068727,
+			BpsIn:       0,
+			BpsAttack:   0,
+			TotalBps:    0,
+			PpsIn:       0,
+			PpsAttack:   0,
+			TotalPps:    0,
+		},
+		{
+			PeriodStart: 1521650368727,
+			BpsIn:       0,
+			BpsAttack:   0,
+			TotalBps:    0,
+			PpsIn:       0,
+			PpsAttack:   0,
+			TotalPps:    0,
+		},
+		{
+			PeriodStart: 1521650668727,
+			BpsIn:       1,
+			BpsAttack:   0,
+			TotalBps:    1,
+			PpsIn:       2,
+			PpsAttack:   0,
+			TotalPps:    2,
+		},
+	},
 }
 
 func HandleDailyReportSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/daily", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, DailyReportOutput)
-    })
+	th.Mux.HandleFunc("/antiddos/82abaa86-8518-47db-8d63-ddf152824635/daily", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, DailyReportOutput)
+	})
 }
 
 var GetTaskOutput = `
@@ -766,16 +766,16 @@ var GetTaskOutput = `
 `
 
 var GetTaskResponse = antiddos.GetTaskResponse{
-    TaskStatus: "running",
-    TaskMsg: "ABC",
+	TaskStatus: "running",
+	TaskMsg:    "ABC",
 }
 
 func HandleGetTaskSuccessfully(t *testing.T) {
-    th.Mux.HandleFunc("/query_task_status", func(w http.ResponseWriter, r *http.Request) {
-        th.TestMethod(t, r, "GET")
-        th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-        
-        w.Header().Add("Content-Type", "application/json")
-        fmt.Fprintf(w, GetTaskOutput)
-    })
+	th.Mux.HandleFunc("/query_task_status", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, GetTaskOutput)
+	})
 }
