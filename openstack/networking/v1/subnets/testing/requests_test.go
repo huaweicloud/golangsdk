@@ -161,6 +161,7 @@ func TestCreateSubnet(t *testing.T) {
           "name": "test_subnets",
           "cidr": "192.168.0.0/16",
           "gateway_ip": "192.168.0.1",
+		  "dhcp_enable": true,
           "primary_dns": "8.8.8.8",
           "secondary_dns": "8.8.4.4",
           "availability_zone":"eu-de-02",
@@ -206,6 +207,7 @@ func TestCreateSubnet(t *testing.T) {
 		AvailabilityZone: "eu-de-02",
 		VPC_ID:           "3b9740a0-b44d-48f0-84ee-42eb166e54f7",
 		DnsList:          []string{"8.8.8.8", "8.8.4.4"},
+		EnableDHCP:       true,
 	}
 	n, err := subnets.Create(fake.ServiceClient(), options).Extract()
 	th.AssertNoErr(t, err)
@@ -237,7 +239,8 @@ func TestUpdateSubnet(t *testing.T) {
 {
 "subnet":
     {
-    "name": "testsubnet"
+    	"name": "testsubnet",
+		"dhcp_enable": false
     }
 }
 `)
