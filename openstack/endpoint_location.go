@@ -1,10 +1,25 @@
 package openstack
 
 import (
+	"errors"
+	"regexp"
+
 	"github.com/huaweicloud/golangsdk"
 	tokens2 "github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
 	tokens3 "github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
 )
+
+// a regular patten  for searching servicename in an existing endpoint
+var replaceEndpointUrl = regexp.MustCompile(`https://.+?\.`)
+
+// a regular patten for searching service name and location
+var repWithoutLocal = regexp.MustCompile(`https://.+?\..+?\.`)
+
+// service have same endpoint address in different location, refer to https://developer.huaweicloud.com/endpoint
+var allRegionInOneEndpoint = map[string]struct{}{
+	"cdn": struct{}{},
+	"dns": struct{}{},
+}
 
 /*
 V2EndpointURL discovers the endpoint URL for a specific service from a
@@ -20,7 +35,7 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts golangsdk.EndpointOpts)
 	// Extract Endpoints from the catalog entries that match the requested Type, Name if provided, and Region if provided.
 	var endpoints = make([]tokens2.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
-		if (entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
+		if (opts.Type == "" || entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
 			for _, endpoint := range entry.Endpoints {
 				if opts.Region == "" || endpoint.Region == opts.Region {
 					endpoints = append(endpoints, endpoint)
@@ -30,10 +45,18 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts golangsdk.EndpointOpts)
 	}
 
 	// Report an error if the options were ambiguous.
-	if len(endpoints) > 1 {
-		err := &ErrMultipleMatchingEndpointsV2{}
-		err.Endpoints = endpoints
-		return "", err
+	if opts.Type != "" {
+		if len(endpoints) > 1 {
+			err := &ErrMultipleMatchingEndpointsV2{}
+			err.Endpoints = endpoints
+			return "", err
+		} else if len(endpoints) < 1 {
+			return buildUrlIfNotFoundV2(catalog, opts)
+		}
+	} else {
+		if len(endpoints) < 1 {
+			return "", &golangsdk.ErrEndpointNotFound{}
+		}
 	}
 
 	// Extract the appropriate URL from the matching Endpoint.
@@ -73,7 +96,7 @@ func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts golangsdk.EndpointOpts)
 	// Name if provided, and Region if provided.
 	var endpoints = make([]tokens3.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
-		if (entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
+		if (opts.Type == "" || entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
 			for _, endpoint := range entry.Endpoints {
 				if opts.Availability != golangsdk.AvailabilityAdmin &&
 					opts.Availability != golangsdk.AvailabilityPublic &&
@@ -92,8 +115,18 @@ func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts golangsdk.EndpointOpts)
 	}
 
 	// Report an error if the options were ambiguous.
-	if len(endpoints) > 1 {
-		return "", ErrMultipleMatchingEndpointsV3{Endpoints: endpoints}
+	if opts.Type != "" {
+		if len(endpoints) > 1 {
+			return "", ErrMultipleMatchingEndpointsV3{Endpoints: endpoints}
+		} else if len(endpoints) < 1 {
+			return buildUrlIfNotFoundV3(catalog, opts)
+		}
+	} else {
+		if len(endpoints) > 1 {
+			return endpoints[0].URL, nil
+		} else if len(endpoints) < 1 {
+			return "", &golangsdk.ErrEndpointNotFound{}
+		}
 	}
 
 	// Extract the URL from the matching Endpoint.
@@ -104,4 +137,43 @@ func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts golangsdk.EndpointOpts)
 	// Report an error if there were no matching endpoints.
 	err := &golangsdk.ErrEndpointNotFound{}
 	return "", err
+}
+
+/*
+ buildUrlIfNotFound builds an endpoint if it is not found in identity service response
+*/
+func buildUrlIfNotFoundV2(catalog *tokens2.ServiceCatalog, opts golangsdk.EndpointOpts) (string, error) {
+
+	tmpOpts := opts
+	tmpOpts.Type = ""
+
+	existingUrl, err := V2EndpointURL(catalog, tmpOpts)
+	return generateEndpointUrlWithExisting(existingUrl, opts, err)
+}
+
+/*
+ buildUrlIfNotFound builds an endpoint if it is not found in identity service response
+*/
+func buildUrlIfNotFoundV3(catalog *tokens3.ServiceCatalog, opts golangsdk.EndpointOpts) (string, error) {
+
+	tmpOpts := opts
+	tmpOpts.Type = ""
+
+	existingUrl, err := V3EndpointURL(catalog, tmpOpts)
+	return generateEndpointUrlWithExisting(existingUrl, opts, err)
+}
+
+// internal method for extract a valid endpoint address
+func generateEndpointUrlWithExisting(existingUrl string, opts golangsdk.EndpointOpts, err error) (string, error) {
+	if err != nil || existingUrl == "" {
+		return "", errors.New("No suitable endpoint could be found in the service catalog.")
+	}
+
+	existingUrl = golangsdk.NormalizeURL(existingUrl)
+	if _, ok := allRegionInOneEndpoint[opts.Type]; ok {
+		existingUrl = repWithoutLocal.ReplaceAllString(existingUrl, ("https://" + opts.Type + "."))
+	} else {
+		existingUrl = replaceEndpointUrl.ReplaceAllString(existingUrl, ("https://" + opts.Type + "."))
+	}
+	return existingUrl, nil
 }
