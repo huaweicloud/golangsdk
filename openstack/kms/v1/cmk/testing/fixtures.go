@@ -447,6 +447,12 @@ func HandleCancelDeletionSuccessfully(t *testing.T) {
 	})
 }
 
+func HandleException(t *testing.T, url string) {
+	th.Mux.HandleFunc(url, func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "")
+	})
+}
+
 var UpdateAliasResponse = cmk.UpdateAliasResponse{
 	KeyInfo: struct {
 		KeyId    string `json:"key_id,"`

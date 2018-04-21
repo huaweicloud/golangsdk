@@ -9,6 +9,14 @@ import (
 	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
+func TestCreateException(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleException(t, "/kms/create-key")
+	_, err := cmk.Create(client.ServiceClient(), cmk.CreateOpts{}).Extract()
+	th.AssertEquals(t, true, err != nil)
+}
+
 func TestCreate(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
@@ -30,6 +38,14 @@ func TestCreate(t *testing.T) {
 	th.CheckDeepEquals(t, &CreateResponse, actual)
 }
 
+func TestEnableException(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleException(t, "/kms/enable-key")
+	_, err := cmk.Enable(client.ServiceClient(), cmk.EnableOpts{}).Extract()
+	th.AssertEquals(t, true, err != nil)
+}
+
 func TestEnable(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
@@ -45,6 +61,14 @@ func TestEnable(t *testing.T) {
 	th.CheckDeepEquals(t, &EnableResponse, actual)
 }
 
+func TestDisableException(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleException(t, "/kms/disable-key")
+	_, err := cmk.Disable(client.ServiceClient(), cmk.DisableOpts{}).Extract()
+	th.AssertEquals(t, true, err != nil)
+}
+
 func TestDisable(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
@@ -58,6 +82,14 @@ func TestDisable(t *testing.T) {
 	actual, err := cmk.Disable(client.ServiceClient(), disableOps).Extract()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, &DisableResponse, actual)
+}
+
+func TestGetException(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleException(t, "/kms/describe-key")
+	_, err := cmk.Get(client.ServiceClient(), cmk.GetOpts{}).Extract()
+	th.AssertEquals(t, true, err != nil)
 }
 
 func TestGet(t *testing.T) {
@@ -137,6 +169,14 @@ func TestScheduleDeletion(t *testing.T) {
 	actual, err := cmk.ScheduleDeletion(client.ServiceClient(), scheduleDeletiontOps).Extract()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, &ScheduleDeletionResponse, actual)
+}
+func TestCancelDeletionException(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleException(t, "/kms/cancel-key-deletion")
+
+	_, err := cmk.CancelDeletion(client.ServiceClient(), cmk.CancelDeletionOpts{}).Extract()
+	th.AssertEquals(t, true, err != nil)
 }
 
 func TestCancelDeletion(t *testing.T) {
