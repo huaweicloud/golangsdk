@@ -1,5 +1,6 @@
 language: go
 sudo: false
+go_import_path: github.com/xioxu/golangsdk
 install:
 - go get golang.org/x/crypto/ssh
 - go get github.com/xioxu/golangsdk
