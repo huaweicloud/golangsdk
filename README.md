@@ -1,8 +1,8 @@
 # Golangsdk: a Huawei clouds SDK for Golang
-[![Go Report Card](https://goreportcard.com/badge/github.com/huaweicloud/golangsdk?branch=master)](https://goreportcard.com/badge/github.com/huaweicloud/golangsdk)
-[![Build Status](https://travis-ci.org/huaweicloud/golangsdk.svg?branch=master)](https://travis-ci.org/huaweicloud/golangsdk)
-[![Coverage Status](https://coveralls.io/repos/github/huaweicloud/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/huaweicloud/golangsdk?branch=master)
-[![LICENSE](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/huaweicloud/golangsdk/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/TonyGitUser/golangsdk?branch=master)](https://goreportcard.com/badge/github.com/TonyGitUser/golangsdk)
+[![Build Status](https://travis-ci.org/TonyGitUser/golangsdk.svg?branch=master)](https://travis-ci.org/TonyGitUser/golangsdk)
+[![Coverage Status](https://coveralls.io/repos/github/TonyGitUser/golangsdk/badge.svg?branch=master)](https://coveralls.io/github/TonyGitUser/golangsdk?branch=master)
+[![LICENSE](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/TonyGitUser/golangsdk/blob/master/LICENSE)
 
 Golangsdk is a Huawei clouds Go SDK.
 Golangsdk is based on [Gophercloud](https://github.com/gophercloud/gophercloud)
