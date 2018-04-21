@@ -80,8 +80,28 @@ func TestV2EndpointExact(t *testing.T) {
 	}
 }
 
+func TestV2EndpointExactNonExist(t *testing.T) {
+	expectedURLs := map[golangsdk.Availability]string{
+		golangsdk.AvailabilityPublic:   "https://none.same.correct.com",
+		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com",
+		golangsdk.AvailabilityInternal: "https://none.same.correct.com",
+	}
+
+	for availability, expected := range expectedURLs {
+		actual, err := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
+			Type:         "none",
+			Name:         "same",
+			Region:       "same",
+			Availability: availability,
+		})
+		th.AssertNoErr(t, err)
+		th.CheckEquals(t, expected, actual)
+	}
+}
+
 func TestV2EndpointNone(t *testing.T) {
-	_, actual := openstack.V2EndpointURL(&catalog2, golangsdk.EndpointOpts{
+	_, actual := openstack.V2EndpointURL(&tokens2.ServiceCatalog{
+		Entries: []tokens2.CatalogEntry{}}, golangsdk.EndpointOpts{
 		Type:         "nope",
 		Availability: golangsdk.AvailabilityPublic,
 	})
@@ -200,8 +220,28 @@ func TestV3EndpointExact(t *testing.T) {
 	}
 }
 
+func TestV3EndpointExactNonExist(t *testing.T) {
+	expectedURLs := map[golangsdk.Availability]string{
+		golangsdk.AvailabilityPublic:   "https://none.same.correct.com",
+		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com",
+		golangsdk.AvailabilityInternal: "https://none.same.correct.com",
+	}
+
+	for availability, expected := range expectedURLs {
+		actual, err := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
+			Type:         "none",
+			Name:         "same",
+			Region:       "same",
+			Availability: availability,
+		})
+		th.AssertNoErr(t, err)
+		th.CheckEquals(t, expected, actual)
+	}
+}
+
 func TestV3EndpointNone(t *testing.T) {
-	_, actual := openstack.V3EndpointURL(&catalog3, golangsdk.EndpointOpts{
+	_, actual := openstack.V3EndpointURL(&tokens3.ServiceCatalog{
+		Entries: []tokens3.CatalogEntry{}}, golangsdk.EndpointOpts{
 		Type:         "nope",
 		Availability: golangsdk.AvailabilityPublic,
 	})
