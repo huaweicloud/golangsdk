@@ -71,19 +71,12 @@ type CreateOptsBuilder interface {
 }
 
 func (opts CreateOpts) ToCreateMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToCreateMap()
 
 	_, r.Err = client.Post(CreateURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -105,19 +98,12 @@ type DisableOptsBuilder interface {
 }
 
 func (opts DisableOpts) ToDisableMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Disable(client *golangsdk.ServiceClient, opts DisableOptsBuilder) (r DisableResult) {
-	b, err := opts.ToDisableMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToDisableMap()
 
 	_, r.Err = client.Post(DisableURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -139,20 +125,12 @@ type EnableOptsBuilder interface {
 }
 
 func (opts EnableOpts) ToEnableMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Enable(client *golangsdk.ServiceClient, opts EnableOptsBuilder) (r EnableResult) {
-	b, err := opts.ToEnableMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToEnableMap()
 	_, r.Err = client.Post(EnableURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
@@ -173,20 +151,12 @@ type GetOptsBuilder interface {
 }
 
 func (opts GetOpts) ToGetMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Get(client *golangsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
-	b, err := opts.ToGetMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToGetMap()
 	_, r.Err = client.Post(GetURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
@@ -222,20 +192,12 @@ type GrantOptsBuilder interface {
 }
 
 func (opts GrantOpts) ToGrantMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Grant(client *golangsdk.ServiceClient, opts GrantOptsBuilder) (r GrantResult) {
-	b, err := opts.ToGrantMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToGrantMap()
 	_, r.Err = client.Post(GrantURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
@@ -270,10 +232,7 @@ type ListOptsBuilder interface {
 }
 
 func (opts ListOpts) ToListMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
@@ -313,19 +272,12 @@ type ListGrantsOptsBuilder interface {
 }
 
 func (opts ListGrantsOpts) ToListGrantsMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func ListGrants(client *golangsdk.ServiceClient, opts ListGrantsOptsBuilder) (r ListGrantsResult) {
-	b, err := opts.ToListGrantsMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToListGrantsMap()
 
 	_, r.Err = client.Post(ListGrantsURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -350,19 +302,12 @@ type ListRetirableOptsBuilder interface {
 }
 
 func (opts ListRetirableOpts) ToListRetirableMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func ListRetirable(client *golangsdk.ServiceClient, opts ListRetirableOptsBuilder) (r ListRetirableResult) {
-	b, err := opts.ToListRetirableMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToListRetirableMap()
 
 	_, r.Err = client.Post(ListRetirableURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -395,20 +340,12 @@ type RetireOptsBuilder interface {
 }
 
 func (opts RetireOpts) ToRetireMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Retire(client *golangsdk.ServiceClient, opts RetireOptsBuilder) (r RetireResult) {
-	b, err := opts.ToRetireMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToRetireMap()
 	_, r.Err = client.Post(RetireURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
@@ -432,20 +369,12 @@ type RevokeOptsBuilder interface {
 }
 
 func (opts RevokeOpts) ToRevokeMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func Revoke(client *golangsdk.ServiceClient, opts RevokeOptsBuilder) (r RevokeResult) {
-	b, err := opts.ToRevokeMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToRevokeMap()
 	_, r.Err = client.Post(RevokeURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
@@ -469,19 +398,12 @@ type ScheduleDeletionOptsBuilder interface {
 }
 
 func (opts ScheduleDeletionOpts) ToScheduleDeletionMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func ScheduleDeletion(client *golangsdk.ServiceClient, opts ScheduleDeletionOptsBuilder) (r ScheduleDeletionResult) {
-	b, err := opts.ToScheduleDeletionMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToScheduleDeletionMap()
 
 	_, r.Err = client.Post(ScheduleDeletionURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -506,19 +428,12 @@ type UpdateAliasOptsBuilder interface {
 }
 
 func (opts UpdateAliasOpts) ToUpdateAliasMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func UpdateAlias(client *golangsdk.ServiceClient, opts UpdateAliasOptsBuilder) (r UpdateAliasResult) {
-	b, err := opts.ToUpdateAliasMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
+	b, _ := opts.ToUpdateAliasMap()
 
 	_, r.Err = client.Post(UpdateAliasURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
@@ -543,20 +458,12 @@ type UpdateDescriptionOptsBuilder interface {
 }
 
 func (opts UpdateDescriptionOpts) ToUpdateDescriptionMap() (map[string]interface{}, error) {
-	b, err := golangsdk.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
+	b, _ := golangsdk.BuildRequestBody(opts, "")
 	return b, nil
 }
 
 func UpdateDescription(client *golangsdk.ServiceClient, opts UpdateDescriptionOptsBuilder) (r UpdateDescriptionResult) {
-	b, err := opts.ToUpdateDescriptionMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-
+	b, _ := opts.ToUpdateDescriptionMap()
 	_, r.Err = client.Post(UpdateDescriptionURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
