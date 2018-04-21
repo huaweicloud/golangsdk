@@ -1,6 +1,10 @@
 language: go
 sudo: false
-go_import_path: github.com/xioxu/golangsdk
+before_install:
+  - mkdir -p $HOME/gopath/src/github.com/huaweicloud/golangsdk
+  - rsync -az ${TRAVIS_BUILD_DIR}/ $HOME/gopath/src/github.com/huaweicloud/golangsdk/
+  - export TRAVIS_BUILD_DIR=$HOME/gopath/src/github.com/huaweicloud/golangsdk
+  - cd $HOME/gopath/src/github.com/huaweicloud/golangsdk
 install:
 - go get golang.org/x/crypto/ssh
 - go get github.com/xioxu/golangsdk
