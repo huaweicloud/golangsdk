@@ -91,7 +91,7 @@ func TestListAllPage(t *testing.T) {
 	HandleListSuccessfully(t)
 
 	actual, err := cmk.List(client.ServiceClient(), cmk.ListOpts{
-		Limit: "1",
+		Limit: 1,
 	}).AllPages()
 	th.AssertNoErr(t, err)
 	listResponse, err := cmk.ExtractList(actual.(cmk.ListPage))
@@ -105,7 +105,7 @@ func TestListEachPage(t *testing.T) {
 	HandleListSuccessfully(t)
 
 	err := cmk.List(client.ServiceClient(), cmk.ListOpts{
-		Limit: "1",
+		Limit: 1,
 	}).EachPage(func(page postpagination.Page) (bool, error) {
 		listResponse, err := cmk.ExtractList(page.(cmk.ListPage))
 		th.AssertNoErr(t, err)
