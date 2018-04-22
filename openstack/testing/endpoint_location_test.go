@@ -82,9 +82,9 @@ func TestV2EndpointExact(t *testing.T) {
 
 func TestV2EndpointExactNonExist(t *testing.T) {
 	expectedURLs := map[golangsdk.Availability]string{
-		golangsdk.AvailabilityPublic:   "https://none.same.correct.com",
-		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com",
-		golangsdk.AvailabilityInternal: "https://none.same.correct.com",
+		golangsdk.AvailabilityPublic:   "https://none.same.correct.com/",
+		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com/",
+		golangsdk.AvailabilityInternal: "https://none.same.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
@@ -222,9 +222,9 @@ func TestV3EndpointExact(t *testing.T) {
 
 func TestV3EndpointExactNonExist(t *testing.T) {
 	expectedURLs := map[golangsdk.Availability]string{
-		golangsdk.AvailabilityPublic:   "https://none.same.correct.com",
-		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com",
-		golangsdk.AvailabilityInternal: "https://none.same.correct.com",
+		golangsdk.AvailabilityPublic:   "https://none.same.correct.com/",
+		golangsdk.AvailabilityAdmin:    "https://none.same.correct.com/",
+		golangsdk.AvailabilityInternal: "https://none.same.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {

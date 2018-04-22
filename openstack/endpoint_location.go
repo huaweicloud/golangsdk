@@ -187,5 +187,5 @@ func generateEndpointUrlWithExisting(existingUrl string, opts golangsdk.Endpoint
 			urlParts = append(urlParts, urlDomainParts[len(urlDomainParts)-2:]...)
 		}
 	}
-	return u.Scheme + "://" + strings.Join(urlParts, "."), nil
+	return u.Scheme + "://" + strings.Join(urlParts, ".") + "/", nil
 }
