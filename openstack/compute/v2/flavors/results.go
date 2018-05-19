@@ -58,9 +58,9 @@ type Flavor struct {
 	// Ephemeral is the amount of ephemeral disk space, measured in GB.
 	Ephemeral int `json:"OS-FLV-EXT-DATA:ephemeral"`
 
-	Links []struct{
+	Links []struct {
 		Href string `json:"href"`
-		Rel string `json:"rel"`
+		Rel  string `json:"rel"`
 	} `json:"links"`
 }
 

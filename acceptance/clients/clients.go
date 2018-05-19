@@ -511,7 +511,6 @@ func UpdatePeerTenantDetails(ao *golangsdk.AuthOptions) error {
 	}
 }
 
-
 // configureDebug will configure the provider client to print the API
 // requests and responses if OS_DEBUG is enabled.
 func configureDebug(client *golangsdk.ProviderClient) {
