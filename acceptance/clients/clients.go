@@ -10,6 +10,7 @@ import (
 
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack"
+	"net/http"
 )
 
 // AcceptanceTestChoices contains image and flavor selections for use by the acceptance tests.
@@ -122,6 +123,8 @@ func NewBlockStorageV1Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewBlockStorageV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -140,6 +143,8 @@ func NewBlockStorageV2Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewBlockStorageV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -160,6 +165,8 @@ func NewBlockStorageV3Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewBlockStorageV3(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -178,6 +185,8 @@ func NewComputeV2Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewComputeV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -198,6 +207,8 @@ func NewDBV1Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewDBV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -216,6 +227,8 @@ func NewDNSV2Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewDNSV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -236,6 +249,8 @@ func NewIdentityV2Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -254,6 +269,8 @@ func NewIdentityV2AdminClient() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{
 		Region:       os.Getenv("OS_REGION_NAME"),
@@ -275,6 +292,8 @@ func NewIdentityV2UnauthenticatedClient() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewIdentityV2(client, golangsdk.EndpointOpts{})
 }
 
@@ -291,6 +310,8 @@ func NewIdentityV3Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewIdentityV3(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -311,6 +332,8 @@ func NewIdentityV3UnauthenticatedClient() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewIdentityV3(client, golangsdk.EndpointOpts{})
 }
 
@@ -327,6 +350,8 @@ func NewImageServiceV2Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewImageServiceV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -346,6 +371,8 @@ func NewNetworkV1Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewNetworkV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -371,6 +398,8 @@ func NewPeerNetworkV1Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewNetworkV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -389,6 +418,8 @@ func NewNetworkV2Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewNetworkV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -414,6 +445,8 @@ func NewPeerNetworkV2Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewNetworkV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -432,6 +465,8 @@ func NewObjectStorageV1Client() (*golangsdk.ServiceClient, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	configureDebug(client)
 
 	return openstack.NewObjectStorageV1(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
@@ -452,6 +487,8 @@ func NewSharedFileSystemV2Client() (*golangsdk.ServiceClient, error) {
 		return nil, err
 	}
 
+	configureDebug(client)
+
 	return openstack.NewSharedFileSystemV2(client, golangsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
@@ -471,5 +508,18 @@ func UpdatePeerTenantDetails(ao *golangsdk.AuthOptions) error {
 
 	} else {
 		return fmt.Errorf("You're missing some important setup:\n OS_Peer_Tenant_ID or OS_Peer_Tenant_Name env variables must be provided.")
+	}
+}
+
+
+// configureDebug will configure the provider client to print the API
+// requests and responses if OS_DEBUG is enabled.
+func configureDebug(client *golangsdk.ProviderClient) {
+	if os.Getenv("OS_DEBUG") != "" {
+		client.HTTPClient = http.Client{
+			Transport: &LogRoundTripper{
+				Rt: &http.Transport{},
+			},
+		}
 	}
 }
