@@ -27,7 +27,6 @@ type LogRoundTripper struct {
 // RoundTrip performs a round-trip HTTP request and logs relevant information
 // about it.
 func (lrt *LogRoundTripper) RoundTrip(request *http.Request) (*http.Response, error) {
-	fmt.Println("round")
 	defer func() {
 		if request.Body != nil {
 			request.Body.Close()
