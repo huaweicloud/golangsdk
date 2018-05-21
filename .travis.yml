@@ -7,9 +7,8 @@ install:
 - go get github.com/mattn/goveralls
 - go get golang.org/x/tools/cmd/goimports
 go:
-- 1.9
-- 1.10
-- release
+- "1.9"
+- "1.10"
 - tip
 env:
   global:
