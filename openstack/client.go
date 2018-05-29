@@ -493,3 +493,9 @@ func NewAntiDDoSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) 
 	sc.ResourceBase = sc.Endpoint + "v2/" + client.ProjectID + "/"
 	return sc, err
 }
+
+// NewDMSServiceV1 creates a ServiceClient that may be used to access the v1 Distributed Message Service.
+func NewDMSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "dms")
+	return sc, err
+}
