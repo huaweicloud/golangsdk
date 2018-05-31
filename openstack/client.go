@@ -363,7 +363,12 @@ func NewImageServiceV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOp
 // load balancer service.
 func NewLoadBalancerV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "load-balancer")
-	sc.ResourceBase = sc.Endpoint + "v2.0/"
+	hasProjectID = openstack.ContainsProjectId(sc.Endpoint)
+
+	if !hasProjectID {
+		sc.ResourceBase = sc.Endpoint + "v2.0/" + client.ProjectID + "/"
+	}
+
 	return sc, err
 }
 
@@ -405,6 +410,12 @@ func NewCESClient(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 		return nil, err
 	}
 	sc.ResourceBase = sc.Endpoint
+
+	hasProjectID = openstack.ContainsProjectId(sc.Endpoint)
+	if !hasProjectID {
+		sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	}
+
 	return sc, err
 }
 
@@ -426,6 +437,12 @@ func NewComputeV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 //auto-scaling service of huawei public cloud
 func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "as")
+	hasProjectID = openstack.ContainsProjectId(sc.Endpoint)
+
+	if !hasProjectID {
+		sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	}
+
 	return sc, err
 }
 
@@ -437,6 +454,12 @@ func NewKmsKeyV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*
 	sc.Endpoint = sc.Endpoint[:strings.LastIndex(sc.Endpoint, "v2")+3]
 	sc.Endpoint = strings.Replace(sc.Endpoint, "v2", "v1.0", 1)
 	sc.ResourceBase = sc.Endpoint
+
+	hasProjectID = openstack.ContainsProjectId(sc.Endpoint)
+	if !hasProjectID {
+		sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	}
+
 	sc.Type = "kms"
 	return sc, err
 }
@@ -474,7 +497,12 @@ func NewNatV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 // NewMapReduceV1 creates a ServiceClient that may be used with the v1 MapReduce service.
 func NewMapReduceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "mrs")
-	sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	hasProjectID = openstack.ContainsProjectId(sc.Endpoint)
+
+	if !hasProjectID {
+		sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	}
+
 	return sc, err
 }
 

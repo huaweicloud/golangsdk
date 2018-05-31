@@ -7,41 +7,41 @@ const (
 )
 
 func getURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "describe-key")
+	return c.ServiceURL(resourcePath, "describe-key")
 }
 
 func createURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "create-key")
+	return c.ServiceURL(resourcePath, "create-key")
 }
 
 func deleteURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "schedule-key-deletion")
+	return c.ServiceURL(resourcePath, "schedule-key-deletion")
 }
 
 func updateAliasURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "update-key-alias")
+	return c.ServiceURL(resourcePath, "update-key-alias")
 }
 
 func updateDesURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "update-key-description")
+	return c.ServiceURL(resourcePath, "update-key-description")
 }
 
 func dataEncryptURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "create-datakey")
+	return c.ServiceURL(resourcePath, "create-datakey")
 }
 
 func encryptDEKURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "encrypt-datakey")
+	return c.ServiceURL(resourcePath, "encrypt-datakey")
 }
 
 func enableKeyURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "enable-key")
+	return c.ServiceURL(resourcePath, "enable-key")
 }
 
 func disableKeyURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "disable-key")
+	return c.ServiceURL(resourcePath, "disable-key")
 }
 
 func listURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, resourcePath, "list-keys")
+	return c.ServiceURL(resourcePath, "list-keys")
 }
