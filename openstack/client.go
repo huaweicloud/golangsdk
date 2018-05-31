@@ -499,3 +499,9 @@ func NewDMSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 	sc, err := initClientOpts(client, eo, "dms")
 	return sc, err
 }
+
+// NewDCSServiceV1 creates a ServiceClient that may be used to access the v1 Distributed Cache Service.
+func NewDCSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "dcs")
+	return sc, err
+}

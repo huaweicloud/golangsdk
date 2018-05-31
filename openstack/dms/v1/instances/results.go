@@ -41,7 +41,7 @@ type Instance struct {
 	InstanceID        string   `json:"instance_id"`
 	ResourceSpecCode  string   `json:"resource_spec_code"`
 	Type              string   `json:"type"`
-	ChargingMode      string   `json:"charging_mode"`
+	ChargingMode      int      `json:"charging_mode"`
 	VPCID             string   `json:"vpc_id"`
 	VPCName           string   `json:"vpc_name"`
 	CreatedAt         string   `json:"created_at"`
