@@ -8,5 +8,5 @@ const (
 )
 
 func rootURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL(c.ProjectID, rootPath, resourcePath)
+	return c.ServiceURL(rootPath, resourcePath)
 }
