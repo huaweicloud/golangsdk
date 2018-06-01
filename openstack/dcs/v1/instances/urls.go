@@ -4,6 +4,7 @@ import "github.com/huaweicloud/golangsdk"
 
 // endpoint/instances
 const resourcePath = "instances"
+const passwordPath = "password"
 
 // createURL will build the rest query url of creation
 func createURL(client *golangsdk.ServiceClient) string {
@@ -23,4 +24,9 @@ func updateURL(c *golangsdk.ServiceClient, id string) string {
 // getURL will build the get url of get function
 func getURL(client *golangsdk.ServiceClient, id string) string {
 	return client.ServiceURL(resourcePath, id)
+}
+
+// passwordURL will build the password update function
+func passwordURL(client *golangsdk.ServiceClient, id string) string {
+	return client.ServiceURL(resourcePath, id, passwordPath)
 }

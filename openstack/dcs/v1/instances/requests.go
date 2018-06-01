@@ -26,7 +26,7 @@ type CreateOps struct {
 	Engine string `json:"engine" required:"true"`
 
 	// Cache engine version, which is 3.0.7.
-	EngineVersion string `json:"engine_version" required:"true"`
+	EngineVersion string `json:"engine_version,omitempty"`
 
 	// Indicates the message storage space.
 	// Cache capacity.
@@ -50,7 +50,7 @@ type CreateOps struct {
 	// Lowercase letters
 	// Digits
 	// Special characters, such as `~!@#$%^&*()-_=+\|[{}]:'",<.>/?
-	Password string `json:"password" required:"true"`
+	Password string `json:"password,omitempty"`
 
 	// Tenant's VPC ID.
 	VPCID string `json:"vpc_id" required:"true"`
@@ -63,7 +63,7 @@ type CreateOps struct {
 
 	// IDs of the AZs where cache nodes reside.
 	// In the current version, only one AZ ID can be set in the request.
-	AvailableZones []string `json:"available_zones,omitempty"`
+	AvailableZones []string `json:"available_zones" required:"true"`
 
 	// Product ID used to differentiate DCS instance types.
 	ProductID string `json:"product_id" required:"true"`
@@ -194,5 +194,47 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 // Get a instance with detailed information by id
 func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
+	return
+}
+
+//UpdatePasswordOptsBuilder is an interface which can build the map paramter of update password function
+type UpdatePasswordOptsBuilder interface {
+	ToPasswordUpdateMap() (map[string]interface{}, error)
+}
+
+//UpdatePasswordOpts is a struct which represents the parameters of update function
+type UpdatePasswordOpts struct {
+	// Old password. It may be empty.
+	OldPassword string `json:"old_password" required:"true"`
+
+	// New password.
+	// Password complexity requirements:
+	// A string of 6–32 characters.
+	// Must be different from the old password.
+	// Contains at least two types of the following characters:
+	// Uppercase letters
+	// Lowercase letters
+	// Digits
+	// Special characters `~!@#$%^&*()-_=+\|[{}]:'",<.>/?
+	NewPassword string `json:"new_password" required:"true"`
+}
+
+// ToPasswordUpdateMap is used for type convert
+func (opts UpdatePasswordOpts) ToPasswordUpdateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+// UpdatePassword is updating password for a dcs instance
+func UpdatePassword(client *golangsdk.ServiceClient, id string, opts UpdatePasswordOptsBuilder) (r UpdatePasswordResult) {
+
+	body, err := opts.ToPasswordUpdateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Put(passwordURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{200},
+	})
 	return
 }
