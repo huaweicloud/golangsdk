@@ -101,7 +101,7 @@ type InstanceBackupPolicy struct {
 type PeriodicalBackupPlan struct {
 	// Time at which backup starts.
 	// "00:00-01:00" indicates that backup starts at 00:00:00.
-	BeginAt int `json:"begin_at" required:"true"`
+	BeginAt string `json:"begin_at" required:"true"`
 
 	// Interval at which backup is performed.
 	// Currently, only weekly backup is supported.
@@ -235,6 +235,43 @@ func UpdatePassword(client *golangsdk.ServiceClient, id string, opts UpdatePassw
 
 	_, r.Err = client.Put(passwordURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
+	})
+	return
+}
+
+//ExtendOptsBuilder is an interface which can build the map paramter of extend function
+type ExtendOptsBuilder interface {
+	ToExtendMap() (map[string]interface{}, error)
+}
+
+//ExtendOpts is a struct which represents the parameters of extend function
+type ExtendOpts struct {
+	// New specifications (memory space) of the DCS instance.
+	// The new specification value to which the DCS instance
+	// will be scaled up must be greater than the current specification value.
+	// Unit: GB.
+	NewCapacity int `json:"new_capacity" required:"true"`
+
+	// New order ID.
+	OrderID string `json:"order_id,omitempty"`
+}
+
+// ToExtendMap is used for type convert
+func (opts ExtendOpts) ToExtendMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+// Extend is extending for a dcs instance
+func Extend(client *golangsdk.ServiceClient, id string, opts ExtendOptsBuilder) (r ExtendResult) {
+
+	body, err := opts.ToExtendMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(extendURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{204},
 	})
 	return
 }
