@@ -104,3 +104,8 @@ func (r UpdatePasswordResult) Extract() (*Password, error) {
 	err := r.Result.ExtractInto(&s)
 	return &s, err
 }
+
+// ExtendResult is a struct from which can get the result of extend method
+type ExtendResult struct {
+	golangsdk.Result
+}
