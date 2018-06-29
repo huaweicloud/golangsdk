@@ -26,7 +26,7 @@ type CreateOps struct {
 	Engine string `json:"engine" required:"true"`
 
 	// Cache engine version, which is 3.0.7.
-	EngineVersion string `json:"engine_version,omitempty"`
+	EngineVersion string `json:"engine_version"`
 
 	// Indicates the message storage space.
 	// Cache capacity.
@@ -37,6 +37,9 @@ type CreateOps struct {
 	// For a DCS Redis instance in cluster mode, the cache capacity can be
 	// 64, 128, 256, 512, or 1024 GB.
 	Capacity int `json:"capacity" required:"true"`
+
+	// Indicate if no password visit cache instance is allowed.
+	NoPasswordAccess string `json:"no_password_access,omitempty"`
 
 	// Indicates the password of an instance.
 	// An instance password must meet the following complexity requirements:
@@ -51,6 +54,9 @@ type CreateOps struct {
 	// Digits
 	// Special characters, such as `~!@#$%^&*()-_=+\|[{}]:'",<.>/?
 	Password string `json:"password,omitempty"`
+
+	// When NoPasswordAccess is flase, the AccessUser is enabled.
+	AccessUser string `json:"access_user,omitempty"`
 
 	// Tenant's VPC ID.
 	VPCID string `json:"vpc_id" required:"true"`
@@ -70,7 +76,7 @@ type CreateOps struct {
 
 	// Backup policy.
 	// This parameter is available for master/standby DCS instances.
-	InstanceBackupPolicy InstanceBackupPolicy `json:"instance_backup_policy,omitempty"`
+	InstanceBackupPolicy *InstanceBackupPolicy `json:"instance_backup_policy,omitempty"`
 
 	// Indicates the time at which a maintenance time window starts.
 	// Format: HH:mm:ss
@@ -153,11 +159,11 @@ type UpdateOpts struct {
 
 	// Brief description of the DCS instance.
 	// A brief description supports up to 1024 characters.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 
 	// Backup policy.
 	// This parameter is available for master/standby DCS instances.
-	InstanceBackupPolicy InstanceBackupPolicy `json:"instance_backup_policy,omitempty"`
+	InstanceBackupPolicy *InstanceBackupPolicy `json:"instance_backup_policy,omitempty"`
 
 	// Time at which the maintenance time window starts.
 	// Format: HH:mm:ss
@@ -185,7 +191,7 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 		return
 	}
 
-	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Put(updateURL(client, id), body, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return
@@ -270,7 +276,7 @@ func Extend(client *golangsdk.ServiceClient, id string, opts ExtendOptsBuilder) 
 		return
 	}
 
-	_, r.Err = client.Post(extendURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Post(extendURL(client, id), body, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return

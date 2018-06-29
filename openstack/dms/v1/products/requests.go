@@ -5,7 +5,7 @@ import (
 )
 
 // Get products
-func Get(client *golangsdk.ServiceClient) (r GetResult) {
-	_, r.Err = client.Get(getURL(client), &r.Body, nil)
+func Get(client *golangsdk.ServiceClient, engine string) (r GetResult) {
+	_, r.Err = client.Get(getURL(client, engine), &r.Body, nil)
 	return
 }

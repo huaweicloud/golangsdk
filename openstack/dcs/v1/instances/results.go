@@ -59,6 +59,8 @@ type Instance struct {
 	OrderID              string               `json:"order_id"`
 	MaintainBegin        string               `json:"maintain_begin"`
 	MaintainEnd          string               `json:"maintain_end"`
+	NoPasswordAccess     string               `json:"no_password_access"`
+	AccessUser           string               `json:"access_user"`
 }
 
 // UpdateResult is a struct from which can get the result of update method

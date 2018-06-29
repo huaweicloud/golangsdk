@@ -35,7 +35,7 @@ type Detail struct {
 // ProductInfo for dms
 type ProductInfo struct {
 	Storage   string `json:"storage"`
-	NodeNum   int    `json:"node_num"`
+	NodeNum   string `json:"node_num"`
 	ProductID string `json:"product_id"`
 	SpecCode  string `json:"spec_code"`
 }
