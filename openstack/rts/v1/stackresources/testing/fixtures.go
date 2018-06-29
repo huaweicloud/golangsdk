@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"testing"
 	"time"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/rts/v1/stackresources"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
-
 )
 
 // ListExpected represents the expected object from a List request.

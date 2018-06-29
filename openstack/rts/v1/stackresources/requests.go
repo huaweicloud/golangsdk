@@ -2,6 +2,7 @@ package stackresources
 
 import (
 	"reflect"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
 )
