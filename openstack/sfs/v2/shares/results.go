@@ -1,10 +1,11 @@
 package shares
 
 import (
+	"time"
 	"encoding/json"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
-	"time"
 )
 
 // Share contains all information associated with an OpenStack Share

@@ -1,9 +1,10 @@
 package shares
 
 import (
+	"reflect"
+
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
-	"reflect"
 )
 
 var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{

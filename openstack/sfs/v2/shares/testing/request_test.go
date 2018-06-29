@@ -2,13 +2,14 @@ package testing
 
 import (
 	"fmt"
+	"net/http"
+	"testing"
+	"time"
+
 	"github.com/huaweicloud/golangsdk/openstack/sfs/v2/shares"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	"github.com/huaweicloud/golangsdk/testhelper/client"
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
-	"net/http"
-	"testing"
-	"time"
 )
 
 func TestCreateShare(t *testing.T) {
