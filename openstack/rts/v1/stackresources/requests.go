@@ -1,9 +1,9 @@
 package stackresources
 
 import (
+	"reflect"
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/pagination"
-	"reflect"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to the
