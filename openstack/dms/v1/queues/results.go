@@ -31,17 +31,17 @@ type DeleteResult struct {
 
 // Queue response
 type Queue struct {
-	ID               string `json:"id"`
-	Name             string `json:"name"`
-	Created          string `json:"created"`
-	Description      string `json:"description"`
-	QueueMode        string `json:"queue_mode"`
-	Reservation      int    `json:"reservation"`
-	MaxMsgSizeByte   int    `json:"max_msg_size_byte"`
-	ProducedMessages int    `json:"produced_messages"`
-	RedrivePolicy    string `json:"redrive_policy"`
-	MaxConsumeCount  int    `json:"max_consume_count"`
-	GroupCount       int    `json:"group_count"`
+	ID               string  `json:"id"`
+	Name             string  `json:"name"`
+	Created          float64 `json:"created"`
+	Description      string  `json:"description"`
+	QueueMode        string  `json:"queue_mode"`
+	Reservation      int     `json:"reservation"`
+	MaxMsgSizeByte   int     `json:"max_msg_size_byte"`
+	ProducedMessages int     `json:"produced_messages"`
+	RedrivePolicy    string  `json:"redrive_policy"`
+	MaxConsumeCount  int     `json:"max_consume_count"`
+	GroupCount       int     `json:"group_count"`
 }
 
 // GetResult contains the body of getting detailed

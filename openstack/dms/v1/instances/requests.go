@@ -113,7 +113,7 @@ type UpdateOpts struct {
 
 	// Indicates the description of an instance.
 	// It is a character string containing not more than 1024 characters.
-	Description string `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 
 	// Indicates the time at which a maintenance time window starts.
 	// Format: HH:mm:ss
@@ -141,7 +141,7 @@ func Update(client *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) 
 		return
 	}
 
-	_, r.Err = client.Put(updateURL(client, id), body, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Put(updateURL(client, id), body, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
 	return

@@ -496,13 +496,17 @@ func NewAntiDDoSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) 
 
 // NewDMSServiceV1 creates a ServiceClient that may be used to access the v1 Distributed Message Service.
 func NewDMSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "dms")
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "dms", 1)
+	sc.ResourceBase = sc.Endpoint + "v1.0/" + client.ProjectID + "/"
 	return sc, err
 }
 
 // NewDCSServiceV1 creates a ServiceClient that may be used to access the v1 Distributed Cache Service.
 func NewDCSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "dcs")
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "dcs", 1)
+	sc.ResourceBase = sc.Endpoint + "v1.0/" + client.ProjectID + "/"
 	return sc, err
 }
 
