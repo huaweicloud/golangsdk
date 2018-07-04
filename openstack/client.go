@@ -512,7 +512,8 @@ func NewOBSService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) 
 	return sc, err
 }
 
-//NewSFSV2 creates a service client taht is used for Huawei cloud  for SFS , it replaces the EVS type.
+//TODO: Need to change to sfs client type from evs once available
+//NewSFSV2 creates a service client that is used for Huawei cloud  for SFS , it replaces the EVS type.
 func NewHwSFSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "evs")
 	sc.Endpoint = strings.Replace(sc.Endpoint, "evs", "sfs", 1)
