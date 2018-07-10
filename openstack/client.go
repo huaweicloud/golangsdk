@@ -196,6 +196,21 @@ func v3auth(client *golangsdk.ProviderClient, endpoint string, opts tokens3.Auth
 		return err
 	}
 
+	opts1, ok := opts.(*golangsdk.AuthOptions)
+	if ok && opts1.AgencyDomainName != "" && opts1.AgencyName != "" {
+		opts2 := golangsdk.AgencyAuthOptions{
+			TokenID:           token.ID,
+			AgencyName:        opts1.AgencyName,
+			AgencyDomainName:  opts1.AgencyDomainName,
+			AgencyProjectName: opts1.AgencyProjectName,
+		}
+		result = tokens3.Create(v3Client, &opts2)
+		token, err = result.ExtractToken()
+		if err != nil {
+			return err
+		}
+	}
+
 	project, err := result.ExtractProject()
 	if err != nil {
 		return err
