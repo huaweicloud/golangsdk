@@ -222,7 +222,9 @@ func v3auth(client *golangsdk.ProviderClient, endpoint string, opts tokens3.Auth
 	}
 
 	client.TokenID = token.ID
-	client.ProjectID = project.ID
+	if project != nil {
+		client.ProjectID = project.ID
+	}
 
 	if opts.CanReauth() {
 		client.ReauthFunc = func() error {
