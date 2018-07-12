@@ -44,9 +44,9 @@ type HostPropertiesOpts struct {
 	Cores                       int                               `json:"cores"`
 	Sockets                     int                               `json:"sockets"`
 	Memory                      int                               `json:"memory"`
-	AvailableInstanceCapacities []AvailableInstanceCapacitiesOpts `json:"available_instance_capacities"`
+	InstanceCapacities 			[]InstanceCapacities 		  `json:"available_instance_capacities"`
 }
-type AvailableInstanceCapacitiesOpts struct {
+type InstanceCapacities struct {
 	// Specifies the number of supported flavors.
 	Flavor string `json:"flavor"`
 }
