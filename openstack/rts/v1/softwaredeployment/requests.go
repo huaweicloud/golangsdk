@@ -106,19 +106,19 @@ type CreateOptsBuilder interface {
 // no required values.
 type CreateOpts struct {
 	// Specifies the stack action that triggers this deployment resource.
-	Action string `json:"action, omitempty"`
+	Action string `json:"action,omitempty"`
 	//Specifies the ID of the software configuration resource running on an instance.
 	ConfigId string `json:"config_id" required:"true"`
 	//Specifies input data stored in the form of a key-value pair.
-	InputValues map[string]interface{} `json:"input_values, omitempty"`
+	InputValues map[string]interface{} `json:"input_values,omitempty"`
 	//Specifies the ID of the instance deployed by the software configuration.
 	ServerId string `json:"server_id" required:"true"`
 	//Specifies the ID of the authenticated tenant who can perform operations on the deployment resources.
-	TenantId string `json:"stack_user_project_id, omitempty"`
+	TenantId string `json:"stack_user_project_id,omitempty"`
 	//Specifies the current status of deployment resources. Valid values include COMPLETE, IN_PROGRESS, and FAILED.
-	Status string `json:"status, omitempty"`
+	Status string `json:"status,omitempty"`
 	//Specifies the cause of the current deployment resource status.
-	StatusReason string `json:"status_reason, omitempty"`
+	StatusReason string `json:"status_reason,omitempty"`
 }
 
 // ToSoftwareDeploymentCreateMap builds a create request body from CreateOpts.
@@ -152,17 +152,17 @@ type UpdateOptsBuilder interface {
 //UpdateOpts is a struct which represents the request body of update method.
 type UpdateOpts struct {
 	// Specifies the stack action that triggers this deployment resource.
-	Action string `json:"action, omitempty"`
+	Action string `json:"action,omitempty"`
 	//Specifies the ID of the software configuration resource running on an instance.
 	ConfigId string `json:"config_id" required:"true"`
 	//Specifies input data stored in the form of a key-value pair.
-	InputValues map[string]interface{} `json:"input_values, omitempty"`
+	InputValues map[string]interface{} `json:"input_values,omitempty"`
 	//Specifies output data stored in the form of a key-value pair.
 	OutputValues map[string]interface{} `json:"output_values" required:"true"`
 	//Specifies the current status of deployment resources. Valid values include COMPLETE, IN_PROGRESS, and FAILED.
-	Status string `json:"status, omitempty"`
+	Status string `json:"status,omitempty"`
 	//Specifies the cause of the current deployment resource status.
-	StatusReason string `json:"status_reason, omitempty"`
+	StatusReason string `json:"status_reason,omitempty"`
 }
 
 //ToSoftwareDeploymentUpdateMap builds a update request body from UpdateOpts.
