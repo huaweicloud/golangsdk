@@ -38,13 +38,13 @@ type Host struct {
 }
 type HostPropertiesOpts struct {
 	// Specifies the property of host.
-	HostType                    string                            `json:"host_type"`
-	HostTypeName                string                            `json:"host_type_name"`
-	Vcpus                       int                               `json:"vcpus"`
-	Cores                       int                               `json:"cores"`
-	Sockets                     int                               `json:"sockets"`
-	Memory                      int                               `json:"memory"`
-	InstanceCapacities 			[]InstanceCapacities 		  `json:"available_instance_capacities"`
+	HostType           string               `json:"host_type"`
+	HostTypeName       string               `json:"host_type_name"`
+	Vcpus              int                  `json:"vcpus"`
+	Cores              int                  `json:"cores"`
+	Sockets            int                  `json:"sockets"`
+	Memory             int                  `json:"memory"`
+	InstanceCapacities []InstanceCapacities `json:"available_instance_capacities"`
 }
 type InstanceCapacities struct {
 	// Specifies the number of supported flavors.
