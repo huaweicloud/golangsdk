@@ -540,3 +540,9 @@ func NewHwSFSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*g
 	sc.Endpoint = strings.Replace(sc.Endpoint, "evs", "sfs", 1)
 	return sc, err
 }
+
+// NewDeHServiceV1 creates a ServiceClient that may be used to access the v1 Dedicated Hosts service.
+func NewDeHServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "deh")
+	return sc, err
+}
