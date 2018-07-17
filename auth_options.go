@@ -85,11 +85,11 @@ type AuthOptions struct {
 	// AgencyNmae is the name of agnecy
 	AgencyName string `json:"xrole_name,omitempty"`
 
-	// AgencyDomainName is the domain name who created the agency
-	AgencyDomainName string `json:"domain_name,omitempty"`
+	// DelegatedDomain is the name of delegated domain
+	DelegatedDomain string `json:"domain_name,omitempty"`
 
-	// AgencyProjectName is the project name of agency
-	AgencyProjectName string
+	// DelegatedProject is the name of delegated project
+	DelegatedProject string
 }
 
 // ToTokenV2CreateMap allows AuthOptions to satisfy the AuthOptionsBuilder
@@ -375,10 +375,10 @@ func (scope *scopeInfo) BuildTokenV3ScopeMap() (map[string]interface{}, error) {
 }
 
 type AgencyAuthOptions struct {
-	TokenID           string
-	AgencyName        string
-	AgencyDomainName  string
-	AgencyProjectName string
+	TokenID          string
+	AgencyName       string
+	DelegatedDomain  string
+	DelegatedProject string
 }
 
 func (opts *AgencyAuthOptions) CanReauth() bool {
@@ -391,8 +391,8 @@ func (opts *AgencyAuthOptions) AuthTokenID() string {
 
 func (opts *AgencyAuthOptions) ToTokenV3ScopeMap() (map[string]interface{}, error) {
 	scope := scopeInfo{
-		ProjectName: opts.AgencyProjectName,
-		DomainName:  opts.AgencyDomainName,
+		ProjectName: opts.DelegatedProject,
+		DomainName:  opts.DelegatedDomain,
 	}
 
 	return scope.BuildTokenV3ScopeMap()
@@ -416,7 +416,7 @@ func (opts *AgencyAuthOptions) ToTokenV3CreateMap(scope map[string]interface{}) 
 	var req authReq
 	req.Identity.Methods = []string{"assume_role"}
 	req.Identity.AssumeRole = assumeRoleReq{
-		DomainName: opts.AgencyDomainName,
+		DomainName: opts.DelegatedDomain,
 		AgencyName: opts.AgencyName,
 	}
 	r, err := BuildRequestBody(req, "auth")
