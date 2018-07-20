@@ -541,6 +541,14 @@ func NewHwSFSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*g
 	return sc, err
 }
 
+func NewBMSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "compute")
+	e := strings.Replace(sc.Endpoint, "v2", "v2.1", 1)
+	sc.Endpoint = e
+	sc.ResourceBase = e
+	return sc, err
+}
+
 // NewDeHServiceV1 creates a ServiceClient that may be used to access the v1 Dedicated Hosts service.
 func NewDeHServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "deh")
