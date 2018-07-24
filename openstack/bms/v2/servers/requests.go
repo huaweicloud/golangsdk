@@ -161,7 +161,6 @@ func getStructServerField(v *Server, field string) string {
 // Get requests details on a single server, by ID.
 func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = client.Get(getURL(client, id), &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{200},
 		MoreHeaders: map[string]string{"X-OpenStack-Nova-API-Version": "2.26"},
 	})
 	return
