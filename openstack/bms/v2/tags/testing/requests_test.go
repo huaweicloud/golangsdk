@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	fake "github.com/huaweicloud/golangsdk/openstack/bms/v2/common"
 	"github.com/huaweicloud/golangsdk/openstack/bms/v2/tags"
 	th "github.com/huaweicloud/golangsdk/testhelper"
+	fake "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
 func TestCreateTag(t *testing.T) {
