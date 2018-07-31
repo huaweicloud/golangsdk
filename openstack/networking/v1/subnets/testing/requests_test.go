@@ -25,7 +25,7 @@ func TestListSubnet(t *testing.T) {
 {
     "subnets": [
         {
-            "id": "134ca339-24dc-44f5-ae6a-cf0404216ed2",
+            "id": "0345a6ef-9404-487b-87c8-212557a1160d",
             "name": "openlab-subnet",
             "cidr": "192.168.200.0/24",
             "status": "ACTIVE",
@@ -37,7 +37,8 @@ func TestListSubnet(t *testing.T) {
 		    "dnsList": [
 			  "114.114.114.114",
 			  "114.114.115.115"
-		    ]
+		    ],
+            "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
         },
         {
             "id": "134ca339-24dc-44f5-ae6a-cf0404216ed2",
@@ -52,7 +53,8 @@ func TestListSubnet(t *testing.T) {
 		    "dnsList": [
 			  "114.114.114.114",
 			  "114.114.115.115"
-		    ]
+		    ],
+            "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
         }
     ]
 }
@@ -72,12 +74,13 @@ func TestListSubnet(t *testing.T) {
 			EnableDHCP: true,
 			Name:       "openlab-subnet",
 			//DnsList:          []string{},
-			ID:            "134ca339-24dc-44f5-ae6a-cf0404216ed2",
+			ID:            "0345a6ef-9404-487b-87c8-212557a1160d",
 			GatewayIP:     "192.168.200.1",
 			VPC_ID:        "58c24204-170e-4ff0-9b42-c53cdea9239a",
 			PRIMARY_DNS:   "114.114.114.114",
 			SECONDARY_DNS: "114.114.115.115",
 			DnsList:       []string{"114.114.114.114", "114.114.115.115"},
+			SubnetId:      "3d543273-31c3-41f8-b887-ed8c2c837578",
 		},
 		{
 			Status:     "ACTIVE",
@@ -91,6 +94,7 @@ func TestListSubnet(t *testing.T) {
 			PRIMARY_DNS:   "114.114.114.114",
 			SECONDARY_DNS: "114.114.115.115",
 			DnsList:       []string{"114.114.114.114", "114.114.115.115"},
+			SubnetId:      "3d543273-31c3-41f8-b887-ed8c2c837578",
 		},
 	}
 	th.AssertDeepEquals(t, expected, actual)
@@ -123,7 +127,8 @@ func TestGetSubnet(t *testing.T) {
         "gateway_ip": "10.0.0.1",
         "dhcp_enable": true,
         "primary_dns": "100.125.4.25",
-        "secondary_dns": "8.8.8.8"
+        "secondary_dns": "8.8.8.8",
+        "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
     }
 }
 		`)
@@ -136,6 +141,7 @@ func TestGetSubnet(t *testing.T) {
 	th.AssertEquals(t, "10.0.0.0/24", n.CIDR)
 	th.AssertEquals(t, "ACTIVE", n.Status)
 	th.AssertEquals(t, "d4f2c817-d5df-4a66-994a-6571312b470e", n.VPC_ID)
+	th.AssertEquals(t, "3d543273-31c3-41f8-b887-ed8c2c837578", n.SubnetId)
 	th.AssertEquals(t, "10.0.0.1", n.GatewayIP)
 	th.AssertEquals(t, "100.125.4.25", n.PRIMARY_DNS)
 	th.AssertEquals(t, "8.8.8.8", n.SECONDARY_DNS)
@@ -193,7 +199,8 @@ func TestCreateSubnet(t *testing.T) {
         "dhcp_enable": true,
         "primary_dns": "8.8.8.8",
         "secondary_dns": "8.8.4.4",
-        "availability_zone": "eu-de-02"
+        "availability_zone": "eu-de-02",
+        "neutron_subnet_id": "3d543273-31c3-41f8-b887-ed8c2c837578"
     }
 }	`)
 	})
@@ -221,6 +228,7 @@ func TestCreateSubnet(t *testing.T) {
 	th.AssertEquals(t, "6b0cf733-f496-4159-9df1-d74c3584a9f7", n.ID)
 	th.AssertEquals(t, "UNKNOWN", n.Status)
 	th.AssertEquals(t, "3b9740a0-b44d-48f0-84ee-42eb166e54f7", n.VPC_ID)
+	th.AssertEquals(t, "3d543273-31c3-41f8-b887-ed8c2c837578", n.SubnetId)
 	th.AssertEquals(t, "8.8.8.8", n.DnsList[0])
 	th.AssertEquals(t, "8.8.4.4", n.DnsList[1])
 
