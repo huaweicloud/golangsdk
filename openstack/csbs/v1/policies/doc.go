@@ -25,7 +25,7 @@ Example to Create a Backup Policy
 					Description: "My backup policy",
 					Enabled: true,
 					OperationDefinition: policies.OperationDefinition{
-						MaxBackups: "5",
+						MaxBackups: 5,
 					},
 					Trigger: policies.Trigger{
 						Properties : policies.TriggerProperties{
@@ -56,9 +56,9 @@ Example to Update a Backup Policy
 									Name:"my-backup-policy",
 									Description:"My backup policy",
 									Enabled:true,
-									OperationDefinition:policies.OperationDefinitionToUpdate{
+									OperationDefinition:policies.OperationDefinition{
 										RetentionDurationDays:-1,
-										MaxBackups:"20",
+										MaxBackups:20,
 									},
 									Trigger:policies.Trigger{
 										Properties:policies.TriggerProperties{

@@ -62,7 +62,7 @@ func TestCreate(t *testing.T) {
 			Description: "My backup policy",
 			Enabled:     true,
 			OperationDefinition: policies.OperationDefinition{
-				MaxBackups: "20",
+				MaxBackups: 20,
 			},
 			Trigger: policies.Trigger{
 				Properties: policies.TriggerProperties{
@@ -126,9 +126,9 @@ func TestUpdate(t *testing.T) {
 			Description: "My backup policy",
 			Enabled:     true,
 			Id:          "b70c712d-f48b-43f7-9a0f-3bab86d59149",
-			OperationDefinition: policies.OperationDefinitionToUpdate{
+			OperationDefinition: policies.OperationDefinition{
 				RetentionDurationDays: -1,
-				MaxBackups:            "20",
+				MaxBackups:            20,
 			},
 			Trigger: policies.Trigger{
 				Properties: policies.TriggerProperties{
@@ -181,7 +181,7 @@ func TestList(t *testing.T) {
 					ID:   "831b5e69-0b75-420c-918e-9cbcb32d97f1",
 					Name: "default",
 				},
-				OperationDefinition: policies.OperationDefinition{
+				OperationDefinition: policies.OperationDefinitionResp{
 					MaxBackups: "5",
 					ProviderId: "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
 					PlanId:     "4d1ce19b-d681-4e44-a87e-c44eb9bfc4c7",

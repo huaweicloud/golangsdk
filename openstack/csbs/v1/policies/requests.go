@@ -119,8 +119,8 @@ type ScheduledOperation struct {
 }
 
 type OperationDefinition struct {
-	MaxBackups            string `json:"max_backups,omitempty"`
-	RetentionDurationDays string `json:"retention_duration_days,omitempty"`
+	MaxBackups            int    `json:"max_backups,omitempty"`
+	RetentionDurationDays int    `json:"retention_duration_days,omitempty"`
 	Permanent             bool   `json:"permanent,omitempty"`
 	PlanId                string `json:"plan_id,omitempty"`
 	ProviderId            string `json:"provider_id,omitempty"`
@@ -187,21 +187,13 @@ type UpdateOpts struct {
 }
 
 type ScheduledOperationToUpdate struct {
-	Description         string                      `json:"description,omitempty"`
-	Enabled             bool                        `json:"enabled,omitempty"`
-	TriggerId           string                      `json:"trigger_id,omitempty"`
-	Name                string                      `json:"name,omitempty"`
-	OperationDefinition OperationDefinitionToUpdate `json:"operation_definition,omitempty"`
-	Trigger             Trigger                     `json:"trigger,omitempty"`
-	Id                  string                      `json:"id" required:"true"`
-}
-
-type OperationDefinitionToUpdate struct {
-	MaxBackups            string `json:"max_backups,omitempty"`
-	RetentionDurationDays int    `json:"retention_duration_days,omitempty"`
-	Permanent             bool   `json:"permanent,omitempty"`
-	PlanId                string `json:"plan_id,omitempty"`
-	ProviderId            string `json:"provider_id,omitempty"`
+	Description         string              `json:"description,omitempty"`
+	Enabled             bool                `json:"enabled,omitempty"`
+	TriggerId           string              `json:"trigger_id,omitempty"`
+	Name                string              `json:"name,omitempty"`
+	OperationDefinition OperationDefinition `json:"operation_definition,omitempty"`
+	Trigger             Trigger             `json:"trigger,omitempty"`
+	Id                  string              `json:"id" required:"true"`
 }
 
 // ToPoliciesUpdateMap builds an update body based on UpdateOpts.

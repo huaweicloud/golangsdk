@@ -20,14 +20,22 @@ type BackupPolicy struct {
 }
 
 type ScheduledOperationResp struct {
-	Description         string              `json:"description"`
-	Enabled             bool                `json:"enabled"`
-	Name                string              `json:"name"`
-	OperationType       string              `json:"operation_type"`
-	OperationDefinition OperationDefinition `json:"operation_definition"`
-	Trigger             TriggerResp         `json:"trigger"`
-	ID                  string              `json:"id"`
-	TriggerID           string              `json:"trigger_id"`
+	Description         string                  `json:"description"`
+	Enabled             bool                    `json:"enabled"`
+	Name                string                  `json:"name"`
+	OperationType       string                  `json:"operation_type"`
+	OperationDefinition OperationDefinitionResp `json:"operation_definition"`
+	Trigger             TriggerResp             `json:"trigger"`
+	ID                  string                  `json:"id"`
+	TriggerID           string                  `json:"trigger_id"`
+}
+
+type OperationDefinitionResp struct {
+	MaxBackups            string `json:"max_backups,omitempty"`
+	RetentionDurationDays string `json:"retention_duration_days,omitempty"`
+	Permanent             bool   `json:"permanent,omitempty"`
+	PlanId                string `json:"plan_id,omitempty"`
+	ProviderId            string `json:"provider_id,omitempty"`
 }
 
 type TriggerResp struct {

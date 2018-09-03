@@ -67,7 +67,7 @@ var createRequest = `
       "description" : "My backup policy",
       "enabled" : true,
       "operation_definition" : {
-        "max_backups" : "20"
+        "max_backups" : 20
       },
       "trigger" : {
         "properties" : {
@@ -151,7 +151,7 @@ var updateRequest = `
       "enabled" : true,
       "operation_definition" : {
         "retention_duration_days" : -1,
-        "max_backups" : "20"
+        "max_backups" : 20
       },
       "trigger" : {
         "properties" : {
