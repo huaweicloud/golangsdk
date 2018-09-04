@@ -11,6 +11,9 @@ import (
 	tokens2 "github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
 	tokens3 "github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
 	"github.com/huaweicloud/golangsdk/openstack/utils"
+        "github.com/huaweicloud/golangsdk/openstack/identity/v3/services"
+        "github.com/huaweicloud/golangsdk/pagination"
+        "github.com/huaweicloud/golangsdk/openstack/identity/v3/endpoints"
 )
 
 const (
@@ -99,27 +102,41 @@ func AuthenticatedClient(options golangsdk.AuthOptions) (*golangsdk.ProviderClie
 
 // Authenticate or re-authenticate against the most recent identity service
 // supported at the provided endpoint.
-func Authenticate(client *golangsdk.ProviderClient, options golangsdk.AuthOptions) error {
-	versions := []*utils.Version{
-		{ID: v2, Priority: 20, Suffix: "/v2.0/"},
-		{ID: v3, Priority: 30, Suffix: "/v3/"},
-	}
+func Authenticate(client *golangsdk.ProviderClient, options golangsdk.AuthOptionsProvider) error {
+        versions := []*utils.Version{
+                {ID: v2, Priority: 20, Suffix: "/v2.0/"},
+                {ID: v3, Priority: 30, Suffix: "/v3/"},
+        }
 
-	chosen, endpoint, err := utils.ChooseVersion(client, versions)
-	if err != nil {
-		return err
-	}
+        chosen, endpoint, err := utils.ChooseVersion(client, versions)
+        if err != nil {
+                return err
+        }
 
-	switch chosen.ID {
-	case v2:
-		return v2auth(client, endpoint, options, golangsdk.EndpointOpts{})
-	case v3:
-		return v3auth(client, endpoint, &options, golangsdk.EndpointOpts{})
-	default:
-		// The switch statement must be out of date from the versions list.
-		return fmt.Errorf("Unrecognized identity version: %s", chosen.ID)
-	}
+        authOptions, isTokenAuthOptions := options.(golangsdk.AuthOptions)
+
+        if isTokenAuthOptions {
+                switch chosen.ID {
+                case v2:
+                        return v2auth(client, endpoint, authOptions, golangsdk.EndpointOpts{})
+                case v3:
+                        return v3auth(client, endpoint, &authOptions, golangsdk.EndpointOpts{})
+                default:
+                        // The switch statement must be out of date from the versions list.
+                        return fmt.Errorf("Unrecognized identity version: %s", chosen.ID)
+                }
+        } else {
+                akskAuthOptions, isAkSkOptions := options.(golangsdk.AKSKAuthOptions)
+
+                if isAkSkOptions {
+                        return v3AKSKAuth(client, endpoint, akskAuthOptions, golangsdk.EndpointOpts{})
+                } else {
+                        return fmt.Errorf("Unrecognized auth options provider: %s", reflect.TypeOf(options))
+                }
+        }
+
 }
+
 
 // AuthenticateV2 explicitly authenticates against the identity v2 endpoint.
 func AuthenticateV2(client *golangsdk.ProviderClient, options golangsdk.AuthOptions, eo golangsdk.EndpointOpts) error {
@@ -238,6 +255,88 @@ func v3auth(client *golangsdk.ProviderClient, endpoint string, opts tokens3.Auth
 
 	return nil
 }
+
+func getEntryByServiceId(entries []tokens3.CatalogEntry, serviceId string) *tokens3.CatalogEntry {
+        if entries == nil {
+                return nil
+        }
+
+        for idx, _ := range entries {
+                if entries[idx].ID == serviceId {
+                        return &entries[idx]
+                }
+        }
+
+        return nil
+}
+
+func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golangsdk.AKSKAuthOptions, eo golangsdk.EndpointOpts) error {
+        v3Client, err := NewIdentityV3(client, eo)
+        if err != nil {
+                return err
+        }
+
+        if endpoint != "" {
+                v3Client.Endpoint = endpoint
+        }
+
+        v3Client.AKSKAuthOptions = options
+        v3Client.ProjectID = options.ProjectId
+
+        var entries = make([]tokens3.CatalogEntry, 0, 1)
+        services.List(v3Client, services.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+                serviceLst, err := services.ExtractServices(page)
+                if err != nil {
+                        return false, err
+                }
+
+                for _, svc := range serviceLst {
+                        entry := tokens3.CatalogEntry{
+                                Type: svc.Type,
+                                //Name: svc.Name,
+                                ID:   svc.ID,
+                        }
+                        entries = append(entries, entry)
+                }
+
+                return true, nil
+        })
+
+        endpoints.List(v3Client, endpoints.ListOpts{}).EachPage(func(page pagination.Page) (bool, error) {
+                endpoints, err := endpoints.ExtractEndpoints(page)
+                if err != nil {
+                        return false, err
+                }
+
+                for _, endpoint := range endpoints {
+                        entry := getEntryByServiceId(entries, endpoint.ServiceID)
+
+                        if entry != nil {
+                                entry.Endpoints = append(entry.Endpoints, tokens3.Endpoint{
+                                        URL:       strings.Replace(endpoint.URL, "$(tenant_id)s", options.ProjectId, -1),
+                                        Region:    endpoint.Region,
+                                        Interface: string(endpoint.Availability),
+                                        ID:        endpoint.ID,
+                                })
+                        }
+                }
+
+                client.EndpointLocator = func(opts golangsdk.EndpointOpts) (string, error) {
+                        if opts.Region == "" {
+                                opts.Region = options.Region
+                        }
+                        return V3EndpointURL(&tokens3.ServiceCatalog{
+                                Entries: entries,
+                        }, opts)
+                }
+
+                return true, nil
+        })
+
+        return nil
+}
+
+
 
 // NewIdentityV2 creates a ServiceClient that may be used to interact with the
 // v2 identity service.

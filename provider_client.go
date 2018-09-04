@@ -74,6 +74,10 @@ type ProviderClient struct {
 	// authentication functions for different Identity service versions.
 	ReauthFunc func() error
 
+	// AKSKAuthOptions provides the value for AK/SK authentication, it should be nil if you use token authentication,
+	// Otherwise, it must have a value
+	AKSKAuthOptions AKSKAuthOptions
+
 	mut *sync.RWMutex
 
 	reauthmut *reauthlock
@@ -217,6 +221,13 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 
 	prereqtok := req.Header.Get("X-Auth-Token")
 
+	if client.AKSKAuthOptions.AccessKey != "" {
+		Sign(req, SignOptions{
+			AccessKey: client.AKSKAuthOptions.AccessKey,
+			SecretKey: client.AKSKAuthOptions.SecretKey,
+		})
+	}
+
 	// Issue the request.
 	resp, err := client.HTTPClient.Do(req)
 	if err != nil {
@@ -301,11 +312,11 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 			if error401er, ok := errType.(Err401er); ok {
 				err = error401er.Error401(respErr)
 			}
-		case http.StatusForbidden:
-			err = ErrDefault403{respErr}
-			if error403er, ok := errType.(Err403er); ok {
-				err = error403er.Error403(respErr)
-			}
+               case http.StatusForbidden:
+                       err = ErrDefault403{respErr}
+                       if error403er, ok := errType.(Err403er); ok {
+                               err = error403er.Error403(respErr)
+                       }
 		case http.StatusNotFound:
 			err = ErrDefault404{respErr}
 			if error404er, ok := errType.(Err404er); ok {
