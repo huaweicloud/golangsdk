@@ -35,7 +35,7 @@ func Get(c *golangsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
 			h[k] = v
 		}
 	}
-	resp, err := c.Head(getURL(c), &golangsdk.RequestOpts{
+	resp, err := c.Request("HEAD", getURL(c), &golangsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{204},
 	})
