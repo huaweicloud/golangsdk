@@ -660,3 +660,22 @@ func NewDeHServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 	sc, err := initClientOpts(client, eo, "deh")
 	return sc, err
 }
+
+// NewDBV1 creates a ServiceClient that may be used to access the v1 DB service.
+func NewDBV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+        return initClientOpts(client, eo, "database")
+}
+
+// NewComputeV2 creates a ServiceClient that may be used with the v2 compute
+// package.
+func NewComputeV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+        return initClientOpts(client, eo, "compute")
+}
+
+// NewImageServiceV2 creates a ServiceClient that may be used to access the v2
+// image service.
+func NewImageServiceV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+        sc, err := initClientOpts(client, eo, "image")
+        sc.ResourceBase = sc.Endpoint + "v2/"
+        return sc, err
+}
