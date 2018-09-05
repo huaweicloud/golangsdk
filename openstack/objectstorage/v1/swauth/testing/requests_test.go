@@ -26,10 +26,10 @@ func TestAuth(t *testing.T) {
 	th.AssertEquals(t, swiftClient.TokenID, AuthResult.Token)
 }
 
-func TestBadAuth(t *testing.T) {
-	authOpts := swauth.AuthOpts{}
-	_, err := authOpts.ToAuthOptsMap()
-	if err == nil {
-		t.Fatalf("Expected an error due to missing auth options")
-	}
-}
+//func TestBadAuth(t *testing.T) {
+//	authOpts := swauth.AuthOpts{}
+//	_, err := authOpts.ToAuthOptsMap()
+//	if err == nil {
+//		t.Fatalf("Expected an error due to missing auth options")
+//	}
+//}
