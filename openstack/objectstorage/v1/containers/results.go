@@ -108,11 +108,11 @@ func (r *GetHeader) UnmarshalJSON(b []byte) error {
 	type tmp GetHeader
 	var s struct {
 		tmp
-		BytesUsed     string                  `json:"X-Container-Bytes-Used"`
-		ContentLength string                  `json:"Content-Length"`
-		ObjectCount   string                  `json:"X-Container-Object-Count"`
-		Write         string                  `json:"X-Container-Write"`
-		Read          string                  `json:"X-Container-Read"`
+		BytesUsed     string                `json:"X-Container-Bytes-Used"`
+		ContentLength string                `json:"Content-Length"`
+		ObjectCount   string                `json:"X-Container-Object-Count"`
+		Write         string                `json:"X-Container-Write"`
+		Read          string                `json:"X-Container-Read"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -201,7 +201,7 @@ func (r *CreateHeader) UnmarshalJSON(b []byte) error {
 	type tmp CreateHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -253,7 +253,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 	type tmp UpdateHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -304,7 +304,7 @@ func (r *DeleteHeader) UnmarshalJSON(b []byte) error {
 	type tmp DeleteHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)

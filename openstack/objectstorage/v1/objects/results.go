@@ -149,11 +149,11 @@ func (r *DownloadHeader) UnmarshalJSON(b []byte) error {
 	type tmp DownloadHeader
 	var s struct {
 		tmp
-		ContentLength     string                  `json:"Content-Length"`
+		ContentLength     string                `json:"Content-Length"`
 		Date              golangsdk.JSONRFC1123 `json:"Date"`
 		DeleteAt          golangsdk.JSONUnix    `json:"X-Delete-At"`
 		LastModified      golangsdk.JSONRFC1123 `json:"Last-Modified"`
-		StaticLargeObject interface{}             `json:"X-Static-Large-Object"`
+		StaticLargeObject interface{}           `json:"X-Static-Large-Object"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -239,11 +239,11 @@ func (r *GetHeader) UnmarshalJSON(b []byte) error {
 	type tmp GetHeader
 	var s struct {
 		tmp
-		ContentLength     string                  `json:"Content-Length"`
+		ContentLength     string                `json:"Content-Length"`
 		Date              golangsdk.JSONRFC1123 `json:"Date"`
 		DeleteAt          golangsdk.JSONUnix    `json:"X-Delete-At"`
 		LastModified      golangsdk.JSONRFC1123 `json:"Last-Modified"`
-		StaticLargeObject interface{}             `json:"X-Static-Large-Object"`
+		StaticLargeObject interface{}           `json:"X-Static-Large-Object"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -322,7 +322,7 @@ func (r *CreateHeader) UnmarshalJSON(b []byte) error {
 	type tmp CreateHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 		LastModified  golangsdk.JSONRFC1123 `json:"Last-Modified"`
 	}
@@ -378,7 +378,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 	type tmp UpdateHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -428,7 +428,7 @@ func (r *DeleteHeader) UnmarshalJSON(b []byte) error {
 	type tmp DeleteHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -482,7 +482,7 @@ func (r *CopyHeader) UnmarshalJSON(b []byte) error {
 	type tmp CopyHeader
 	var s struct {
 		tmp
-		ContentLength          string                  `json:"Content-Length"`
+		ContentLength          string                `json:"Content-Length"`
 		CopiedFromLastModified golangsdk.JSONRFC1123 `json:"X-Copied-From-Last-Modified"`
 		Date                   golangsdk.JSONRFC1123 `json:"Date"`
 		LastModified           golangsdk.JSONRFC1123 `json:"Last-Modified"`

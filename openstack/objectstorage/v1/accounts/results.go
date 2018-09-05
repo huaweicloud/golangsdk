@@ -27,7 +27,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 	type tmp UpdateHeader
 	var s struct {
 		tmp
-		ContentLength string                  `json:"Content-Length"`
+		ContentLength string                `json:"Content-Length"`
 		Date          golangsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
