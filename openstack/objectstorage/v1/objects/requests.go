@@ -381,7 +381,7 @@ func Get(c *golangsdk.ServiceClient, containerName, objectName string, opts GetO
 		url += query
 	}
 
-	resp, err := c.Head(url, &golangsdk.RequestOpts{
+	resp, err := c.Request("HEAD", url, &golangsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200, 204},
 	})
