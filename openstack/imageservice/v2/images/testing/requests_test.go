@@ -331,7 +331,7 @@ func TestImageListByTags(t *testing.T) {
 		Tag: "foo",
 	}
 
-	expectedQueryString := "?tag=foo&tag=bar"
+	expectedQueryString := "?tag=foo"
 	actualQueryString, err := listOpts.ToImageListQuery()
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, expectedQueryString, actualQueryString)
