@@ -371,7 +371,7 @@ func TestUpdate(t *testing.T) {
 	opts := subnets.UpdateOpts{
 		Name:           "my_new_subnet",
 		DNSNameservers: []string{"foo"},
-		HostRoutes: &[]subnets.HostRoute{
+		HostRoutes: []subnets.HostRoute{
 			{NextHop: "bar"},
 		},
 	}
@@ -468,7 +468,7 @@ func TestUpdateHostRoutes(t *testing.T) {
 
 	opts := subnets.UpdateOpts{
 		Name:       "my_new_subnet",
-		HostRoutes: &HostRoutes,
+		HostRoutes: HostRoutes,
 	}
 	s, err := subnets.Update(fake.ServiceClient(), "08eae331-0402-425a-923c-34f7cfe39c1b", opts).Extract()
 	th.AssertNoErr(t, err)
@@ -497,7 +497,7 @@ func TestUpdateRemoveHostRoutes(t *testing.T) {
 
 	noHostRoutes := []subnets.HostRoute{}
 	opts := subnets.UpdateOpts{
-		HostRoutes: &noHostRoutes,
+		HostRoutes: noHostRoutes,
 	}
 	s, err := subnets.Update(fake.ServiceClient(), "08eae331-0402-425a-923c-34f7cfe39c1b", opts).Extract()
 	th.AssertNoErr(t, err)

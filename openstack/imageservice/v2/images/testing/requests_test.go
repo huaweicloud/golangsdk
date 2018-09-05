@@ -328,7 +328,7 @@ func TestImageListByTags(t *testing.T) {
 	HandleImageListByTagsSuccessfully(t)
 
 	listOpts := images.ListOpts{
-		Tags: []string{"foo", "bar"},
+		Tag: "foo",
 	}
 
 	expectedQueryString := "?tag=foo&tag=bar"
