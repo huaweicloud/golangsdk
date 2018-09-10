@@ -31,11 +31,11 @@ type ScheduledOperationResp struct {
 }
 
 type OperationDefinitionResp struct {
-	MaxBackups            string `json:"max_backups,omitempty"`
-	RetentionDurationDays string `json:"retention_duration_days,omitempty"`
-	Permanent             bool   `json:"permanent,omitempty"`
-	PlanId                string `json:"plan_id,omitempty"`
-	ProviderId            string `json:"provider_id,omitempty"`
+	MaxBackups            string `json:"max_backups"`
+	RetentionDurationDays string `json:"retention_duration_days"`
+	Permanent             string `json:"permanent"`
+	PlanId                string `json:"plan_id"`
+	ProviderId            string `json:"provider_id"`
 }
 
 type TriggerResp struct {
