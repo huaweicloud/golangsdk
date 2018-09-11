@@ -516,7 +516,6 @@ func NewCESClient(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 	sc, err := initClientOpts(client, eo, "volumev2")
 	if err != nil {
 		return nil, err
-
 	}
 	e := strings.Replace(sc.Endpoint, "v2", "V1.0", 1)
 	sc.Endpoint = strings.Replace(e, "evs", "ces", 1)
@@ -541,7 +540,13 @@ func NewComputeV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 //NewAutoScalingService creates a ServiceClient that may be used to access the
 //auto-scaling service of huawei public cloud
 func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "as")
+	sc, err := initClientOpts(client, eo, "volumev2")
+	if err != nil {
+		return nil, err
+	}
+	e := strings.Replace(sc.Endpoint, "v2", "autoscaling-api/v1", 1)
+	sc.Endpoint = strings.Replace(e, "evs", "as", 1)
+	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
 
