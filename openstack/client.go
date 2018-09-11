@@ -513,10 +513,13 @@ func NewRdsServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 }
 
 func NewCESClient(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "ces")
+	sc, err := initClientOpts(client, eo, "volumev2")
 	if err != nil {
 		return nil, err
+
 	}
+	e := strings.Replace(sc.Endpoint, "v2", "V1.0", 1)
+	sc.Endpoint = strings.Replace(e, "evs", "ces", 1)
 	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
