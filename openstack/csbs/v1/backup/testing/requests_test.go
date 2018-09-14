@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"testing"
 
+	"time"
+
+	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/csbs/v1/backup"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
@@ -127,6 +130,7 @@ func TestList(t *testing.T) {
 		t.Errorf("Failed to extract backups: %v", err)
 	}
 
+	var FinishedAt, _ = time.Parse(golangsdk.RFC3339MilliNoZ, "2018-08-14T08:31:08.720800")
 	expected := []backup.Backup{
 		{
 			Status: "available",
@@ -150,7 +154,7 @@ func TestList(t *testing.T) {
 				FailReason:           "",
 				ResourceAz:           "eu-de-02",
 				ImageType:            "backup",
-				FinishedAt:           "2018-08-14T08:31:08.720800",
+				FinishedAt:           FinishedAt,
 				AverageSpeed:         19,
 				CopyStatus:           "na",
 				Incremental:          false,

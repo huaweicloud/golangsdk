@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+	"time"
 
+	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/csbs/v1/policies"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
@@ -163,6 +165,7 @@ func TestList(t *testing.T) {
 		t.Errorf("Failed to extract backup policies: %v", err)
 	}
 
+	var CreatedAt, _ = time.Parse(golangsdk.RFC3339MilliNoZ, "2018-08-20T10:43:56.246383")
 	expected := []policies.BackupPolicy{
 		{
 			Status:      "suspended",
@@ -182,7 +185,7 @@ func TestList(t *testing.T) {
 					Name: "default",
 				},
 				OperationDefinition: policies.OperationDefinitionResp{
-					MaxBackups: "5",
+					MaxBackups: 5,
 					ProviderId: "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
 					PlanId:     "4d1ce19b-d681-4e44-a87e-c44eb9bfc4c7",
 				},
@@ -196,7 +199,7 @@ func TestList(t *testing.T) {
 			Parameters: policies.PolicyParam{
 				Common: map[string]interface{}{},
 			},
-			CreatedAt: "2018-08-20T10:43:56.246383",
+			CreatedAt: CreatedAt,
 			ProjectId: "91d687759aed45d28b5f6084bc2fa8ad",
 			Resources: []policies.Resource{
 				{
