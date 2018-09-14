@@ -10,6 +10,7 @@ import (
 	"github.com/huaweicloud/golangsdk"
 	tokens2 "github.com/huaweicloud/golangsdk/openstack/identity/v2/tokens"
 	"github.com/huaweicloud/golangsdk/openstack/identity/v3/endpoints"
+	"github.com/huaweicloud/golangsdk/openstack/identity/v3/projects"
 	"github.com/huaweicloud/golangsdk/openstack/identity/v3/services"
 	tokens3 "github.com/huaweicloud/golangsdk/openstack/identity/v3/tokens"
 	"github.com/huaweicloud/golangsdk/openstack/utils"
@@ -269,6 +270,28 @@ func getEntryByServiceId(entries []tokens3.CatalogEntry, serviceId string) *toke
 	return nil
 }
 
+func getProjectID(client *golangsdk.ServiceClient, name string) (string, error) {
+	opts := projects.ListOpts{
+		Name: name,
+	}
+	allPages, err := projects.List(client, opts).AllPages()
+	if err != nil {
+		return "", err
+	}
+
+	projects, err := projects.ExtractProjects(allPages)
+
+	if err != nil {
+		return "", err
+	}
+
+	if len(projects) < 1 {
+		return "", fmt.Errorf("[DEBUG] cannot find the tenant: %s", name)
+	}
+
+	return projects[0].ID, nil
+}
+
 func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golangsdk.AKSKAuthOptions, eo golangsdk.EndpointOpts) error {
 	v3Client, err := NewIdentityV3(client, eo)
 	if err != nil {
@@ -280,6 +303,16 @@ func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golan
 	}
 
 	v3Client.AKSKAuthOptions = options
+
+	if options.ProjectId == "" && options.ProjectName != "" {
+		id, err := getProjectID(v3Client, options.ProjectName)
+		if err != nil {
+			return err
+		}
+		options.ProjectId = id
+	}
+
+	client.ProjectID = options.ProjectId
 	v3Client.ProjectID = options.ProjectId
 
 	var entries = make([]tokens3.CatalogEntry, 0, 1)
@@ -521,10 +554,12 @@ func NewRdsServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 }
 
 func NewCESClient(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "ces")
+	sc, err := initClientOpts(client, eo, "volumev2")
 	if err != nil {
 		return nil, err
 	}
+	e := strings.Replace(sc.Endpoint, "v2", "V1.0", 1)
+	sc.Endpoint = strings.Replace(e, "evs", "ces", 1)
 	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
@@ -546,7 +581,13 @@ func NewComputeV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 //NewAutoScalingService creates a ServiceClient that may be used to access the
 //auto-scaling service of huawei public cloud
 func NewAutoScalingService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "as")
+	sc, err := initClientOpts(client, eo, "volumev2")
+	if err != nil {
+		return nil, err
+	}
+	e := strings.Replace(sc.Endpoint, "v2", "autoscaling-api/v1", 1)
+	sc.Endpoint = strings.Replace(e, "evs", "as", 1)
+	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
 
