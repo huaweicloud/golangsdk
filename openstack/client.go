@@ -521,14 +521,21 @@ func NewLoadBalancerV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOp
 	return sc, err
 }
 
-// NewOtcV1 creates a ServiceClient that may be used with the v1 network package.
+// NewElbV1 creates a ServiceClient that may be used with the v1 network package.
 func NewElbV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts, otctype string) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "compute")
-	//fmt.Printf("client=%+v.\n", sc)
 	sc.Endpoint = strings.Replace(strings.Replace(sc.Endpoint, "ecs", otctype, 1), "/v2/", "/v1.0/", 1)
-	//fmt.Printf("url=%s.\n", sc.Endpoint)
 	sc.ResourceBase = sc.Endpoint
 	sc.Type = otctype
+	return sc, err
+}
+
+// NewElbV2 creates a ServiceClient that may be used with the v1 network package.
+func NewElbV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "compute")
+	sc.Endpoint = strings.Replace(strings.Replace(sc.Endpoint, "ecs", "elb", 1), "/v2/", "/v2.0/", 1)
+	sc.ResourceBase = sc.Endpoint
+	sc.Type = "elb"
 	return sc, err
 }
 
