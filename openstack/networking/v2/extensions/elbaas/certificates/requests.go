@@ -68,6 +68,9 @@ type UpdateOptsBuilder interface {
 type UpdateOpts struct {
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
+	Domain      string `json:"domain,omitempty"`
+	Certificate string `json:"certificate" required:"true"`
+	PrivateKey  string `json:"private_key" required:"true"`
 }
 
 func (u UpdateOpts) IsNeedUpdate() (bool, error) {
