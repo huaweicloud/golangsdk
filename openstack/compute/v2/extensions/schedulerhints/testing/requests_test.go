@@ -29,6 +29,8 @@ func TestCreateOpts(t *testing.T) {
 		TargetCell:           "foobar",
 		BuildNearHostIP:      "192.168.1.1/24",
 		AdditionalProperties: map[string]interface{}{"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1"},
+		Tenancy:              "dedicated",
+		DedicatedHostID:      "dcaa399d-0d72-42a0-8a55-0030d25828cc",
 	}
 
 	ext := schedulerhints.CreateOptsExt{
@@ -59,7 +61,9 @@ func TestCreateOpts(t *testing.T) {
 				"target_cell": "foobar",
 				"build_near_host_ip": "192.168.1.1",
 				"cidr": "/24",
-				"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1"
+				"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1",
+				"tenancy": "dedicated",
+				"dedicated_host_id": "dcaa399d-0d72-42a0-8a55-0030d25828cc"
 			}
 		}
 	`
@@ -89,6 +93,8 @@ func TestCreateOptsWithComplexQuery(t *testing.T) {
 		TargetCell:           "foobar",
 		BuildNearHostIP:      "192.168.1.1/24",
 		AdditionalProperties: map[string]interface{}{"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1"},
+		Tenancy:              "dedicated",
+		DedicatedHostID:      "dcaa399d-0d72-42a0-8a55-0030d25828cc",
 	}
 
 	ext := schedulerhints.CreateOptsExt{
@@ -121,7 +127,9 @@ func TestCreateOptsWithComplexQuery(t *testing.T) {
 				"target_cell": "foobar",
 				"build_near_host_ip": "192.168.1.1",
 				"cidr": "/24",
-				"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1"
+				"reservation": "a0cf03a5-d921-4877-bb5c-86d26cf818e1",
+				"tenancy": "dedicated",
+				"dedicated_host_id": "dcaa399d-0d72-42a0-8a55-0030d25828cc"
 			}
 		}
 	`
