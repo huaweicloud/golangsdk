@@ -715,3 +715,23 @@ func NewCSBSService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts)
 	sc, err := initClientOpts(client, eo, "data-protect")
 	return sc, err
 }
+
+// NewVBSV2 creates a ServiceClient that may be used to access the VBS service for Orange and Telefonica Cloud.
+func NewVBSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "vbsv2")
+	return sc, err
+}
+
+// NewOTCVBS creates a ServiceClient that may be used to access the VBS service for OTC Cloud.
+func NewOTCVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "vbs")
+	sc.Endpoint = sc.Endpoint + sc.ProjectID + "/"
+	return sc, err
+}
+
+// NewHwVBS creates a service client that is used for Huawei cloud  for VBS.
+func NewHwVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "compute")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "ecs", "vbs", 1)
+	return sc, err
+}
