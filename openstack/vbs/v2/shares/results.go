@@ -20,13 +20,13 @@ type Share struct {
 	//ID of the project that shares the backup
 	FromProjectID string `json:"from_project_id"`
 	//Creation time of the backup share
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"-"`
 	//Update time of the backup share
-	UpdatedAt time.Time `json:"updated_at"`
+	UpdatedAt time.Time `json:"-"`
 	//Whether the backup has been deleted
 	Deleted string `json:"deleted"`
 	//Deletion time
-	DeletedAt time.Time `json:"deleted_at"`
+	DeletedAt time.Time `json:"-"`
 }
 
 type Backup struct {
