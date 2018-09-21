@@ -358,9 +358,6 @@ func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golan
 		}
 
 		client.EndpointLocator = func(opts golangsdk.EndpointOpts) (string, error) {
-			if opts.Region == "" {
-				opts.Region = options.Region
-			}
 			return V3EndpointURL(&tokens3.ServiceCatalog{
 				Entries: entries,
 			}, opts)
