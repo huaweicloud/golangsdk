@@ -158,7 +158,7 @@ var listResponse = `
                 "resource_az": "eu-de-02",
                 "image_type": "backup",
                 "finished_at": "2018-08-14T08:31:08.720800",
-                "average_speed": 19,                
+                "average_speed": 19,
                 "copy_status": "na",
                 "incremental": false,
                 "taskid": "1afcab08-9f97-11e8-9526-286ed488ca8c",

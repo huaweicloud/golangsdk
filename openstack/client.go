@@ -358,9 +358,6 @@ func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golan
 		}
 
 		client.EndpointLocator = func(opts golangsdk.EndpointOpts) (string, error) {
-			if opts.Region == "" {
-				opts.Region = options.Region
-			}
 			return V3EndpointURL(&tokens3.ServiceCatalog{
 				Entries: entries,
 			}, opts)
@@ -723,5 +720,12 @@ func NewHwCSBSServiceV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointO
 	e := strings.Replace(sc.Endpoint, "v2", "v1", 1)
 	sc.Endpoint = e
 	sc.ResourceBase = e
+	return sc, err
+}
+
+func NewMLSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "mls", 1)
+	sc.ResourceBase = sc.Endpoint + "v1.0/" + client.ProjectID + "/"
 	return sc, err
 }
