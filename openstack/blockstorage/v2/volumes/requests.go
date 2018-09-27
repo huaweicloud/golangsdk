@@ -80,14 +80,14 @@ func (opts DeleteOpts) ToVolumeDeleteQuery() (string, error) {
 //Delete will delete the existing Volume with the provided ID
 func Delete(client *golangsdk.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := deleteURL(client, id)
-
-	q, err := opts.ToVolumeDeleteQuery()
-	if err != nil {
-		r.Err = err
-		return
+	if opts != nil {
+		q, err := opts.ToVolumeDeleteQuery()
+		if err != nil {
+			r.Err = err
+			return
+		}
+		url += q
 	}
-
-	url += q
 	_, r.Err = client.Delete(url, nil)
 	return
 }
