@@ -150,6 +150,7 @@ type VolumeBackup struct {
 	Id               string `json:"id"`
 	ImageType        string `json:"image_type"`
 	Incremental      bool   `json:"incremental"`
+	SnapshotID       string `json:"snapshot_id"`
 	Name             string `json:"name"`
 	Size             int    `json:"size"`
 	SourceVolumeId   string `json:"source_volume_id"`
