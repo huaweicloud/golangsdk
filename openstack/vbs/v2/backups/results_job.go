@@ -43,6 +43,7 @@ func WaitForJobSuccess(client *golangsdk.ServiceClient, secs int, jobID string) 
 
 	jobClient := *client
 	jobClient.Endpoint = strings.Replace(jobClient.Endpoint, "v2", "v1", 1)
+	jobClient.ResourceBase = jobClient.Endpoint
 	return golangsdk.WaitFor(secs, func() (bool, error) {
 		job := new(JobStatus)
 		_, err := jobClient.Get(jobClient.ServiceURL("jobs", jobID), &job, nil)
@@ -66,6 +67,7 @@ func GetJobEntity(client *golangsdk.ServiceClient, jobId string, label string) (
 
 	jobClient := *client
 	jobClient.Endpoint = strings.Replace(jobClient.Endpoint, "v2", "v1", 1)
+	jobClient.ResourceBase = jobClient.Endpoint
 	job := new(JobStatus)
 	_, err := jobClient.Get(jobClient.ServiceURL("jobs", jobId), &job, nil)
 	if err != nil {

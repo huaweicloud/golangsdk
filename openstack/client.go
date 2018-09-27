@@ -736,16 +736,13 @@ func NewVBSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	return sc, err
 }
 
-// NewOTCVBS creates a ServiceClient that may be used to access the VBS service for OTC Cloud.
-func NewOTCVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "vbs")
-	sc.Endpoint = sc.Endpoint + sc.ProjectID + "/"
-	return sc, err
-}
-
-// NewHwVBS creates a service client that is used for Huawei cloud  for VBS.
-func NewHwVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "compute")
-	sc.Endpoint = strings.Replace(sc.Endpoint, "ecs", "vbs", 1)
+// NewVBS creates a service client that is used for VBS.
+func NewVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "volumev2")
+	if err != nil {
+		return nil, err
+	}
+	sc.Endpoint = strings.Replace(sc.Endpoint, "evs", "vbs", 1)
+	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
