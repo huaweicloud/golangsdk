@@ -40,12 +40,12 @@ type CreateOps struct {
 	// Uppercase letters
 	// Digits
 	// Special characters (`~!@#$%^&*()-_=+\|[{}]:'",<.>/?)
-	Password string `json:"password" required:"true"`
+	Password string `json:"password,omitempty"`
 
 	// Indicates a username.
 	// A username consists of 1 to 64 characters
 	// and supports only letters, digits, and hyphens (-).
-	AccessUser string `json:"access_user" required:"true"`
+	AccessUser string `json:"access_user,omitempty"`
 
 	// Indicates the ID of a VPC.
 	VPCID string `json:"vpc_id" required:"true"`
@@ -70,6 +70,21 @@ type CreateOps struct {
 	// Indicates the time at which a maintenance time window ends.
 	// Format: HH:mm:ss
 	MaintainEnd string `json:"maintain_end,omitempty"`
+
+	//This parameter is mandatory when a Kafka instance is created.
+	//Indicates the maximum number of topics in a Kafka instance.
+	PartitionNum int `json:"partition_num,omitempty"`
+
+	//Indicates whether to enable SSL-encrypted access.
+	SslEnable bool `json:"ssl_enable"`
+
+	//This parameter is mandatory if the engine is kafka.
+	//Indicates the baseline bandwidth of a Kafka instance, that is,
+	//the maximum amount of data transferred per unit time. Unit: byte/s.
+	Specification string `json:"specification,omitempty"`
+
+	//Indicates the storage I/O specification. For details on how to select a disk type
+	StorageSpecCode string `json:"storage_spec_code,omitempty"`
 }
 
 // ToInstanceCreateMap is used for type convert
