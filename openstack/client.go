@@ -740,3 +740,20 @@ func NewDWSClient(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
+
+// NewVBSV2 creates a ServiceClient that may be used to access the VBS service for Orange and Telefonica Cloud.
+func NewVBSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "vbsv2")
+	return sc, err
+}
+
+// NewVBS creates a service client that is used for VBS.
+func NewVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "volumev2")
+	if err != nil {
+		return nil, err
+	}
+	sc.Endpoint = strings.Replace(sc.Endpoint, "evs", "vbs", 1)
+	sc.ResourceBase = sc.Endpoint
+	return sc, err
+}
