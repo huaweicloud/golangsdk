@@ -41,6 +41,12 @@ type Group struct {
 	AvailableDeadletters int    `json:"available_deadletters"`
 }
 
+type Groups struct {
+	QueueId   string  `json:"queue_id"`
+	QueueName string  `json:"queue_name"`
+	Details   []Group `json:"groups"`
+}
+
 // GroupPage may be embedded in a Page
 // that contains all of the results from an operation at once.
 type GroupPage struct {

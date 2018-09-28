@@ -30,6 +30,9 @@ type Detail struct {
 	SpecCode        string        `json:"spec_code"`
 	VMSpecification string        `json:"vm_specification"`
 	ProductInfos    []ProductInfo `json:"product_info"`
+	PartitionNum    string        `json:"partition_num"`
+	Bandwidth       string        `json:"bandwidth"`
+	IOs             []IO          `json:"io"`
 }
 
 // ProductInfo for dms
@@ -38,6 +41,12 @@ type ProductInfo struct {
 	NodeNum   string `json:"node_num"`
 	ProductID string `json:"product_id"`
 	SpecCode  string `json:"spec_code"`
+	IOs       []IO   `json:"io"`
+}
+
+type IO struct {
+	IOType          string `json:"io_type"`
+	StorageSpecCode string `json:"storage_spec_code"`
 }
 
 // GetResult contains the body of getting detailed
