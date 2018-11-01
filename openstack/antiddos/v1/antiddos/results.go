@@ -36,36 +36,40 @@ type DailyReportResult struct {
 	commonResult
 }
 
-func (r DailyReportResult) Extract() (*DailyReportResponse, error) {
-	var response DailyReportResponse
-	err := r.ExtractInto(&response)
-	return &response, err
+func (r DailyReportResult) Extract() ([]Data, error) {
+	var s DailyReportResponse
+	err := r.ExtractInto(&s)
+	if err != nil {
+		return nil, err
+	}
+	return s.Data, nil
 }
 
 type DailyReportResponse struct {
 	// Traffic in the last 24 hours
-	Data []struct {
-		// Start time
-		PeriodStart int `json:"period_start,"`
+	Data []Data `json:"data"`
+}
+type Data struct {
+	// Start time
+	PeriodStart int `json:"period_start,"`
 
-		// Inbound traffic (bit/s)
-		BpsIn int `json:"bps_in,"`
+	// Inbound traffic (bit/s)
+	BpsIn int `json:"bps_in,"`
 
-		// Attack traffic (bit/s)
-		BpsAttack int `json:"bps_attack,"`
+	// Attack traffic (bit/s)
+	BpsAttack int `json:"bps_attack,"`
 
-		// Total traffic
-		TotalBps int `json:"total_bps,"`
+	// Total traffic
+	TotalBps int `json:"total_bps,"`
 
-		// Inbound packet rate (number of packets per second)
-		PpsIn int `json:"pps_in,"`
+	// Inbound packet rate (number of packets per second)
+	PpsIn int `json:"pps_in,"`
 
-		// Attack packet rate (number of packets per second)
-		PpsAttack int `json:"pps_attack,"`
+	// Attack packet rate (number of packets per second)
+	PpsAttack int `json:"pps_attack,"`
 
-		// Total packet rate
-		TotalPps int `json:"total_pps,"`
-	} `json:"data,"`
+	// Total packet rate
+	TotalPps int `json:"total_pps,"`
 }
 
 type DeleteResult struct {
@@ -198,10 +202,13 @@ type ListLogsResult struct {
 	commonResult
 }
 
-func (r ListLogsResult) Extract() (*ListLogsResponse, error) {
-	var response ListLogsResponse
-	err := r.ExtractInto(&response)
-	return &response, err
+func (r ListLogsResult) Extract() ([]Logs, error) {
+	var s ListLogsResponse
+	err := r.ExtractInto(&s)
+	if err != nil {
+		return nil, err
+	}
+	return s.Logs, nil
 }
 
 type ListLogsResponse struct {
@@ -209,35 +216,41 @@ type ListLogsResponse struct {
 	Total int `json:"total,"`
 
 	// List of events
-	Logs []struct {
-		// Start time
-		StartTime int `json:"start_time,"`
-
-		// End time
-		EndTime int `json:"end_time,"`
-
-		// Defense status, the possible value of which is one of the following: 1: indicates that traffic cleaning is underway. 2: indicates that traffic is discarded.
-		Status int `json:"status,"`
-
-		// Traffic at the triggering point.
-		TriggerBps int `json:"trigger_bps,"`
-
-		// Packet rate at the triggering point
-		TriggerPps int `json:"trigger_pps,"`
-
-		// HTTP request rate at the triggering point
-		TriggerHttpPps int `json:"trigger_http_pps,"`
-	} `json:"logs,"`
+	Logs []Logs `json:"logs,"`
 }
 
+type Logs struct {
+	// Start time
+	StartTime int `json:"start_time,"`
+
+	// End time
+	EndTime int `json:"end_time,"`
+
+	// Defense status, the possible value of which is one of the following: 1: indicates that traffic cleaning is underway. 2: indicates that traffic is discarded.
+	Status int `json:"status,"`
+
+	// Traffic at the triggering point.
+	TriggerBps int `json:"trigger_bps,"`
+
+	// Packet rate at the triggering point
+	TriggerPps int `json:"trigger_pps,"`
+
+	// HTTP request rate at the triggering point
+	TriggerHttpPps int `json:"trigger_http_pps,"`
+}
 type ListStatusResult struct {
 	commonResult
 }
 
-func (r ListStatusResult) Extract() (*ListStatusResponse, error) {
-	var response ListStatusResponse
-	err := r.ExtractInto(&response)
-	return &response, err
+// Extract is a function that accepts a ListStatusOpts struct, which allows you to filter and sort
+// the returned collection for greater efficiency.
+func (r commonResult) Extract() ([]DdosStatus, error) {
+	var s ListStatusResponse
+	err := r.ExtractInto(&s)
+	if err != nil {
+		return nil, err
+	}
+	return s.DdosStatus, nil
 }
 
 type ListStatusResponse struct {
@@ -245,19 +258,21 @@ type ListStatusResponse struct {
 	Total int `json:"total,"`
 
 	// List of defense statuses
-	DdosStatus []struct {
-		// Floating IP address
-		FloatingIpAddress string `json:"floating_ip_address,"`
+	DdosStatus []DdosStatus `json:"ddosStatus,"`
+}
 
-		// ID of an EIP
-		FloatingIpId string `json:"floating_ip_id,"`
+type DdosStatus struct {
+	// Floating IP address
+	FloatingIpAddress string `json:"floating_ip_address,"`
 
-		// EIP type.
-		NetworkType string `json:"network_type,"`
+	// ID of an EIP
+	FloatingIpId string `json:"floating_ip_id,"`
 
-		// Defense status
-		Status string `json:"status,"`
-	} `json:"ddosStatus,"`
+	// EIP type.
+	NetworkType string `json:"network_type,"`
+
+	// Defense status
+	Status string `json:"status,"`
 }
 
 type UpdateResult struct {
