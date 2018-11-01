@@ -85,7 +85,7 @@ type CreateOptsBuilder interface {
 type CreateOpts struct {
 	BucketName                string                    `json:"bucket_name" required:"true"`
 	FilePrefixName            string                    `json:"file_prefix_name,omitempty"`
-	SimpleMessageNotification SimpleMessageNotification `json:"smn" required:"true"`
+	SimpleMessageNotification SimpleMessageNotification `json:"-"`
 }
 
 type SimpleMessageNotification struct {
@@ -122,7 +122,7 @@ type UpdateOpts struct {
 	Status                    string                    `json:"status,omitempty"`
 	BucketName                string                    `json:"bucket_name" required:"true"`
 	FilePrefixName            string                    `json:"file_prefix_name,omitempty"`
-	SimpleMessageNotification SimpleMessageNotification `json:"smn" required:"true"`
+	SimpleMessageNotification SimpleMessageNotification `json:"-"`
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
