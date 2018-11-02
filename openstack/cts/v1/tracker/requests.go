@@ -80,12 +80,19 @@ type CreateOptsBuilder interface {
 	ToTrackerCreateMap() (map[string]interface{}, error)
 }
 
+// CreateOptsWithSMN contains the options for create a Tracker. This object is
+// passed to tracker.Create().
+type CreateOptsWithSMN struct {
+	BucketName                string                    `json:"bucket_name" required:"true"`
+	FilePrefixName            string                    `json:"file_prefix_name,omitempty"`
+	SimpleMessageNotification SimpleMessageNotification `json:"smn,omitempty"`
+}
+
 // CreateOpts contains the options for create a Tracker. This object is
 // passed to tracker.Create().
 type CreateOpts struct {
-	BucketName                string                    `json:"bucket_name" required:"true"`
-	FilePrefixName            string                    `json:"file_prefix_name,omitempty"`
-	SimpleMessageNotification SimpleMessageNotification `json:"-"`
+	BucketName     string `json:"bucket_name" required:"true"`
+	FilePrefixName string `json:"file_prefix_name,omitempty"`
 }
 
 type SimpleMessageNotification struct {
@@ -102,11 +109,18 @@ func (opts CreateOpts) ToTrackerCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
+// ToTrackerCreateMap assembles a request body based on the contents of a
+// CreateOpts.
+func (opts CreateOptsWithSMN) ToTrackerCreateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
 // Create will create a new tracker based on the values in CreateOpts. To extract
 // the tracker name  from the response, call the Extract method on the
 // CreateResult.
 func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToTrackerCreateMap()
+
 	if err != nil {
 		r.Err = err
 		return
@@ -117,12 +131,19 @@ func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRe
 	return
 }
 
-// UpdateOpts contains all the values needed to update a  tracker
-type UpdateOpts struct {
+// UpdateOptsWithSMN contains all the values needed to update a  tracker
+type UpdateOptsWithSMN struct {
 	Status                    string                    `json:"status,omitempty"`
 	BucketName                string                    `json:"bucket_name" required:"true"`
 	FilePrefixName            string                    `json:"file_prefix_name,omitempty"`
-	SimpleMessageNotification SimpleMessageNotification `json:"-"`
+	SimpleMessageNotification SimpleMessageNotification `json:"smn,omitempty"`
+}
+
+// UpdateOpts contains all the values needed to update a  tracker
+type UpdateOpts struct {
+	Status         string `json:"status,omitempty"`
+	BucketName     string `json:"bucket_name" required:"true"`
+	FilePrefixName string `json:"file_prefix_name,omitempty"`
 }
 
 // UpdateOptsBuilder allows extensions to add additional parameters to the
@@ -132,6 +153,10 @@ type UpdateOptsBuilder interface {
 }
 
 // ToTrackerUpdateMap builds an update body based on UpdateOpts.
+func (opts UpdateOptsWithSMN) ToTrackerUpdateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
 func (opts UpdateOpts) ToTrackerUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }

@@ -28,7 +28,7 @@ func TestCreate(t *testing.T) {
 			fmt.Fprintf(w, createResponse)
 		})
 
-	options := &tracker.CreateOpts{
+	options := &tracker.CreateOptsWithSMN{
 		BucketName:     "obs-e51d",
 		FilePrefixName: "yO8Q",
 		SimpleMessageNotification: tracker.SimpleMessageNotification{
@@ -62,7 +62,7 @@ func TestUpdate(t *testing.T) {
 		fmt.Fprintf(w, updateResponse)
 	})
 
-	options := &tracker.UpdateOpts{
+	options := &tracker.UpdateOptsWithSMN{
 		BucketName:     "cirros-img",
 		FilePrefixName: "yO8Q",
 		Status:         "disabled",
