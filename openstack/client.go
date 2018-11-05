@@ -772,3 +772,9 @@ func NewHwAntiDDoSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts
 	sc.ResourceBase = sc.Endpoint
 	return sc, err
 }
+
+// NewELBV1 creates a ServiceClient that may be used to access the ELB service.
+func NewELBV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "elbv1")
+	return sc, err
+}
