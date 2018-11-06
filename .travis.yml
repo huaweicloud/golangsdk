@@ -8,7 +8,6 @@ install:
 - go get golang.org/x/tools/cmd/goimports
 go:
 - "1.11"
-- "1.11"
 - tip
 env:
   global:
