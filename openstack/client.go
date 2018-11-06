@@ -769,3 +769,9 @@ func NewELBV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	sc, err := initClientOpts(client, eo, "elbv1")
 	return sc, err
 }
+
+// NewRDSV1 creates a ServiceClient that may be used to access the RDS service.
+func NewRDSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "rdsv1")
+	return sc, err
+}
