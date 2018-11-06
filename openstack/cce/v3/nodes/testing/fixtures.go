@@ -42,7 +42,8 @@ var Expected = &nodes.Nodes{
 		Login: nodes.LoginSpec{
 			SshKey: "test-keypair",
 		},
-		PublicIP: nodes.PublicIPSpec{Eip: nodes.EipSpec{Bandwidth: nodes.BandwidthOpts{}, IpType: ""}},
+		ExtendParam: nodes.ExtendParam{},
+		PublicIP:    nodes.PublicIPSpec{Eip: nodes.EipSpec{Bandwidth: nodes.BandwidthOpts{}, IpType: ""}},
 		RootVolume: nodes.VolumeSpec{
 			VolumeType: "SATA",
 			Size:       40,
