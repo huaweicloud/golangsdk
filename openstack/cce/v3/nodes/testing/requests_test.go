@@ -138,6 +138,8 @@ func TestCreateV3Node(t *testing.T) {
 	  "spec": {
 	    "az": "cn-east-2a",
 	    "count": 1,
+        "extendParam": {
+        },
 	    "dataVolumes": [
 	      {
 	        "size": 100,
