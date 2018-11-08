@@ -764,6 +764,12 @@ func NewVBS(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golan
 	return sc, err
 }
 
+// NewCTSService creates a ServiceClient that can be used to access the Cloud Trace service.
+func NewCTSService(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "cts")
+	return sc, err
+}
+
 // NewELBV1 creates a ServiceClient that may be used to access the ELB service.
 func NewELBV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "elbv1")
