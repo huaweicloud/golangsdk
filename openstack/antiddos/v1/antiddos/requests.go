@@ -1,6 +1,7 @@
 package antiddos
 
 import (
+	"reflect"
 	"strconv"
 	"time"
 
@@ -159,6 +160,9 @@ func ListLogs(client *golangsdk.ServiceClient, floatingIpId string, opts ListLog
 }
 
 type ListStatusOpts struct {
+	// ID of an EIP
+	FloatingIpId string
+
 	// If this parameter is not used, the defense statuses of all ECSs are displayed in the Neutron-queried order by default.
 	Status string `q:"status"`
 
@@ -172,30 +176,63 @@ type ListStatusOpts struct {
 	Ip string `q:"ip"`
 }
 
-type ListStatusOptsBuilder interface {
-	ToListStatusQuery() (string, error)
-}
+// ListStatus returns collection of DdosStatus. It accepts a ListStatusOpts struct, which allows you to filter and sort
+// the returned collection for greater efficiency.
+func ListStatus(client *golangsdk.ServiceClient, opts ListStatusOpts) ([]DdosStatus, error) {
+	var r ListStatusResult
 
-func (opts ListStatusOpts) ToListStatusQuery() (string, error) {
-	q, err := golangsdk.BuildQueryString(opts)
-	return q.String(), err
-}
-
-func ListStatus(client *golangsdk.ServiceClient, opts ListStatusOptsBuilder) (r ListStatusResult) {
-	url := ListStatusURL(client)
-	if opts != nil {
-		query, err := opts.ToListStatusQuery()
-		if err != nil {
-			r.Err = err
-			return
-		}
-		url += query
+	q, err := golangsdk.BuildQueryString(&opts)
+	if err != nil {
+		return nil, err
 	}
+	u := ListStatusURL(client) + q.String()
 
-	_, r.Err = client.Get(url, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Get(u, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	return
+
+	allStatus, err := r.Extract()
+	if err != nil {
+		return nil, err
+	}
+
+	return FilterDdosStatus(allStatus, opts)
+}
+
+func FilterDdosStatus(ddosStatus []DdosStatus, opts ListStatusOpts) ([]DdosStatus, error) {
+
+	var refinedDdosStatus []DdosStatus
+	var matched bool
+	m := map[string]interface{}{}
+
+	if opts.FloatingIpId != "" {
+		m["FloatingIpId"] = opts.FloatingIpId
+	}
+
+	if len(m) > 0 && len(ddosStatus) > 0 {
+		for _, ddosStatus := range ddosStatus {
+			matched = true
+
+			for key, value := range m {
+				if sVal := getStructField(&ddosStatus, key); !(sVal == value) {
+					matched = false
+				}
+			}
+
+			if matched {
+				refinedDdosStatus = append(refinedDdosStatus, ddosStatus)
+			}
+		}
+	} else {
+		refinedDdosStatus = ddosStatus
+	}
+	return refinedDdosStatus, nil
+}
+
+func getStructField(v *DdosStatus, field string) string {
+	r := reflect.ValueOf(v)
+	f := reflect.Indirect(r).FieldByName(field)
+	return string(f.String())
 }
 
 type UpdateOpts struct {
