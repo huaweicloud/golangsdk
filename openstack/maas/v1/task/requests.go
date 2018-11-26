@@ -1,8 +1,6 @@
 package task
 
 import (
-	"log"
-
 	"github.com/huaweicloud/golangsdk"
 )
 
