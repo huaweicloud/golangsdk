@@ -133,8 +133,13 @@ func HandleUpdateSuccessfully(t *testing.T) {
 	})
 }
 
-var ListStatusResponse = antiddos.ListStatusResponse{
-	Total: 2,
+var ListStatusResponse = []antiddos.DdosStatus{
+	{
+		FloatingIpId:      "4d60bba4-0791-4e82-8262-9bdffaeb1d14",
+		FloatingIpAddress: "49.4.4.36",
+		NetworkType:       "EIP",
+		Status:            "notConfig",
+	},
 }
 
 const ListStatusOutput string = `
@@ -144,8 +149,7 @@ const ListStatusOutput string = `
     "floating_ip_id": "4d60bba4-0791-4e82-8262-9bdffaeb1d14",
     "floating_ip_address": "49.4.4.36",
     "network_type": "EIP",
-    "status": "notConfig",
-    "blackhole_endtime": 0
+    "status": "notConfig"
   }]
 }
 `
@@ -164,18 +168,6 @@ func HandleListStatusSuccessfully(t *testing.T) {
 		if ip == "49." && limit == "2" && offset == "1" && status == "notConfig" {
 			fmt.Fprintf(w, ListStatusOutput)
 		}
-	})
-
-	ListStatusResponse.DdosStatus = append(ListStatusResponse.DdosStatus, struct {
-		FloatingIpAddress string `json:"floating_ip_address,"`
-		FloatingIpId      string `json:"floating_ip_id,"`
-		NetworkType       string `json:"network_type,"`
-		Status            string `json:"status,"`
-	}{
-		FloatingIpId:      "4d60bba4-0791-4e82-8262-9bdffaeb1d14",
-		FloatingIpAddress: "49.4.4.36",
-		NetworkType:       "EIP",
-		Status:            "notConfig",
 	})
 }
 
@@ -626,24 +618,14 @@ var ListLogsOutput = `
 }
 `
 
-var ListLogsResponse = antiddos.ListLogsResponse{
-	Total: 1,
-	Logs: []struct {
-		StartTime      int `json:"start_time,"`
-		EndTime        int `json:"end_time,"`
-		Status         int `json:"status,"`
-		TriggerBps     int `json:"trigger_bps,"`
-		TriggerPps     int `json:"trigger_pps,"`
-		TriggerHttpPps int `json:"trigger_http_pps,"`
-	}{
-		{
-			StartTime:      1473217200000,
-			EndTime:        1473242400000,
-			Status:         1,
-			TriggerBps:     51106,
-			TriggerPps:     2600,
-			TriggerHttpPps: 3589,
-		},
+var ListLogsResponse = []antiddos.Logs{
+	{
+		StartTime:      1473217200000,
+		EndTime:        1473242400000,
+		Status:         1,
+		TriggerBps:     51106,
+		TriggerPps:     2600,
+		TriggerHttpPps: 3589,
 	},
 }
 
@@ -709,43 +691,33 @@ var DailyReportOutput = `
 }
 `
 
-var DailyReportResponse = antiddos.DailyReportResponse{
-	Data: []struct {
-		PeriodStart int `json:"period_start,"`
-		BpsIn       int `json:"bps_in,"`
-		BpsAttack   int `json:"bps_attack,"`
-		TotalBps    int `json:"total_bps,"`
-		PpsIn       int `json:"pps_in,"`
-		PpsAttack   int `json:"pps_attack,"`
-		TotalPps    int `json:"total_pps,"`
-	}{
-		{
-			PeriodStart: 1521650068727,
-			BpsIn:       0,
-			BpsAttack:   0,
-			TotalBps:    0,
-			PpsIn:       0,
-			PpsAttack:   0,
-			TotalPps:    0,
-		},
-		{
-			PeriodStart: 1521650368727,
-			BpsIn:       0,
-			BpsAttack:   0,
-			TotalBps:    0,
-			PpsIn:       0,
-			PpsAttack:   0,
-			TotalPps:    0,
-		},
-		{
-			PeriodStart: 1521650668727,
-			BpsIn:       1,
-			BpsAttack:   0,
-			TotalBps:    1,
-			PpsIn:       2,
-			PpsAttack:   0,
-			TotalPps:    2,
-		},
+var DailyReportResponse = []antiddos.Data{
+	{
+		PeriodStart: 1521650068727,
+		BpsIn:       0,
+		BpsAttack:   0,
+		TotalBps:    0,
+		PpsIn:       0,
+		PpsAttack:   0,
+		TotalPps:    0,
+	},
+	{
+		PeriodStart: 1521650368727,
+		BpsIn:       0,
+		BpsAttack:   0,
+		TotalBps:    0,
+		PpsIn:       0,
+		PpsAttack:   0,
+		TotalPps:    0,
+	},
+	{
+		PeriodStart: 1521650668727,
+		BpsIn:       1,
+		BpsAttack:   0,
+		TotalBps:    1,
+		PpsIn:       2,
+		PpsAttack:   0,
+		TotalPps:    2,
 	},
 }
 

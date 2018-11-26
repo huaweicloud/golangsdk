@@ -29,6 +29,25 @@ func TestGetV3Cluster(t *testing.T) {
 
 }
 
+func TestGetV3ClusterOTC(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/api/v3/projects/c59fd21fd2a94963b822d8985b884673/clusters/daa97872-59d7-11e8-a787-0255ac101f54", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, OutputOTC)
+	})
+
+	actual, err := clusters.Get(fake.ServiceClient(), "daa97872-59d7-11e8-a787-0255ac101f54").Extract()
+	th.AssertNoErr(t, err)
+	expected := ExpectedOTC
+	th.AssertDeepEquals(t, expected, actual)
+
+}
+
 func TestListV3Cluster(t *testing.T) {
 
 	th.SetupHTTP()
@@ -55,6 +74,34 @@ func TestListV3Cluster(t *testing.T) {
 
 	th.AssertDeepEquals(t, expected, actual)
 }
+
+func TestListV3ClusterOTC(t *testing.T) {
+
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/api/v3/projects/c59fd21fd2a94963b822d8985b884673/clusters", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+
+		fmt.Fprintf(w, ListOutputOTC)
+	})
+
+	//count := 0
+
+	actual, err := clusters.List(fake.ServiceClient(), clusters.ListOpts{})
+	if err != nil {
+		t.Errorf("Failed to extract clusters: %v", err)
+	}
+
+	expected := ListExpectedOTC
+
+	th.AssertDeepEquals(t, expected, actual)
+}
+
 func TestCreateV3Cluster(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()

@@ -80,9 +80,9 @@ func TestListStatus(t *testing.T) {
 		Ip:     "49.",
 	}
 
-	actual, err := antiddos.ListStatus(client.ServiceClient(), listOpt).Extract()
+	actual, err := antiddos.ListStatus(client.ServiceClient(), listOpt)
 	th.AssertNoErr(t, err)
-	th.CheckDeepEquals(t, &ListStatusResponse, actual)
+	th.CheckDeepEquals(t, ListStatusResponse, actual)
 }
 
 func TestListConfigs(t *testing.T) {
@@ -117,7 +117,7 @@ func TestListLogs(t *testing.T) {
 		SortDir: "asc",
 	}).Extract()
 	th.AssertNoErr(t, err)
-	th.CheckDeepEquals(t, &ListLogsResponse, actual)
+	th.CheckDeepEquals(t, ListLogsResponse, actual)
 }
 
 func TestGetStatus(t *testing.T) {
@@ -139,7 +139,7 @@ func TestDailyReport(t *testing.T) {
 	floatingIpId := "82abaa86-8518-47db-8d63-ddf152824635"
 	actual, err := antiddos.DailyReport(client.ServiceClient(), floatingIpId).Extract()
 	th.AssertNoErr(t, err)
-	th.CheckDeepEquals(t, &DailyReportResponse, actual)
+	th.CheckDeepEquals(t, DailyReportResponse, actual)
 }
 
 func TestGetTask(t *testing.T) {
