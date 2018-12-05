@@ -8,25 +8,25 @@ type Task struct {
 }
 
 type TaskResult struct {
-	ID           int64       `json:"id"`
-	Name         string      `json:"name"`
-	SrcNode      SrcNode     `json:"src_node"`
-	DstNode      DstNode     `json:"dst_node"`
-	ThreadNum    int         `json:"thread_num"`
-	Status       int         `json:"status"`
-	Progress     float64     `json:"progress"`
-	MigrateSpeed int64       `json:"migrate_speed"`
-	EnableKMS    bool        `json:"enableKMS"`
-	Description  string      `json:"description"`
-	TotalSize    int64       `json:"total_size"`
-	CompleteSize int64       `json:"complete_size"`
-	StartTime    int64       `json:"start_time"`
-	LeftTime     int64       `json:"left_time"`
-	TotalTime    int64       `json:"total_time"`
-	SuccessNum   int64       `json:"success_num"`
-	FailNum      int64       `json:"fail_num"`
-	TotalNum     int64       `json:"total_num"`
-	SmnInfo      SmnInfo     `json:"smnInfo"`
+	ID           int64   `json:"id"`
+	Name         string  `json:"name"`
+	SrcNode      SrcNode `json:"src_node"`
+	DstNode      DstNode `json:"dst_node"`
+	ThreadNum    int     `json:"thread_num"`
+	Status       int     `json:"status"`
+	Progress     float64 `json:"progress"`
+	MigrateSpeed int64   `json:"migrate_speed"`
+	EnableKMS    bool    `json:"enableKMS"`
+	Description  string  `json:"description"`
+	TotalSize    int64   `json:"total_size"`
+	CompleteSize int64   `json:"complete_size"`
+	StartTime    int64   `json:"start_time"`
+	LeftTime     int64   `json:"left_time"`
+	TotalTime    int64   `json:"total_time"`
+	SuccessNum   int64   `json:"success_num"`
+	FailNum      int64   `json:"fail_num"`
+	TotalNum     int64   `json:"total_num"`
+	SmnInfo      SmnInfo `json:"smnInfo"`
 }
 
 type SrcNode struct {
@@ -36,9 +36,9 @@ type SrcNode struct {
 }
 
 type DstNode struct {
-	Region    string   `json:"region"`
-	ObjectKey string   `json:"object_key"`
-	Bucket    string   `json:"bucket"`
+	Region    string `json:"region"`
+	ObjectKey string `json:"object_key"`
+	Bucket    string `json:"bucket"`
 }
 
 type SmnInfo struct {
