@@ -9,12 +9,12 @@ var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
 }
 
 type CreateOpts struct {
-	SrcNode     SrcNodeOpts `json:"src_node" required:"true"`
-	DstNode     DstNodeOpts `json:"dst_node" required:"true"`
-	EnableKMS   bool        `json:"enableKMS" required:"true"`
-	ThreadNum   int         `json:"thread_num" required:"true"`
-	Description string      `json:"description,omitempty"`
-	SmnInfo     SmnInfoOpts `json:"smnInfo,omitempty"`
+	SrcNode     SrcNodeOpts  `json:"src_node" required:"true"`
+	DstNode     DstNodeOpts  `json:"dst_node" required:"true"`
+	EnableKMS   bool         `json:"enableKMS" required:"true"`
+	ThreadNum   int          `json:"thread_num" required:"true"`
+	Description string       `json:"description,omitempty"`
+	SmnInfo     *SmnInfoOpts `json:"smnInfo,omitempty"`
 }
 
 type SrcNodeOpts struct {
@@ -68,7 +68,7 @@ func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 }
 
 func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
-	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{204},
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders}
 	_, r.Err = c.Delete(resourceURL(c, id), reqOpt)
 	return

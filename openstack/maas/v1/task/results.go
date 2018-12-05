@@ -3,12 +3,12 @@ package task
 import "github.com/huaweicloud/golangsdk"
 
 type Task struct {
-	ID       string `json:"id"`
+	ID       int64  `json:"id"`
 	TaskName string `json:"task_name"`
 }
 
 type TaskResult struct {
-	ID           string      `json:"id"`
+	ID           int64       `json:"id"`
 	Name         string      `json:"name"`
 	SrcNode      SrcNode     `json:"src_node"`
 	DstNode      DstNode     `json:"dst_node"`
@@ -16,9 +16,8 @@ type TaskResult struct {
 	Status       int         `json:"status"`
 	Progress     float64     `json:"progress"`
 	MigrateSpeed int64       `json:"migrate_speed"`
-	EngineKMS    bool        `json:"enableKMS"`
+	EnableKMS    bool        `json:"enableKMS"`
 	Description  string      `json:"description"`
-	ErrorReason  ErrorReason `json:"error_reason"`
 	TotalSize    int64       `json:"total_size"`
 	CompleteSize int64       `json:"complete_size"`
 	StartTime    int64       `json:"start_time"`
@@ -38,13 +37,8 @@ type SrcNode struct {
 
 type DstNode struct {
 	Region    string   `json:"region"`
-	ObjectKey []string `json:"object_key"`
+	ObjectKey string   `json:"object_key"`
 	Bucket    string   `json:"bucket"`
-}
-
-type ErrorReason struct {
-	ErrorCode string `json:"error_code"`
-	ErrorMsg  string `json:"error_msg"`
 }
 
 type SmnInfo struct {
@@ -57,8 +51,8 @@ type CreateResult struct {
 	golangsdk.Result
 }
 
-func (r CreateResult) Extract() (*TaskResult, error) {
-	var s TaskResult
+func (r CreateResult) Extract() (*Task, error) {
+	var s Task
 	err := r.ExtractInto(&s)
 	return &s, err
 }
@@ -71,8 +65,8 @@ type GetResult struct {
 	golangsdk.Result
 }
 
-func (r GetResult) Extract() (*Task, error) {
-	var s Task
+func (r GetResult) Extract() (*TaskResult, error) {
+	var s TaskResult
 	err := r.ExtractInto(&s)
 	return &s, err
 }
