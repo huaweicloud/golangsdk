@@ -777,6 +777,15 @@ func NewMAASV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*go
 	return sc, err
 }
 
+// MAASV1 creates a ServiceClient that may be used with the v1 MAAS service.
+func MAASV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "maas", 1)
+	sc.Endpoint = sc.Endpoint + "v1/"
+	sc.ResourceBase = sc.Endpoint + client.ProjectID + "/"
+	return sc, err
+}
+
 func NewHwAntiDDoSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "volumev2")
 	if err != nil {
