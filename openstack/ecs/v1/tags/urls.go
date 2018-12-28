@@ -1,0 +1,12 @@
+package tags
+
+import "github.com/huaweicloud/golangsdk"
+
+const (
+	rootPath     = "servers"
+	resourcePath = "tags/action"
+)
+
+func actionURL(c *golangsdk.ServiceClient, id string) string {
+	return c.ServiceURL(rootPath, id, resourcePath)
+}
