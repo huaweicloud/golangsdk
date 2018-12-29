@@ -18,7 +18,7 @@ type BatchOptsBuilder interface {
 	ToTagsBatchMap() (map[string]interface{}, error)
 }
 
-// BatchOpts contains all the values needed to perform BatchAction on the policy tags.
+// BatchOpts contains all the values needed to perform BatchAction on the instance tags.
 type BatchOpts struct {
 	//List of tags to perform batch operation
 	Tags []Tag `json:"tags,omitempty"`
@@ -41,7 +41,7 @@ func (opts BatchOpts) ToTagsBatchMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-//BatchAction is used to create ,update or delete the tags of a specified backup policy.
+//BatchAction is used to create ,update or delete the tags of a specified instance.
 func BatchAction(client *golangsdk.ServiceClient, serverID string, opts BatchOptsBuilder) (r ActionResults) {
 	b, err := opts.ToTagsBatchMap()
 	if err != nil {
@@ -51,5 +51,11 @@ func BatchAction(client *golangsdk.ServiceClient, serverID string, opts BatchOpt
 	_, r.Err = client.Post(actionURL(client, serverID), b, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
+	return
+}
+
+// Get retrieves the tags of a specific instance.
+func Get(client *golangsdk.ServiceClient, serverID string) (r GetResult) {
+	_, r.Err = client.Get(resourceURL(client, serverID), &r.Body, nil)
 	return
 }
