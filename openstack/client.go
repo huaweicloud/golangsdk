@@ -439,7 +439,32 @@ func authWithAgencyByAKSK(client *golangsdk.ProviderClient, endpoint string, opt
 func getDomainID(name string, client *golangsdk.ServiceClient) (string, error) {
 	old := client.Endpoint
 	defer func() { client.Endpoint = old }()
-	client.Endpoint = "https://iam.myhwclouds.com:443/v3/auth/"
+
+	endpoint, err := client.EndpointLocator(
+		golangsdk.EndpointOpts{
+			Type:         "identity",
+			Availability: golangsdk.AvailabilityPublic,
+		})
+	if err != nil {
+		if v, ok := err.(ErrMultipleMatchingEndpointsV3); ok {
+			e := ""
+			for _, i := range v.Endpoints {
+				if i.Region == "" {
+					e = golangsdk.NormalizeURL(i.URL) + "auth/"
+					break
+				}
+			}
+
+			if e == "" {
+				return "", err
+			}
+			client.Endpoint = e
+		} else {
+			return "", err
+		}
+	} else {
+		client.Endpoint = endpoint + "auth/"
+	}
 
 	opts := domains.ListOpts{
 		Name: name,
