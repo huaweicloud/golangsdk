@@ -497,6 +497,18 @@ func getDomainID(name string, client *golangsdk.ServiceClient) (string, error) {
 	}
 }
 
+func HeaderForAdminToken(c *golangsdk.ServiceClient) (map[string]string, error) {
+	if c.AKSKAuthOptions.AccessKey != "" {
+		i, err := getDomainID(c.AKSKAuthOptions.Domain, c)
+		if err != nil {
+			return nil, err
+		}
+
+		return map[string]string{"X-Domain-Id": i}, nil
+	}
+	return nil, nil
+}
+
 // NewIdentityV2 creates a ServiceClient that may be used to interact with the
 // v2 identity service.
 func NewIdentityV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
