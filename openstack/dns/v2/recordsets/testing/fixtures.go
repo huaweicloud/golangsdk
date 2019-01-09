@@ -289,7 +289,6 @@ func HandleCreateSuccessfully(t *testing.T) {
 const UpdateRecordSetRequest = `
 {
   "description" : "Updated description",
-  "ttl" : null,
   "records" : [
       "10.1.0.2",
       "10.1.0.3"
