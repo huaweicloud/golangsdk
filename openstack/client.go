@@ -956,7 +956,7 @@ func NewRDSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 
 // NewKMSV1 creates a ServiceClient that may be used to access the KMS service.
 func NewKMSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
-	sc, err := initClientOpts(client, eo, "kmsv1")
+	sc, err := initClientOpts(client, eo, "kms")
 	return sc, err
 }
 
