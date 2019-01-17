@@ -318,14 +318,6 @@ func TestCreateFailureTokenIDUserID(t *testing.T) {
 	authTokenPostErr(t, tokens.AuthOptions{UserID: "something", TokenID: "12345"}, nil, true, golangsdk.ErrUserIDWithToken{})
 }
 
-func TestCreateFailureTokenIDDomainID(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainID: "something", TokenID: "12345"}, nil, true, golangsdk.ErrDomainIDWithToken{})
-}
-
-func TestCreateFailureTokenIDDomainName(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainName: "something", TokenID: "12345"}, nil, true, golangsdk.ErrDomainNameWithToken{})
-}
-
 func TestCreateFailureMissingUser(t *testing.T) {
 	options := tokens.AuthOptions{Password: "supersecure"}
 	authTokenPostErr(t, options, nil, false, golangsdk.ErrUsernameOrUserID{})
