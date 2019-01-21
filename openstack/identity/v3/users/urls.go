@@ -35,5 +35,5 @@ func listInGroupURL(client *golangsdk.ServiceClient, groupID string) string {
 }
 
 func membershipURL(client *golangsdk.ServiceClient, groupID string, userID string) string {
-        return client.ServiceURL("groups",groupID,"users",userID)
+	return client.ServiceURL("groups", groupID, "users", userID)
 }

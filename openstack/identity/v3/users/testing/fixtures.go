@@ -187,7 +187,7 @@ var FirstUser = users.User{
 	DomainID: "default",
 	Enabled:  true,
 	ID:       "2844b2a08be147a08ef58317d6471f1f",
-	Name:              "glance",
+	Name:     "glance",
 }
 
 // SecondUser is the second user in the List request.
@@ -197,7 +197,7 @@ var SecondUser = users.User{
 	DomainID:         "1789d1",
 	Enabled:          true,
 	ID:               "9fe1d3",
-	Name:              "jsmith",
+	Name:             "jsmith",
 }
 
 var SecondUserNoOptions = users.User{
@@ -205,7 +205,7 @@ var SecondUserNoOptions = users.User{
 	DomainID:         "1789d1",
 	Enabled:          true,
 	ID:               "9fe1d3",
-	Name:              "jsmith",
+	Name:             "jsmith",
 }
 
 // SecondUserUpdated is how SecondUser should look after an Update.
@@ -214,7 +214,7 @@ var SecondUserUpdated = users.User{
 	DomainID:         "1789d1",
 	Enabled:          false,
 	ID:               "9fe1d3",
-	Name:              "jsmith",
+	Name:             "jsmith",
 }
 
 // ExpectedUsersSlice is the slice of users expected to be returned from ListOutput.

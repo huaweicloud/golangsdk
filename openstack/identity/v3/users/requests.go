@@ -35,7 +35,6 @@ type ListOpts struct {
 
 	// Name filters the response by username.
 	Name string `q:"name"`
-
 }
 
 // ToUserListQuery formats a ListOpts into a query string.
@@ -197,16 +196,15 @@ func ListInGroup(client *golangsdk.ServiceClient, groupID string, opts ListOptsB
 }
 
 // Add a user into one group
-func AddToGroup(client *golangsdk.ServiceClient, groupID string, userID string)  (r AddMembershipResult) {
-        _, r.Err = client.Put(membershipURL(client,groupID, userID),nil ,nil, &golangsdk.RequestOpts{
-                OkCodes: []int{204},
-        })
-        return
+func AddToGroup(client *golangsdk.ServiceClient, groupID string, userID string) (r AddMembershipResult) {
+	_, r.Err = client.Put(membershipURL(client, groupID, userID), nil, nil, &golangsdk.RequestOpts{
+		OkCodes: []int{204},
+	})
+	return
 }
-
 
 // Remove user from group
 func RemoveFromGroup(client *golangsdk.ServiceClient, groupID string, userID string) (r DeleteResult) {
-        _, r.Err = client.Delete(membershipURL(client, groupID, userID), nil)
-        return
+	_, r.Err = client.Delete(membershipURL(client, groupID, userID), nil)
+	return
 }
