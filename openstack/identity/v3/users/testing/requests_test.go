@@ -41,8 +41,6 @@ func TestListUsersAllPages(t *testing.T) {
 	actual, err := users.ExtractUsers(allPages)
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, ExpectedUsersSlice, actual)
-	th.AssertEquals(t, ExpectedUsersSlice[0].Extra["email"], "glance@localhost")
-	th.AssertEquals(t, ExpectedUsersSlice[1].Extra["email"], "jsmith@example.com")
 }
 
 func TestGetUser(t *testing.T) {
@@ -53,7 +51,6 @@ func TestGetUser(t *testing.T) {
 	actual, err := users.Get(client.ServiceClient(), "9fe1d3").Extract()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, SecondUser, *actual)
-	th.AssertEquals(t, SecondUser.Extra["email"], "jsmith@example.com")
 }
 
 func TestCreateUser(t *testing.T) {
@@ -68,16 +65,6 @@ func TestCreateUser(t *testing.T) {
 		Enabled:          &iTrue,
 		Password:         "secretsecret",
 		DefaultProjectID: "263fd9",
-		Options: map[users.Option]interface{}{
-			users.IgnorePasswordExpiry: true,
-			users.MultiFactorAuthRules: []interface{}{
-				[]string{"password", "totp"},
-				[]string{"password", "custom-auth-method"},
-			},
-		},
-		Extra: map[string]interface{}{
-			"email": "jsmith@example.com",
-		},
 	}
 
 	actual, err := users.Create(client.ServiceClient(), createOpts).Extract()
@@ -97,9 +84,6 @@ func TestCreateNoOptionsUser(t *testing.T) {
 		Enabled:          &iTrue,
 		Password:         "secretsecret",
 		DefaultProjectID: "263fd9",
-		Extra: map[string]interface{}{
-			"email": "jsmith@example.com",
-		},
 	}
 
 	actual, err := users.Create(client.ServiceClient(), createOpts).Extract()
@@ -115,12 +99,6 @@ func TestUpdateUser(t *testing.T) {
 	iFalse := false
 	updateOpts := users.UpdateOpts{
 		Enabled: &iFalse,
-		Options: map[users.Option]interface{}{
-			users.MultiFactorAuthRules: nil,
-		},
-		Extra: map[string]interface{}{
-			"disabled_reason": "DDOS",
-		},
 	}
 
 	actual, err := users.Update(client.ServiceClient(), "9fe1d3", updateOpts).Extract()
