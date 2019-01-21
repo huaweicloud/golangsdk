@@ -242,10 +242,6 @@ var FirstUser = users.User{
 	},
 	Name:              "glance",
 	PasswordExpiresAt: nilTime,
-	Description:       "some description",
-	Extra: map[string]interface{}{
-		"email": "glance@localhost",
-	},
 }
 
 // SecondUser is the second user in the List request.
@@ -259,10 +255,6 @@ var SecondUser = users.User{
 		"self": "https://example.com/identity/v3/users/9fe1d3",
 	},
 	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email": "jsmith@example.com",
-	},
 	Options: map[string]interface{}{
 		"ignore_password_expiry": true,
 		"multi_factor_auth_rules": []interface{}{
@@ -281,10 +273,6 @@ var SecondUserNoOptions = users.User{
 		"self": "https://example.com/identity/v3/users/9fe1d3",
 	},
 	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email": "jsmith@example.com",
-	},
 }
 
 // SecondUserUpdated is how SecondUser should look after an Update.
@@ -297,11 +285,6 @@ var SecondUserUpdated = users.User{
 		"self": "https://example.com/identity/v3/users/9fe1d3",
 	},
 	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email":           "jsmith@example.com",
-		"disabled_reason": "DDOS",
-	},
 	Options: map[string]interface{}{
 		"ignore_password_expiry": true,
 	},
