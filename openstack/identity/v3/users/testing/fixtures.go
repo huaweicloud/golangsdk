@@ -255,13 +255,6 @@ var SecondUser = users.User{
 		"self": "https://example.com/identity/v3/users/9fe1d3",
 	},
 	Name:              "jsmith",
-	Options: map[string]interface{}{
-		"ignore_password_expiry": true,
-		"multi_factor_auth_rules": []interface{}{
-			[]string{"password", "totp"},
-			[]string{"password", "custom-auth-method"},
-		},
-	},
 }
 
 var SecondUserNoOptions = users.User{
@@ -285,9 +278,6 @@ var SecondUserUpdated = users.User{
 		"self": "https://example.com/identity/v3/users/9fe1d3",
 	},
 	Name:              "jsmith",
-	Options: map[string]interface{}{
-		"ignore_password_expiry": true,
-	},
 }
 
 // ExpectedUsersSlice is the slice of users expected to be returned from ListOutput.
