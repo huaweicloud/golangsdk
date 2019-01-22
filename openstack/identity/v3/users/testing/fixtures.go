@@ -27,31 +27,14 @@ const ListOutput = `
             "domain_id": "default",
             "enabled": true,
             "id": "2844b2a08be147a08ef58317d6471f1f",
-            "links": {
-                "self": "http://example.com/identity/v3/users/2844b2a08be147a08ef58317d6471f1f"
-            },
-            "name": "glance",
-            "password_expires_at": null,
-            "description": "some description",
-            "extra": {
-              "email": "glance@localhost"
-            }
+            "name": "glance"
         },
         {
             "default_project_id": "263fd9",
             "domain_id": "1789d1",
             "enabled": true,
             "id": "9fe1d3",
-            "links": {
-                "self": "https://example.com/identity/v3/users/9fe1d3"
-            },
-            "name": "jsmith",
-            "password_expires_at": "2016-11-06T15:32:17.000000",
-            "email": "jsmith@example.com",
-            "options": {
-                "ignore_password_expiry": true,
-                "multi_factor_auth_rules": [["password", "totp"], ["password", "custom-auth-method"]]
-            }
+            "name": "jsmith"
         }
     ]
 }
@@ -65,16 +48,7 @@ const GetOutput = `
         "domain_id": "1789d1",
         "enabled": true,
         "id": "9fe1d3",
-        "links": {
-            "self": "https://example.com/identity/v3/users/9fe1d3"
-        },
-        "name": "jsmith",
-        "password_expires_at": "2016-11-06T15:32:17.000000",
-        "email": "jsmith@example.com",
-        "options": {
-            "ignore_password_expiry": true,
-            "multi_factor_auth_rules": [["password", "totp"], ["password", "custom-auth-method"]]
-        }
+        "name": "jsmith"
     }
 }
 `
@@ -87,12 +61,7 @@ const GetOutputNoOptions = `
         "domain_id": "1789d1",
         "enabled": true,
         "id": "9fe1d3",
-        "links": {
-            "self": "https://example.com/identity/v3/users/9fe1d3"
-        },
-        "name": "jsmith",
-        "password_expires_at": "2016-11-06T15:32:17.000000",
-        "email": "jsmith@example.com"
+        "name": "jsmith"
     }
 }
 `
@@ -105,12 +74,7 @@ const CreateRequest = `
         "domain_id": "1789d1",
         "enabled": true,
         "name": "jsmith",
-        "password": "secretsecret",
-        "email": "jsmith@example.com",
-        "options": {
-            "ignore_password_expiry": true,
-            "multi_factor_auth_rules": [["password", "totp"], ["password", "custom-auth-method"]]
-        }
+        "password": "secretsecret"
     }
 }
 `
@@ -123,8 +87,7 @@ const CreateNoOptionsRequest = `
         "domain_id": "1789d1",
         "enabled": true,
         "name": "jsmith",
-        "password": "secretsecret",
-        "email": "jsmith@example.com"
+        "password": "secretsecret"
     }
 }
 `
@@ -133,11 +96,7 @@ const CreateNoOptionsRequest = `
 const UpdateRequest = `
 {
     "user": {
-        "enabled": false,
-        "disabled_reason": "DDOS",
-        "options": {
-            "multi_factor_auth_rules": null
-        }
+        "enabled": false
     }
 }
 `
@@ -150,16 +109,7 @@ const UpdateOutput = `
         "domain_id": "1789d1",
         "enabled": false,
         "id": "9fe1d3",
-        "links": {
-            "self": "https://example.com/identity/v3/users/9fe1d3"
-        },
-        "name": "jsmith",
-        "password_expires_at": "2016-11-06T15:32:17.000000",
-        "email": "jsmith@example.com",
-        "disabled_reason": "DDOS",
-        "options": {
-            "ignore_password_expiry": true
-        }
+        "name": "jsmith"
     }
 }
 `
@@ -237,15 +187,7 @@ var FirstUser = users.User{
 	DomainID: "default",
 	Enabled:  true,
 	ID:       "2844b2a08be147a08ef58317d6471f1f",
-	Links: map[string]interface{}{
-		"self": "http://example.com/identity/v3/users/2844b2a08be147a08ef58317d6471f1f",
-	},
-	Name:              "glance",
-	PasswordExpiresAt: nilTime,
-	Description:       "some description",
-	Extra: map[string]interface{}{
-		"email": "glance@localhost",
-	},
+	Name:     "glance",
 }
 
 // SecondUser is the second user in the List request.
@@ -255,21 +197,7 @@ var SecondUser = users.User{
 	DomainID:         "1789d1",
 	Enabled:          true,
 	ID:               "9fe1d3",
-	Links: map[string]interface{}{
-		"self": "https://example.com/identity/v3/users/9fe1d3",
-	},
-	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email": "jsmith@example.com",
-	},
-	Options: map[string]interface{}{
-		"ignore_password_expiry": true,
-		"multi_factor_auth_rules": []interface{}{
-			[]string{"password", "totp"},
-			[]string{"password", "custom-auth-method"},
-		},
-	},
+	Name:             "jsmith",
 }
 
 var SecondUserNoOptions = users.User{
@@ -277,14 +205,7 @@ var SecondUserNoOptions = users.User{
 	DomainID:         "1789d1",
 	Enabled:          true,
 	ID:               "9fe1d3",
-	Links: map[string]interface{}{
-		"self": "https://example.com/identity/v3/users/9fe1d3",
-	},
-	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email": "jsmith@example.com",
-	},
+	Name:             "jsmith",
 }
 
 // SecondUserUpdated is how SecondUser should look after an Update.
@@ -293,18 +214,7 @@ var SecondUserUpdated = users.User{
 	DomainID:         "1789d1",
 	Enabled:          false,
 	ID:               "9fe1d3",
-	Links: map[string]interface{}{
-		"self": "https://example.com/identity/v3/users/9fe1d3",
-	},
-	Name:              "jsmith",
-	PasswordExpiresAt: SecondUserPasswordExpiresAt,
-	Extra: map[string]interface{}{
-		"email":           "jsmith@example.com",
-		"disabled_reason": "DDOS",
-	},
-	Options: map[string]interface{}{
-		"ignore_password_expiry": true,
-	},
+	Name:             "jsmith",
 }
 
 // ExpectedUsersSlice is the slice of users expected to be returned from ListOutput.
