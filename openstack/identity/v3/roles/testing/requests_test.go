@@ -96,25 +96,6 @@ func TestDeleteRole(t *testing.T) {
 	th.AssertNoErr(t, res.Err)
 }
 
-func TestListAssignmentsSinglePage(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-	HandleListRoleAssignmentsSuccessfully(t)
-
-	count := 0
-	err := roles.ListAssignments(client.ServiceClient(), roles.ListAssignmentsOpts{}).EachPage(func(page pagination.Page) (bool, error) {
-		count++
-		actual, err := roles.ExtractRoleAssignments(page)
-		th.AssertNoErr(t, err)
-
-		th.CheckDeepEquals(t, ExpectedRoleAssignmentsSlice, actual)
-
-		return true, nil
-	})
-	th.AssertNoErr(t, err)
-	th.CheckEquals(t, count, 1)
-}
-
 func TestAssign(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
