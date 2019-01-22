@@ -321,7 +321,37 @@ var ExpectedRoleAssignmentsSlice = []roles.RoleAssignment{FirstRoleAssignment, S
 // HandleListRoleAssignmentsSuccessfully creates an HTTP handler at `/role_assignments` on the
 // test handler mux that responds with a list of two role assignments.
 func HandleListRoleAssignmentsSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/role_assignments", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/domains/{domain_id}/groups/{group_id}/roles", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, ListAssignmentOutput)
+	})
+
+	th.Mux.HandleFunc("/projects/{project_id}/groups/{group_id}/roles", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, ListAssignmentOutput)
+	})
+
+	th.Mux.HandleFunc("/projects/{project_id}/users/{user_id}/roles", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, ListAssignmentOutput)
+	})
+
+	th.Mux.HandleFunc("/domains/{domain_id}/users/{user_id}/roles", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "Accept", "application/json")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
