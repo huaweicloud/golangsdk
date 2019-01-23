@@ -64,7 +64,6 @@ type CreateOpts struct {
 	// DomainID is the ID of the domain the group belongs to.
 	DomainID string `json:"domain_id,omitempty"`
 
-	// Extra is free-form extra key/value pairs to describe the group.
 	Extra map[string]interface{} `json:"-"`
 }
 
