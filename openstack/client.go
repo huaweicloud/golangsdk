@@ -974,6 +974,13 @@ func NewSMNV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	return sc, err
 }
 
+// NewCCE creates a ServiceClient that may be used to access the CCE service.
+func NewCCE(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "ccev2.0")
+	sc.ResourceBase = sc.Endpoint + "api/v3/projects/" + client.ProjectID + "/"
+	return sc, err
+}
+
 func NewSDKClient(c *golangsdk.ProviderClient, eo golangsdk.EndpointOpts, serviceType string) (*golangsdk.ServiceClient, error) {
 	switch serviceType {
 	case "mls":
