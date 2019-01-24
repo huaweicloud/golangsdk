@@ -186,7 +186,7 @@ func HandleCreateGroupSuccessfully(t *testing.T) {
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		th.TestJSONRequest(t, r, CreateRequest)
 
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, GetOutput)
 	})
 }
