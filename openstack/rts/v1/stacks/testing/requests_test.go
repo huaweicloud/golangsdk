@@ -53,7 +53,7 @@ func TestGetStack(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleGetSuccessfully(t, GetOutput)
 
-	actual, err := stacks.Get(fake.ServiceClient(), "postman_stack").Extract()
+	actual, err := stacks.Get(fake.ServiceClient(), "postman_stack", "db6977b2-27aa-4775-9ae7-6213212d4ada").Extract()
 	th.AssertNoErr(t, err)
 
 	expected := GetExpected
