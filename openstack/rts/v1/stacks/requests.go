@@ -206,8 +206,8 @@ func getStructField(v *ListedStack, field string) string {
 	return string(f.String())
 }
 
-func Get(c *golangsdk.ServiceClient, stackName, stackID string) (r GetResult) {
-	_, r.Err = c.Get(getURL(c, stackName, stackID), &r.Body, nil)
+func Get(c *golangsdk.ServiceClient, stackName string) (r GetResult) {
+	_, r.Err = c.Get(getURL(c, stackName), &r.Body, nil)
 	return
 }
 
