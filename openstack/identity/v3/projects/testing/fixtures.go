@@ -174,7 +174,7 @@ func HandleDeleteProjectSuccessfully(t *testing.T) {
 		th.TestMethod(t, r, "DELETE")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 
-		w.WriteHeader(http.StatusNoContent)
+		w.WriteHeader(http.StatusOK)
 	})
 }
 
