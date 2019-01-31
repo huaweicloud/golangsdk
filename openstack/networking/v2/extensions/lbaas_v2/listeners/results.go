@@ -57,7 +57,7 @@ type Listener struct {
 	Pools []pools.Pool `json:"pools"`
 
 	// L7policiess are the L7 policies which are part of this listener.
-	L7Policiess []l7policiess.L7Policy `json:"l7policies"`
+	L7Policiess []l7policies.L7Policy `json:"l7policies"`
 
 	// The provisioning status of the listener.
 	// This value is ACTIVE, PENDING_* or ERROR.
