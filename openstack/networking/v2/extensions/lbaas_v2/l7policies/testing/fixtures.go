@@ -18,8 +18,8 @@ const SingleL7PolicyBody = `
 		"description": "",
 		"admin_state_up": true,
 		"redirect_pool_id": null,
-		"redirect_url": "http://www.example.com",
-		"action": "REDIRECT_TO_URL",
+		"redirect_listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
+		"action": "REDIRECT_TO_LISTENER",
 		"position": 1,
 		"tenant_id": "e3cd678b11784734bc366148aa37580e",
 		"id": "8a1412f0-4c32-4257-8b07-af4770b604fd",
@@ -30,57 +30,44 @@ const SingleL7PolicyBody = `
 `
 
 var (
-	L7PolicyToURL = l7policies.L7Policy{
-		ID:             "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		Name:           "redirect-example.com",
-		ListenerID:     "023f2e34-7806-443b-bfae-16c324569a3d",
-		Action:         "REDIRECT_TO_URL",
-		Position:       1,
-		Description:    "",
-		TenantID:       "e3cd678b11784734bc366148aa37580e",
-		RedirectPoolID: "",
-		RedirectURL:    "http://www.example.com",
-		AdminStateUp:   true,
-		Rules:          []l7policies.Rule{},
+	L7PolicyToListener = l7policies.L7Policy{
+		ID:                 "8a1412f0-4c32-4257-8b07-af4770b604fd",
+		Name:               "redirect-example.com",
+		ListenerID:         "023f2e34-7806-443b-bfae-16c324569a3d",
+		Action:             "REDIRECT_TO_LISTENER",
+		Position:           1,
+		Description:        "",
+		TenantID:           "e3cd678b11784734bc366148aa37580e",
+		RedirectPoolID:     "",
+		RedirectListenerID: "023f2e34-7806-443b-bfae-16c324569a3d",
+		AdminStateUp:       true,
+		Rules:              []l7policies.Rule{},
 	}
 	L7PolicyToPool = l7policies.L7Policy{
-		ID:             "964f4ba4-f6cd-405c-bebd-639460af7231",
-		Name:           "redirect-pool",
-		ListenerID:     "be3138a3-5cf7-4513-a4c2-bb137e668bab",
-		Action:         "REDIRECT_TO_POOL",
-		Position:       1,
-		Description:    "",
-		TenantID:       "c1f7910086964990847dc6c8b128f63c",
-		RedirectPoolID: "bac433c6-5bea-4311-80da-bd1cd90fbd25",
-		RedirectURL:    "",
-		AdminStateUp:   true,
-		Rules:          []l7policies.Rule{},
+		ID:                 "964f4ba4-f6cd-405c-bebd-639460af7231",
+		Name:               "redirect-pool",
+		ListenerID:         "be3138a3-5cf7-4513-a4c2-bb137e668bab",
+		Action:             "REDIRECT_TO_POOL",
+		Position:           1,
+		Description:        "",
+		TenantID:           "c1f7910086964990847dc6c8b128f63c",
+		RedirectPoolID:     "bac433c6-5bea-4311-80da-bd1cd90fbd25",
+		RedirectListenerID: "",
+		AdminStateUp:       true,
+		Rules:              []l7policies.Rule{},
 	}
 	L7PolicyUpdated = l7policies.L7Policy{
-		ID:             "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		Name:           "NewL7PolicyName",
-		ListenerID:     "023f2e34-7806-443b-bfae-16c324569a3d",
-		Action:         "REDIRECT_TO_URL",
-		Position:       1,
-		Description:    "Redirect requests to example.com",
-		TenantID:       "e3cd678b11784734bc366148aa37580e",
-		RedirectPoolID: "",
-		RedirectURL:    "http://www.new-example.com",
-		AdminStateUp:   true,
-		Rules:          []l7policies.Rule{},
-	}
-	L7PolicyNullRedirectURLUpdated = l7policies.L7Policy{
-		ID:             "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		Name:           "NewL7PolicyName",
-		ListenerID:     "023f2e34-7806-443b-bfae-16c324569a3d",
-		Action:         "REDIRECT_TO_URL",
-		Position:       1,
-		Description:    "Redirect requests to example.com",
-		TenantID:       "e3cd678b11784734bc366148aa37580e",
-		RedirectPoolID: "",
-		RedirectURL:    "",
-		AdminStateUp:   true,
-		Rules:          []l7policies.Rule{},
+		ID:                 "8a1412f0-4c32-4257-8b07-af4770b604fd",
+		Name:               "NewL7PolicyName",
+		ListenerID:         "023f2e34-7806-443b-bfae-16c324569a3d",
+		Action:             "REDIRECT_TO_LISTENER",
+		Position:           1,
+		Description:        "Redirect requests to example.com",
+		TenantID:           "e3cd678b11784734bc366148aa37580e",
+		RedirectPoolID:     "",
+		RedirectListenerID: "023f2e34-7806-443b-bfae-16c324569a3d",
+		AdminStateUp:       true,
+		Rules:              []l7policies.Rule{},
 	}
 	RulePath = l7policies.Rule{
 		ID:           "16621dbb-a736-4888-a57a-3ecd53df784c",
@@ -123,9 +110,9 @@ func HandleL7PolicyCreationSuccessfully(t *testing.T, response string) {
 		th.TestJSONRequest(t, r, `{
 			"l7policy": {
 				"listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
-				"redirect_url": "http://www.example.com",
+				"redirect_listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
 				"name": "redirect-example.com",
-				"action": "REDIRECT_TO_URL"
+				"action": "REDIRECT_TO_LISTENER"
 			}
 		}`)
 
@@ -146,8 +133,8 @@ const L7PoliciesListBody = `
             "rules": [],
             "tenant_id": "e3cd678b11784734bc366148aa37580e",
             "listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
-            "redirect_url": "http://www.example.com",
-            "action": "REDIRECT_TO_URL",
+            "redirect_listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
+            "action": "REDIRECT_TO_LISTENER",
             "position": 1,
             "id": "8a1412f0-4c32-4257-8b07-af4770b604fd",
             "name": "redirect-example.com"
@@ -176,28 +163,8 @@ const PostUpdateL7PolicyBody = `
 		"description": "Redirect requests to example.com",
 		"admin_state_up": true,
 		"redirect_pool_id": null,
-		"redirect_url": "http://www.new-example.com",
-		"action": "REDIRECT_TO_URL",
-		"position": 1,
-		"tenant_id": "e3cd678b11784734bc366148aa37580e",
-		"id": "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		"name": "NewL7PolicyName",
-		"rules": []
-	}
-}
-`
-
-// PostUpdateL7PolicyNullRedirectURLBody is the canned response body of a Update request
-// on an existing l7policy with a null redirect_url .
-const PostUpdateL7PolicyNullRedirectURLBody = `
-{
-	"l7policy": {
-		"listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
-		"description": "Redirect requests to example.com",
-		"admin_state_up": true,
-		"redirect_pool_id": null,
-		"redirect_url": null,
-		"action": "REDIRECT_TO_URL",
+		"redirect_listener_id": "023f2e34-7806-443b-bfae-16c324569a3d",
+		"action": "REDIRECT_TO_LISTENER",
 		"position": 1,
 		"tenant_id": "e3cd678b11784734bc366148aa37580e",
 		"id": "8a1412f0-4c32-4257-8b07-af4770b604fd",
@@ -258,30 +225,11 @@ func HandleL7PolicyUpdateSuccessfully(t *testing.T) {
 		th.TestJSONRequest(t, r, `{
 			"l7policy": {
 				"name": "NewL7PolicyName",
-				"action": "REDIRECT_TO_URL",
-				"redirect_url": "http://www.new-example.com"
+				"action": "REDIRECT_TO_LISTENER",
 			}
 		}`)
 
 		fmt.Fprintf(w, PostUpdateL7PolicyBody)
-	})
-}
-
-// HandleL7PolicyUpdateNullRedirectURLSuccessfully sets up the test server to respond to a l7policy Update request.
-func HandleL7PolicyUpdateNullRedirectURLSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/v2.0/lbaas/l7policies/8a1412f0-4c32-4257-8b07-af4770b604fd", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "PUT")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		th.TestHeader(t, r, "Accept", "application/json")
-		th.TestHeader(t, r, "Content-Type", "application/json")
-		th.TestJSONRequest(t, r, `{
-			"l7policy": {
-				"name": "NewL7PolicyName",
-				"redirect_url": null
-			}
-		}`)
-
-		fmt.Fprintf(w, PostUpdateL7PolicyNullRedirectURLBody)
 	})
 }
 
