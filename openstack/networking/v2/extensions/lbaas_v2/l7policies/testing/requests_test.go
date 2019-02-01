@@ -15,14 +15,14 @@ func TestCreateL7Policy(t *testing.T) {
 	HandleL7PolicyCreationSuccessfully(t, SingleL7PolicyBody)
 
 	actual, err := l7policies.Create(fake.ServiceClient(), l7policies.CreateOpts{
-		Name:        "redirect-example.com",
-		ListenerID:  "023f2e34-7806-443b-bfae-16c324569a3d",
-		Action:      l7policies.ActionRedirectToURL,
-		RedirectURL: "http://www.example.com",
+		Name:               "redirect-example.com",
+		ListenerID:         "023f2e34-7806-443b-bfae-16c324569a3d",
+		Action:             l7policies.ActionRedirectToListener,
+		RedirectListenerID: "023f2e34-7806-443b-bfae-16c324569a3d",
 	}).Extract()
 
 	th.AssertNoErr(t, err)
-	th.CheckDeepEquals(t, L7PolicyToURL, *actual)
+	th.CheckDeepEquals(t, L7PolicyToListener, *actual)
 }
 
 func TestRequiredL7PolicyCreateOpts(t *testing.T) {
@@ -59,7 +59,7 @@ func TestListL7Policies(t *testing.T) {
 		if len(actual) != 2 {
 			t.Fatalf("Expected 2 l7policies, got %d", len(actual))
 		}
-		th.CheckDeepEquals(t, L7PolicyToURL, actual[0])
+		th.CheckDeepEquals(t, L7PolicyToListener, actual[0])
 		th.CheckDeepEquals(t, L7PolicyToPool, actual[1])
 
 		return true, nil
@@ -81,7 +81,7 @@ func TestListAllL7Policies(t *testing.T) {
 	th.AssertNoErr(t, err)
 	actual, err := l7policies.ExtractL7Policies(allPages)
 	th.AssertNoErr(t, err)
-	th.CheckDeepEquals(t, L7PolicyToURL, actual[0])
+	th.CheckDeepEquals(t, L7PolicyToListener, actual[0])
 	th.CheckDeepEquals(t, L7PolicyToPool, actual[1])
 }
 
@@ -96,7 +96,7 @@ func TestGetL7Policy(t *testing.T) {
 		t.Fatalf("Unexpected Get error: %v", err)
 	}
 
-	th.CheckDeepEquals(t, L7PolicyToURL, *actual)
+	th.CheckDeepEquals(t, L7PolicyToListener, *actual)
 }
 
 func TestDeleteL7Policy(t *testing.T) {
@@ -106,47 +106,6 @@ func TestDeleteL7Policy(t *testing.T) {
 
 	res := l7policies.Delete(fake.ServiceClient(), "8a1412f0-4c32-4257-8b07-af4770b604fd")
 	th.AssertNoErr(t, res.Err)
-}
-
-func TestUpdateL7Policy(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-	HandleL7PolicyUpdateSuccessfully(t)
-
-	client := fake.ServiceClient()
-	newName := "NewL7PolicyName"
-	redirectURL := "http://www.new-example.com"
-	actual, err := l7policies.Update(client, "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		l7policies.UpdateOpts{
-			Name:        &newName,
-			Action:      l7policies.ActionRedirectToURL,
-			RedirectURL: &redirectURL,
-		}).Extract()
-	if err != nil {
-		t.Fatalf("Unexpected Update error: %v", err)
-	}
-
-	th.CheckDeepEquals(t, L7PolicyUpdated, *actual)
-}
-
-func TestUpdateL7PolicyNullRedirectURL(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-	HandleL7PolicyUpdateNullRedirectURLSuccessfully(t)
-
-	client := fake.ServiceClient()
-	newName := "NewL7PolicyName"
-	redirectURL := ""
-	actual, err := l7policies.Update(client, "8a1412f0-4c32-4257-8b07-af4770b604fd",
-		l7policies.UpdateOpts{
-			Name:        &newName,
-			RedirectURL: &redirectURL,
-		}).Extract()
-	if err != nil {
-		t.Fatalf("Unexpected Update error: %v", err)
-	}
-
-	th.CheckDeepEquals(t, L7PolicyNullRedirectURLUpdated, *actual)
 }
 
 func TestUpdateL7PolicyWithInvalidOpts(t *testing.T) {
