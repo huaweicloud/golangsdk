@@ -16,5 +16,5 @@ type ExtraDHCPOpt struct {
 
 	// IPVersion is the IP protocol version of a single DHCP option.
 	// Valid value is 4 or 6. Default is 4.
-	IPVersion int `json:"ip_version"`
+	IPVersion string `json:"ip_version"`
 }
