@@ -645,10 +645,10 @@ func TestGetWithExtraDHCPOpts(t *testing.T) {
 
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptName, "option1")
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptValue, "value1")
-	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, 4)
+	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, "4")
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[1].OptName, "option2")
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[1].OptValue, "value2")
-	th.AssertDeepEquals(t, s.ExtraDHCPOpts[1].IPVersion, 4)
+	th.AssertDeepEquals(t, s.ExtraDHCPOpts[1].IPVersion, "4")
 }
 
 func TestCreateWithExtraDHCPOpts(t *testing.T) {
@@ -711,7 +711,7 @@ func TestCreateWithExtraDHCPOpts(t *testing.T) {
 
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptName, "option1")
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptValue, "value1")
-	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, 4)
+	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, "4")
 }
 
 func TestUpdateWithExtraDHCPOpts(t *testing.T) {
@@ -775,5 +775,5 @@ func TestUpdateWithExtraDHCPOpts(t *testing.T) {
 
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptName, "option2")
 	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].OptValue, "value2")
-	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, 4)
+	th.AssertDeepEquals(t, s.ExtraDHCPOpts[0].IPVersion, "4")
 }

@@ -573,12 +573,12 @@ const GetWithExtraDHCPOptsResponse = `
             {
                 "opt_name": "option1",
                 "opt_value": "value1",
-                "ip_version": 4
+                "ip_version": "4"
             },
             {
                 "opt_name": "option2",
                 "opt_value": "value2",
-                "ip_version": 4
+                "ip_version": "4"
             }
         ],
         "admin_state_up": true,
@@ -633,7 +633,7 @@ const CreateWithExtraDHCPOptsResponse = `
             {
                 "opt_name": "option1",
                 "opt_value": "value1",
-                "ip_version": 4
+                "ip_version": "4"
             }
         ],
         "admin_state_up": true,
@@ -690,7 +690,7 @@ const UpdateWithExtraDHCPOptsResponse = `
             {
                 "opt_name": "option2",
                 "opt_value": "value2",
-                "ip_version": 4
+                "ip_version": "4"
             }
         ],
         "admin_state_up": true,
