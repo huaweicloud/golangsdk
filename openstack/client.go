@@ -330,7 +330,7 @@ func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golan
 	}
 
 	if options.DomainID == "" && options.Domain != "" {
-		id, err := getDomainIDV1(options.Domain, v3Client)
+		id, err := getDomainID(options.Domain, v3Client)
 		if err != nil {
 			return err
 		}
@@ -454,67 +454,6 @@ func getDomainID(name string, client *golangsdk.ServiceClient) (string, error) {
 	old := client.Endpoint
 	defer func() { client.Endpoint = old }()
 
-	endpoint, err := client.EndpointLocator(
-		golangsdk.EndpointOpts{
-			Type:         "identity",
-			Availability: golangsdk.AvailabilityPublic,
-		})
-	if err != nil {
-		if v, ok := err.(ErrMultipleMatchingEndpointsV3); ok {
-			e := ""
-			for _, i := range v.Endpoints {
-				if i.Region == "" {
-					e = golangsdk.NormalizeURL(i.URL) + "auth/"
-					break
-				}
-			}
-
-			if e == "" {
-				return "", err
-			}
-			client.Endpoint = e
-		} else {
-			return "", err
-		}
-	} else {
-		client.Endpoint = endpoint + "auth/"
-	}
-
-	opts := domains.ListOpts{
-		Name: name,
-	}
-	allPages, err := domains.List(client, &opts).AllPages()
-	if err != nil {
-		return "", fmt.Errorf("List domains failed, err=%s", err)
-	}
-
-	all, err := domains.ExtractDomains(allPages)
-	if err != nil {
-		return "", fmt.Errorf("Extract domains failed, err=%s", err)
-	}
-
-	count := len(all)
-	switch count {
-	case 0:
-		err := &golangsdk.ErrResourceNotFound{}
-		err.ResourceType = "iam"
-		err.Name = name
-		return "", err
-	case 1:
-		return all[0].ID, nil
-	default:
-		err := &golangsdk.ErrMultipleResourcesFound{}
-		err.ResourceType = "iam"
-		err.Name = name
-		err.Count = count
-		return "", err
-	}
-}
-
-func getDomainIDV1(name string, client *golangsdk.ServiceClient) (string, error) {
-	old := client.Endpoint
-	defer func() { client.Endpoint = old }()
-
 	client.Endpoint = old + "auth/"
 
 	opts := domains.ListOpts{
@@ -546,18 +485,6 @@ func getDomainIDV1(name string, client *golangsdk.ServiceClient) (string, error)
 		err.Count = count
 		return "", err
 	}
-}
-
-func HeaderForAdminToken(c *golangsdk.ServiceClient) (map[string]string, error) {
-	if c.AKSKAuthOptions.AccessKey != "" {
-		i, err := getDomainID(c.AKSKAuthOptions.Domain, c)
-		if err != nil {
-			return nil, err
-		}
-
-		return map[string]string{"X-Domain-Id": i}, nil
-	}
-	return nil, nil
 }
 
 // NewIdentityV2 creates a ServiceClient that may be used to interact with the
