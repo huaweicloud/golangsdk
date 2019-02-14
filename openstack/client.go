@@ -249,18 +249,16 @@ func v3auth(client *golangsdk.ProviderClient, endpoint string, opts tokens3.Auth
 }
 
 func v3authWithAgency(client *golangsdk.ProviderClient, endpoint string, opts *golangsdk.AuthOptions, eo golangsdk.EndpointOpts) error {
-	token := opts.TokenID
-	if token == "" {
+	if opts.TokenID == "" {
 		err := v3auth(client, endpoint, opts, eo)
 		if err != nil {
 			return err
 		}
-		token = client.TokenID
-		client.TokenID = ""
+	} else {
+		client.TokenID = opts.TokenID
 	}
 
 	opts1 := golangsdk.AgencyAuthOptions{
-		TokenID:          token,
 		AgencyName:       opts.AgencyName,
 		AgencyDomainName: opts.AgencyDomainName,
 		DelegatedProject: opts.DelegatedProject,
