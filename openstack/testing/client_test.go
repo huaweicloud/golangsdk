@@ -295,6 +295,7 @@ func TestIdentityAdminV3Client(t *testing.T) {
 	pc, err := openstack.AuthenticatedClient(options)
 	th.AssertNoErr(t, err)
 	sc, err := openstack.NewIdentityV3(pc, golangsdk.EndpointOpts{
+		Region:       "RegionOne",
 		Availability: golangsdk.AvailabilityAdmin,
 	})
 	th.AssertNoErr(t, err)
