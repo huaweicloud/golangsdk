@@ -300,18 +300,30 @@ func HandleUnassignSuccessfully(t *testing.T) {
 
 // FirstRoleAssignment is the first role assignment in the List request.
 var FirstRoleAssignment = roles.RoleAssignment{
-	Role:  roles.AssignedRole{ID: "123456"},
-	Scope: roles.Scope{Domain: roles.Domain{ID: "161718"}},
-	User:  roles.User{ID: "313233"},
-	Group: roles.Group{},
+	Catalog:     "BASE",
+	Description: "Tenant Administrator",
+	DisplayName: "Tenant Administrator",
+	ID:          "699bd62cda304d2cad03fd2fb190b8cf",
+	Name:        "te_admin",
+	Type:        "AA",
+	Policy: roles.Policy{
+		Statement: []roles.Statement{},
+		Version:   "v1",
+	},
 }
 
 // SecondRoleAssignemnt is the second role assignemnt in the List request.
 var SecondRoleAssignment = roles.RoleAssignment{
-	Role:  roles.AssignedRole{ID: "123456"},
-	Scope: roles.Scope{Project: roles.Project{ID: "456789"}},
-	User:  roles.User{ID: "313233"},
-	Group: roles.Group{},
+	Catalog:     "BASE",
+	Description: "Security Administrator",
+	DisplayName: "Security Administrator",
+	ID:          "699bd62cda304d2cad03fd2fb190b8ce",
+	Name:        "secu_admin",
+	Type:        "AA",
+	Policy: roles.Policy{
+		Statement: []roles.Statement{},
+		Version:   "v1",
+	},
 }
 
 // ExpectedRoleAssignmentsSlice is the slice of role assignments expected to be
