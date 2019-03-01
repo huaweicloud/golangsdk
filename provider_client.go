@@ -2,6 +2,7 @@ package golangsdk
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -82,11 +83,19 @@ type ProviderClient struct {
 	// Otherwise, it must have a value
 	AKSKAuthOptions AKSKAuthOptions
 
+	// Context is the context passed to the HTTP request.
+	Context context.Context
+
+	// mut is a mutex for the client. It protects read and write access to client attributes such as getting
+	// and setting the TokenID.
 	mut *sync.RWMutex
 
+	// reauthmut is a mutex for reauthentication it attempts to ensure that only one reauthentication
+	// attempt happens at one time.
 	reauthmut *reauthlock
 }
 
+// reauthlock represents a set of attributes used to help in the reauthentication process.
 type reauthlock struct {
 	sync.RWMutex
 	reauthing bool
@@ -240,6 +249,9 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 	req, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
+	}
+	if client.Context != nil {
+		req = req.WithContext(client.Context)
 	}
 
 	// Populate the request headers. Apply options.MoreHeaders last, to give the caller the chance to

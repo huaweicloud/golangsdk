@@ -1,11 +1,13 @@
 package testing
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -125,6 +127,32 @@ func TestConcurrentReauth(t *testing.T) {
 	wg.Wait()
 
 	th.AssertEquals(t, 1, info.numreauths)
+}
+
+func TestRequestWithContext(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "OK")
+	}))
+	defer ts.Close()
+
+	ctx, cancel := context.WithCancel(context.Background())
+	p := &golangsdk.ProviderClient{Context: ctx}
+
+	res, err := p.Request("GET", ts.URL, &golangsdk.RequestOpts{KeepResponseBody: true})
+	th.AssertNoErr(t, err)
+	_, err = ioutil.ReadAll(res.Body)
+	th.AssertNoErr(t, err)
+	err = res.Body.Close()
+	th.AssertNoErr(t, err)
+
+	cancel()
+	res, err = p.Request("GET", ts.URL, &golangsdk.RequestOpts{})
+	if err == nil {
+		t.Fatal("expecting error, got nil")
+	}
+	if !strings.Contains(err.Error(), ctx.Err().Error()) {
+		t.Fatalf("expecting error to contain: %q, got %q", ctx.Err().Error(), err.Error())
+	}
 }
 
 func TestRequestConnectionReuse(t *testing.T) {
