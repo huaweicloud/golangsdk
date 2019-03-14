@@ -2,7 +2,6 @@ package policies
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"time"
 
@@ -36,9 +35,9 @@ type ScheduledOperationResp struct {
 }
 
 type OperationDefinitionResp struct {
-	MaxBackups            int    `json:"-"`
-	RetentionDurationDays int    `json:"-"`
-	Permanent             bool   `json:"-"`
+	MaxBackups            int    `json:"max_backups"`
+	RetentionDurationDays int    `json:"retention_duration_days"`
+	Permanent             bool   `json:"permanent"`
 	PlanId                string `json:"plan_id"`
 	ProviderId            string `json:"provider_id"`
 }
@@ -91,6 +90,7 @@ func (r *TriggerPropertiesResp) UnmarshalJSON(b []byte) error {
 	return err
 }
 
+/*
 // UnmarshalJSON helps to unmarshal OperationDefinitionResp fields into needed values.
 func (r *OperationDefinitionResp) UnmarshalJSON(b []byte) error {
 	type tmp OperationDefinitionResp
@@ -161,6 +161,7 @@ func (r *OperationDefinitionResp) UnmarshalJSON(b []byte) error {
 
 	return err
 }
+*/
 
 // Extract will get the backup policies object from the commonResult
 func (r commonResult) Extract() (*BackupPolicy, error) {
