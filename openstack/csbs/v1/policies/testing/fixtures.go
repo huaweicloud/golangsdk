@@ -110,7 +110,7 @@ var createResponse = `
                     "name": "default"
                 },
                 "operation_definition": {
-                    "max_backups": 20,
+                    "max_backups": "20",
                     "provider_id": "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
                     "plan_id": "5af626d2-19b9-4dc4-8e95-ddba008318b3"
                 },
@@ -184,7 +184,7 @@ var updateResponse = `
                     }
                 },
                 "operation_definition": {
-                    "max_backups": 20,
+                    "max_backups": "20",
                     "provider_id": "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
                     "plan_id": "5af626d2-19b9-4dc4-8e95-ddba008318b3",
                     "retention_duration_days": -1
