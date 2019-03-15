@@ -11,17 +11,17 @@ import (
 )
 
 type CreateBackupPolicy struct {
-	CreatedAt           time.Time                       `json:"-"`
-	Description         string                          `json:"description"`
-	ID                  string                          `json:"id"`
-	Name                string                          `json:"name"`
-	Parameters          PolicyParam                     `json:"parameters"`
-	ProjectId           string                          `json:"project_id"`
-	ProviderId          string                          `json:"provider_id"`
-	Resources           []Resource                      `json:"resources"`
-	ScheduledOperations []CreateScheduledOperationResp  `json:"scheduled_operations"`
-	Status              string                          `json:"status"`
-	Tags                []ResourceTag                   `json:"tags"`
+	CreatedAt           time.Time                      `json:"-"`
+	Description         string                         `json:"description"`
+	ID                  string                         `json:"id"`
+	Name                string                         `json:"name"`
+	Parameters          PolicyParam                    `json:"parameters"`
+	ProjectId           string                         `json:"project_id"`
+	ProviderId          string                         `json:"provider_id"`
+	Resources           []Resource                     `json:"resources"`
+	ScheduledOperations []CreateScheduledOperationResp `json:"scheduled_operations"`
+	Status              string                         `json:"status"`
+	Tags                []ResourceTag                  `json:"tags"`
 }
 
 type BackupPolicy struct {
