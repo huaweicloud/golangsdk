@@ -27,7 +27,7 @@ var getResponse = `
                     "name": "default"
                 },
                 "operation_definition": {
-                    "max_backups": "20",
+                    "max_backups": 20,
                     "provider_id": "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
                     "plan_id": "5af626d2-19b9-4dc4-8e95-ddba008318b3"
                 },
@@ -233,7 +233,7 @@ var listResponse = `
                         "name": "default"
                     },
                     "operation_definition": {
-                        "max_backups": "5",
+                        "max_backups": 5,
                         "provider_id": "fc4d5750-22e7-4798-8a46-f48f62c4c1da",
                         "plan_id": "4d1ce19b-d681-4e44-a87e-c44eb9bfc4c7"
                     },
