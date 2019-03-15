@@ -2,6 +2,7 @@ package policies
 
 import (
 	"encoding/json"
+	"strconv"
 
 	"time"
 
@@ -125,7 +126,7 @@ func (r *TriggerPropertiesResp) UnmarshalJSON(b []byte) error {
 
 // UnmarshalJSON helps to unmarshal OperationDefinitionResp fields into needed values.
 func (r *CreateOperationDefinitionResp) UnmarshalJSON(b []byte) error {
-	type tmp OperationDefinitionResp
+	type tmp CreateOperationDefinitionResp
 	var s struct {
 		tmp
 		MaxBackups            string `json:"max_backups"`
@@ -149,7 +150,7 @@ func (r *CreateOperationDefinitionResp) UnmarshalJSON(b []byte) error {
 			if err != nil {
 				return err
 			}
-			*r = OperationDefinitionResp(s.tmp)
+			*r = CreateOperationDefinitionResp(s.tmp)
 			r.MaxBackups = s.MaxBackups
 			r.RetentionDurationDays = s.RetentionDurationDays
 			r.Permanent = s.Permanent
@@ -159,7 +160,7 @@ func (r *CreateOperationDefinitionResp) UnmarshalJSON(b []byte) error {
 		}
 	}
 
-	*r = OperationDefinitionResp(s.tmp)
+	*r = CreateOperationDefinitionResp(s.tmp)
 
 	switch s.MaxBackups {
 	case "":
