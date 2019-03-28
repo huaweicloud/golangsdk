@@ -84,7 +84,7 @@ type ContainerNetworkSpec struct {
 //Authentication parameters
 type AuthenticationSpec struct {
 	//Authentication mode: rbac , x509 or authenticating_proxy
-	Mode string `json:"mode" required:"true"`
+	Mode                string            `json:"mode" required:"true"`
 	AuthenticatingProxy map[string]string `json:"authenticatingProxy" required:"true"`
 }
 
