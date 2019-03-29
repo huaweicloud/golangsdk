@@ -129,7 +129,7 @@ func TestCreateV3Cluster(t *testing.T) {
         },
         "containerNetwork": {
             "mode": "overlay_l2"
-        }
+        },
         "authentication": {
             "mode": "rbac",
 			"authenticatingProxy": {}
@@ -154,7 +154,7 @@ func TestCreateV3Cluster(t *testing.T) {
 				SubnetId: "00e41db7-e56b-4946-bf91-27bb9effd664"},
 			ContainerNetwork: clusters.ContainerNetworkSpec{Mode: "overlay_l2"},
 			Authentication: clusters.AuthenticationSpec{
-				Mode: "rbac",
+				Mode:                "rbac",
 				AuthenticatingProxy: make(map[string]string)},
 		},
 	}
