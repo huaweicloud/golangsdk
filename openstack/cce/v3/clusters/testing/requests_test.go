@@ -155,7 +155,7 @@ func TestCreateV3Cluster(t *testing.T) {
 			ContainerNetwork: clusters.ContainerNetworkSpec{Mode: "overlay_l2"},
 			Authentication: clusters.AuthenticationSpec{
 				Mode: "rbac",
-				AuthenticatingProxy: make(map[string]string)}
+				AuthenticatingProxy: make(map[string]string)},
 		},
 	}
 	actual, err := clusters.Create(fake.ServiceClient(), options).Extract()
