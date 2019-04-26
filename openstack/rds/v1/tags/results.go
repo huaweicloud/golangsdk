@@ -21,11 +21,11 @@ type commonResult struct {
 }
 
 type CreateResult struct {
-	commonResult
+	golangsdk.ErrResult
 }
 
 type DeleteResult struct {
-	golangsdk.Result
+	golangsdk.ErrResult
 }
 
 type GetResult struct {

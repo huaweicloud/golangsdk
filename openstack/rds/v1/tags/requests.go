@@ -48,7 +48,7 @@ func Create(client *golangsdk.ServiceClient, id string, opts CreateOptsBuilder) 
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(resourceURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Post(resourceURL(client, id), b, nil, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
 	})
@@ -62,7 +62,7 @@ func Delete(client *golangsdk.ServiceClient, id string, opts DeleteOptsBuilder) 
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(resourceURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.DeleteWithBody(resourceURL(client, id), b, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
 	})
