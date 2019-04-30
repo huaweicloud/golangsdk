@@ -73,7 +73,7 @@ type SecurityGroup struct {
 	ID string `json:"id"`
 }
 
-type LBListener struct {
+type LBaaSListener struct {
 	ListenerID   string `json:"listener_id"`
 	PoolID       string `json:"pool_id"`
 	ProtocolPort int    `json:"protocol_port"`
