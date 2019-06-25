@@ -16,8 +16,8 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new whiteblackip rule.
 type CreateOpts struct {
-	Addr string `json:"addr" required:"true"`
-	White int `json:"white,omitempty"`
+	Addr  string `json:"addr" required:"true"`
+	White int    `json:"white,omitempty"`
 }
 
 // ToWhiteBlackIPCreateMap builds a create request body from CreateOpts.
@@ -45,8 +45,8 @@ type UpdateOptsBuilder interface {
 
 // UpdateOpts contains all the values needed to update a whiteblackip rule.
 type UpdateOpts struct {
-	Addr string `json:"addr" required:"true"`
-	White *int `json:"white" required:"true"`
+	Addr  string `json:"addr" required:"true"`
+	White *int   `json:"white" required:"true"`
 }
 
 // ToWhiteBlackIPUpdateMap builds a update request body from UpdateOpts.
