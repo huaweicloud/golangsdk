@@ -11,6 +11,8 @@ type DataMasking struct {
 	Url string `json:"url"`
 	//Masked Field
 	Category string `json:"category"`
+	//Masked Subfield
+	Index string `json:"index"`
 	//Policy ID
 	PolicyID string `json:"policyid"`
 }
