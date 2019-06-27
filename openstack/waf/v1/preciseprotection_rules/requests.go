@@ -16,16 +16,16 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new precise protection rule.
 type CreateOpts struct {
-	Name       string     `json:"name" required:"true"`
-	Time       bool       `json:"time,omitempty"`
-	Start      int64      `json:"start,omitempty"`
-	End        int64      `json:"end,omitempty"`
-	Conditions Conditions `json:"conditions" required:"true"`
-	Action     Action     `json:"action" required:"true"`
-	Priority   *int       `json:"priority,omitempty"`
+	Name       string      `json:"name" required:"true"`
+	Time       bool        `json:"time,omitempty"`
+	Start      int64       `json:"start,omitempty"`
+	End        int64       `json:"end,omitempty"`
+	Conditions []Condition `json:"conditions" required:"true"`
+	Action     Action      `json:"action" required:"true"`
+	Priority   *int        `json:"priority,omitempty"`
 }
 
-type Conditions struct {
+type Condition struct {
 	Category string   `json:"category" required:"true"`
 	Index    string   `json:"index,omitempty"`
 	Logic    int      `json:"logic" required:"true"`

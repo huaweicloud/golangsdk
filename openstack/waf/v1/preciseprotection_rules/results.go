@@ -5,15 +5,15 @@ import (
 )
 
 type Precise struct {
-	Id         string     `json:"id"`
-	PolicyID   string     `json:"policyid"`
-	Name       string     `json:"name"`
-	Time       bool       `json:"time"`
-	Start      int64      `json:"start"`
-	End        int64      `json:"end"`
-	Conditions Conditions `json:"conditions"`
-	Action     Action     `json:"action"`
-	Priority   int        `json:"priority"`
+	Id         string      `json:"id"`
+	PolicyID   string      `json:"policyid"`
+	Name       string      `json:"name"`
+	Time       bool        `json:"time"`
+	Start      int64       `json:"start"`
+	End        int64       `json:"end"`
+	Conditions []Condition `json:"conditions"`
+	Action     Action      `json:"action"`
+	Priority   int         `json:"priority"`
 }
 
 type commonResult struct {
