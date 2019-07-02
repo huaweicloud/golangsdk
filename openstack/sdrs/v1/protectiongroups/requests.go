@@ -88,6 +88,6 @@ func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 func Delete(c *golangsdk.ServiceClient, id string) (r JobResult) {
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders}
-	_, r.Err = c.DeleteWithResponse(resourceURL(c, &r.Body, id), reqOpt)
+	_, r.Err = c.DeleteWithResponse(resourceURL(c, id), &r.Body, reqOpt)
 	return
 }
