@@ -13,10 +13,11 @@ type IKEVersion string
 type Phase1NegotiationMode string
 
 const (
+	AuthAlgorithmMD5          AuthAlgorithm         = "md5"
 	AuthAlgorithmSHA1         AuthAlgorithm         = "sha1"
-	AuthAlgorithmSHA256       AuthAlgorithm         = "sha256"
-	AuthAlgorithmSHA384       AuthAlgorithm         = "sha384"
-	AuthAlgorithmSHA512       AuthAlgorithm         = "sha512"
+	AuthAlgorithmSHA256       AuthAlgorithm         = "sha2-256"
+	AuthAlgorithmSHA384       AuthAlgorithm         = "sha2-384"
+	AuthAlgorithmSHA512       AuthAlgorithm         = "sha2-512"
 	EncryptionAlgorithm3DES   EncryptionAlgorithm   = "3des"
 	EncryptionAlgorithmAES128 EncryptionAlgorithm   = "aes-128"
 	EncryptionAlgorithmAES256 EncryptionAlgorithm   = "aes-256"
