@@ -148,7 +148,11 @@ func TestCreateV3Node(t *testing.T) {
 	    ],
 	    "flavor": "s3.large.2",
 	    "login": {
-	      "sshKey": "test-keypair"
+	      "sshKey": "test-keypair",
+	      "userPassword": {
+			"password": "",
+            "username": ""
+		  }
 	    },
 		"nodeNicSpec": {
 		  "primaryNic": {}
