@@ -17,7 +17,7 @@ type UpdateOptsBuilder interface {
 // UpdateOpts contains all the values needed to update a Backup.
 type UpdateOpts struct {
 	//Keep Days
-	KeepDays int `json:"keep_days" required:"true"`
+	KeepDays *int `json:"keep_days" required:"true"`
 	//Start Time
 	StartTime string `json:"start_time,omitempty"`
 	//Period
