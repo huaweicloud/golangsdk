@@ -14,19 +14,32 @@ type CreateResult struct {
 }
 
 type Instance struct {
-	Id               string         `json:"id"`
-	Name             string         `json:"name"`
-	DataStore        DataStore      `json:"datastore"`
-	Status           string         `json:"status"`
-	Region           string         `json:"region"`
-	AvailabilityZone string         `json:"availability_zone"`
-	VpcId            string         `json:"vpc_id"`
-	SubnetId         string         `json:"subnet_id"`
-	SecurityGroupId  string         `json:"security_group_id"`
-	DiskEncryptionId string         `json:"disk_encryption_id"`
-	Mode             string         `json:"mode"`
-	Flavor           []Flavor       `json:"flavor"`
-	BackupStrategy   BackupStrategy `json:"backup_strategy"`
+	Id               string            `json:"id"`
+	Name             string            `json:"name"`
+	DataStore        DataStore         `json:"datastore"`
+	Status           string            `json:"status"`
+	Region           string            `json:"region"`
+	AvailabilityZone string            `json:"availability_zone"`
+	VpcId            string            `json:"vpc_id"`
+	SubnetId         string            `json:"subnet_id"`
+	SecurityGroupId  string            `json:"security_group_id"`
+	DiskEncryptionId string            `json:"disk_encryption_id"`
+	Mode             string            `json:"mode"`
+	Flavor           []FlavorOpt       `json:"flavor"`
+	BackupStrategy   BackupStrategyOpt `json:"backup_strategy"`
+}
+
+type FlavorOpt struct {
+	Type     string `json:"type" required:"true"`
+	Num      string `json:"num" required:"true"`
+	Storage  string `json:"storage,omitempty"`
+	Size     string `json:"size,omitempty"`
+	SpecCode string `json:"spec_code" required:"true"`
+}
+
+type BackupStrategyOpt struct {
+	StartTime string `json:"start_time" required:"true"`
+	KeepDays  string `json:"keep_days,omitempty"`
 }
 
 func (r CreateResult) Extract() (*Instance, error) {
@@ -62,7 +75,7 @@ type InstanceResponse struct {
 	Id                string         `json:"id"`
 	Name              string         `json:"name"`
 	Status            string         `json:"status"`
-	Port              int            `json:"port"`
+	Port              string         `json:"port"`
 	Mode              string         `json:"mode"`
 	Region            string         `json:"region"`
 	DataStore         DataStore      `json:"datastore"`
@@ -70,7 +83,7 @@ type InstanceResponse struct {
 	Created           string         `json:"created"`
 	Updated           string         `json:"updated"`
 	DbUserName        string         `json:"db_user_name"`
-	Ssl               int            `json:"ssl"`
+	Ssl               string         `json:"ssl"`
 	VpcId             string         `json:"vpc_id"`
 	SubnetId          string         `json:"subnet_id"`
 	SecurityGroupId   string         `json:"security_group_id"`
@@ -82,12 +95,12 @@ type InstanceResponse struct {
 }
 
 type Group struct {
-	Type   string `json:"type"`
-	Id     string `json:"id"`
-	Name   string `json:"name"`
-	Status string `json:"status"`
-	Volume Volume `json:"volume"`
-	Nodes  Nodes  `json:"nodes"`
+	Type   string  `json:"type"`
+	Id     string  `json:"id"`
+	Name   string  `json:"name"`
+	Status string  `json:"status"`
+	Volume Volume  `json:"volume"`
+	Nodes  []Nodes `json:"nodes"`
 }
 
 type Volume struct {
