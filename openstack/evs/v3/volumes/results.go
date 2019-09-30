@@ -62,8 +62,10 @@ type Volume struct {
 	SourceVolID string `json:"source_volid"`
 	// The ID of the back that can be used to create an EVS disk
 	BackupID string `json:"backup_id"`
-	// Arbitrary key-value pairs defined by the user.
+	// Arbitrary key-value pairs defined by the metadata field table.
 	Metadata map[string]string `json:"metadata"`
+	// Arbitrary key-value pairs defined by the user.
+	Tags map[string]string `json:"tags"`
 	// UserID is the id of the user who created the volume.
 	UserID string `json:"user_id"`
 	// Indicates whether this is a bootable volume.
