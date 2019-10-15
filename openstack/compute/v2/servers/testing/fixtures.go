@@ -78,7 +78,11 @@ const ServerListBody = `
 			"created": "2014-09-25T13:10:02Z",
 			"tenant_id": "fcad67a6189847c4aecfa3c81a05783b",
 			"OS-DCF:diskConfig": "MANUAL",
-			"os-extended-volumes:volumes_attached": [],
+			"os-extended-volumes:volumes_attached": [
+				{
+					"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e"
+				}
+			],
 			"accessIPv4": "",
 			"accessIPv6": "",
 			"progress": 0,
@@ -148,7 +152,11 @@ const ServerListBody = `
 			"created": "2014-09-25T13:04:41Z",
 			"tenant_id": "fcad67a6189847c4aecfa3c81a05783b",
 			"OS-DCF:diskConfig": "MANUAL",
-			"os-extended-volumes:volumes_attached": [],
+			"os-extended-volumes:volumes_attached": [
+				{
+					"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e"
+				}
+			],
 			"accessIPv4": "",
 			"accessIPv6": "",
 			"progress": 0,
@@ -210,7 +218,11 @@ const ServerListBody = `
 		"created": "2014-09-25T13:04:41Z",
 		"tenant_id": "fcad67a6189847c4aecfa3c81a05783b",
 		"OS-DCF:diskConfig": "MANUAL",
-		"os-extended-volumes:volumes_attached": [],
+		"os-extended-volumes:volumes_attached": [
+			{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e"
+			}
+		],
 		"accessIPv4": "",
 		"accessIPv6": "",
 		"progress": 0,
@@ -287,7 +299,11 @@ const SingleServerBody = `
 		"created": "2014-09-25T13:04:41Z",
 		"tenant_id": "fcad67a6189847c4aecfa3c81a05783b",
 		"OS-DCF:diskConfig": "MANUAL",
-		"os-extended-volumes:volumes_attached": [],
+		"os-extended-volumes:volumes_attached": [
+			{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e"
+			}
+		],
 		"accessIPv4": "",
 		"accessIPv6": "",
 		"progress": 0,
@@ -364,7 +380,11 @@ const FaultyServerBody = `
 		"created": "2014-09-25T13:04:41Z",
 		"tenant_id": "fcad67a6189847c4aecfa3c81a05783b",
 		"OS-DCF:diskConfig": "MANUAL",
-		"os-extended-volumes:volumes_attached": [],
+		"os-extended-volumes:volumes_attached": [
+			{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e"
+			}
+		],
 		"accessIPv4": "",
 		"accessIPv6": "",
 		"progress": 0,
@@ -448,6 +468,11 @@ var (
 				"name": "default",
 			},
 		},
+		VolumesAttached: []map[string]string{
+			map[string]string{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e",
+			},
+		},
 	}
 
 	derpTimeCreated, _ = time.Parse(time.RFC3339, "2014-09-25T13:04:41Z")
@@ -506,6 +531,11 @@ var (
 				"name": "default",
 			},
 		},
+		VolumesAttached: []map[string]string{
+			map[string]string{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e",
+			},
+		},
 	}
 
 	ConsoleOutput = "abc"
@@ -556,6 +586,11 @@ var (
 		SecurityGroups: []map[string]interface{}{
 			map[string]interface{}{
 				"name": "default",
+			},
+		},
+		VolumesAttached: []map[string]string{
+			map[string]string{
+				"id": "cfb68a5e-203f-446d-9fd7-74b7e1f9722e",
 			},
 		},
 	}
