@@ -21,6 +21,10 @@ func (r commonResult) Extract() (*Whitelist, error) {
 	return s, r.ExtractInto(s)
 }
 
+func (r commonResult) ExtractInto(v interface{}) error {
+	return r.Result.ExtractIntoStructPtr(v, "whitelist")
+}
+
 type CreateResult struct {
 	commonResult
 }
