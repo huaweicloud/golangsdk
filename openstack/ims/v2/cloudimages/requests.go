@@ -171,6 +171,12 @@ type CreateByOBSOpts struct {
 	MinRam int `json:"min_ram,omitempty"`
 }
 
+// CreateOpts represents options used to create an image.
+type CreateDataImageByServerOpts struct {
+	// the data disks to be converted
+	DataImages []DataImage `json:"data_images" required:"true"`
+}
+
 type DataImage struct {
 	// the data disk image name
 	Name string `json:"name" required:"true"`
