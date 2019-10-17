@@ -203,6 +203,10 @@ func (opts CreateByOBSOpts) ToImageCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
+func (opts CreateDataImageByServerOpts) ToImageCreateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
 // Create implements create image request.
 func CreateImageByServer(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r JobResult) {
 	b, err := opts.ToImageCreateMap()
@@ -217,6 +221,18 @@ func CreateImageByServer(client *golangsdk.ServiceClient, opts CreateOptsBuilder
 
 // Create implements create image request.
 func CreateImageByOBS(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r JobResult) {
+	b, err := opts.ToImageCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{OkCodes: []int{200}})
+	return
+}
+
+// Create implements create image request.
+func CreateDataImageByServer(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r JobResult) {
 	b, err := opts.ToImageCreateMap()
 	if err != nil {
 		r.Err = err
