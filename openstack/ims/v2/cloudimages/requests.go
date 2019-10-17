@@ -177,6 +177,22 @@ type CreateDataImageByServerOpts struct {
 	DataImages []DataImage `json:"data_images" required:"true"`
 }
 
+// CreateOpts represents options used to create an image.
+type CreateDataImageByOBSOpts struct {
+	// the name of the data disk image
+	Name string `json:"name" required:"true"`
+	// Description of image
+	Description string `json:"description,omitempty"`
+	// the OS type
+	OsType string `json:"os_type" required:"true"`
+	// the URL of the external image file in the OBS bucket
+	ImageUrl string `json:"image_url" required:"true"`
+	// the minimum size of the system disk in the unit of GB
+	MinDisk int `json:"min_disk" required:"true"`
+	// the master key used for encrypting an image
+	CmkId string `json:"cmk_id,omitempty"`
+}
+
 type DataImage struct {
 	// the data disk image name
 	Name string `json:"name" required:"true"`
@@ -204,6 +220,10 @@ func (opts CreateByOBSOpts) ToImageCreateMap() (map[string]interface{}, error) {
 }
 
 func (opts CreateDataImageByServerOpts) ToImageCreateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+func (opts CreateDataImageByOBSOpts) ToImageCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
@@ -240,5 +260,17 @@ func CreateDataImageByServer(client *golangsdk.ServiceClient, opts CreateOptsBui
 	}
 
 	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{OkCodes: []int{200}})
+	return
+}
+
+// Create implements create image request.
+func CreateDataImageByOBS(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r JobResult) {
+	b, err := opts.ToImageCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+
+	_, r.Err = client.Post(createDataImageURL(client), b, &r.Body, &golangsdk.RequestOpts{OkCodes: []int{200}})
 	return
 }
