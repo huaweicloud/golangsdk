@@ -50,6 +50,8 @@ type Spec struct {
 	Version string `json:"version,omitempty"`
 	//Cluster description
 	Description string `json:"description,omitempty"`
+	//Public IP ID
+	PublicIP string `json:"publicip_id,omitempty"`
 	// Node network parameters
 	HostNetwork HostNetworkSpec `json:"hostNetwork" required:"true"`
 	//Container network parameters
