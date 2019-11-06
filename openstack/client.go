@@ -339,6 +339,7 @@ func v3AKSKAuth(client *golangsdk.ProviderClient, endpoint string, options golan
 	}
 
 	client.ProjectID = options.ProjectId
+	client.DomainID = options.DomainId
 	v3Client.ProjectID = options.ProjectId
 
 	var entries = make([]tokens3.CatalogEntry, 0, 1)
@@ -995,6 +996,12 @@ func SDRSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golan
 // NewSDRSV1 creates a ServiceClient that may be used to access the SDRS service.
 func NewSDRSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "sdrs")
+	return sc, err
+}
+
+// NewBSSV1 creates a ServiceClient that may be used to access the BSS service.
+func NewBSSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "bssv1")
 	return sc, err
 }
 
