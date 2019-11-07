@@ -21,3 +21,11 @@ func listDetailURL(client *golangsdk.ServiceClient) string {
 func jobURL(sc *golangsdk.ServiceClient, jobId string) string {
 	return sc.ServiceURL("jobs", jobId)
 }
+
+func orderURL(sc *golangsdk.ServiceClient, orderId string) string {
+	return sc.ServiceURL(sc.DomainID, "common/order-mgr/orders-resource", orderId)
+}
+
+func deleteOrderURL(sc *golangsdk.ServiceClient) string {
+	return sc.ServiceURL(sc.DomainID, "common/order-mgr/resources/delete")
+}
