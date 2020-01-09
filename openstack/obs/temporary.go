@@ -44,7 +44,7 @@ func (obsClient ObsClient) CreateSignedUrl(input *CreateSignedUrlInput) (output 
 	if input.Expires <= 0 {
 		input.Expires = 300
 	}
-	
+
 	requestUrl, err := obsClient.doAuthTemporary(string(input.Method), input.Bucket, input.Key, params, headers, int64(input.Expires))
 	if err != nil {
 		return nil, err

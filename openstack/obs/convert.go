@@ -77,12 +77,12 @@ func ParseStringToStorageClassType(value string) (ret StorageClassType) {
 
 func convertGrantToXml(grant Grant, isObs bool, isBucket bool) string {
 	xml := make([]string, 0, 4)
-	if !isObs{
+	if !isObs {
 		xml = append(xml, fmt.Sprintf("<Grant><Grantee xsi:type=\"%s\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">", grant.Grantee.Type))
 	}
 
 	if grant.Grantee.Type == GranteeUser {
-		if isObs{
+		if isObs {
 			xml = append(xml, "<Grant><Grantee>")
 		}
 		if grant.Grantee.ID != "" {
@@ -108,7 +108,7 @@ func convertGrantToXml(grant Grant, isObs bool, isBucket bool) string {
 			xml = append(xml, "<Grant><Grantee>")
 			xml = append(xml, fmt.Sprintf("<Canned>Everyone</Canned>"))
 			xml = append(xml, "</Grantee>")
-		}else{
+		} else {
 			return strings.Join(xml, "")
 		}
 	}
@@ -132,10 +132,10 @@ func ConvertLoggingStatusToXml(input BucketLoggingStatus, returnMd5 bool, isObs 
 	}
 	if input.TargetBucket != "" || input.TargetPrefix != "" || grantsLength > 0 {
 		xml = append(xml, "<LoggingEnabled>")
-		if input.TargetBucket != ""{
+		if input.TargetBucket != "" {
 			xml = append(xml, fmt.Sprintf("<TargetBucket>%s</TargetBucket>", input.TargetBucket))
 		}
-		if input.TargetPrefix != ""{
+		if input.TargetPrefix != "" {
 			targetPrefix := XmlTranscoding(input.TargetPrefix)
 			xml = append(xml, fmt.Sprintf("<TargetPrefix>%s</TargetPrefix>", targetPrefix))
 		}
@@ -165,10 +165,10 @@ func ConvertAclToXml(input AccessControlPolicy, returnMd5 bool, isObs bool) (dat
 		ownerDisplayName := XmlTranscoding(input.Owner.DisplayName)
 		xml = append(xml, fmt.Sprintf("<DisplayName>%s</DisplayName>", ownerDisplayName))
 	}
-	if isObs && input.Delivered!=""{
+	if isObs && input.Delivered != "" {
 		objectDelivered := XmlTranscoding(input.Delivered)
 		xml = append(xml, fmt.Sprintf("</Owner><Delivered>%s</Delivered><AccessControlList>", objectDelivered))
-	}else{
+	} else {
 		xml = append(xml, "</Owner><AccessControlList>")
 	}
 	for _, grant := range input.Grants {
@@ -190,7 +190,7 @@ func convertBucketAclToXml(input AccessControlPolicy, returnMd5 bool, isObs bool
 		ownerDisplayName := XmlTranscoding(input.Owner.DisplayName)
 		xml = append(xml, fmt.Sprintf("<DisplayName>%s</DisplayName>", ownerDisplayName))
 	}
-	
+
 	xml = append(xml, "</Owner><AccessControlList>")
 
 	for _, grant := range input.Grants {
@@ -231,7 +231,7 @@ func ConvertWebsiteConfigurationToXml(input BucketWebsiteConfiguration, returnMd
 		}
 		xml = append(xml, "</RedirectAllRequestsTo>")
 	} else {
-		if input.IndexDocument.Suffix != ""{
+		if input.IndexDocument.Suffix != "" {
 			indexDocumentSuffix := XmlTranscoding(input.IndexDocument.Suffix)
 			xml = append(xml, fmt.Sprintf("<IndexDocument><Suffix>%s</Suffix></IndexDocument>", indexDocumentSuffix))
 		}
@@ -438,7 +438,7 @@ func converntConfigureToXml(topicConfiguration TopicConfiguration, xmlElem strin
 	if ret := converntFilterRulesToXml(topicConfiguration.FilterRules, isObs); ret != "" {
 		xml = append(xml, ret)
 	}
-	tempElem := xmlElem[0:1] + "/" +xmlElem[1:]
+	tempElem := xmlElem[0:1] + "/" + xmlElem[1:]
 	xml = append(xml, tempElem)
 	return strings.Join(xml, "")
 }

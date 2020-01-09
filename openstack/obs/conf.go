@@ -68,7 +68,7 @@ func (conf config) String() string {
 		"\nmaxRetryCount:%d, maxConnsPerHost:%d, sslVerify:%v, proxyUrl:%s, maxRedirectCount:%d]",
 		conf.endpoint, conf.signature, conf.pathStyle, conf.region,
 		conf.connectTimeout, conf.socketTimeout, conf.headerTimeout, conf.idleConnTimeout,
-		conf.maxRetryCount, conf.maxConnsPerHost, conf.sslVerify, conf.proxyUrl, conf.maxRedirectCount, 
+		conf.maxRetryCount, conf.maxConnsPerHost, conf.sslVerify, conf.proxyUrl, conf.maxRedirectCount,
 	)
 }
 
@@ -174,7 +174,6 @@ func WithMaxRedirectCount(maxRedirectCount int) configurer {
 		conf.maxRedirectCount = maxRedirectCount
 	}
 }
-
 
 func (conf *config) initConfigWithDefault() error {
 	conf.securityProvider.ak = strings.TrimSpace(conf.securityProvider.ak)
@@ -352,18 +351,18 @@ func (conf *config) formatUrls(bucketName, objectKey string, params map[string]s
 
 	if objectKey != "" {
 		var encodeObjectKey string
-		if escape{
+		if escape {
 			tempKey := []rune(objectKey)
 			result := make([]string, 0, len(tempKey))
-			for _, value:=range tempKey{
-				if string(value) == "/"{
+			for _, value := range tempKey {
+				if string(value) == "/" {
 					result = append(result, string(value))
-				}else{
+				} else {
 					result = append(result, url.QueryEscape(string(value)))
 				}
 			}
-			encodeObjectKey = strings.Join(result,"")
-		}else{
+			encodeObjectKey = strings.Join(result, "")
+		} else {
 			encodeObjectKey = escapeFunc(objectKey)
 		}
 		requestUrl += "/" + encodeObjectKey

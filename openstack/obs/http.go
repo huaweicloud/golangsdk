@@ -96,7 +96,7 @@ func (obsClient ObsClient) doAction(action, method, bucketName, objectKey string
 	start := GetCurrentTimestamp()
 
 	params, headers, data, err := input.trans(obsClient.conf.signature == SignatureObs)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	if params == nil {
@@ -270,15 +270,15 @@ func (obsClient ObsClient) doHttp(method, bucketName, objectKey string, params m
 	redirectFlag := false
 	for i, redirectCount := 0, 0; i <= maxRetryCount; i++ {
 		if redirectUrl != "" {
-			if !redirectFlag{
+			if !redirectFlag {
 				parsedRedirectUrl, err := url.Parse(redirectUrl)
 				if err != nil {
 					return nil, err
 				}
 				requestUrl, _ = obsClient.doAuth(method, bucketName, objectKey, params, headers, parsedRedirectUrl.Host)
-				if parsedRequestUrl, err := url.Parse(requestUrl); err != nil{
+				if parsedRequestUrl, err := url.Parse(requestUrl); err != nil {
 					return nil, err
-				}else if parsedRequestUrl.RawQuery != "" && parsedRedirectUrl.RawQuery == "" {
+				} else if parsedRequestUrl.RawQuery != "" && parsedRedirectUrl.RawQuery == "" {
 					redirectUrl += "?" + parsedRequestUrl.RawQuery
 				}
 			}
@@ -351,15 +351,15 @@ func (obsClient ObsClient) doHttp(method, bucketName, objectKey string, params m
 				resp = nil
 				break
 			} else if resp.StatusCode >= 300 && resp.StatusCode < 400 {
-				if location := resp.Header.Get(HEADER_LOCATION_CAMEL); location != "" && redirectCount < maxRedirectCount{
+				if location := resp.Header.Get(HEADER_LOCATION_CAMEL); location != "" && redirectCount < maxRedirectCount {
 					redirectUrl = location
 					doLog(LEVEL_WARN, "Redirect request to %s", redirectUrl)
 					msg = resp.Status
 					maxRetryCount++
 					redirectCount++
-					if resp.StatusCode == 302 && method == HTTP_GET{
+					if resp.StatusCode == 302 && method == HTTP_GET {
 						redirectFlag = true
-					}else{
+					} else {
 						redirectFlag = false
 					}
 				} else {
@@ -374,7 +374,7 @@ func (obsClient ObsClient) doHttp(method, bucketName, objectKey string, params m
 		if i != maxRetryCount {
 			if resp != nil {
 				_err := resp.Body.Close()
-				if _err != nil{
+				if _err != nil {
 					doLog(LEVEL_WARN, "Failed to close resp body with reason: %v", _err)
 				}
 				resp = nil

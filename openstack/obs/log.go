@@ -89,7 +89,7 @@ func (lw *loggerWrapper) rotate() {
 	}
 	if stat.Size() >= logConf.maxLogSize {
 		_err := lw.fd.Sync()
-		if _err != nil{
+		if _err != nil {
 			panic(err)
 		}
 		lw.fd.Close()
@@ -97,7 +97,7 @@ func (lw *loggerWrapper) rotate() {
 			lw.index = 1
 		}
 		_err = os.Rename(lw.fullPath, lw.fullPath+"."+IntToString(lw.index))
-		if _err != nil{
+		if _err != nil {
 			panic(err)
 		}
 		lw.index += 1
@@ -117,7 +117,7 @@ func (lw *loggerWrapper) doFlush() {
 		lw.logger.Println(m)
 	}
 	err := lw.fd.Sync()
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 }
@@ -273,7 +273,7 @@ func logEnabled() bool {
 }
 
 func DoLog(level Level, format string, v ...interface{}) {
-	doLog(level, format, v)
+	doLog(level, format, v...)
 }
 
 func doLog(level Level, format string, v ...interface{}) {

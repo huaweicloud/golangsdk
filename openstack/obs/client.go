@@ -682,7 +682,7 @@ func (obsClient ObsClient) PutObject(input *PutObjectInput) (output *PutObjectOu
 			input.ContentType = contentType
 		}
 	}
-	
+
 	output = &PutObjectOutput{}
 	var repeatable bool
 	if input.Body != nil {
@@ -836,7 +836,6 @@ func (obsClient ObsClient) UploadPart(_input *UploadPartInput) (output *UploadPa
 	input.SseHeader = _input.SseHeader
 	input.Body = _input.Body
 
-
 	output = &UploadPartOutput{}
 	var repeatable bool
 	if input.Body != nil {
@@ -867,7 +866,7 @@ func (obsClient ObsClient) UploadPart(_input *UploadPartInput) (output *UploadPa
 			input.PartSize = fileSize - input.Offset
 		}
 		fileReaderWrapper.totalCount = input.PartSize
-		if _, err = fd.Seek(input.Offset, io.SeekStart);err != nil{
+		if _, err = fd.Seek(input.Offset, io.SeekStart); err != nil {
 			return nil, err
 		}
 		input.Body = fileReaderWrapper

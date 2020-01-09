@@ -290,10 +290,10 @@ type grantObs struct {
 }
 
 type AccessControlPolicy struct {
-	XMLName    xml.Name `xml:"AccessControlPolicy"`
-	Owner      Owner    `xml:"Owner"`
-	Grants     []Grant  `xml:"AccessControlList>Grant"`
-	Delivered  string   `xml:"Delivered,omitempty"`
+	XMLName   xml.Name `xml:"AccessControlPolicy"`
+	Owner     Owner    `xml:"Owner"`
+	Grants    []Grant  `xml:"AccessControlList>Grant"`
+	Delivered string   `xml:"Delivered,omitempty"`
 }
 
 type accessControlPolicyObs struct {

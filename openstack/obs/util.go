@@ -84,7 +84,7 @@ func FormatUtcToRfc1123(t time.Time) string {
 func Md5(value []byte) []byte {
 	m := md5.New()
 	_, err := m.Write(value)
-	if err != nil{
+	if err != nil {
 		doLog(LEVEL_WARN, "MD5 failed to write with reason: %v", err)
 	}
 	return m.Sum(nil)
@@ -93,7 +93,7 @@ func Md5(value []byte) []byte {
 func HmacSha1(key, value []byte) []byte {
 	mac := hmac.New(sha1.New, key)
 	_, err := mac.Write(value)
-	if err != nil{
+	if err != nil {
 		doLog(LEVEL_WARN, "HmacSha1 failed to write with reason: %v", err)
 	}
 	return mac.Sum(nil)
@@ -102,7 +102,7 @@ func HmacSha1(key, value []byte) []byte {
 func HmacSha256(key, value []byte) []byte {
 	mac := hmac.New(sha256.New, key)
 	_, err := mac.Write(value)
-	if err != nil{
+	if err != nil {
 		doLog(LEVEL_WARN, "HmacSha256 failed to write with reason: %v", err)
 	}
 	return mac.Sum(nil)
@@ -127,7 +127,7 @@ func Base64Md5(value []byte) string {
 func Sha256Hash(value []byte) []byte {
 	hash := sha256.New()
 	_, err := hash.Write(value)
-	if err != nil{
+	if err != nil {
 		doLog(LEVEL_WARN, "Sha256Hash failed to write with reason: %v", err)
 	}
 	return hash.Sum(nil)
@@ -163,7 +163,7 @@ func UrlDecode(value string) (string, error) {
 	return "", err
 }
 
-func UrlDecodeWithoutError(value string) (string){
+func UrlDecodeWithoutError(value string) string {
 	ret, err := UrlDecode(value)
 	if err == nil {
 		return ret

@@ -144,14 +144,14 @@ func (input CreateBucketInput) trans(isObs bool) (params map[string]string, head
 
 		xml := make([]string, 0, 3)
 		xml = append(xml, "<CreateBucketConfiguration>")
-		if isObs{
+		if isObs {
 			xml = append(xml, fmt.Sprintf("<Location>%s</Location>", input.Location))
-		}else{
+		} else {
 			xml = append(xml, fmt.Sprintf("<LocationConstraint>%s</LocationConstraint>", input.Location))
 		}
 		xml = append(xml, "</CreateBucketConfiguration>")
-		
-		data = strings.Join(xml,"")
+
+		data = strings.Join(xml, "")
 	}
 	return
 }
@@ -168,7 +168,7 @@ func (input SetBucketStoragePolicyInput) trans(isObs bool) (params map[string]st
 		params = map[string]string{string(SubResourceStoragePolicy): ""}
 		xml = append(xml, fmt.Sprintf("<StoragePolicy><DefaultStorageClass>%s</DefaultStorageClass></StoragePolicy>", storageClass))
 	} else {
-		if input.StorageClass != "WARM" && input.StorageClass != "COLD"{
+		if input.StorageClass != "WARM" && input.StorageClass != "COLD" {
 			input.StorageClass = StorageClassStandard
 		}
 		params = map[string]string{string(SubResourceStorageClass): ""}
@@ -201,7 +201,7 @@ func (input ListObjsInput) trans(isObs bool) (params map[string]string, headers 
 
 func (input ListObjectsInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.ListObjsInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	if input.Marker != "" {
@@ -212,7 +212,7 @@ func (input ListObjectsInput) trans(isObs bool) (params map[string]string, heade
 
 func (input ListVersionsInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.ListObjsInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	params[string(SubResourceVersions)] = ""
@@ -270,7 +270,7 @@ func (input SetBucketPolicyInput) trans(isObs bool) (params map[string]string, h
 func (input SetBucketCorsInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params = map[string]string{string(SubResourceCors): ""}
 	data, md5, err := ConvertRequestToIoReaderV2(input)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	headers = map[string][]string{HEADER_MD5_CAMEL: []string{md5}}
@@ -314,7 +314,7 @@ func (input SetBucketLifecycleConfigurationInput) trans(isObs bool) (params map[
 func (input SetBucketTaggingInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params = map[string]string{string(SubResourceTagging): ""}
 	data, md5, err := ConvertRequestToIoReaderV2(input)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	headers = map[string][]string{HEADER_MD5_CAMEL: []string{md5}}
@@ -338,7 +338,7 @@ func (input DeleteObjectInput) trans(isObs bool) (params map[string]string, head
 func (input DeleteObjectsInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params = map[string]string{string(SubResourceDelete): ""}
 	data, md5, err := ConvertRequestToIoReaderV2(input)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	headers = map[string][]string{HEADER_MD5_CAMEL: []string{md5}}
@@ -505,7 +505,7 @@ func (input SetObjectMetadataInput) trans(isObs bool) (params map[string]string,
 
 func (input GetObjectInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.GetObjectMetadataInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	if input.ResponseCacheControl != "" {
@@ -595,7 +595,7 @@ func (input ObjectOperationInput) trans(isObs bool) (params map[string]string, h
 
 func (input PutObjectBasicInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.ObjectOperationInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 
@@ -615,7 +615,7 @@ func (input PutObjectBasicInput) trans(isObs bool) (params map[string]string, he
 
 func (input PutObjectInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.PutObjectBasicInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	if input.Body != nil {
@@ -626,7 +626,7 @@ func (input PutObjectInput) trans(isObs bool) (params map[string]string, headers
 
 func (input CopyObjectInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.ObjectOperationInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 
@@ -695,7 +695,7 @@ func (input AbortMultipartUploadInput) trans(isObs bool) (params map[string]stri
 
 func (input InitiateMultipartUploadInput) trans(isObs bool) (params map[string]string, headers map[string][]string, data interface{}, err error) {
 	params, headers, data, err = input.ObjectOperationInput.trans(isObs)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	if input.ContentType != "" {

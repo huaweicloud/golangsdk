@@ -46,23 +46,23 @@ func (obsClient ObsClient) doAuthTemporary(method, bucketName, objectKey string,
 	} else {
 		if isV4 {
 			date, parseDateErr := time.Parse(RFC1123_FORMAT, headers[HEADER_DATE_CAMEL][0])
-			if parseDateErr != nil{
+			if parseDateErr != nil {
 				doLog(LEVEL_WARN, "Failed to parse date with reason: %v", parseDateErr)
 				return "", parseDateErr
 			}
 			delete(headers, HEADER_DATE_CAMEL)
 			shortDate := date.Format(SHORT_DATE_FORMAT)
 			longDate := date.Format(LONG_DATE_FORMAT)
-			if len(headers[HEADER_HOST_CAMEL]) != 0{
-				index := strings.LastIndex(headers[HEADER_HOST_CAMEL][0],":")
-				if index != -1{
+			if len(headers[HEADER_HOST_CAMEL]) != 0 {
+				index := strings.LastIndex(headers[HEADER_HOST_CAMEL][0], ":")
+				if index != -1 {
 					port := headers[HEADER_HOST_CAMEL][0][index+1:]
-					if port == "80" || port == "443"{
+					if port == "80" || port == "443" {
 						headers[HEADER_HOST_CAMEL] = []string{headers[HEADER_HOST_CAMEL][0][:index]}
 					}
 				}
-				
-			}	
+
+			}
 
 			signedHeaders, _headers := getSignedHeaders(headers)
 
@@ -75,7 +75,7 @@ func (obsClient ObsClient) doAuthTemporary(method, bucketName, objectKey string,
 
 			requestUrl, canonicalizedUrl = obsClient.conf.formatUrls(bucketName, objectKey, params, true)
 			parsedRequestUrl, _err := url.Parse(requestUrl)
-			if _err != nil{
+			if _err != nil {
 				doLog(LEVEL_WARN, "Failed to parse requestUrl with reason: %v", _err)
 				return "", _err
 			}
@@ -88,7 +88,7 @@ func (obsClient ObsClient) doAuthTemporary(method, bucketName, objectKey string,
 		} else {
 			originDate := headers[HEADER_DATE_CAMEL][0]
 			date, parseDateErr := time.Parse(RFC1123_FORMAT, originDate)
-			if parseDateErr != nil{
+			if parseDateErr != nil {
 				doLog(LEVEL_WARN, "Failed to parse date with reason: %v", parseDateErr)
 				return "", parseDateErr
 			}
@@ -103,7 +103,6 @@ func (obsClient ObsClient) doAuthTemporary(method, bucketName, objectKey string,
 				requestUrl += "&"
 			}
 			delete(headers, HEADER_DATE_CAMEL)
-
 
 			if obsClient.conf.signature != SignatureObs {
 				requestUrl += "AWS"
