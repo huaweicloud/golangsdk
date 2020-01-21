@@ -24,12 +24,12 @@ type CreateOpts struct {
 	Name string `json:"name" required:"true"`
 	//Instance Description
 	Description string `json:"description,omitempty"`
+	//Cluster ID
+	ClusterID string `json:"cluster_id,omitempty"`
 	//Subnet ID
 	SubnetID string `json:"primary_subnet_id,omitempty"`
 	//IP Address
 	IpAddress string `json:"primary_ip_address,omitempty"`
-	//Flavor ID
-	FlavorRef string `json:"flavorRef,omitempty"`
 }
 
 // ToInstanceCreateMap builds a create request body from CreateOpts.
