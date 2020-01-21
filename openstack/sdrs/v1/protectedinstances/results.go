@@ -19,8 +19,6 @@ type Instance struct {
 	SourceServer string `json:"source_server"`
 	//Target Server
 	TargetServer string `json:"target_server"`
-	//Priority Station
-	PriorityStation string `json:"priority_station"`
 	//Attachment
 	Attachment []Attachment `json:"attachment"`
 }
