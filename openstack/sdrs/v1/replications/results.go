@@ -44,7 +44,7 @@ type RecordMetadata struct {
 	//Volume Size
 	VolumeSize int `json:"volume_size"`
 	//Volume Type
-	VolumeType int `json:"volume_type"`
+	VolumeType string `json:"volume_type"`
 }
 
 type commonResult struct {
