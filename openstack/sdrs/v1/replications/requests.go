@@ -98,8 +98,8 @@ func (opts DeleteOpts) ToReplicationDeleteMap() (map[string]interface{}, error) 
 }
 
 // Delete will permanently delete a particular Replication based on its unique ID.
-func Delete(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r JobResult) {
-	b, err := opts.ToReplicationUpdateMap()
+func Delete(c *golangsdk.ServiceClient, id string, opts DeleteOptsBuilder) (r JobResult) {
+	b, err := opts.ToReplicationDeleteMap()
 	if err != nil {
 		r.Err = err
 		return
