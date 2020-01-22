@@ -1,2 +1,9 @@
-**/*.swp
 .idea
+
+#temp file
+*.swp
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
