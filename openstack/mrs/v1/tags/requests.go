@@ -4,6 +4,10 @@ import (
 	"github.com/huaweicloud/golangsdk"
 )
 
+var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
+	MoreHeaders: map[string]string{"Content-Type": "application/json", "X-Language": "en-us"},
+}
+
 // Tag is a structure of key value pair.
 type Tag struct {
 	//tag key
@@ -49,13 +53,17 @@ func BatchAction(client *golangsdk.ServiceClient, clusterID string, opts BatchOp
 		return
 	}
 	_, r.Err = client.Post(actionURL(client, clusterID), b, nil, &golangsdk.RequestOpts{
-		OkCodes: []int{204},
+		OkCodes:     []int{204},
+		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
 	})
 	return
 }
 
 // Get retrieves the tags of a specific instance.
 func Get(client *golangsdk.ServiceClient, clusterID string) (r GetResult) {
-	_, r.Err = client.Get(resourceURL(client, clusterID), &r.Body, nil)
+	_, r.Err = client.Get(resourceURL(client, clusterID), &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: RequestOpts.MoreHeaders, JSONBody: nil,
+	})
 	return
 }
