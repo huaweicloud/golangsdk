@@ -52,7 +52,7 @@ type Cluster struct {
 	CoreDataVolumeType    string       `json:"coreDataVolumeType"`
 	CoreDataVolumeSize    int          `json:"coreDataVolumeSize"`
 	CoreDataVolumeCount   int          `json:"coreDataVolumeCount"`
-	BootstrapScripts      []ScriptOpts `json:"bootstrap_scripts"`
+	BootstrapScripts      []ScriptOpts `json:"bootstrapScripts"`
 }
 
 type Component struct {
