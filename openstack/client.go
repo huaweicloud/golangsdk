@@ -576,6 +576,15 @@ func initcommonServiceClient(client *golangsdk.ProviderClient, eo golangsdk.Endp
 	return sc, err
 }
 
+// TODO: Need to change to apig client type from apig once available
+// ApiGateWayV1 creates a service client that is used for Huawei cloud for API gateway.
+func ApiGateWayV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "apig", 1)
+	sc.ResourceBase = sc.Endpoint + "v1.0/apigw/"
+	return sc, err
+}
+
 // NewObjectStorageV1 creates a ServiceClient that may be used with the v1
 // object storage package.
 func NewObjectStorageV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
