@@ -1,8 +1,6 @@
 package addons
 
 import (
-	"reflect"
-
 	"github.com/huaweicloud/golangsdk"
 )
 
