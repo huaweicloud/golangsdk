@@ -1,8 +1,6 @@
 package addons
 
 import (
-	"encoding/json"
-
 	"github.com/huaweicloud/golangsdk"
 )
 
