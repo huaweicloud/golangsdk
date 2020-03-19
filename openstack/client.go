@@ -1041,6 +1041,15 @@ func SDRSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golan
 	return sc, err
 }
 
+// CCIV1 creates a ServiceClient that may be used with the v1 CCI service.
+func CCIV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "network")
+	sc.Endpoint = strings.Replace(sc.Endpoint, "vpc", "cci", 1)
+	sc.Endpoint = sc.Endpoint + "apis/networking.cci.io/v1beta1/"
+	sc.ResourceBase = sc.Endpoint
+	return sc, err
+}
+
 // TMSV1 creates a ServiceClient that may be used with the v1 TMS service.
 func TMSV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "network")
