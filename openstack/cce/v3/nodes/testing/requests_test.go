@@ -154,6 +154,9 @@ func TestCreateV3Node(t *testing.T) {
             "username": ""
 		  }
 	    },
+		"nodeNicSpec": {
+		  "primaryNic": {}
+		},
 	    "publicIP": {
 		      "eip": {
 		        "bandwidth": {}
