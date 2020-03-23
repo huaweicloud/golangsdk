@@ -150,6 +150,9 @@ func TestCreateV3Node(t *testing.T) {
 	    "login": {
 	      "sshKey": "test-keypair"
 	    },
+		"nodeNicSpec": {
+		  "primaryNic": {}
+		},
 	    "publicIP": {
 		      "eip": {
 		        "bandwidth": {}
