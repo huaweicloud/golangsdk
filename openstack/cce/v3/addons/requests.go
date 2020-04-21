@@ -14,19 +14,19 @@ type CreateOptsBuilder interface {
 	ToAddonCreateMap() (map[string]interface{}, error)
 }
 
-// CreateOpts contains all the values needed to create a new addon
+// CreateOpts contains all the values needed to create a new Addon
 type CreateOpts struct {
 	// API type, fixed value Addon
 	Kind string `json:"kind" required:"true"`
 	// API version, fixed value v3
 	ApiVersion string `json:"apiVersion" required:"true"`
-	// Metadata required to create an addon
+	// Metadata required to create an Addon
 	Metadata map[string]string `json:"metadata" required:"true"`
-	// specifications to create an addon
+	// specifications to create an Addon
 	Spec RequestSpec `json:"spec" required:"true"`
 }
 
-//Specifications to create an addon
+//Specifications to create an Addon
 type RequestSpec struct {
 	// For the addon version.
 	Version string `json:"version" required:"true"`
@@ -44,7 +44,7 @@ func (opts CreateOpts) ToAddonCreateMap() (map[string]interface{}, error) {
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
-// addon.
+// Addon.
 func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToAddonCreateMap()
 	if err != nil {
@@ -56,7 +56,7 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 	return
 }
 
-// Get retrieves a particular addon based on its unique ID.
+// Get retrieves a particular Addon based on its unique ID.
 func Get(c *golangsdk.ServiceClient, id, cluster_id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id, cluster_id), &r.Body, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
@@ -65,7 +65,7 @@ func Get(c *golangsdk.ServiceClient, id, cluster_id string) (r GetResult) {
 	return
 }
 
-// Delete will permanently delete a particular addon based on its unique ID.
+// Delete will permanently delete a particular Addon based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, id, cluster_id string) (r DeleteResult) {
 	_, r.Err = c.Delete(resourceURL(c, id, cluster_id), &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
