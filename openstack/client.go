@@ -1033,3 +1033,10 @@ func NewDDSV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 	sc, err := initClientOpts(client, eo, "ddsv3")
 	return sc, err
 }
+
+// NewVPCV1 creates a ServiceClient that may be used with the v1 network
+// package.
+func NewVPCV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc, err := initClientOpts(client, eo, "vpc")
+	return sc, err
+}
