@@ -20,10 +20,10 @@ func HandleDownloadObjectSuccessfully(t *testing.T) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
-		w.Header().Set("Date", "Wed, 10 Nov 2009 23:00:00 GMT")
+		w.Header().Set("Date", "Wed, 10 Nov 2009 23:00:00 UTC")
 		w.Header().Set("X-Static-Large-Object", "True")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "Successful download with Gophercloud")
+		fmt.Fprintf(w, "Successful download with Golangsdk")
 	})
 }
 
@@ -32,7 +32,7 @@ func HandleDownloadObjectSuccessfully(t *testing.T) {
 var ExpectedListInfo = []objects.Object{
 	{
 		Hash:         "451e372e48e0f6b1114fa0724aa79fa1",
-		LastModified: time.Date(2016, time.August, 17, 22, 11, 58, 602650000, time.UTC), //"2016-08-17T22:11:58.602650"
+		LastModified: time.Date(2016, time.August, 17, 22, 11, 58, 602650000, time.UTC),
 		Bytes:        14,
 		Name:         "goodbye",
 		ContentType:  "application/octet-stream",
@@ -151,6 +151,7 @@ func HandleCreateTextObjectSuccessfully(t *testing.T, content string) {
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Content-Type", "text/plain")
 		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestBody(t, r, `Did gyre and gimble in the wabe`)
 
 		hash := md5.New()
 		io.WriteString(hash, content)
@@ -169,6 +170,7 @@ func HandleCreateTextWithCacheControlSuccessfully(t *testing.T, content string) 
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Cache-Control", `max-age="3600", public`)
 		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestBody(t, r, `All mimsy were the borogoves`)
 
 		hash := md5.New()
 		io.WriteString(hash, content)
@@ -187,6 +189,7 @@ func HandleCreateTypelessObjectSuccessfully(t *testing.T, content string) {
 		th.TestMethod(t, r, "PUT")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
+		th.TestBody(t, r, `The sky was the color of television, tuned to a dead channel.`)
 
 		if contentType, present := r.Header["Content-Type"]; present {
 			t.Errorf("Expected Content-Type header to be omitted, but was %#v", contentType)
@@ -231,7 +234,7 @@ func HandleUpdateObjectSuccessfully(t *testing.T) {
 		th.TestMethod(t, r, "POST")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
-		th.TestHeader(t, r, "X-Object-Meta-Gophercloud-Test", "objects")
+		th.TestHeader(t, r, "X-Object-Meta-Golangsdk-Test", "objects")
 		w.WriteHeader(http.StatusAccepted)
 	})
 }
@@ -243,7 +246,7 @@ func HandleGetObjectSuccessfully(t *testing.T) {
 		th.TestMethod(t, r, "HEAD")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
-		w.Header().Add("X-Object-Meta-Gophercloud-Test", "objects")
+		w.Header().Add("X-Object-Meta-Golangsdk-Test", "objects")
 		w.Header().Add("X-Static-Large-Object", "true")
 		w.WriteHeader(http.StatusNoContent)
 	})

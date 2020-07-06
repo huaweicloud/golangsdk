@@ -9,26 +9,22 @@ import (
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
-var (
-	loc, _ = time.LoadLocation("GMT")
-)
+func TestUpdateAccount(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleUpdateAccountSuccessfully(t)
 
-//func TestUpdateAccount(t *testing.T) {
-//	th.SetupHTTP()
-//	defer th.TeardownHTTP()
-//	HandleUpdateAccountSuccessfully(t)
+	options := &accounts.UpdateOpts{Metadata: map[string]string{"golangsdk-test": "accounts"}}
+	res := accounts.Update(fake.ServiceClient(), options)
+	th.AssertNoErr(t, res.Err)
 
-//	options := &accounts.UpdateOpts{Metadata: map[string]string{"golangsdk-test": "accounts"}}
-//	res := accounts.Update(fake.ServiceClient(), options)
-//	th.AssertNoErr(t, res.Err)
-
-//	expected := &accounts.UpdateHeader{
-//		Date: time.Date(2014, time.January, 17, 16, 9, 56, 0, loc), // Fri, 17 Jan 2014 16:09:56 GMT
-//	}
-//	actual, err := res.Extract()
-//	th.AssertNoErr(t, err)
-//	th.CheckDeepEquals(t, expected, actual)
-//}
+	expected := &accounts.UpdateHeader{
+		Date: time.Date(2014, time.January, 17, 16, 9, 56, 0, time.UTC),
+	}
+	actual, err := res.Extract()
+	th.AssertNoErr(t, err)
+	th.CheckDeepEquals(t, expected, actual)
+}
 
 func TestGetAccount(t *testing.T) {
 	th.SetupHTTP()
@@ -49,7 +45,7 @@ func TestGetAccount(t *testing.T) {
 		ContainerCount: 2,
 		ObjectCount:    5,
 		BytesUsed:      14,
-		Date:           time.Date(2014, time.January, 17, 16, 9, 56, 0, loc), // Fri, 17 Jan 2014 16:09:56 GMT
+		Date:           time.Date(2014, time.January, 17, 16, 9, 56, 0, time.UTC),
 	}
 	actual, err := res.Extract()
 	th.AssertNoErr(t, err)
@@ -74,7 +70,7 @@ func TestGetAccountNoQuota(t *testing.T) {
 		ContainerCount: 2,
 		ObjectCount:    5,
 		BytesUsed:      14,
-		Date:           time.Date(2014, time.January, 17, 16, 9, 56, 0, loc), // Fri, 17 Jan 2014 16:09:56 GMT
+		Date:           time.Date(2014, time.January, 17, 16, 9, 56, 0, time.UTC),
 	}
 	actual, err := res.Extract()
 	th.AssertNoErr(t, err)

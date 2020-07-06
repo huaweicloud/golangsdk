@@ -12,7 +12,6 @@ import (
 
 var (
 	metadata = map[string]string{"golangsdk-test": "containers"}
-	loc, _   = time.LoadLocation("GMT")
 )
 
 func TestListContainerInfo(t *testing.T) {
@@ -92,11 +91,11 @@ func TestCreateContainer(t *testing.T) {
 	expected := &containers.CreateHeader{
 		ContentLength: 0,
 		ContentType:   "text/html; charset=UTF-8",
-		Date:          time.Date(2016, time.August, 17, 19, 25, 43, 0, loc), //Wed, 17 Aug 2016 19:25:43 GMT
+		Date:          time.Date(2016, time.August, 17, 19, 25, 43, 0, time.UTC),
 		TransID:       "tx554ed59667a64c61866f1-0058b4ba37",
 	}
 	actual, err := res.Extract()
-	th.CheckNoErr(t, err)
+	th.AssertNoErr(t, err)
 	th.AssertDeepEquals(t, expected, actual)
 }
 
@@ -106,7 +105,7 @@ func TestDeleteContainer(t *testing.T) {
 	HandleDeleteContainerSuccessfully(t)
 
 	res := containers.Delete(fake.ServiceClient(), "testContainer")
-	th.CheckNoErr(t, res.Err)
+	th.AssertNoErr(t, res.Err)
 }
 
 func TestUpdateContainer(t *testing.T) {
@@ -116,7 +115,7 @@ func TestUpdateContainer(t *testing.T) {
 
 	options := &containers.UpdateOpts{Metadata: map[string]string{"foo": "bar"}}
 	res := containers.Update(fake.ServiceClient(), "testContainer", options)
-	th.CheckNoErr(t, res.Err)
+	th.AssertNoErr(t, res.Err)
 }
 
 func TestGetContainer(t *testing.T) {
@@ -129,13 +128,13 @@ func TestGetContainer(t *testing.T) {
 	}
 	res := containers.Get(fake.ServiceClient(), "testContainer", getOpts)
 	_, err := res.ExtractMetadata()
-	th.CheckNoErr(t, err)
+	th.AssertNoErr(t, err)
 
 	expected := &containers.GetHeader{
 		AcceptRanges:  "bytes",
 		BytesUsed:     100,
 		ContentType:   "application/json; charset=utf-8",
-		Date:          time.Date(2016, time.August, 17, 19, 25, 43, 0, loc), //Wed, 17 Aug 2016 19:25:43 GMT
+		Date:          time.Date(2016, time.August, 17, 19, 25, 43, 0, time.UTC),
 		ObjectCount:   4,
 		Read:          []string{"test"},
 		TransID:       "tx554ed59667a64c61866f1-0057b4ba37",
@@ -143,6 +142,6 @@ func TestGetContainer(t *testing.T) {
 		StoragePolicy: "test_policy",
 	}
 	actual, err := res.Extract()
-	th.CheckNoErr(t, err)
+	th.AssertNoErr(t, err)
 	th.AssertDeepEquals(t, expected, actual)
 }

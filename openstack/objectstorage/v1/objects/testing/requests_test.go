@@ -16,10 +16,6 @@ import (
 	fake "github.com/huaweicloud/golangsdk/testhelper/client"
 )
 
-var (
-	loc, _ = time.LoadLocation("GMT")
-)
-
 func TestDownloadReader(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
@@ -44,12 +40,12 @@ func TestDownloadExtraction(t *testing.T) {
 	// Check []byte extraction
 	bytes, err := response.ExtractContent()
 	th.AssertNoErr(t, err)
-	th.CheckEquals(t, "Successful download with Gophercloud", string(bytes))
+	th.CheckEquals(t, "Successful download with Golangsdk", string(bytes))
 
 	expected := &objects.DownloadHeader{
-		ContentLength:     36,
+		ContentLength:     34,
 		ContentType:       "text/plain; charset=utf-8",
-		Date:              time.Date(2009, time.November, 10, 23, 0, 0, 0, loc),
+		Date:              time.Date(2009, time.November, 10, 23, 0, 0, 0, time.UTC),
 		StaticLargeObject: true,
 	}
 	actual, err := response.Extract()
@@ -222,7 +218,7 @@ func TestUpateObjectMetadata(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleUpdateObjectSuccessfully(t)
 
-	options := &objects.UpdateOpts{Metadata: map[string]string{"Gophercloud-Test": "objects"}}
+	options := &objects.UpdateOpts{Metadata: map[string]string{"Golangsdk-Test": "objects"}}
 	res := objects.Update(fake.ServiceClient(), "testContainer", "testObject", options)
 	th.AssertNoErr(t, res.Err)
 }
@@ -232,7 +228,7 @@ func TestGetObject(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleGetObjectSuccessfully(t)
 
-	expected := map[string]string{"Gophercloud-Test": "objects"}
+	expected := map[string]string{"Golangsdk-Test": "objects"}
 	actual, err := objects.Get(fake.ServiceClient(), "testContainer", "testObject", nil).ExtractMetadata()
 	th.AssertNoErr(t, err)
 	th.CheckDeepEquals(t, expected, actual)
