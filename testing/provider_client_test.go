@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"sync"
 	"testing"
 	"time"
@@ -118,4 +119,47 @@ func TestConcurrentReauth(t *testing.T) {
 	wg.Wait()
 
 	th.AssertEquals(t, 1, info.numreauths)
+}
+
+func TestRequestRetry(t *testing.T) {
+	retryCount := 2
+
+	var info = struct {
+		retries int
+		mut     *sync.RWMutex
+	}{
+		0,
+		new(sync.RWMutex),
+	}
+
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		_, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			t.Errorf("Error hadling test request")
+		}
+		info.mut.RLock()
+		info.retries += 1
+		info.mut.RUnlock()
+		if info.retries < retryCount {
+			panic(err) // simulate EOF
+		}
+		_, _ = fmt.Fprintf(w, `%v`, info.retries)
+	})
+
+	p := new(golangsdk.ProviderClient)
+	p.MaxRetries = retryCount
+	reqopts := new(golangsdk.RequestOpts)
+	resp, err := p.Request("GET", fmt.Sprintf("%s/route", th.Endpoint()), reqopts)
+	th.AssertNoErr(t, err)
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Errorf("Error hadling test response")
+	}
+	actual, err := strconv.Atoi(string(data))
+	th.AssertNoErr(t, err)
+	th.AssertEquals(t, retryCount, actual)
 }

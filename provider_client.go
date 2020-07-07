@@ -5,9 +5,12 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"math"
+	"net"
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 )
 
 // DefaultUserAgent is the default User-Agent string set in the request header.
@@ -80,6 +83,9 @@ type ProviderClient struct {
 	// AKSKAuthOptions provides the value for AK/SK authentication, it should be nil if you use token authentication,
 	// Otherwise, it must have a value
 	AKSKAuthOptions AKSKAuthOptions
+
+	// Max Retries defines maximum number of API call retires
+	MaxRetries int
 
 	mut *sync.RWMutex
 
@@ -170,9 +176,7 @@ func jsonMarshal(t interface{}) ([]byte, error) {
 	return buffer.Bytes(), err
 }
 
-// Request performs an HTTP request using the ProviderClient's current HTTPClient. An authentication
-// header will automatically be provided.
-func (client *ProviderClient) Request(method, url string, options *RequestOpts) (*http.Response, error) {
+func (client *ProviderClient) request(method, url string, options *RequestOpts) (*http.Response, error) {
 	var body io.Reader
 	var contentType *string
 
@@ -384,17 +388,50 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 	return resp, nil
 }
 
+func retryTimeout(count int) time.Duration {
+	seconds := math.Pow(2, float64(count))
+	return time.Duration(seconds) * time.Second
+}
+
+// Request performs an HTTP request using the ProviderClient's current HTTPClient. An authentication
+// header will automatically be provided.
+func (client *ProviderClient) Request(method, url string, options *RequestOpts) (resp *http.Response, err error) {
+	retried := 0
+	for retried <= client.MaxRetries {
+		resp, err = client.request(method, url, options)
+		retried += 1
+		if err == nil {
+			return resp, nil
+		}
+		// we should not retry in case of HTTP error codes
+		if _, ok := err.(ErrUnexpectedResponseCode); ok {
+			return resp, err
+		}
+		// make first few retries fast
+		if retried < 5 {
+			time.Sleep(retryTimeout(retried))
+			continue
+		}
+		if nerr, ok := err.(net.Error); ok && nerr.Temporary() {
+			time.Sleep(retryTimeout(retried))
+			continue
+		}
+		break // permanent network or other error
+	}
+	return resp, err
+}
+
 func defaultOkCodes(method string) []int {
-	switch {
-	case method == "GET":
+	switch method {
+	case "GET":
 		return []int{200}
-	case method == "POST":
+	case "POST":
 		return []int{201, 202}
-	case method == "PUT":
+	case "PUT":
 		return []int{201, 202}
-	case method == "PATCH":
+	case "PATCH":
 		return []int{200, 204}
-	case method == "DELETE":
+	case "DELETE":
 		return []int{202, 204}
 	}
 

@@ -29,6 +29,8 @@ const (
 
 	// provider represents the suffix of endpoint url
 	provider = "myhuaweicloud.com"
+
+	defaultRetries = 10
 )
 
 /*
@@ -45,7 +47,7 @@ A basic example of using this would be:
 	provider, err := openstack.NewClient(ao.IdentityEndpoint)
 	client, err := openstack.NewIdentityV3(provider, golangsdk.EndpointOpts{})
 */
-func NewClient(endpoint string) (*golangsdk.ProviderClient, error) {
+func NewClient(endpoint string, maxRetries ...int) (*golangsdk.ProviderClient, error) {
 	u, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
@@ -67,6 +69,11 @@ func NewClient(endpoint string) (*golangsdk.ProviderClient, error) {
 	p := new(golangsdk.ProviderClient)
 	p.IdentityBase = base
 	p.IdentityEndpoint = endpoint
+	if len(maxRetries) == 0 {
+		p.MaxRetries = defaultRetries
+	} else {
+		p.MaxRetries = maxRetries[0]
+	}
 	p.UseTokenLock()
 
 	return p, nil
