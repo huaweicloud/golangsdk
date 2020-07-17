@@ -1124,7 +1124,7 @@ func NewVPCV1(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*gol
 func NewGeminiDBV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc := new(golangsdk.ServiceClient)
 	sc.ProviderClient = client
-	sc.Endpoint = fmt.Sprintf("https://geminidb.%s.myhuaweicloud.com", eo.Region)
+	sc.Endpoint = fmt.Sprintf("https://gaussdb-nosql.%s.myhuaweicloud.com", eo.Region)
 	sc.ResourceBase = fmt.Sprintf("%s/v3/%s/", sc.Endpoint, client.ProjectID)
 
 	return sc, nil
