@@ -45,3 +45,59 @@ func PolicyGet(client *golangsdk.ServiceClient, clusterId string) (r PolicyResul
 	_, r.Err = client.Get(policyURL(client, clusterId), &r.Body, nil)
 	return
 }
+
+// Enable will enable the Snapshot function with the provided ID.
+func Enable(client *golangsdk.ServiceClient, clusterId string) (r ErrorResult) {
+	_, r.Err = client.Post(enableURL(client, clusterId), nil, nil, nil)
+	return
+}
+
+// Disable will disable the Snapshot function with the provided ID.
+func Disable(client *golangsdk.ServiceClient, clusterId string) (r ErrorResult) {
+	_, r.Err = client.Delete(disableURL(client, clusterId), nil)
+	return
+}
+
+// CreateOpts contains options for creating a snapshot.
+// This object is passed to the snapshots.Create function.
+type CreateOpts struct {
+	Name        string `json:"name" required:"true"`
+	Description string `json:"description,omitempty"`
+	Indices     string `json:"indices,omitempty"`
+}
+
+// ToSnapshotCreateMap assembles a request body based on the contents of a
+// CreateOpts.
+func (opts CreateOpts) ToSnapshotCreateMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+// Create will create a new snapshot based on the values in CreateOpts.
+// To extract the result from the response, call the Extract method on the CreateResult.
+func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder, clusterId string) (r CreateResult) {
+	b, err := opts.ToSnapshotCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = client.Post(createURL(client, clusterId), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{201},
+	})
+	return
+}
+
+// List retrieves the Snapshots with the provided ID. To extract the Snapshot
+// objects from the response, call the Extract method on the GetResult.
+func List(client *golangsdk.ServiceClient, clusterId string) (r ListResult) {
+	_, r.Err = client.Get(listURL(client, clusterId), &r.Body, nil)
+	return
+}
+
+// Delete will delete the existing Snapshot ID with the provided ID.
+func Delete(client *golangsdk.ServiceClient, clusterId, id string) (r ErrorResult) {
+	_, r.Err = client.Delete(deleteURL(client, clusterId, id), &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: map[string]string{"Content-Type": "application/json"},
+	})
+	return
+}
