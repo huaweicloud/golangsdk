@@ -12,6 +12,10 @@ type JobResponse struct {
 }
 
 type JobStatus struct {
+	Job Job `json:"job"`
+}
+
+type Job struct {
 	Status     string `json:"status"`
 	JobID      string `json:"id"`
 	FailReason string `json:"fail_reason"`
@@ -35,14 +39,15 @@ func (r JobResult) ExtractJobStatus() (*JobStatus, error) {
 
 func WaitForJobSuccess(client *golangsdk.ServiceClient, secs int, jobID string) error {
 	return golangsdk.WaitFor(secs, func() (bool, error) {
-		job := new(JobStatus)
-		_, err := client.Get(jobURL(client, jobID), &job, &golangsdk.RequestOpts{
+		job_status := new(JobStatus)
+		_, err := client.Get(jobURL(client, jobID), &job_status, &golangsdk.RequestOpts{
 			MoreHeaders: requestOpts.MoreHeaders,
 		})
 		time.Sleep(5 * time.Second)
 		if err != nil {
 			return false, err
 		}
+		job := job_status.Job
 
 		if job.Status == "Completed" {
 			return true, nil
