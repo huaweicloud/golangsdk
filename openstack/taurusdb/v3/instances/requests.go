@@ -198,7 +198,7 @@ func UpdateName(client *golangsdk.ServiceClient, instanceId string, opts UpdateN
 		return
 	}
 
-	_, r.Err = client.Post(nameURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Put(nameURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes:     []int{201, 202},
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
