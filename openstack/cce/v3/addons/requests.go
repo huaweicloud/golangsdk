@@ -57,14 +57,14 @@ func (opts CreateOpts) ToAddonCreateMap() (map[string]interface{}, error) {
 
 // Create accepts a CreateOpts struct and uses the values to create a new
 // addon.
-func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder, cluster_id string) (r CreateResult) {
 	b, err := opts.ToAddonCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{201}}
-	_, r.Err = c.Post(rootURL(c), b, &r.Body, reqOpt)
+	_, r.Err = c.Post(rootURL(c, cluster_id), b, &r.Body, reqOpt)
 	return
 }
 
