@@ -198,8 +198,8 @@ func UpdateName(client *golangsdk.ServiceClient, instanceId string, opts UpdateN
 		return
 	}
 
-	_, r.Err = client.Post(nameURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{201, 202},
+	_, r.Err = client.Put(nameURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
 
@@ -230,7 +230,7 @@ func UpdatePass(client *golangsdk.ServiceClient, instanceId string, opts UpdateP
 	}
 
 	_, r.Err = client.Post(passwordURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{201, 202},
+		OkCodes:     []int{200},
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
 
@@ -261,7 +261,7 @@ func Resize(client *golangsdk.ServiceClient, instanceId string, opts ResizeBuild
 	}
 
 	_, r.Err = client.Post(actionURL(client, instanceId), b, &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{201, 202},
+		OkCodes:     []int{200},
 		MoreHeaders: requestOpts.MoreHeaders,
 	})
 
