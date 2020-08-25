@@ -40,7 +40,7 @@ type Spec struct {
 	// Addon Template Type.
 	AddonTemplateType string `json:"addonTemplateType" required:"true"`
 	// Addon Template Labels.
-	AddonTemplateLables []string `json:"addonTemplateLables,omitempty"`
+	AddonTemplateLables []string `json:"addonTemplateLables, omitempty"`
 	// Addon Description.
 	Description string `json:"description" required:"true"`
 	// Addon Parameters
