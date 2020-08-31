@@ -56,11 +56,10 @@ As a contributor you will need to setup your workspace in a slightly different
 way than just downloading it. Here are the basic instructions:
 
 1. Configure your `$GOPATH` and run `go get` as described in the main
-[README](/README.md#how-to-install) but add `-tags "fixtures acceptance"` to
-get dependencies for unit and acceptance tests.
+[README](/README.md#how-to-install).
 
    ```bash
-   go get -tags "fixtures acceptance" github.com/huaweicloud/golangsdk
+   go get github.com/huaweicloud/golangsdk
    ```
 
 2. Move into the directory that houses your local repository:
@@ -222,25 +221,19 @@ environments in our [acceptance tests readme](/acceptance).
 To run all tests:
 
   ```bash
-  go test -tags fixtures ./...
+  go test ./acceptance/...
   ```
 
 To run all tests with verbose output:
 
   ```bash
-  go test -v -tags fixtures ./...
-  ```
-
-To run tests that match certain [build tags]():
-
-  ```bash
-  go test -tags "fixtures foo bar" ./...
+  go test -v ./acceptance/...
   ```
 
 To run tests for a particular sub-package:
 
   ```bash
-  cd ./path/to/package && go test -tags fixtures ./...
+  cd ./acceptance/openstack/sub-package && go test ./...
   ```
 
 ## Style guide
