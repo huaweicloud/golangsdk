@@ -27,19 +27,25 @@ func Apply(client *golangsdk.ServiceClient, id string, opts ApplyBuilder) (r App
 		return
 	}
 
-	_, r.Err = client.Post(applyURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
-		OkCodes:     []int{202},
+	_, r.Err = client.Put(applyURL(client, id), b, &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
 		MoreHeaders: map[string]string{"Content-Type": "application/json"},
 	})
 	return
 }
 
 func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
-	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
+	_, r.Err = client.Get(getURL(client, id), &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: map[string]string{"Content-Type": "application/json"},
+	})
 	return
 }
 
 func GetInstanceConfig(client *golangsdk.ServiceClient, id string) (r GetResult) {
-	_, r.Err = client.Get(instanceConfigURL(client, id), &r.Body, nil)
+	_, r.Err = client.Get(instanceConfigURL(client, id), &r.Body, &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: map[string]string{"Content-Type": "application/json"},
+	})
 	return
 }
