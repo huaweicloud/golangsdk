@@ -10,8 +10,9 @@ type ApplyResponse struct {
 }
 
 type Parameter struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name     string `json:"name"`
+	Value    string `json:"value"`
+	ReadOnly bool   `json:"readonly"`
 }
 
 type GetResponse struct {
