@@ -134,7 +134,7 @@ func TestServiceClientEndpoint(t *testing.T) {
 	t.Logf("ces endpoint:\t %s", actualURL)
 
 	// Find the anti-ddos service in the service catalog.
-	serviceClient, err = openstack.NewHwAntiDDoSV1(providerClient, golangsdk.EndpointOpts{
+	serviceClient, err = openstack.NewAntiDDoSV1(providerClient, golangsdk.EndpointOpts{
 		Region: region,
 	})
 	th.AssertNoErr(t, err)
@@ -152,4 +152,64 @@ func TestServiceClientEndpoint(t *testing.T) {
 	actualURL = serviceClient.ResourceBaseURL()
 	th.AssertEquals(t, expectedURL, actualURL)
 	t.Logf("as endpoint:\t %s", actualURL)
+
+	// Find the KMS service in the service catalog.
+	serviceClient, err = openstack.NewKMSV1(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://kms.%s.%s/v1.0/", region, apiDomain)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("kms endpoint:\t %s", actualURL)
+
+	// Find the RDS v1 service in the service catalog.
+	serviceClient, err = openstack.NewRDSV1(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://rds.%s.%s/rds/v1/%s/", region, apiDomain, projectID)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("rds v1 endpoint:\t %s", actualURL)
+
+	// Find the RDS v3 service in the service catalog.
+	serviceClient, err = openstack.NewRDSV3(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://rds.%s.%s/v3/%s/", region, apiDomain, projectID)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("rds v3 endpoint:\t %s", actualURL)
+
+	// Find the SMN service in the service catalog.
+	serviceClient, err = openstack.NewSMNV2(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://smn.%s.%s/v2/%s/notifications/", region, apiDomain, projectID)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("smn endpoint:\t %s", actualURL)
+
+	// Find the SDRS service in the service catalog.
+	serviceClient, err = openstack.NewSDRSV1(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://sdrs.%s.%s/v1/%s/", region, apiDomain, projectID)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("sdrs endpoint:\t %s", actualURL)
+
+	// Find the VBS service in the service catalog.
+	serviceClient, err = openstack.NewVBSV2(providerClient, golangsdk.EndpointOpts{
+		Region: region,
+	})
+	th.AssertNoErr(t, err)
+	expectedURL = fmt.Sprintf("https://vbs.%s.%s/v2/%s/", region, apiDomain, projectID)
+	actualURL = serviceClient.ResourceBaseURL()
+	th.AssertEquals(t, expectedURL, actualURL)
+	t.Logf("vbs endpoint:\t %s", actualURL)
 }
