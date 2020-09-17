@@ -1135,3 +1135,13 @@ func NewSberIamV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 
 	return sc, nil
 }
+
+//NewSberDNSV2 creates a ServiceClient that may be used with SberCloud DNS client
+func NewSberDNSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
+	sc := new(golangsdk.ServiceClient)
+	sc.ProviderClient = client
+	sc.Endpoint = fmt.Sprintf("https://dns.%s.hc.sbercloud.ru/v3/", eo.Region)
+	sc.ResourceBase = sc.Endpoint
+
+	return sc, nil
+}
