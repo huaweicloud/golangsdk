@@ -1140,7 +1140,7 @@ func NewSberIamV3(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (
 func NewSberDNSV2(client *golangsdk.ProviderClient, eo golangsdk.EndpointOpts) (*golangsdk.ServiceClient, error) {
 	sc := new(golangsdk.ServiceClient)
 	sc.ProviderClient = client
-	sc.Endpoint = fmt.Sprintf("https://dns.%s.hc.sbercloud.ru/v3/", eo.Region)
+	sc.Endpoint = fmt.Sprintf("https://dns.%s.hc.sbercloud.ru/v2/", eo.Region)
 	sc.ResourceBase = sc.Endpoint
 
 	return sc, nil
