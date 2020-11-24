@@ -167,6 +167,7 @@ func TestGetAllInstances(t *testing.T) {
 					StartTime: "16:00-17:00",
 					KeepDays:  7,
 				},
+				EnterpriseProjectId: "0",
 			},
 
 			{
@@ -217,6 +218,7 @@ func TestGetAllInstances(t *testing.T) {
 					StartTime: "16:00-17:00",
 					KeepDays:  7,
 				},
+				EnterpriseProjectId: "0",
 			},
 		},
 	}
