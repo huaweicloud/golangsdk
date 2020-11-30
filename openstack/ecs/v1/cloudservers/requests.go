@@ -156,6 +156,7 @@ type ServerExtendParam struct {
 
 type MetaData struct {
 	OpSvcUserId string `json:"op_svc_userid,omitempty"`
+	AgencyName  string `json:"agency_name,omitempty"`
 }
 
 type SecurityGroup struct {
