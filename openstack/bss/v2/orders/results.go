@@ -16,6 +16,6 @@ type Order struct {
 
 func (r UnsubscribeResult) Extract() (*Order, error) {
 	var response Order
-    err := r.ExtractInto(&response)
-    return &response, err
+	err := r.ExtractInto(&response)
+	return &response, err
 }
