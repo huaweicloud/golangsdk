@@ -103,8 +103,14 @@ type ListOpts struct {
 	// value ranges from 0 to intmax.
 	Limit int `q:"limit"`
 
-	//Value range: 4, 6, respectively, to create ipv4 and ipv6, when not created ipv4 by default
+	// Value range: 4, 6, respectively, to create ipv4 and ipv6, when not created ipv4 by default
 	IPVersion int `q:"ip_version"`
+
+	// Associated port id
+	PortId string `q:"port_id"`
+
+	// Public IP address
+	PublicIp string `q:"public_ip_address"`
 
 	// enterprise_project_id
 	// You can use this field to filter the elastic public IP under an enterprise project.
