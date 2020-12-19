@@ -339,8 +339,8 @@ type ResizeOptsBuilder interface {
 
 // ToServerResizeMap assembles a request body based on the contents of a
 // ResizeOpts.
-func (opts CreateOpts) ToServerResizeMap() (map[string]interface{}, error) {
-	return golangsdk.BuildRequestBody(opts, "")
+func (opts ResizeOpts) ToServerResizeMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "resize")
 }
 
 // Resize requests a server to be resizeed.
