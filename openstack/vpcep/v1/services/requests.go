@@ -123,7 +123,8 @@ type ListOptsBuilder interface {
 type ListOpts struct {
 	ServiceName string `q:"endpoint_service_name"`
 	ID          string `q:"id"`
-	Status      string `q:"status"`
+	// Status is not supported for ListPublic
+	Status string `q:"status"`
 }
 
 // ToServiceListQuery formats a ListOpts into a query string.
@@ -136,6 +137,30 @@ func (opts ListOpts) ToServiceListQuery() (string, error) {
 func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) ([]Service, error) {
 	var r ListResult
 	url := rootURL(client)
+	if opts != nil {
+		query, err := opts.ToServiceListQuery()
+		if err != nil {
+			return nil, err
+		}
+		url += query
+	}
+	_, r.Err = client.Get(url, &r.Body, nil)
+	if r.Err != nil {
+		return nil, r.Err
+	}
+
+	allNodes, err := r.ExtractServices()
+	if err != nil {
+		return nil, err
+	}
+
+	return allNodes, nil
+}
+
+// ListPublic makes a request against the API to list public VPC endpoint services.
+func ListPublic(client *golangsdk.ServiceClient, opts ListOptsBuilder) ([]PublicService, error) {
+	var r ListPublicResult
+	url := publicResourceURL(client)
 	if opts != nil {
 		query, err := opts.ToServiceListQuery()
 		if err != nil {
