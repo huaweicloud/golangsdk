@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/huaweicloud/golangsdk"
+	"github.com/huaweicloud/golangsdk/openstack/common/tags"
 )
 
 // CreateOptsBuilder allows extensions to add parameters to the
@@ -33,6 +34,8 @@ type CreateOpts struct {
 	VipPortID string `json:"vip_port_id,omitempty"`
 	// Specifies whether the client IP address and port number or marker_id information is transmitted to the server.
 	TCPProxy string `json:"tcp_proxy,omitempty"`
+	// Specifies the resource tags in key/value format
+	Tags []tags.ResourceTag `json:"tags,omitempty"`
 }
 
 // PortOpts contains the port mappings opened to the VPC endpoint service.
