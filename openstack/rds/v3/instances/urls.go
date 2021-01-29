@@ -22,6 +22,10 @@ func singletohaURL(c *golangsdk.ServiceClient, instancesId string) string {
 	return c.ServiceURL("instances", instancesId, "action")
 }
 
+func renameURL(c *golangsdk.ServiceClient, instancesId string) string {
+	return c.ServiceURL("instances", instancesId, "name")
+}
+
 func resizeURL(c *golangsdk.ServiceClient, instancesId string) string {
 	return c.ServiceURL("instances", instancesId, "action")
 }

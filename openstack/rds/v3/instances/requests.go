@@ -172,6 +172,33 @@ func Restart(client *golangsdk.ServiceClient, opts RestartRdsInstanceBuilder, in
 	return
 }
 
+type RenameRdsInstanceOpts struct {
+	Name string `json:"name" required:"true"`
+}
+
+type RenameRdsInstanceBuilder interface {
+	ToRenameRdsInstanceMap() (map[string]interface{}, error)
+}
+
+func (opts RenameRdsInstanceOpts) ToRenameRdsInstanceMap() (map[string]interface{}, error) {
+	b, err := golangsdk.BuildRequestBody(&opts, "")
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
+
+func Rename(client *golangsdk.ServiceClient, opts RenameRdsInstanceBuilder, instanceId string) error {
+	b, err := opts.ToRenameRdsInstanceMap()
+	if err != nil {
+		return err
+	}
+	_, err = client.Put(renameURL(client, instanceId), b, nil, &golangsdk.RequestOpts{
+		OkCodes: []int{200},
+	})
+	return err
+}
+
 type ListRdsInstanceOpts struct {
 	Id            string `q:"id"`
 	Name          string `q:"name"`
