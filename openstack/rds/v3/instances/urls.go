@@ -14,6 +14,6 @@ func listURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("instances")
 }
 
-func restartURL(c *golangsdk.ServiceClient, instancesId string, updata string) string {
+func updateURL(c *golangsdk.ServiceClient, instancesId string, updata string) string {
 	return c.ServiceURL("instances", instancesId, updata)
 }
