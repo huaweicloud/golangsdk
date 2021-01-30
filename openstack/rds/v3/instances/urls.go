@@ -14,30 +14,6 @@ func listURL(c *golangsdk.ServiceClient) string {
 	return c.ServiceURL("instances")
 }
 
-func restartURL(c *golangsdk.ServiceClient, instancesId string) string {
-	return c.ServiceURL("instances", instancesId, "action")
-}
-
-func singletohaURL(c *golangsdk.ServiceClient, instancesId string) string {
-	return c.ServiceURL("instances", instancesId, "action")
-}
-
-func renameURL(c *golangsdk.ServiceClient, instancesId string) string {
-	return c.ServiceURL("instances", instancesId, "name")
-}
-
-func resizeURL(c *golangsdk.ServiceClient, instancesId string) string {
-	return c.ServiceURL("instances", instancesId, "action")
-}
-
-func enlargeURL(c *golangsdk.ServiceClient, instancesId string) string {
-	return c.ServiceURL("instances", instancesId, "action")
-}
-
-func listerrorlogURL(c *golangsdk.ServiceClient, instanceID string) string {
-	return c.ServiceURL("instances", instanceID, "errorlog")
-}
-
-func listslowlogURL(c *golangsdk.ServiceClient, instanceID string) string {
-	return c.ServiceURL("instances", instanceID, "slowlog")
+func restartURL(c *golangsdk.ServiceClient, instancesId string, updata string) string {
+	return c.ServiceURL("instances", instancesId, updata)
 }
