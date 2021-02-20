@@ -58,3 +58,25 @@ func TestDelete(t *testing.T) {
 	err := servergroups.Delete(client.ServiceClient(), "616fb98f-46ca-475e-917e-2563e5a8cd19").ExtractErr()
 	th.AssertNoErr(t, err)
 }
+
+func TestAddMember(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleAddMemberSuccessfully(t)
+
+	err := servergroups.UpdateMember(client.ServiceClient(), servergroups.MemberOpts{
+		InstanceUUid: "d194d539-07b0-446e-b52c-e639e618e49d",
+	}, "add_member", "616fb98f-46ca-475e-917e-2563e5a8cd19").ExtractErr()
+	th.AssertNoErr(t, err)
+}
+
+func TestRemoveMember(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+	HandleRemoveMemberSuccessfully(t)
+
+	err := servergroups.UpdateMember(client.ServiceClient(), servergroups.MemberOpts{
+		InstanceUUid: "d194d539-07b0-446e-b52c-e639e618e49d",
+	}, "remove_member", "616fb98f-46ca-475e-917e-2563e5a8cd19").ExtractErr()
+	th.AssertNoErr(t, err)
+}
