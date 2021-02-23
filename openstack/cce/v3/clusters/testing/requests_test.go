@@ -130,10 +130,6 @@ func TestCreateV3Cluster(t *testing.T) {
         "containerNetwork": {
             "mode": "overlay_l2"
 		},
-		"eniNetwork": {
-			"eniSubnetCIDR": "192.168.2.0/24",
-			"eniSubnetId": "fb8f0799-94a7-4ea3-99ca-1d9c3c8d1526"
-		},
         "authentication": {
             "mode": "rbac",
 			"authenticatingProxy": {}
@@ -157,10 +153,6 @@ func TestCreateV3Cluster(t *testing.T) {
 				VpcId:    "3305eb40-2707-4940-921c-9f335f84a2ca",
 				SubnetId: "00e41db7-e56b-4946-bf91-27bb9effd664"},
 			ContainerNetwork: clusters.ContainerNetworkSpec{Mode: "overlay_l2"},
-			EniNetwork: clusters.EniNetworkSpec{
-				SubnetId: "fb8f0799-94a7-4ea3-99ca-1d9c3c8d1526",
-				Cidr:     "192.168.2.0/24",
-			},
 			Authentication: clusters.AuthenticationSpec{
 				Mode:                "rbac",
 				AuthenticatingProxy: make(map[string]string)},

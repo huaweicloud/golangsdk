@@ -23,10 +23,6 @@ const Output = `
         "containerNetwork": {
             "mode": "overlay_l2"
         },
-        "eniNetwork": {
-			"eniSubnetCIDR": "192.168.2.0/24",
-			"eniSubnetId": "fb8f0799-94a7-4ea3-99ca-1d9c3c8d1526"
-		},
         "billingMode": 0
     },
     "status": {
@@ -89,10 +85,6 @@ var Expected = &clusters.Clusters{
 		},
 		ContainerNetwork: clusters.ContainerNetworkSpec{
 			Mode: "overlay_l2",
-		},
-		EniNetwork: clusters.EniNetworkSpec{
-			SubnetId: "fb8f0799-94a7-4ea3-99ca-1d9c3c8d1526",
-			Cidr:     "192.168.2.0/24",
 		},
 		BillingMode: 0,
 	},
