@@ -158,3 +158,37 @@ func HandleDeleteSuccessfully(t *testing.T) {
 		w.WriteHeader(http.StatusAccepted)
 	})
 }
+
+func HandleAddMemberSuccessfully(t *testing.T) {
+	th.Mux.HandleFunc("/cloudservers/os-server-groups/616fb98f-46ca-475e-917e-2563e5a8cd19/action", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "POST")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		th.TestJSONRequest(t, r, `
+{
+    "add_member": {
+        "instance_uuid": "d194d539-07b0-446e-b52c-e639e618e49d"
+    }
+}
+`)
+
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+	})
+}
+
+func HandleRemoveMemberSuccessfully(t *testing.T) {
+	th.Mux.HandleFunc("/cloudservers/os-server-groups/616fb98f-46ca-475e-917e-2563e5a8cd19/action", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "POST")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		th.TestJSONRequest(t, r, `
+{
+    "remove_member": {
+        "instance_uuid": "d194d539-07b0-446e-b52c-e639e618e49d"
+    }
+}
+`)
+
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusAccepted)
+	})
+}
