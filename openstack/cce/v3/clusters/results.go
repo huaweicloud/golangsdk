@@ -55,7 +55,7 @@ type Spec struct {
 	//Container network parameters
 	ContainerNetwork ContainerNetworkSpec `json:"containerNetwork" required:"true"`
 	//ENI network parameters
-	EniNetwork EniNetworkSpec `json:"eniNetwork,omitempty"`
+	EniNetwork *EniNetworkSpec `json:"eniNetwork,omitempty"`
 	//Authentication parameters
 	Authentication AuthenticationSpec `json:"authentication,omitempty"`
 	// Charging mode of the cluster, which is 0 (on demand)
