@@ -208,3 +208,24 @@ func TestDeleteV3Cluster(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 }
+
+func TestDeleteWithOptsV3Cluster(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/api/v3/projects/c59fd21fd2a94963b822d8985b884673/clusters/daa97872-59d7-11e8-a787-0255ac101f54", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "DELETE")
+		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
+		w.WriteHeader(http.StatusOK)
+	})
+	options := clusters.DeleteOpts{
+		DeleteEfs: "true",
+		DeleteENI: "true",
+		DeleteEvs: "true",
+		DeleteNet: "true",
+		DeleteObs: "true",
+		DeleteSfs: "true",
+	}
+	err := clusters.DeleteWithOpts(fake.ServiceClient(), "daa97872-59d7-11e8-a787-0255ac101f54", options).ExtractErr()
+	th.AssertNoErr(t, err)
+}
