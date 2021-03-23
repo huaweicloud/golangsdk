@@ -79,9 +79,12 @@ func TestListNode(t *testing.T) {
 		{
 			Kind:       "Host",
 			Apiversion: "v3",
-			Metadata: nodes.Metadata{Name: "test-node-1234",
-				Id: "b99acd73-5d7c-11e8-8e76-0255ac101929"},
-			Spec: nodes.Spec{Az: "cn-east-2a",
+			Metadata: nodes.Metadata{
+				Name: "test-node-1234",
+				Id:   "b99acd73-5d7c-11e8-8e76-0255ac101929",
+			},
+			Spec: nodes.Spec{
+				Az:          "cn-east-2a",
 				Login:       nodes.LoginSpec{SshKey: "test-keypair"},
 				RootVolume:  nodes.VolumeSpec{Size: 40, VolumeType: "SATA"},
 				BillingMode: 0,
@@ -92,7 +95,11 @@ func TestListNode(t *testing.T) {
 					}},
 				Flavor: "s1.medium",
 			},
-			Status: nodes.Status{Phase: "Active", ServerID: "41748e56-33d4-46a1-aa57-2c8c29907995", PrivateIP: "192.168.0.3"},
+			Status: nodes.Status{
+				Phase:     "Active",
+				ServerID:  "41748e56-33d4-46a1-aa57-2c8c29907995",
+				PrivateIP: "192.168.0.3",
+			},
 		},
 	}
 
@@ -129,7 +136,7 @@ func TestCreateV3Node(t *testing.T) {
 		th.TestHeader(t, r, "Accept", "application/json")
 
 		th.TestJSONRequest(t, r, `
-			{
+	{
 	  "apiversion": "v3",
 	  "kind": "Node",
 	  "metadata": {
@@ -138,12 +145,6 @@ func TestCreateV3Node(t *testing.T) {
 	  "spec": {
 	    "az": "cn-east-2a",
 	    "count": 1,
-	    "dataVolumes": [
-	      {
-	        "size": 100,
-	        "volumetype": "SATA"
-	      }
-	    ],
 	    "flavor": "s3.large.2",
 	    "login": {
 	      "sshKey": "test-keypair",
@@ -151,7 +152,17 @@ func TestCreateV3Node(t *testing.T) {
 			"password": "",
             "username": ""
 		  }
-	    },
+		},
+		"rootVolume": {
+			"size": 40,
+			"volumetype": "SATA"
+		},
+	    "dataVolumes": [
+	      {
+	        "size": 100,
+	        "volumetype": "SATA"
+	      }
+	    ],
 		"nodeNicSpec": {
 		  "primaryNic": {}
 		},
@@ -159,11 +170,7 @@ func TestCreateV3Node(t *testing.T) {
 		      "eip": {
 		        "bandwidth": {}
 		      }
-		 },
-	    "rootVolume": {
-	      "size": 40,
-	      "volumetype": "SATA"
-	    }
+		 }
 	  }
 	}
 `)
@@ -172,14 +179,18 @@ func TestCreateV3Node(t *testing.T) {
 		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, Output)
 	})
-	options := nodes.CreateOpts{Kind: "Node",
+	options := nodes.CreateOpts{
+		Kind:       "Node",
 		ApiVersion: "v3",
 		Metadata:   nodes.CreateMetaData{Name: "test-node"},
-		Spec: nodes.Spec{Flavor: "s3.large.2", Az: "cn-east-2a",
+		Spec: nodes.Spec{
+			Flavor:      "s3.large.2",
+			Az:          "cn-east-2a",
 			Login:       nodes.LoginSpec{SshKey: "test-keypair"},
 			RootVolume:  nodes.VolumeSpec{Size: 40, VolumeType: "SATA"},
 			DataVolumes: []nodes.VolumeSpec{{Size: 100, VolumeType: "SATA"}},
-			Count:       1},
+			Count:       1,
+		},
 	}
 	actual, err := nodes.Create(fake.ServiceClient(), "cec124c2-58f1-11e8-ad73-0255ac101926", options).Extract()
 	th.AssertNoErr(t, err)

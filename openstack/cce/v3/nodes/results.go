@@ -74,7 +74,7 @@ type Spec struct {
 	// Tag of a Kubernetes node, key value pair format
 	K8sTags map[string]string `json:"k8sTags,omitempty"`
 	// The runtime spec
-	RunTime RunTimeSpec `json:"runtime,omitempty"`
+	RunTime *RunTimeSpec `json:"runtime,omitempty"`
 	// taints to created nodes to configure anti-affinity
 	Taints []TaintSpec `json:"taints,omitempty"`
 }
