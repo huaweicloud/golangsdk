@@ -18,18 +18,21 @@ const Output = `{
             "volumetype": "SATA",
             "size": 40
         },
-        "publicIP": {
-		      "eip": {
-		        "bandwidth": {}
-		      }
-		    },
         "dataVolumes": [
             {
                 "volumetype": "SATA",
                 "size": 100
             }
-        ]
-}
+        ],
+        "publicIP": {
+            "eip": {
+              "bandwidth": {}
+            }
+        },
+        "runtime": {
+            "name": "docker"
+        }
+    }
 }`
 
 var Expected = &nodes.Nodes{
@@ -53,6 +56,7 @@ var Expected = &nodes.Nodes{
 				Size:       100,
 			},
 		},
+		RunTime: &nodes.RunTimeSpec{Name: "docker"},
 	},
 }
 
