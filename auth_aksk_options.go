@@ -38,6 +38,9 @@ type AKSKAuthOptions struct {
 
 	// DelegatedProject is the name of delegated project
 	DelegatedProject string
+
+	// whether using the customer catalog, defaults to false
+	WithUserCatalog bool
 }
 
 // GetIdentityEndpoint implements the method of AuthOptionsProvider
