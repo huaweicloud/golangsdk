@@ -131,7 +131,7 @@ func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRe
 		return
 	}
 
-	_, r.Err = client.Post(createURL(client), b, &r.Body, &golangsdk.RequestOpts{
+	_, r.Err = client.Post(rootURL(client), b, &r.Body, &golangsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
 	return
@@ -158,7 +158,7 @@ func (opts DeleteOpts) ToInstanceDeleteQuery() (string, error) {
 
 //Delete is a method to delete an existing bcs instance
 func Delete(client *golangsdk.ServiceClient, opts DeleteOptsBuilder, id string) (r DeleteResult) {
-	url := deleteURL(client, id)
+	url := resourceURL(client, id)
 	if opts != nil {
 		query, err := opts.ToInstanceDeleteQuery()
 		if err != nil {
@@ -177,7 +177,7 @@ func Delete(client *golangsdk.ServiceClient, opts DeleteOptsBuilder, id string) 
 
 //Get is a method to obtain the detailed information of an existing bcs instance
 func Get(client *golangsdk.ServiceClient, id string) (r ShowResult) {
-	_, r.Err = client.Get(getURL(client, id), &r.Body, nil)
+	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
 }
 
@@ -189,7 +189,7 @@ func GetStatus(client *golangsdk.ServiceClient, id string) (r StatusResult) {
 
 //List is a method to obtain the detailed information list of all existing bcs instance
 func List(client *golangsdk.ServiceClient) (r ListResult) {
-	_, r.Err = client.Get(listURL(client), &r.Body, nil)
+	_, r.Err = client.Get(rootURL(client), &r.Body, nil)
 	return
 }
 
@@ -232,7 +232,7 @@ func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, id string) 
 		return
 	}
 
-	_, r.Err = client.Post(updateURL(client, id), b, nil, &golangsdk.RequestOpts{
+	_, r.Err = client.Post(resourceURL(client, id), b, nil, &golangsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
 	return

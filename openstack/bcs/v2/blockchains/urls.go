@@ -2,26 +2,16 @@ package blockchains
 
 import "github.com/huaweicloud/golangsdk"
 
-func createURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL("blockchains")
+const resourcePath = "blockchains"
+
+func rootURL(c *golangsdk.ServiceClient) string {
+	return c.ServiceURL(resourcePath)
 }
 
-func listURL(c *golangsdk.ServiceClient) string {
-	return c.ServiceURL("blockchains")
+func resourceURL(c *golangsdk.ServiceClient, instanceID string) string {
+	return c.ServiceURL(resourcePath, instanceID)
 }
 
-func getURL(c *golangsdk.ServiceClient, instanceID string) string {
-	return c.ServiceURL("blockchains", instanceID)
-}
-
-func updateURL(c *golangsdk.ServiceClient, instanceID string) string {
-	return c.ServiceURL("blockchains", instanceID)
-}
-
-func deleteURL(c *golangsdk.ServiceClient, instanceID string) string {
-	return c.ServiceURL("blockchains", instanceID)
-}
-
-func extraURL(c *golangsdk.ServiceClient, instanceID string, extra string) string {
-	return c.ServiceURL("blockchains", instanceID, extra)
+func extraURL(c *golangsdk.ServiceClient, instanceID, extra string) string {
+	return c.ServiceURL(resourcePath, instanceID, extra)
 }
