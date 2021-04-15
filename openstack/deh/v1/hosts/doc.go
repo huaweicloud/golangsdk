@@ -30,6 +30,10 @@ Example to delete Hosts
 Example to List Hosts
 	listdeh := hosts.ListOpts{}
 	alldehs, err := hosts.List(client,listdeh).AllPages()
+	if err != nil {
+		panic(err)
+	}
+
 	list,err:=hosts.ExtractHosts(alldehs)
 	if err != nil {
 		panic(err)
@@ -45,10 +49,10 @@ Example to List Servers
 	listOpts := hosts.ListServerOpts{}
 	allServers, err := hosts.ListServer(client, "671611d2-b45c-4648-9e78-06eb24522291",listOpts)
 	if err != nil {
-	panic(err)
+		panic(err)
 	}
 
 	for _, server := range allServers {
-	fmt.Printf("%+v\n", server)
+		fmt.Printf("%+v\n", server)
 	}
 */
