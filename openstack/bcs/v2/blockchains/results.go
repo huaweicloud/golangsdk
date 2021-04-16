@@ -54,30 +54,45 @@ type BCSInstance struct {
 }
 
 type Basic struct {
-	ID                      string   `json:"id"`
-	Name                    string   `json:"name"`
-	Version                 string   `json:"version"`
-	VersionType             int      `json:"version_type"`
-	ServiceType             string   `json:"service_type"`
-	PurchaseType            string   `json:"purchase_type"`
-	SignAlgorithm           string   `json:"sign_algorithm"`
-	Consensus               string   `json:"consensus"`
-	ChargingMode            int      `json:"charging_mode"`
-	DatabaseType            string   `json:"database_type"`
-	ClusterID               string   `json:"cluster_id"`
-	ClusterName             string   `json:"cluster_name"`
-	ClusterType             string   `json:"cluster_type"`
-	ClusterAvailabilityZone string   `json:"cluster_az"`
-	CreatedTime             string   `json:"created_time"`
-	DeployType              string   `json:"deploy_type"`
-	IsCrossRegion           bool     `json:"is_cross_region"`
-	IsSupportRollback       bool     `json:"is_support_rollback"`
-	IsSupportRestful        bool     `json:"is_support_restful"`
-	IsOldService            bool     `json:"is_old_service"`
-	OldServiceVersion       string   `json:"old_service_version"`
-	AgentPortalAddress      []string `json:"agent_portal_addrs"`
-	Status                  string   `json:"status"`
-	ProcessStatus           string   `json:"process_status"`
+	ID                       string       `json:"id"`
+	Name                     string       `json:"name"`
+	KernelType               string       `json:"kernel_type"`
+	Version                  string       `json:"version"`
+	VersionType              int          `json:"version_type"`
+	VolumeType               string       `json:"volume_type"`
+	ServiceType              string       `json:"service_type"`
+	PurchaseType             string       `json:"purchase_type"`
+	SignAlgorithm            string       `json:"sign_algorithm"`
+	Consensus                string       `json:"consensus"`
+	ChargingMode             int          `json:"charging_mode"`
+	DatabaseType             string       `json:"database_type"`
+	ClusterID                string       `json:"cluster_id"`
+	ClusterName              string       `json:"cluster_name"`
+	ClusterType              string       `json:"cluster_type"`
+	ClusterPlatformType      string       `json:"cluster_platform_type"`
+	ClusterAvailabilityZone  string       `json:"cluster_az"`
+	CreatedTime              string       `json:"created_time"`
+	DeployType               string       `json:"deploy_type"`
+	DeployScale              int          `json:"deploy_scale"`
+	DeployStatus             int          `json:"deploy_status"`
+	DetailStatus             DetailStatus `json:"detail_status"`
+	IsCrossRegion            bool         `json:"is_cross_region"`
+	IsSupportRollback        bool         `json:"is_support_rollback"`
+	IsSupportRestful         bool         `json:"is_support_restful"`
+	IsSupportTc3             bool         `json:"is_support_tc3"`
+	IsOldService             bool         `json:"is_old_service"`
+	OldServiceVersion        string       `json:"old_service_version"`
+	AgentPortalAddress       []string     `json:"agent_portal_addrs"`
+	Status                   string       `json:"status"`
+	ProcessStatus            string       `json:"process_status"`
+	Tc3TaskServerPortalAddrs []string     `json:"tc3_taskserver_portal_addrs"`
+	TotalDeployPeer          int          `json:"total_deploy_peer"`
+	OrderStatus              int          `json:"order_status"`
+	OrderInfo                OrderInfo    `json:"order_info"`
+	OrderFadeCache           int          `json:"order_fade_cache"`
+	OrderFadeEnable          bool         `json:"order_fade_enable"`
+	IEFClusterInfo           IEFCluster   `json:"ief_cluster_info"`
+	IEFAPIVersion            string       `json:"iefapi_version"`
 }
 
 type Channel struct {
@@ -107,12 +122,22 @@ type CouchDB struct {
 
 type DMSKafka struct {
 	Address         []string `json:"addr"`
+	Name            string   `json:"name"`
+	Status          string   `json:"status"`
+	NodeCount       int      `json:"node_cnt"`
 	OrderFadeEnable bool     `json:"order_fade_enable"`
 	OrderFadeCache  int      `json:"order_fade_cache"`
 }
 
 type IEF struct {
 	DeployMode int `json:"deploy_mode"`
+}
+
+type IEFCluster struct {
+	GroupID      string `json:"group_id"`
+	GroupName    string `json:"group_name"`
+	InstanceID   string `json:"instance_id"`
+	InstanceName string `json:"instance_name"`
 }
 
 type SFS struct {
@@ -129,6 +154,25 @@ type PVC struct {
 type OBS struct {
 	Name    string `json:"name"`
 	Address string `json:"addr"`
+}
+
+type DetailStatus struct {
+	AgentStatus     string `json:"agent_status"`
+	ConsensusStatus string `json:"consensus_status"`
+	OrgStatus       string `json:"org_status"`
+	PeerStatus      string `json:"peer_status"`
+	PluginStatus    string `json:"plugin_status"`
+}
+
+type OrderInfo struct {
+	Delete            int    `json:"delete"`
+	Operate           int    `json:"operate"`
+	OrderID           string `json:"order_id"`
+	OrderStatus       int    `json:"order_status"`
+	OrderType         int    `json:"order_type"`
+	Release           int    `json:"release"`
+	ResourceErrorCode string `json:"resource_error_code"`
+	ResourceStatus    int    `json:"resource_status"`
 }
 
 func (r ShowResult) Extract() (*BCSInstance, error) {
