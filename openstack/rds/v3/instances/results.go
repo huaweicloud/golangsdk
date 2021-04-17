@@ -14,11 +14,19 @@ type CreateResult struct {
 	commonResult
 }
 
-type RestartRdsInstanceResult struct {
+type DeleteResult struct {
 	commonResult
 }
 
-type SingleToHaRdsInstanceResult struct {
+type RestartResult struct {
+	commonResult
+}
+
+type RenameResult struct {
+	commonResult
+}
+
+type SingleToHaResult struct {
 	commonResult
 }
 
@@ -26,7 +34,7 @@ type ResizeFlavorResult struct {
 	commonResult
 }
 
-type RenameResult struct {
+type EnlargeVolumeResult struct {
 	commonResult
 }
 
@@ -51,38 +59,34 @@ type Instance struct {
 	ChargeInfo          ChargeInfo     `json:"charge_info"`
 }
 
-type CreateRds struct {
+type CreateResponse struct {
 	Instance Instance `json:"instance"`
 	JobId    string   `json:"job_id"`
 	OrderId  string   `json:"order_id"`
 }
 
-func (r CreateResult) Extract() (*CreateRds, error) {
-	var response CreateRds
+func (r CreateResult) Extract() (*CreateResponse, error) {
+	var response CreateResponse
 	err := r.ExtractInto(&response)
 	return &response, err
 }
 
-type DeleteInstanceRdsResult struct {
-	commonResult
-}
-
-type DeleteInstanceRdsResponse struct {
+type DeleteResponse struct {
 	JobId string `json:"job_id"`
 }
 
-func (r DeleteInstanceRdsResult) Extract() (*DeleteInstanceRdsResponse, error) {
-	var response DeleteInstanceRdsResponse
+func (r DeleteResult) Extract() (*DeleteResponse, error) {
+	var response DeleteResponse
 	err := r.ExtractInto(&response)
 	return &response, err
 }
 
-type RestartRdsResponse struct {
+type RestartResponse struct {
 	JobId string `json:"job_id"`
 }
 
-func (r RestartRdsInstanceResult) Extract() (*RestartRdsResponse, error) {
-	var response RestartRdsResponse
+func (r RestartResult) Extract() (*RestartResponse, error) {
+	var response RestartResponse
 	err := r.ExtractInto(&response)
 	return &response, err
 }
@@ -91,7 +95,7 @@ type SingleToHaResponse struct {
 	JobId string `json:"job_id"`
 }
 
-func (r SingleToHaRdsInstanceResult) Extract() (*SingleToHaResponse, error) {
+func (r SingleToHaResult) Extract() (*SingleToHaResponse, error) {
 	var response SingleToHaResponse
 	err := r.ExtractInto(&response)
 	return &response, err
@@ -105,10 +109,6 @@ func (r ResizeFlavorResult) Extract() (*ResizeFlavor, error) {
 	var response ResizeFlavor
 	err := r.ExtractInto(&response)
 	return &response, err
-}
-
-type EnlargeVolumeResult struct {
-	commonResult
 }
 
 type EnlargeVolumeResp struct {
@@ -185,7 +185,7 @@ func (r RdsPage) IsEmpty() (bool, error) {
 	return len(data.Instances) == 0, err
 }
 
-// ExtractCloudServers is a function that takes a ListResult and returns the services' information.
+// ExtractRdsInstances is a function that takes a ListResult and returns the instances' information.
 func ExtractRdsInstances(r pagination.Page) (ListRdsResponse, error) {
 	var s ListRdsResponse
 	err := (r.(RdsPage)).ExtractInto(&s)
