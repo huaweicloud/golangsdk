@@ -56,7 +56,11 @@ type Instance struct {
 	VpcId               string         `json:"vpc_id"`
 	SubnetId            string         `json:"subnet_id"`
 	SecurityGroupId     string         `json:"security_group_id"`
-	ChargeInfo          ChargeInfo     `json:"charge_info"`
+	ChargeInfo          ChargeResponse `json:"charge_info"`
+}
+
+type ChargeResponse struct {
+	ChargeMode string `json:"charge_mode"`
 }
 
 type CreateResponse struct {
@@ -151,6 +155,7 @@ type RdsInstanceResponse struct {
 	Volume              Volume             `json:"volume"`
 	SwitchStrategy      string             `json:"switch_strategy"`
 	BackupStrategy      BackupStrategy     `json:"backup_strategy"`
+	ChargeInfo          ChargeResponse     `json:"charge_info"`
 	MaintenanceWindow   string             `json:"maintenance_window"`
 	Nodes               []Nodes            `json:"nodes"`
 	RelatedInstance     []RelatedInstance  `json:"related_instance"`
