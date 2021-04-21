@@ -33,7 +33,7 @@ func (opts ListOpts) ToTaskListQuery() (string, error) {
 }
 
 func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	url := listURL(client)
+	url := rootURL(client)
 	if opts != nil {
 		query, err := opts.ToTaskListQuery()
 		if err != nil {
@@ -48,6 +48,6 @@ func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Page
 }
 
 func Get(client *golangsdk.ServiceClient, id string) (r GetResult) {
-	_, r.Err = client.Get(singleURL(client, id), &r.Body, nil)
+	_, r.Err = client.Get(resourceURL(client, id), &r.Body, nil)
 	return
 }
