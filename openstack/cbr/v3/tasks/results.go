@@ -135,7 +135,9 @@ func (r commonResult) Extract() (*OperationLog, error) {
 }
 
 func ExtractTasks(r pagination.Page) (*[]OperationLog, error) {
-	var s []OperationLog
-	err := r.(TaskPage).Result.ExtractIntoSlicePtr(&s, "operation_log")
-	return &s, err
+	var s struct {
+		OperationLog []OperationLog `json:"operation_logs"`
+	}
+	err := r.(TaskPage).Result.ExtractInto(&s)
+	return &s.OperationLog, err
 }
