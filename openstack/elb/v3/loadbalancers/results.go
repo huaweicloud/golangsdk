@@ -120,6 +120,8 @@ type EipInfo struct {
 	EipID string `json:"eip_id"`
 	// Eip Address
 	EipAddress string `json:"eip_address"`
+	// Eip Address
+	IpVersion int `json:"ip_version"`
 }
 
 // PoolRef
@@ -139,7 +141,7 @@ type PublicIpInfo struct {
 	// Public IP Address
 	PublicIpAddress string `json:"publicip_address"`
 	// IP Version
-	IpVersion string `json:"ip_version"`
+	IpVersion int `json:"ip_version"`
 }
 
 // StatusTree represents the status of a loadbalancer.

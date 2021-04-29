@@ -54,13 +54,13 @@ type CreateOpts struct {
 	L7Flavor string `json:"l7_flavor_id,omitempty"`
 
 	// IPv6 Bandwidth.
-	IPV6Bandwidth BandwidthRef `json:"ipv6_bandwidth,omitempty"`
+	IPV6Bandwidth *BandwidthRef `json:"ipv6_bandwidth,omitempty"`
 
 	// Public IP IDs.
 	PublicIPIds []string `json:"publicip_ids,omitempty"`
 
 	// Public IP.
-	PublicIP PublicIP `json:"publicip,omitempty"`
+	PublicIP *PublicIP `json:"publicip,omitempty"`
 
 	// ELB VirSubnet IDs.
 	ElbSubnetIds []string `json:"elb_virsubnet_ids,omitempty"`
@@ -76,6 +76,12 @@ type CreateOpts struct {
 type BandwidthRef struct {
 	// Share Bandwidth ID
 	ID string `json:"id" required:"true"`
+}
+
+// UBandwidthRef
+type UBandwidthRef struct {
+	// Share Bandwidth ID
+	ID *string `json:"id"`
 }
 
 // PublicIP
@@ -170,10 +176,10 @@ type UpdateOpts struct {
 	VipAddress string `json:"vip_address,omitempty"`
 
 	// The network on which to allocate the Loadbalancer's address.
-	VipSubnetID string `json:"vip_subnet_cidr_id,omitempty"`
+	VipSubnetID *string `json:"vip_subnet_cidr_id"`
 
 	// The V6 network on which to allocate the Loadbalancer's address.
-	IpV6VipSubnetID string `json:"ipv6_vip_virsubnet_id,omitempty"`
+	IpV6VipSubnetID *string `json:"ipv6_vip_virsubnet_id"`
 
 	// The UUID of a l4 flavor.
 	L4Flavor string `json:"l4_flavor_id,omitempty"`
@@ -182,7 +188,7 @@ type UpdateOpts struct {
 	L7Flavor string `json:"l7_flavor_id,omitempty"`
 
 	// IPv6 Bandwidth.
-	IPV6Bandwidth BandwidthRef `json:"ipv6_bandwidth,omitempty"`
+	IPV6Bandwidth *UBandwidthRef `json:"ipv6_bandwidth,omitempty"`
 
 	// ELB VirSubnet IDs.
 	ElbSubnetIds []string `json:"elb_virsubnet_ids,omitempty"`
