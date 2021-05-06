@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/huaweicloud/golangsdk/openstack/cbr/v3/vaults"
+	"github.com/huaweicloud/golangsdk/openstack/common/tags"
 	th "github.com/huaweicloud/golangsdk/testhelper"
 	"github.com/huaweicloud/golangsdk/testhelper/client"
 )
@@ -224,7 +225,7 @@ var (
 				},
 			},
 		},
-		Tags: []vaults.Tag{
+		Tags: []tags.ResourceTag{
 			{
 				Key:   "key01",
 				Value: "value01",
@@ -254,7 +255,7 @@ var (
 			Allocated:       40,
 			Size:            100,
 		},
-		Tags: []vaults.Tag{
+		Tags: []tags.ResourceTag{
 			{
 				Key:   "key01",
 				Value: "value01",
@@ -311,7 +312,7 @@ var (
 				Allocated:       40,
 				Size:            100,
 			},
-			Tags: []vaults.Tag{
+			Tags: []tags.ResourceTag{
 				{
 					Key:   "key01",
 					Value: "value01",
