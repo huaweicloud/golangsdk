@@ -77,7 +77,10 @@ type CreateOpts struct {
 	MemberTimeout *int `json:"member_timeout,omitempty"`
 
 	// The ipgroup of the Listener.
-	IpGroup IpGroup `json:"ipgroup,omitempty"`
+	IpGroup *IpGroup `json:"ipgroup,omitempty"`
+
+	// The http insert headers of the Listener.
+	InsertHeaders *InsertHeaders `json:"insert_headers,omitempty"`
 
 	// Transparent client ip enable
 	TransparentClientIP *bool `json:"transparent_client_ip_enable,omitempty"`
@@ -88,8 +91,15 @@ type CreateOpts struct {
 
 type IpGroup struct {
 	IpGroupId string `json:"ipgroup_id" required:"true"`
-	Enable    *bool  `json:"enable_ipgroup" required:"true"`
+	Enable    bool   `json:"enable_ipgroup" required:"true"`
 	Type      string `json:"type" required:"true"`
+}
+
+type InsertHeaders struct {
+	ForwardedELBIP   *bool `json:"X-Forwarded-ELB-IP,omitempty"`
+	ForwardedPort    *bool `json:"X-Forwarded-Port,omitempty"`
+	ForwardedForPort *bool `json:"X-Forwarded-For-Port,omitempty"`
+	ForwardedHost    *bool `json:"X-Forwarded-Host" required:"true"`
 }
 
 // ToListenerCreateMap builds a request body from CreateOpts.
@@ -126,6 +136,11 @@ type UpdateOptsBuilder interface {
 	ToListenerUpdateMap() (map[string]interface{}, error)
 }
 
+type IpGroupUpdate struct {
+	IpGroupId string `json:"ipgroup_id,omitempty"`
+	Type      string `json:"type,omitempty"`
+}
+
 // UpdateOpts represents options for updating a Listener.
 type UpdateOpts struct {
 	// The administrative state of the Listener. A valid value is true (UP)
@@ -133,13 +148,13 @@ type UpdateOpts struct {
 	AdminStateUp *bool `json:"admin_state_up,omitempty"`
 
 	// the ID of the CA certificate used by the listener.
-	CAContainerRef string `json:"client_ca_tls_container_ref,omitempty"`
+	CAContainerRef *string `json:"client_ca_tls_container_ref,omitempty"`
 
 	// The ID of the default pool with which the Listener is associated.
 	DefaultPoolID string `json:"default_pool_id,omitempty"`
 
-	// A reference to a Barbican container of TLS secrets.
-	DefaultTlsContainerRef string `json:"default_tls_container_ref,omitempty"`
+	// A reference to a container of TLS secrets.
+	DefaultTlsContainerRef *string `json:"default_tls_container_ref,omitempty"`
 
 	// Human-readable description for the Listener.
 	Description string `json:"description,omitempty"`
@@ -151,10 +166,10 @@ type UpdateOpts struct {
 	Name string `json:"name,omitempty"`
 
 	// A list of references to TLS secrets.
-	SniContainerRefs []string `json:"sni_container_refs,omitempty"`
+	SniContainerRefs *[]string `json:"sni_container_refs,omitempty"`
 
 	// Specifies the security policy used by the listener.
-	TlsCiphersPolicy string `json:"tls_ciphers_policy,omitempty"`
+	TlsCiphersPolicy *string `json:"tls_ciphers_policy,omitempty"`
 
 	// Whether enable member retry
 	EnableMemberRetry *bool `json:"enable_member_retry,omitempty"`
@@ -169,7 +184,10 @@ type UpdateOpts struct {
 	MemberTimeout *int `json:"member_timeout,omitempty"`
 
 	// The ipgroup of the Listener.
-	IpGroup IpGroup `json:"ipgroup,omitempty"`
+	IpGroup *IpGroupUpdate `json:"ipgroup,omitempty"`
+
+	// The http insert headers of the Listener.
+	InsertHeaders *InsertHeaders `json:"insert_headers,omitempty"`
 
 	// Transparent client ip enable
 	TransparentClientIP *bool `json:"transparent_client_ip_enable,omitempty"`

@@ -56,30 +56,36 @@ type Listener struct {
 	// Specifies the security policy used by the listener.
 	TlsCiphersPolicy string `json:"tls_ciphers_policy"`
 
-	// The provisioning status of the listener.
-	// This value is ACTIVE, PENDING_* or ERROR.
-	ProvisioningStatus string `json:"provisioning_status"`
-
 	// Whether enable member retry
-	EnableMemberRetry *bool `json:"enable_member_retry,omitempty"`
+	EnableMemberRetry bool `json:"enable_member_retry"`
 
 	// The keepalive timeout of the Listener.
-	KeepaliveTimeout *int `json:"keepalive_timeout,omitempty"`
+	KeepaliveTimeout int `json:"keepalive_timeout"`
 
 	// The client timeout of the Listener.
-	ClientTimeout *int `json:"client_timeout,omitempty"`
+	ClientTimeout int `json:"client_timeout"`
 
 	// The member timeout of the Listener.
-	MemberTimeout *int `json:"member_timeout,omitempty"`
+	MemberTimeout int `json:"member_timeout"`
 
 	// The ipgroup of the Listener.
-	IpGroup IpGroup `json:"ipgroup,omitempty"`
+	IpGroup IpGroup `json:"ipgroup"`
+
+	// The http insert headers of the Listener.
+	InsertHeaders InsertHeadersInfo `json:"insert_headers"`
 
 	// Transparent client ip enable
-	TransparentClientIP *bool `json:"transparent_client_ip_enable,omitempty"`
+	TransparentClientIP bool `json:"transparent_client_ip_enable"`
 
 	// Enhance L7policy enable
-	EnhanceL7policy *bool `json:"enhance_l7policy_enable,omitempty"`
+	EnhanceL7policy bool `json:"enhance_l7policy_enable"`
+}
+
+type InsertHeadersInfo struct {
+	ForwardedELBIP   bool `json:"X-Forwarded-ELB-IP,omitempty"`
+	ForwardedPort    bool `json:"X-Forwarded-Port,omitempty"`
+	ForwardedForPort bool `json:"X-Forwarded-For-Port,omitempty"`
+	ForwardedHost    bool `json:"X-Forwarded-Host" required:"true"`
 }
 
 type commonResult struct {
