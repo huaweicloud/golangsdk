@@ -53,6 +53,6 @@ func TestDeleteLifecycleHook(t *testing.T) {
 	defer th.TeardownHTTP()
 	handleLifeCycleHookDelete(t)
 
-	err := lifecyclehooks.Delete(client.ServiceClient(), "50ed20b8-9853-4668-a71c-c8c15b5cb85f", "test-hook").Extract()
+	err := lifecyclehooks.Delete(client.ServiceClient(), "50ed20b8-9853-4668-a71c-c8c15b5cb85f", "test-hook").ExtractErr()
 	th.AssertNoErr(t, err)
 }

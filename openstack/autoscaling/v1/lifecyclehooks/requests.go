@@ -50,13 +50,13 @@ func Create(client *golangsdk.ServiceClient, opts CreateOptsBuilder, groupID str
 
 // Get is a method to obtains the hook detail of autoscaling service.
 func Get(client *golangsdk.ServiceClient, groupID, hookName string) (r GetResult) {
-	_, r.Err = client.Get(resourceURL(client, groupID, hookName), &r.Body, &golangsdk.RequestOpts{})
+	_, r.Err = client.Get(resourceURL(client, groupID, hookName), &r.Body, nil)
 	return
 }
 
 // List is a method to obtains a hook array of the autoscaling service.
 func List(client *golangsdk.ServiceClient, groupID string) (r ListResult) {
-	_, r.Err = client.Get(listURL(client, groupID), &r.Body, &golangsdk.RequestOpts{})
+	_, r.Err = client.Get(listURL(client, groupID), &r.Body, nil)
 	return
 }
 
@@ -88,7 +88,7 @@ func (opts UpdateOpts) ToLifecycleHookUpdateMap() (map[string]interface{}, error
 }
 
 // Update is a method which can be able to access to udpate the existing hook of the autoscaling service.
-func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, groupID, hookName string) (r GetResult) {
+func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, groupID, hookName string) (r UpdateResult) {
 	b, err := opts.ToLifecycleHookUpdateMap()
 	if err != nil {
 		r.Err = err
@@ -102,7 +102,7 @@ func Update(client *golangsdk.ServiceClient, opts UpdateOptsBuilder, groupID, ho
 }
 
 //Delete is a method which can be able to access to delete the existing hook of the autoscaling service.
-func Delete(client *golangsdk.ServiceClient, groupID, hookName string) (r NoneResult) {
-	_, r.Err = client.Delete(resourceURL(client, groupID, hookName), &golangsdk.RequestOpts{})
+func Delete(client *golangsdk.ServiceClient, groupID, hookName string) (r DeleteResult) {
+	_, r.Err = client.Delete(resourceURL(client, groupID, hookName), nil)
 	return
 }

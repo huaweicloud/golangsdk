@@ -2,10 +2,6 @@ package lifecyclehooks
 
 import "github.com/huaweicloud/golangsdk"
 
-type commonResult struct {
-	golangsdk.Result
-}
-
 // Hook is a struct that represents the result of API calling.
 type Hook struct {
 	// The lifecycle hook name.
@@ -26,6 +22,17 @@ type Hook struct {
 	CreateTime string `json:"create_time"`
 }
 
+type commonResult struct {
+	golangsdk.Result
+}
+
+// Extract will deserialize the result to Hook object.
+func (r commonResult) Extract() (*Hook, error) {
+	var s Hook
+	err := r.Result.ExtractInto(&s)
+	return &s, err
+}
+
 type CreateResult struct {
 	commonResult
 }
@@ -34,11 +41,8 @@ type GetResult struct {
 	commonResult
 }
 
-// Extract will deserialize the result to Hook object.
-func (r commonResult) Extract() (*Hook, error) {
-	var s Hook
-	err := r.Result.ExtractInto(&s)
-	return &s, err
+type UpdateResult struct {
+	commonResult
 }
 
 type ListResult struct {
@@ -55,10 +59,6 @@ func (r ListResult) Extract() (*[]Hook, error) {
 	return &s.Hooks, err
 }
 
-type NoneResult struct {
-	commonResult
-}
-
-func (r NoneResult) Extract() error {
-	return r.Err
+type DeleteResult struct {
+	golangsdk.ErrResult
 }
