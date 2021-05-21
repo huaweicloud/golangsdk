@@ -260,7 +260,7 @@ type CreateMemberOpts struct {
 
 	// If you omit this parameter, LBaaS uses the vip_subnet_id parameter value
 	// for the subnet UUID.
-	SubnetID string `json:"subnet_id,omitempty"`
+	SubnetID string `json:"subnet_cidr_id,omitempty"`
 
 	// The administrative state of the Pool. A valid value is true (UP)
 	// or false (DOWN).

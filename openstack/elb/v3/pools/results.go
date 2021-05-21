@@ -65,7 +65,7 @@ type Pool struct {
 
 	// The network on which the members of the Pool will be located. Only members
 	// that are on this network can be added to the Pool.
-	SubnetID string `json:"subnet_id"`
+	SubnetID string `json:"subnet_cidr_id"`
 
 	// The administrative state of the Pool, which is up (true) or down (false).
 	AdminStateUp bool `json:"admin_state_up"`
