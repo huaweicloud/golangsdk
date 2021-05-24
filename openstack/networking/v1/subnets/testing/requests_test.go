@@ -69,11 +69,10 @@ func TestListSubnet(t *testing.T) {
 
 	expected := []subnets.Subnet{
 		{
-			Status:     "ACTIVE",
-			CIDR:       "192.168.200.0/24",
-			EnableDHCP: true,
-			Name:       "openlab-subnet",
-			//DnsList:          []string{},
+			Status:        "ACTIVE",
+			CIDR:          "192.168.200.0/24",
+			EnableDHCP:    true,
+			Name:          "openlab-subnet",
 			ID:            "0345a6ef-9404-487b-87c8-212557a1160d",
 			GatewayIP:     "192.168.200.1",
 			VPC_ID:        "58c24204-170e-4ff0-9b42-c53cdea9239a",
@@ -83,11 +82,10 @@ func TestListSubnet(t *testing.T) {
 			SubnetId:      "3d543273-31c3-41f8-b887-ed8c2c837578",
 		},
 		{
-			Status:     "ACTIVE",
-			CIDR:       "192.168.200.0/24",
-			EnableDHCP: true,
-			Name:       "openlab-subnet",
-			//DnsList:          []string{},
+			Status:        "ACTIVE",
+			CIDR:          "192.168.200.0/24",
+			EnableDHCP:    true,
+			Name:          "openlab-subnet",
 			ID:            "134ca339-24dc-44f5-ae6a-cf0404216ed2",
 			GatewayIP:     "192.168.200.1",
 			VPC_ID:        "58c24204-170e-4ff0-9b42-c53cdea9239a",
@@ -247,8 +245,12 @@ func TestUpdateSubnet(t *testing.T) {
 {
 "subnet":
     {
-    	"name": "testsubnet",
-		"dhcp_enable": false
+        "name": "testsubnet",
+        "dnsList": [
+            "114.114.114.114",
+            "8.8.8.8"
+        ],
+        "dhcp_enable": false
     }
 }
 `)
@@ -260,14 +262,17 @@ func TestUpdateSubnet(t *testing.T) {
 {
     "subnet": {
         "id": "83e3bddc-b9ed-4614-a0dc-8a997095a86c",
-		"name": "testsubnet",
+        "name": "testsubnet",
         "status": "ACTIVE"
     }
 }
 		`)
 	})
 
-	options := subnets.UpdateOpts{Name: "testsubnet"}
+	options := subnets.UpdateOpts{
+		Name:    "testsubnet",
+		DnsList: &[]string{"114.114.114.114", "8.8.8.8"},
+	}
 
 	n, err := subnets.Update(fake.ServiceClient(), "8f794f06-2275-4d82-9f5a-6d68fbe21a75", "83e3bddc-b9ed-4614-a0dc-8a997095a86c", options).Extract()
 	th.AssertNoErr(t, err)
