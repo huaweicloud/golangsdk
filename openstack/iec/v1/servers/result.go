@@ -97,3 +97,19 @@ type CreateCloudServerResponse struct {
 type DeleteResult struct {
 	golangsdk.ErrResult
 }
+
+type Servers struct {
+	Servers []Server `json:"servers"`
+	Count   int      `json:"count"`
+}
+
+type ListResult struct {
+	commonResult
+}
+
+func (r ListResult) Extract() (*Servers, error) {
+	var entity Servers
+
+	err := r.ExtractInto(&entity)
+	return &entity, err
+}
