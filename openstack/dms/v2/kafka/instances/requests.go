@@ -124,7 +124,7 @@ type CreateOps struct {
 	EnterpriseProjectID string `json:"enterprise_project_id,omitempty"`
 
 	// Indicates the tags of the instance
-	Tags tags.ResourceTags `json:"tags,omitempty"`
+	Tags []tags.ResourceTag `json:"tags,omitempty"`
 }
 
 // ToInstanceCreateMap is used for type convert
