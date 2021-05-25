@@ -33,3 +33,20 @@ func (r GetResult) ExtractVolumeType() (*VolumeType, error) {
 	err := r.ExtractIntoStructPtr(&entity, "")
 	return &entity, err
 }
+
+// Volumes 卷列表对象
+type Volumes struct {
+	Volumes []common.Volume `json:"volumes"`
+	Count   int             `json:"count"`
+}
+
+type ListResult struct {
+	commonResult
+}
+
+func (r ListResult) Extract() (*Volumes, error) {
+	var entity Volumes
+
+	err := r.ExtractInto(&entity)
+	return &entity, err
+}
