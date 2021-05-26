@@ -160,7 +160,7 @@ func DeleteServers(client *golangsdk.ServiceClient, opts DeleteOptsBuilder) (r D
 
 	var resp *http.Response
 	resp, r.Err = client.Post(deleteURL, body, nil, &golangsdk.RequestOpts{
-		OkCodes: []int{http.StatusNoContent},
+		OkCodes: []int{http.StatusAccepted},
 	})
 	if r.Err != nil {
 		return
