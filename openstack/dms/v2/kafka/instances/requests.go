@@ -255,7 +255,5 @@ func List(client *golangsdk.ServiceClient, opts ListOpsBuilder) pagination.Pager
 		return Page{pagination.SinglePageBase(r)}
 	})
 
-	header := map[string]string{"Content-Type": "application/json"}
-	pageList.Headers = header
 	return pageList
 }
