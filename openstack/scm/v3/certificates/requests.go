@@ -89,3 +89,9 @@ func Export(c *golangsdk.ServiceClient, id string) (r ExportResult) {
 	})
 	return
 }
+
+// Delete the imported certificate based on its unique ID.
+func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
+	_, r.Err = c.Delete(resourceURL(c, id), nil)
+	return
+}

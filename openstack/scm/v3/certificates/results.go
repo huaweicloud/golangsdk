@@ -71,6 +71,11 @@ func (r commonResult) Extract() (*Certificate, error) {
 type GetResult struct {
 	commonResult
 }
+
 type ExportResult struct {
+	commonResult
+}
+
+type DeleteResult struct {
 	commonResult
 }
