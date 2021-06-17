@@ -59,7 +59,7 @@ type ImportResult struct {
 }
 
 type PushResult struct {
-	commonResult
+	golangsdk.ErrResult
 }
 
 func (r commonResult) Extract() (*Certificate, error) {
@@ -77,5 +77,5 @@ type ExportResult struct {
 }
 
 type DeleteResult struct {
-	commonResult
+	golangsdk.ErrResult
 }
