@@ -2,9 +2,31 @@ package certificates
 
 import (
 	"github.com/huaweicloud/golangsdk"
-	"github.com/huaweicloud/golangsdk/pagination"
 )
 
+/*
+Part 1:
+The response of the import operation.
+*/
+// The struct defines the information about the imported certificate.
+type CertificateImportInfo struct {
+	CertificateId string `json:"certificate_id"`
+}
+
+type ImportResult struct {
+	golangsdk.Result
+}
+
+func (r ImportResult) Extract() (*CertificateImportInfo, error) {
+	var s CertificateImportInfo
+	err := r.ExtractInto(&s)
+	return &s, err
+}
+
+/*
+Part 2:
+The response from query escrowed certificate.
+*/
 // This struct defines the authentication information of the domain.
 // API that will be used to Obtain Certificate Information
 type Authentification struct {
@@ -14,18 +36,12 @@ type Authentification struct {
 	Domain      string `json:"domain"`
 }
 
-// The struct defines the information about the imported certificate.
-// This struct is used by the API for obtain certificate information and importing.
-type Certificate struct {
-	// the importing API only uses certificate_id.
-	CertificateId     string             `json:"certificate_id"`
+// The struct defines the detail information about the escrow certificate information.
+type CertificateEscrowInfo struct {
 	Id                string             `json:"id"`
-	Name              string             `json:"name,omitempty" required:"true"`
-	Certificate       string             `json:"certificate" required:"true"`
-	CertificateChain  string             `json:"certificate_chain" required:"true"`
-	PrivateKey        string             `json:"private_key" required:"true"`
 	Status            string             `json:"status"`
 	OrderId           string             `json:"order_id"`
+	Name              string             `json:"name"`
 	CertificateType   string             `json:"type"`
 	Brand             string             `json:"brand"`
 	PushSupport       string             `json:"push_support"`
@@ -44,38 +60,49 @@ type Certificate struct {
 	Authentifications []Authentification `json:"authentification,omitempty"`
 }
 
-// CertificatePage is the page returned by a pager when traversing over a
-// collection of certificates.
-type CertificatePage struct {
-	pagination.SinglePageBase
-}
-
-type commonResult struct {
+type GetResult struct {
 	golangsdk.Result
 }
 
-type ImportResult struct {
-	commonResult
-}
-
-type PushResult struct {
-	golangsdk.ErrResult
-}
-
-func (r commonResult) Extract() (*Certificate, error) {
-	var s Certificate
+func (r GetResult) Extract() (*CertificateEscrowInfo, error) {
+	var s CertificateEscrowInfo
 	err := r.ExtractInto(&s)
 	return &s, err
 }
 
-type GetResult struct {
-	commonResult
+/*
+-- Part 3:
+-- The response from exported certificate.
+*/
+// The struct defines the detail information about the imported certificate.
+type CertificateDetail struct {
+	Certificate      string `json:"certificate" required:"true"`
+	CertificateChain string `json:"certificate_chain" required:"true"`
+	PrivateKey       string `json:"private_key" required:"true"`
+}
+
+func (r ExportResult) Extract() (*CertificateDetail, error) {
+	var s CertificateDetail
+	err := r.ExtractInto(&s)
+	return &s, err
 }
 
 type ExportResult struct {
-	commonResult
+	golangsdk.Result
 }
 
+/*
+Part 4:
+The response from pushing certificate.
+*/
+type PushResult struct {
+	golangsdk.ErrResult
+}
+
+/*
+Part 5:
+The response from deleting certificate.
+*/
 type DeleteResult struct {
 	golangsdk.ErrResult
 }
