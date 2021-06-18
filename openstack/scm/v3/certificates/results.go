@@ -50,13 +50,13 @@ type CertificateEscrowInfo struct {
 	IssueTime         string             `json:"issue_time"`
 	NotBefore         string             `json:"not_before"`
 	NotAfter          string             `json:"not_after"`
-	ValidityPeriod    int8               `json:"validity_period,omitempty"`
+	ValidityPeriod    int                `json:"validity_period,omitempty"`
 	ValidationMethod  string             `json:"validation_method"`
 	DomainType        string             `json:"domain_type"`
 	Domain            string             `json:"domain"`
 	Sans              string             `json:"sans"`
-	DomainCount       int8               `json:"domain_count,omitempty"`
-	WildcardCount     int8               `json:"wildcard_count,omitempty"`
+	DomainCount       int                `json:"domain_count,omitempty"`
+	WildcardCount     int                `json:"wildcard_count,omitempty"`
 	Authentifications []Authentification `json:"authentification,omitempty"`
 }
 
