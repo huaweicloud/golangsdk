@@ -16,11 +16,11 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new certificate.
 type CreateOpts struct {
-	//Certificate name
+	// Certificate name
 	Name string `json:"name" required:"true"`
-	//Certificate content
+	// Certificate content
 	Content string `json:"content" required:"true"`
-	//Private Key
+	// Private Key
 	Key string `json:"key" required:"true"`
 }
 
@@ -72,14 +72,20 @@ func Update(c *golangsdk.ServiceClient, certID string, opts UpdateOptsBuilder) (
 
 // Get retrieves a particular certificate based on its unique ID.
 func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
-	_, r.Err = c.Get(resourceURL(c, id), &r.Body, &RequestOpts)
+	reqOpt := &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+	_, r.Err = c.Get(resourceURL(c, id), &r.Body, reqOpt)
 	return
 }
 
 // Delete will permanently delete a particular certificate based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, id string) (r DeleteResult) {
-	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{204},
-		MoreHeaders: RequestOpts.MoreHeaders}
+	reqOpt := &golangsdk.RequestOpts{
+		OkCodes:     []int{204},
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
 	_, r.Err = c.Delete(resourceURL(c, id), reqOpt)
 	return
 }

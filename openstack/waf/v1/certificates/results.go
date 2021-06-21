@@ -1,18 +1,18 @@
 package certificates
 
 import (
-	"time"
-
 	"github.com/huaweicloud/golangsdk"
 )
 
 type Certificate struct {
-	//Certificate ID
+	// Certificate ID
 	Id string `json:"id"`
-	//Certificate Name
+	// Certificate Name
 	Name string `json:"name"`
-	//When the certificate expires
-	ExpireTime time.Time `json:"expireTime"`
+	// the time when the certificate expires in unix timestamp
+	ExpireTime int `json:"expireTime"`
+	// the time when the certificate is uploaded in unix timestamp
+	TimeStamp int `json:"timestamp"`
 }
 
 type commonResult struct {
