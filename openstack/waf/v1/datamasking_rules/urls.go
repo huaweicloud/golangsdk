@@ -2,10 +2,10 @@ package datamasking_rules
 
 import "github.com/huaweicloud/golangsdk"
 
-func rootURL(c *golangsdk.ServiceClient, policy_id string) string {
-	return c.ServiceURL("policy", policy_id, "privacy")
+func rootURL(c *golangsdk.ServiceClient, policyID string) string {
+	return c.ServiceURL("policy", policyID, "privacy")
 }
 
-func resourceURL(c *golangsdk.ServiceClient, policy_id, id string) string {
-	return c.ServiceURL("policy", policy_id, "privacy", id)
+func resourceURL(c *golangsdk.ServiceClient, policyID, id string) string {
+	return c.ServiceURL("policy", policyID, "privacy", id)
 }
