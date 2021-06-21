@@ -69,7 +69,7 @@ func Push(c *golangsdk.ServiceClient, id string, opts PushOptsBuilder) (r PushRe
 	}
 
 	_, r.Err = c.Post(pushURL(c, id), b, nil, &golangsdk.RequestOpts{
-		OkCodes: []int{200, 201, 204},
+		OkCodes: []int{204},
 	})
 	return
 }
