@@ -6,7 +6,7 @@ import (
 
 type Precise struct {
 	Id         string      `json:"id"`
-	PolicyID   string      `json:"policyid"`
+	PolicyID   string      `json:"policy_id"`
 	Name       string      `json:"name"`
 	Time       bool        `json:"time"`
 	Start      int64       `json:"start"`

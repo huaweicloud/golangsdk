@@ -5,14 +5,14 @@ import (
 )
 
 type WhiteBlackIP struct {
-	//WhiteBlackIP Rule ID
+	// WhiteBlackIP Rule ID
 	Id string `json:"id"`
-	//WhiteBlackIP Rule Addr
+	// WhiteBlackIP Rule Addr
 	Addr string `json:"addr"`
-	//IP address type
+	// IP address type
 	White int `json:"white"`
-	//Policy ID
-	PolicyID string `json:"policyid"`
+	// Policy ID
+	PolicyID string `json:"policy_id"`
 }
 
 type commonResult struct {

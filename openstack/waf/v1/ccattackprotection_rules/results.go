@@ -6,7 +6,7 @@ import (
 
 type CcAttack struct {
 	Id           string       `json:"id"`
-	PolicyID     string       `json:"policyid"`
+	PolicyID     string       `json:"policy_id"`
 	Url          string       `json:"url"`
 	LimitNum     int          `json:"limit_num"`
 	LimitPeriod  int          `json:"limit_period"`
