@@ -5,16 +5,16 @@ import (
 )
 
 type DataMasking struct {
-	//DataMasking Rule ID
+	// DataMasking Rule ID
 	Id string `json:"id"`
-	//DataMaksing Rule URL
-	Url string `json:"url"`
-	//Masked Field
+	// Policy ID
+	PolicyID string `json:"policy_id"`
+	// DataMaksing Rule URL
+	Path string `json:"path"`
+	// Masked Field
 	Category string `json:"category"`
-	//Masked Subfield
+	// Masked Subfield
 	Index string `json:"index"`
-	//Policy ID
-	PolicyID string `json:"policyid"`
 }
 
 type commonResult struct {

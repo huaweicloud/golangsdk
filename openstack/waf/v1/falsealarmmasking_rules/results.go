@@ -13,14 +13,20 @@ type ListResponse struct {
 }
 
 type AlarmMasking struct {
-	//False Alarm Masking Rule ID
+	// the ID of a false alarm masking rule
 	Id string `json:"id"`
-	//False Alarm Maksing Rule URL
-	Url string `json:"url"`
-	//Rule ID
+	// the policy ID
+	PolicyID string `json:"policy_id"`
+	// a misreported URL excluding a domain name
+	Path string `json:"path"`
+	// the event ID
+	EventID string `json:"event_id"`
+	// the event ID
+	EventType string `json:"event_type"`
+	// the rule ID, which consists of six digits and cannot be empty
 	Rule string `json:"rule"`
-	//Policy ID
-	PolicyID string `json:"policyid"`
+	// the time when a false alarm masking rule is added
+	TimeStamp int `json:"timestamp"`
 }
 
 type commonResult struct {
@@ -37,6 +43,14 @@ func (r commonResult) Extract() (*AlarmMasking, error) {
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a False Alarm Masking rule.
 type CreateResult struct {
+	commonResult
+}
+
+type UpdateResult struct {
+	commonResult
+}
+
+type GetResult struct {
 	commonResult
 }
 
