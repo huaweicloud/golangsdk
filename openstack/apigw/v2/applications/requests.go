@@ -61,17 +61,17 @@ func Get(client *golangsdk.ServiceClient, instanceId, appId string) (r GetResult
 // ListOpts allows to filter list data using given parameters.
 type ListOpts struct {
 	// App ID.
-	Id string `json:"id"`
+	Id string `q:"id"`
 	// App name.
-	Name string `json:"name"`
+	Name string `q:"name"`
 	// App status.
-	Status string `json:"status"`
+	Status string `q:"status"`
 	// App key.
-	AppKey string `json:"app_key"`
+	AppKey string `q:"app_key"`
 	// Creator of the application.
 	//     USER: The app is created by the API user.
 	//     MARKET: The app is allocated by the marketplace.
-	Creator string `json:"creator"`
+	Creator string `q:"creator"`
 	// Offset from which the query starts.
 	// If the offset is less than 0, the value is automatically converted to 0. Default to 0.
 	Offset int `q:"offset"`
@@ -141,7 +141,7 @@ func Delete(client *golangsdk.ServiceClient, instanceId, appId string) (r Delete
 	return
 }
 
-// SecretResetOpts allows to create or update the application code value using given parameters.
+// AppCodeOpts allows to create an application code using given parameters.
 type AppCodeOpts struct {
 	// AppCode value, which contains 64 to 180 characters, starting with a letter, plus sign (+) or slash (/).
 	// Only letters and the following special characters are allowed: +-_!@#$%/=
@@ -175,7 +175,7 @@ func AutoGenerateAppCode(client *golangsdk.ServiceClient, instanceId, appId stri
 	return
 }
 
-// Get is a method to obtain the specified code of the specified application of the specified instance using
+// GetAppCode is a method to obtain the specified code of the specified application of the specified instance using
 // instanceId, appId and codeId.
 func GetAppCode(client *golangsdk.ServiceClient, instanceId, appId, codeId string) (r GetCodeResult) {
 	_, r.Err = client.Get(codeResourceURL(client, instanceId, appId, codeId), &r.Body, &golangsdk.RequestOpts{
@@ -186,8 +186,11 @@ func GetAppCode(client *golangsdk.ServiceClient, instanceId, appId, codeId strin
 
 // ListCodeOpts allows to filter application code list data using given parameters.
 type ListCodeOpts struct {
-	Offset int `json:"offset"`
-	Limit  int `json:"limit"`
+	// Offset from which the query starts.
+	// If the offset is less than 0, the value is automatically converted to 0. Default to 0.
+	Offset int `q:"offset"`
+	// Number of items displayed on each page.
+	Limit int `q:"limit"`
 }
 
 type ListCodeOptsBuilder interface {
