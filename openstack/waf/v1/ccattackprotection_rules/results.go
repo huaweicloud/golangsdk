@@ -7,7 +7,7 @@ import (
 type CcAttack struct {
 	Id           string       `json:"id"`
 	PolicyID     string       `json:"policy_id"`
-	Url          string       `json:"url"`
+	Url          string       `json:"path"`
 	LimitNum     int          `json:"limit_num"`
 	LimitPeriod  int          `json:"limit_period"`
 	LockTime     int          `json:"lock_time"`
@@ -16,6 +16,7 @@ type CcAttack struct {
 	TagCondition TagCondition `json:"tag_condition"`
 	Action       Action       `json:"action"`
 	Default      bool         `json:"default"`
+	TimeStamp    int          `json:"timestamp"`
 }
 
 type commonResult struct {
@@ -32,6 +33,12 @@ func (r commonResult) Extract() (*CcAttack, error) {
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a cc attack protection rule.
 type CreateResult struct {
+	commonResult
+}
+
+// UpdateResult represents the result of a update operation. Call its Extract
+// method to interpret it as a cc attack protection rule.
+type UpdateResult struct {
 	commonResult
 }
 
