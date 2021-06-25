@@ -17,7 +17,7 @@ type CreateOptsBuilder interface {
 // CreateOpts contains all the values needed to create a new web tamper protection rule.
 type CreateOpts struct {
 	Hostname string `json:"hostname" required:"true"`
-	Url      string `json:"url" required:"true"`
+	Url      string `json:"path" required:"true"`
 }
 
 // ToWebTamperCreateMap builds a create request body from CreateOpts.
@@ -39,14 +39,20 @@ func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder)
 
 // Get retrieves a particular web tamper protection rule based on its unique ID.
 func Get(c *golangsdk.ServiceClient, policyID, ruleID string) (r GetResult) {
-	_, r.Err = c.Get(resourceURL(c, policyID, ruleID), &r.Body, &RequestOpts)
+	reqOpt := &golangsdk.RequestOpts{
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+
+	_, r.Err = c.Get(resourceURL(c, policyID, ruleID), &r.Body, reqOpt)
 	return
 }
 
 // Delete will permanently delete a particular web tamper protection rule based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, policyID, ruleID string) (r DeleteResult) {
-	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{204},
-		MoreHeaders: RequestOpts.MoreHeaders}
+	reqOpt := &golangsdk.RequestOpts{
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+
 	_, r.Err = c.Delete(resourceURL(c, policyID, ruleID), reqOpt)
 	return
 }

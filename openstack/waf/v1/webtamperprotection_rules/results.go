@@ -5,10 +5,11 @@ import (
 )
 
 type WebTamper struct {
-	Id       string `json:"id"`
-	PolicyID string `json:"policy_id"`
-	Hostname string `json:"hostname"`
-	Url      string `json:"url"`
+	Id        string `json:"id"`
+	PolicyID  string `json:"policy_id"`
+	Hostname  string `json:"hostname"`
+	Url       string `json:"path"`
+	TimeStamp int64  `json:"timestamp"`
 }
 
 type commonResult struct {
