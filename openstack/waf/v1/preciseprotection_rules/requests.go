@@ -17,7 +17,7 @@ type CreateOptsBuilder interface {
 // CreateOpts contains all the values needed to create a new precise protection rule.
 type CreateOpts struct {
 	Name       string      `json:"name" required:"true"`
-	Time       bool        `json:"time,omitempty"`
+	Time       bool        `json:"time"`
 	Start      int64       `json:"start,omitempty"`
 	End        int64       `json:"end,omitempty"`
 	Conditions []Condition `json:"conditions" required:"true"`
@@ -28,7 +28,7 @@ type CreateOpts struct {
 type Condition struct {
 	Category string   `json:"category" required:"true"`
 	Index    string   `json:"index,omitempty"`
-	Logic    int      `json:"logic" required:"true"`
+	Logic    string   `json:"logic" required:"true"`
 	Contents []string `json:"contents" required:"true"`
 }
 
@@ -53,16 +53,35 @@ func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder)
 	return
 }
 
+// Update will update a precise protection rule based on the values in CreateOpts.
+// The response code from api is 200
+func Update(c *golangsdk.ServiceClient, policyID, ruleID string, opts CreateOptsBuilder) (r UpdateResult) {
+	b, err := opts.ToPreciseCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
+	_, r.Err = c.Put(resourceURL(c, policyID, ruleID), b, &r.Body, reqOpt)
+	return
+}
+
 // Get retrieves a particular precise rule based on its unique ID.
 func Get(c *golangsdk.ServiceClient, policyID, ruleID string) (r GetResult) {
-	_, r.Err = c.Get(resourceURL(c, policyID, ruleID), &r.Body, &RequestOpts)
+	reqOpt := &golangsdk.RequestOpts{
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+
+	_, r.Err = c.Get(resourceURL(c, policyID, ruleID), &r.Body, reqOpt)
 	return
 }
 
 // Delete will permanently delete a particular precise rule based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, policyID, ruleID string) (r DeleteResult) {
-	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{204},
-		MoreHeaders: RequestOpts.MoreHeaders}
+	reqOpt := &golangsdk.RequestOpts{
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+
 	_, r.Err = c.Delete(resourceURL(c, policyID, ruleID), reqOpt)
 	return
 }
