@@ -33,6 +33,12 @@ type CreateResult struct {
 	commonResult
 }
 
+// UpdateResult represents the result of a update operation. Call its Extract
+// method to interpret it as a precise protection rule.
+type UpdateResult struct {
+	commonResult
+}
+
 // GetResult represents the result of a get operation. Call its Extract
 // method to interpret it as a precise protection rule.
 type GetResult struct {
