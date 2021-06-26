@@ -126,8 +126,9 @@ func Download(c *golangsdk.ServiceClient, containerName, objectName string, opts
 	}
 
 	resp, err := c.Get(url, nil, &golangsdk.RequestOpts{
-		MoreHeaders: h,
-		OkCodes:     []int{200, 206, 304},
+		MoreHeaders:      h,
+		OkCodes:          []int{200, 206, 304},
+		KeepResponseBody: true,
 	})
 	if resp != nil {
 		r.Header = resp.Header
