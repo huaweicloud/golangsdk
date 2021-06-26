@@ -41,8 +41,29 @@ const (
 	"id": "3585fce96a5d44f8b445121b9440274a",
 	"name": "terraform_test_update",
 	"remark": "Updated by script"
-}
-`
+}`
+
+	expectedCreateVariableResponse = `
+{
+	"env_id": "3585fce96a5d44f8b445121b9440274a",
+	"group_id": "bd7c9608c05e4e93a6b44e47f19b6bed",
+	"id": "2dc48632332f4157804175175e71e3e8",
+	"variable_name": "Path",
+	"variable_value": "/stage/test"
+}`
+
+	expectedListVariablesResponse = `
+{
+	"variables": [
+		{
+			"env_id": "3585fce96a5d44f8b445121b9440274a",
+			"group_id": "bd7c9608c05e4e93a6b44e47f19b6bed",
+			"id": "2dc48632332f4157804175175e71e3e8",
+			"variable_name": "Path",
+			"variable_value": "/stage/test"
+		}
+	]
+}`
 )
 
 var (
@@ -84,26 +105,53 @@ var (
 			Description: "Updated by script",
 		},
 	}
+
+	variableCreateOpts = &environments.CreateVariableOpts{
+		EnvId:   "3585fce96a5d44f8b445121b9440274a",
+		GroupId: "bd7c9608c05e4e93a6b44e47f19b6bed",
+		Name:    "Path",
+		Value:   "/stage/test",
+	}
+
+	expectedCreateVariableResponseData = &environments.Variable{
+		EnvId:   "3585fce96a5d44f8b445121b9440274a",
+		GroupId: "bd7c9608c05e4e93a6b44e47f19b6bed",
+		Name:    "Path",
+		Value:   "/stage/test",
+		Id:      "2dc48632332f4157804175175e71e3e8",
+	}
+
+	expectedListVariableResponseData = []environments.Variable{
+		{
+			EnvId:   "3585fce96a5d44f8b445121b9440274a",
+			GroupId: "bd7c9608c05e4e93a6b44e47f19b6bed",
+			Name:    "Path",
+			Value:   "/stage/test",
+			Id:      "2dc48632332f4157804175175e71e3e8",
+		},
+	}
 )
 
 func handleV2EnvironmentCreate(t *testing.T) {
-	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/envs", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "POST")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusAccepted)
-		_, _ = fmt.Fprint(w, expectedCreateResponse)
-	})
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/envs",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusAccepted)
+			_, _ = fmt.Fprint(w, expectedCreateResponse)
+		})
 }
 
 func handleV2EnvironmentList(t *testing.T) {
-	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/envs", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "GET")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = fmt.Fprint(w, expectedListResponse)
-	})
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/envs",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedListResponse)
+		})
 }
 
 func handleV2EnvironmentUpdate(t *testing.T) {
@@ -125,4 +173,47 @@ func handleV2EnvironmentDelete(t *testing.T) {
 			w.Header().Add("Content-Type", "application/json")
 			w.WriteHeader(http.StatusNoContent)
 		})
+}
+
+func handleV2EnvironmentVariableCreate(t *testing.T) {
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/env-variables",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			_, _ = fmt.Fprint(w, expectedCreateVariableResponse)
+		})
+}
+
+func handleV2EnvironmentVariableGet(t *testing.T) {
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/env-variables"+
+		"/2dc48632332f4157804175175e71e3e8", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "GET")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = fmt.Fprint(w, expectedCreateVariableResponse)
+	})
+}
+
+func handleV2EnvironmentVariableList(t *testing.T) {
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/env-variables",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedListVariablesResponse)
+		})
+}
+
+func handleV2EnvironmentVariableDelete(t *testing.T) {
+	th.Mux.HandleFunc("/instances/cc4ea721cc6747f7969e06bd21121c52/env-variables"+
+		"/2dc48632332f4157804175175e71e3e8", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "DELETE")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNoContent)
+	})
 }
