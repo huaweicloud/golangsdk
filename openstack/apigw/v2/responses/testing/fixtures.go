@@ -131,8 +131,6 @@ var (
 		GroupId:    "d060ade0560a4c01b89bf954ad2e9d6e",
 	}
 
-	responsesOpts = &responses.ResponseOpts{}
-
 	expectedCreateResponseData = &responses.Response{
 		CreateTime: "2021-06-24T09:33:10.562277766+08:00",
 		UpdateTime: "2021-06-24T09:33:10.562277766+08:00",
