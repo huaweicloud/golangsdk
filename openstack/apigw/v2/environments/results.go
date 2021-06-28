@@ -47,7 +47,51 @@ func ExtractEnvironments(r pagination.Page) ([]Environment, error) {
 	return s, err
 }
 
-// DeleteResult represents a result of the Delete method.
+// DeleteResult represents a result of the Delete and DeleteVariable method.
 type DeleteResult struct {
 	golangsdk.ErrResult
+}
+
+type VariableResult struct {
+	golangsdk.Result
+}
+
+// VariableCreateResult represents a result of the CreateVariable method.
+type VariableCreateResult struct {
+	VariableResult
+}
+
+// VariableGetResult represents a result of the GetVariable operation.
+type VariableGetResult struct {
+	VariableResult
+}
+
+type Variable struct {
+	// Environment variable ID.
+	Id string `json:"id"`
+	// Variable name.
+	Name string `json:"variable_name"`
+	// Variable value.
+	Value string `json:"variable_value"`
+	// API group ID.
+	GroupId string `json:"group_id"`
+	// Environment ID.
+	EnvId string `json:"env_id"`
+}
+
+func (r VariableResult) Extract() (*Variable, error) {
+	var s Variable
+	err := r.ExtractInto(&s)
+	return &s, err
+}
+
+// VariablePage represents the response pages of the List operation.
+type VariablePage struct {
+	pagination.SinglePageBase
+}
+
+func ExtractVariables(r pagination.Page) ([]Variable, error) {
+	var s []Variable
+	err := r.(VariablePage).Result.ExtractIntoSlicePtr(&s, "variables")
+	return s, err
 }
