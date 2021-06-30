@@ -5,7 +5,7 @@ import (
 	"github.com/huaweicloud/golangsdk/pagination"
 )
 
-// CreateOpts allows to create a new custom response or update the existing custom response using given parameters.
+// ResponseOpts allows to create a new custom response or update the existing custom response using given parameters.
 type ResponseOpts struct {
 	// APIG group name, which can contain 1 to 64 characters, only letters, digits, hyphens (-) and
 	// underscores (_) are allowed.
@@ -27,6 +27,10 @@ type ResponseOpts struct {
 	//     DEFAULT_5XX: Another 5XX error occurred.
 	// Each error type is in JSON format.
 	Responses map[string]ResponseInfo `json:"responses,omitempty"`
+	// APIG dedicated instance ID.
+	InstanceId string `json:"-"`
+	// APIG group ID.
+	GroupId string `json:"-"`
 }
 
 type ResponseInfo struct {
@@ -41,40 +45,51 @@ type ResponseInfo struct {
 
 type ResponseOptsBuilder interface {
 	ToResponseOptsMap() (map[string]interface{}, error)
+	GetInstanceId() string
+	GetGroupId() string
 }
 
 func (opts ResponseOpts) ToResponseOptsMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
+func (opts ResponseOpts) GetInstanceId() string {
+	return opts.InstanceId
+}
+
+func (opts ResponseOpts) GetGroupId() string {
+	return opts.GroupId
+}
+
 // Create is a method by which to create function that create a new custom response.
-func Create(client *golangsdk.ServiceClient, instanceId, groupId string, opts ResponseOptsBuilder) (r CreateResult) {
+func Create(client *golangsdk.ServiceClient, opts ResponseOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToResponseOptsMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Post(rootURL(client, instanceId, groupId), reqBody, &r.Body, nil)
+	_, r.Err = client.Post(rootURL(client, buildResponsesPath(opts.GetInstanceId(), opts.GetGroupId())),
+		reqBody, &r.Body, nil)
 	return
 }
 
 // Update is a method by which to create function that udpate the existing custom response.
-func Update(client *golangsdk.ServiceClient, instanceId, groupId, respId string,
-	opts ResponseOptsBuilder) (r UpdateResult) {
+func Update(client *golangsdk.ServiceClient, respId string, opts ResponseOptsBuilder) (r UpdateResult) {
 	reqBody, err := opts.ToResponseOptsMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(resourceURL(client, instanceId, groupId, respId), reqBody, &r.Body, &golangsdk.RequestOpts{
-		OkCodes: []int{200},
-	})
+	_, r.Err = client.Put(resourceURL(client, buildResponsesPath(opts.GetInstanceId(), opts.GetGroupId()), respId),
+		reqBody, &r.Body, &golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
 	return
 }
 
 // Get is a method to obtain the specified custom response according to the instanceId, appId and respId.
 func Get(client *golangsdk.ServiceClient, instanceId, groupId, respId string) (r GetResult) {
-	_, r.Err = client.Get(resourceURL(client, instanceId, groupId, respId), &r.Body, nil)
+	_, r.Err = client.Get(resourceURL(client, buildResponsesPath(instanceId, groupId), respId), &r.Body, nil)
 	return
 }
 
@@ -85,10 +100,24 @@ type ListOpts struct {
 	Offset int `q:"offset"`
 	// Number of items displayed on each page. The valid values are range form 1 to 500, default to 20.
 	Limit int `q:"limit"`
+	// APIG dedicated instance ID.
+	InstanceId string `json:"-"`
+	// APIG group ID.
+	GroupId string `json:"-"`
 }
 
 type ListOptsBuilder interface {
 	ToListQuery() (string, error)
+	GetInstanceId() string
+	GetGroupId() string
+}
+
+func (opts ListOpts) GetInstanceId() string {
+	return opts.InstanceId
+}
+
+func (opts ListOpts) GetGroupId() string {
+	return opts.GroupId
 }
 
 func (opts ListOpts) ToListQuery() (string, error) {
@@ -100,8 +129,8 @@ func (opts ListOpts) ToListQuery() (string, error) {
 }
 
 // List is a method to obtain an array of one or more custom reponses according to the query parameters.
-func List(client *golangsdk.ServiceClient, instanceId, groupId string, opts ListOptsBuilder) pagination.Pager {
-	url := rootURL(client, instanceId, groupId)
+func List(client *golangsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	url := rootURL(client, buildResponsesPath(opts.GetInstanceId(), opts.GetGroupId()))
 	if opts != nil {
 		query, err := opts.ToListQuery()
 		if err != nil {
@@ -117,21 +146,39 @@ func List(client *golangsdk.ServiceClient, instanceId, groupId string, opts List
 
 // Delete is a method to delete the existing custom response.
 func Delete(client *golangsdk.ServiceClient, instanceId, groupId, respId string) (r DeleteResult) {
-	_, r.Err = client.Delete(resourceURL(client, instanceId, groupId, respId), nil)
+	_, r.Err = client.Delete(resourceURL(client, buildResponsesPath(instanceId, groupId), respId), nil)
 	return
 }
 
-// SpecResp is used to build the APIG response url. All parameters are required.
-type SpecResp struct {
+// SpecRespOpts is used to build the APIG response url. All parameters are required.
+type SpecRespOpts struct {
 	InstanceId string
 	GroupId    string
 	RespId     string
-	RespType   string
+}
+
+type SpecRespOptsBuilder interface {
+	GetInstanceId() string
+	GetGroupId() string
+	GetResponseId() string
+}
+
+func (opts SpecRespOpts) GetInstanceId() string {
+	return opts.InstanceId
+}
+
+func (opts SpecRespOpts) GetGroupId() string {
+	return opts.GroupId
+}
+
+func (opts SpecRespOpts) GetResponseId() string {
+	return opts.RespId
 }
 
 // GetSpecResp is a method to get the specifies custom response configuration from an group.
-func GetSpecResp(client *golangsdk.ServiceClient, spec SpecResp) (r GetSpecRespResult) {
-	_, r.Err = client.Get(responseURL(client, spec.InstanceId, spec.GroupId, spec.RespId, spec.RespType), &r.Body, nil)
+func GetSpecResp(client *golangsdk.ServiceClient, respType string, opts SpecRespOptsBuilder) (r GetSpecRespResult) {
+	_, r.Err = client.Get(specResponsesURL(client, buildResponsesPath(opts.GetInstanceId(), opts.GetGroupId()),
+		opts.GetResponseId(), respType), &r.Body, nil)
 	return
 }
 
@@ -144,21 +191,23 @@ func (opts ResponseInfo) ToSpecRespUpdateMap() (map[string]interface{}, error) {
 }
 
 // UpdateSpecResp is a method to update an existing custom response configuration from an group.
-func UpdateSpecResp(client *golangsdk.ServiceClient, spec SpecResp, opts UpdateSpecRespBuilder) (r UpdateSpecRespResult) {
-	reqBody, err := opts.ToSpecRespUpdateMap()
+func UpdateSpecResp(client *golangsdk.ServiceClient, respType string, specOpts SpecRespOptsBuilder,
+	respOpts UpdateSpecRespBuilder) (r UpdateSpecRespResult) {
+	reqBody, err := respOpts.ToSpecRespUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = client.Put(responseURL(client, spec.InstanceId, spec.GroupId, spec.RespId, spec.RespType),
-		reqBody, &r.Body, &golangsdk.RequestOpts{
-			OkCodes: []int{200},
-		})
+	_, r.Err = client.Put(specResponsesURL(client, buildResponsesPath(specOpts.GetInstanceId(), specOpts.GetGroupId()),
+		specOpts.GetResponseId(), respType), reqBody, &r.Body, &golangsdk.RequestOpts{
+		OkCodes: []int{200},
+	})
 	return
 }
 
 // DeleteSpecResp is a method to delete an existing custom response configuration from an group.
-func DeleteSpecResp(client *golangsdk.ServiceClient, instanceId, groupId, respId, respType string) (r DeleteResult) {
-	_, r.Err = client.Delete(responseURL(client, instanceId, groupId, respId, respType), nil)
+func DeleteSpecResp(client *golangsdk.ServiceClient, respType string, specOpts SpecRespOptsBuilder) (r DeleteResult) {
+	_, r.Err = client.Delete(specResponsesURL(client, buildResponsesPath(specOpts.GetInstanceId(),
+		specOpts.GetGroupId()), specOpts.GetResponseId(), respType), nil)
 	return
 }

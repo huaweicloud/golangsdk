@@ -127,6 +127,8 @@ var (
 				Status: 402,
 			},
 		},
+		InstanceId: "9b76174b785342078e557f23c01d5e41",
+		GroupId:    "d060ade0560a4c01b89bf954ad2e9d6e",
 	}
 
 	expectedCreateResponseData = &responses.Response{
@@ -207,6 +209,11 @@ var (
 		},
 	}
 
+	listOpts = &responses.ListOpts{
+		InstanceId: "9b76174b785342078e557f23c01d5e41",
+		GroupId:    "d060ade0560a4c01b89bf954ad2e9d6e",
+	}
+
 	expectedListResponseData = []responses.Response{
 		{
 			Id:         "baabc69fdb8f4c458637666c0441e9a4",
@@ -225,7 +232,19 @@ var (
 	}
 
 	updateOpts = &responses.ResponseOpts{
-		Name: "terraform-test",
+		Name:       "terraform-test",
+		InstanceId: "9b76174b785342078e557f23c01d5e41",
+		GroupId:    "d060ade0560a4c01b89bf954ad2e9d6e",
+	}
+	specRespOpts = &responses.SpecRespOpts{
+		InstanceId: "9b76174b785342078e557f23c01d5e41",
+		GroupId:    "d060ade0560a4c01b89bf954ad2e9d6e",
+		RespId:     "baabc69fdb8f4c458637666c0441e9a4",
+	}
+
+	responseInfoOpts = &responses.ResponseInfo{
+		Body:   "{\"error_code\":\"$context.error.code\",\"error_msg\":\"$context.error.message\",\"request_id\":\"$context.requestId\"}",
+		Status: 405,
 	}
 
 	expectedGetSpecResponseData = &responses.ResponseInfo{

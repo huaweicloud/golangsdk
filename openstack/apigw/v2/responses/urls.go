@@ -1,17 +1,23 @@
 package responses
 
-import "github.com/huaweicloud/golangsdk"
+import (
+	"fmt"
 
-const rootPath = "instances"
+	"github.com/huaweicloud/golangsdk"
+)
 
-func rootURL(c *golangsdk.ServiceClient, instanceId, groupId string) string {
-	return c.ServiceURL(rootPath, instanceId, "api-groups", groupId, "gateway-responses")
+func buildResponsesPath(instanceId, groupId string) string {
+	return fmt.Sprintf("instances/%s/api-groups/%s/gateway-responses", instanceId, groupId)
 }
 
-func resourceURL(c *golangsdk.ServiceClient, instanceId, groupId, respId string) string {
-	return c.ServiceURL(rootPath, instanceId, "api-groups", groupId, "gateway-responses", respId)
+func rootURL(c *golangsdk.ServiceClient, path string) string {
+	return c.ServiceURL(path)
 }
 
-func responseURL(c *golangsdk.ServiceClient, instanceId, groupId, respId, respType string) string {
-	return c.ServiceURL(rootPath, instanceId, "api-groups", groupId, "gateway-responses", respId, respType)
+func resourceURL(c *golangsdk.ServiceClient, path, respId string) string {
+	return c.ServiceURL(path, respId)
+}
+
+func specResponsesURL(c *golangsdk.ServiceClient, path, respId, respType string) string {
+	return c.ServiceURL(path, respId, respType)
 }
