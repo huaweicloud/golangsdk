@@ -68,17 +68,6 @@ func TestDisableEgressV2Instance(t *testing.T) {
 	th.AssertNoErr(t, err)
 }
 
-func TestUpdateIngressV2Instance(t *testing.T) {
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-	handleV2InstanceIngressUpdate(t)
-
-	actual, err := instances.UpdateIngressAccess(client.ServiceClient(), "e6a5871bfb5b47d19c5874790f639ef8",
-		updateIngressOpts).Extract()
-	th.AssertNoErr(t, err)
-	th.AssertDeepEquals(t, expectedUpdateIngressResponseData, actual)
-}
-
 func TestDisableIngressV2Instance(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()

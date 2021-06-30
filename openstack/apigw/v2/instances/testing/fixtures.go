@@ -93,13 +93,6 @@ const (
 		}
 	]
 }`
-	expectedUpdateIngressResponse = `
-{
-	"eip_address": "94.74.115.227",
-	"eip_id": "706673d2-e36b-4577-87bc-e6d6e71812f7",
-	"eip_status": "ACTIVE"
-}
-`
 )
 
 var (
@@ -150,12 +143,6 @@ var (
 
 	updateIngressOpts = instances.IngressAccessOpts{
 		EipId: "706673d2-e36b-4577-87bc-e6d6e71812f7",
-	}
-
-	expectedUpdateIngressResponseData = &instances.Ingress{
-		ID:          "706673d2-e36b-4577-87bc-e6d6e71812f7",
-		Ipv4Address: "94.74.115.227",
-		Status:      "ACTIVE",
 	}
 
 	expectedGetResponseData = &instances.Instance{
@@ -260,21 +247,11 @@ func handleV2InstanceEgressDisable(t *testing.T) {
 	})
 }
 
-func handleV2InstanceIngressUpdate(t *testing.T) {
-	th.Mux.HandleFunc("/instances/e6a5871bfb5b47d19c5874790f639ef8/eip", func(w http.ResponseWriter, r *http.Request) {
-		th.TestMethod(t, r, "PUT")
-		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
-		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, _ = fmt.Fprint(w, expectedUpdateIngressResponse)
-	})
-}
-
 func handleV2InstanceIngressDisable(t *testing.T) {
 	th.Mux.HandleFunc("/instances/e6a5871bfb5b47d19c5874790f639ef8/eip", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "DELETE")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
-		w.WriteHeader(http.StatusNoContent)
+		w.WriteHeader(http.StatusOK)
 	})
 }
