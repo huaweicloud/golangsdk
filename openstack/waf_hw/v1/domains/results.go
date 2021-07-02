@@ -12,7 +12,6 @@ type Domain struct {
 	// CNAME value
 	PolicyId string `json:"policyid"`
 	// Access Code
-	// Access Code
 	AccessCode string `json:"access_code"`
 	// WAF mode: 0 - disabled, 1 - enabled, -1 - bypassed.
 	ProtectStatus int `json:"protect_status"`
