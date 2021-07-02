@@ -2,7 +2,6 @@ package domains
 
 import (
 	"github.com/huaweicloud/golangsdk"
-	"log"
 )
 
 var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
@@ -47,7 +46,6 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 		r.Err = err
 		return
 	}
-	log.Printf("WAF Create: %#v", b)
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Post(rootURL(c), b, &r.Body, reqOpt)
 	return
@@ -61,20 +59,16 @@ type UpdateOptsBuilder interface {
 
 // UpdateOpts contains all the values needed to update a Domain.
 type UpdateOpts struct {
-	// Whether proxy is configured
-	Proxy *bool `json:"proxy,omitempty"`
-	// Certificate ID
-	CertificateId string `json:"certificateid,omitempty"`
-	// Certificate name
-	CertificateName string `json:"certificatename,omitempty"`
-	// The original server information
-	Servers      []ServerOpts      `json:"server,omitempty"`
-	Tls          string            `json:"tls,omitempty"`
-	Cipher       string            `json:"cipher,omitempty"`
-	BlockPages   []BlockPage       `json:"block_page,omitempty"`
-	TrafficMarks []TrafficMark     `json:"traffic_mark,omitempty"`
-	Flag         map[string]string `json:"flag,omitempty"`
-	Extend       map[string]string `json:"extend,omitempty"`
+	Proxy           *bool             `json:"proxy,omitempty"`
+	CertificateId   string            `json:"certificateid,omitempty"`
+	CertificateName string            `json:"certificatename,omitempty"`
+	Servers         []ServerOpts      `json:"server,omitempty"`
+	Tls             string            `json:"tls,omitempty"`
+	Cipher          string            `json:"cipher,omitempty"`
+	BlockPages      []BlockPage       `json:"block_page,omitempty"`
+	TrafficMarks    []TrafficMark     `json:"traffic_mark,omitempty"`
+	Flag            map[string]string `json:"flag,omitempty"`
+	Extend          map[string]string `json:"extend,omitempty"`
 }
 
 // BlockPage contains the alarm page information
