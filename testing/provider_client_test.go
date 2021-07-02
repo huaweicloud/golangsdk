@@ -3,8 +3,11 @@ package testing
 import (
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
+	"net/http/httptest"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -90,6 +93,10 @@ func TestConcurrentReauth(t *testing.T) {
 
 	wg := new(sync.WaitGroup)
 	reqopts := new(golangsdk.RequestOpts)
+	reqopts.KeepResponseBody = true
+	reqopts.MoreHeaders = map[string]string{
+		"X-Auth-Token": prereauthTok,
+	}
 
 	for i := 0; i < numconc; i++ {
 		wg.Add(1)
@@ -118,4 +125,65 @@ func TestConcurrentReauth(t *testing.T) {
 	wg.Wait()
 
 	th.AssertEquals(t, 1, info.numreauths)
+}
+
+func TestRequestConnectionReuse(t *testing.T) {
+	ts := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "OK")
+	}))
+
+	// an amount of iterations
+	var iter = 10000
+	// connections tracks an amount of connections made
+	var connections int64
+
+	ts.Config.ConnState = func(_ net.Conn, s http.ConnState) {
+		// track an amount of connections
+		if s == http.StateNew {
+			atomic.AddInt64(&connections, 1)
+		}
+	}
+	ts.Start()
+	defer ts.Close()
+
+	p := &golangsdk.ProviderClient{}
+	reqopts := new(golangsdk.RequestOpts)
+
+	for i := 0; i < iter; i++ {
+		_, err := p.Request("GET", ts.URL, reqopts)
+		th.AssertNoErr(t, err)
+	}
+
+	th.AssertEquals(t, int64(1), connections)
+}
+
+func TestRequestConnectionClose(t *testing.T) {
+	ts := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "OK")
+	}))
+
+	// an amount of iterations
+	var iter = 10
+	// connections tracks an amount of connections made
+	var connections int64
+
+	ts.Config.ConnState = func(_ net.Conn, s http.ConnState) {
+		// track an amount of connections
+		if s == http.StateNew {
+			atomic.AddInt64(&connections, 1)
+		}
+	}
+	ts.Start()
+	defer ts.Close()
+
+	p := &golangsdk.ProviderClient{}
+	reqopts := new(golangsdk.RequestOpts)
+	reqopts.KeepResponseBody = true
+
+	for i := 0; i < iter; i++ {
+		_, err := p.Request("GET", ts.URL, reqopts)
+		th.AssertNoErr(t, err)
+	}
+
+	th.AssertEquals(t, int64(iter), connections)
 }
