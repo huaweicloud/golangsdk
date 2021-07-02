@@ -2,6 +2,7 @@ package golangsdk
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io"
@@ -82,11 +83,19 @@ type ProviderClient struct {
 	// Otherwise, it must have a value
 	AKSKAuthOptions AKSKAuthOptions
 
+	// Context is the context passed to the HTTP request.
+	Context context.Context
+
+	// mut is a mutex for the client. It protects read and write access to client attributes such as getting
+	// and setting the TokenID.
 	mut *sync.RWMutex
 
+	// reauthmut is a mutex for reauthentication it attempts to ensure that only one reauthentication
+	// attempt happens at one time.
 	reauthmut *reauthlock
 }
 
+// reauthlock represents a set of attributes used to help in the reauthentication process.
 type reauthlock struct {
 	sync.RWMutex
 	reauthing bool
@@ -137,6 +146,37 @@ func (client *ProviderClient) SetToken(t string) {
 	client.TokenID = t
 }
 
+// Reauthenticate calls client.ReauthFunc in a thread-safe way. If this is
+// called because of a 401 response, the caller may pass the previous token. In
+// this case, the reauthentication can be skipped if another thread has already
+// reauthenticated in the meantime. If no previous token is known, an empty
+// string should be passed instead to force unconditional reauthentication.
+func (client *ProviderClient) Reauthenticate(previousToken string) (err error) {
+	if client.ReauthFunc == nil {
+		return nil
+	}
+
+	if client.mut == nil {
+		return client.ReauthFunc()
+	}
+
+	client.mut.Lock()
+	defer client.mut.Unlock()
+
+	client.reauthmut.Lock()
+	client.reauthmut.reauthing = true
+	client.reauthmut.Unlock()
+
+	if previousToken == "" || client.TokenID == previousToken {
+		err = client.ReauthFunc()
+	}
+
+	client.reauthmut.Lock()
+	client.reauthmut.reauthing = false
+	client.reauthmut.Unlock()
+	return
+}
+
 // RequestOpts customizes the behavior of the provider.Request() method.
 type RequestOpts struct {
 	// JSONBody, if provided, will be encoded as JSON and used as the body of the HTTP request. The
@@ -184,7 +224,7 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 	// io.ReadSeeker as-is. Default the content-type to application/json.
 	if options.JSONBody != nil {
 		if options.RawBody != nil {
-			panic("Please provide only one of JSONBody or RawBody to golangsdk.Request().")
+			return nil, errors.New("Please provide only one of JSONBody or RawBody to golangsdk.Request()")
 		}
 
 		rendered, err := jsonMarshal(options.JSONBody)
@@ -209,6 +249,9 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 	req, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return nil, err
+	}
+	if client.Context != nil {
+		req = req.WithContext(client.Context)
 	}
 
 	// Populate the request headers. Apply options.MoreHeaders last, to give the caller the chance to
@@ -295,21 +338,7 @@ func (client *ProviderClient) Request(method, url string, options *RequestOpts) 
 			}
 		case http.StatusUnauthorized:
 			if client.ReauthFunc != nil {
-				if client.mut != nil {
-					client.mut.Lock()
-					client.reauthmut.Lock()
-					client.reauthmut.reauthing = true
-					client.reauthmut.Unlock()
-					if curtok := client.TokenID; curtok == prereqtok {
-						err = client.ReauthFunc()
-					}
-					client.reauthmut.Lock()
-					client.reauthmut.reauthing = false
-					client.reauthmut.Unlock()
-					client.mut.Unlock()
-				} else {
-					err = client.ReauthFunc()
-				}
+				err = client.Reauthenticate(prereqtok)
 				if err != nil {
 					e := &ErrUnableToReauthenticate{}
 					e.ErrOriginal = respErr
