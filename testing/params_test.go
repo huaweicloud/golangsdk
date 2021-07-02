@@ -4,6 +4,7 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/huaweicloud/golangsdk"
 	th "github.com/huaweicloud/golangsdk/testhelper"
@@ -38,7 +39,7 @@ func TestBuildQueryString(t *testing.T) {
 	iFalse := false
 	opts := struct {
 		J  int               `q:"j"`
-		R  string            `q:"r,required"`
+		R  string            `q:"r" required:"true"`
 		C  bool              `q:"c"`
 		S  []string          `q:"s"`
 		TS []testVar         `q:"ts"`
@@ -64,7 +65,7 @@ func TestBuildQueryString(t *testing.T) {
 
 	opts = struct {
 		J  int               `q:"j"`
-		R  string            `q:"r,required"`
+		R  string            `q:"r" required:"true"`
 		C  bool              `q:"c"`
 		S  []string          `q:"s"`
 		TS []testVar         `q:"ts"`
@@ -89,15 +90,17 @@ func TestBuildQueryString(t *testing.T) {
 
 func TestBuildHeaders(t *testing.T) {
 	testStruct := struct {
-		Accept string `h:"Accept"`
-		Num    int    `h:"Number,required"`
-		Style  bool   `h:"Style"`
+		Accept        string `h:"Accept"`
+		ContentLength int64  `h:"Content-Length"`
+		Num           int    `h:"Number" required:"true"`
+		Style         bool   `h:"Style"`
 	}{
-		Accept: "application/json",
-		Num:    4,
-		Style:  true,
+		Accept:        "application/json",
+		ContentLength: 256,
+		Num:           4,
+		Style:         true,
 	}
-	expected := map[string]string{"Accept": "application/json", "Number": "4", "Style": "true"}
+	expected := map[string]string{"Accept": "application/json", "Number": "4", "Style": "true", "Content-Length": "256"}
 	actual, err := golangsdk.BuildHeaders(&testStruct)
 	th.CheckNoErr(t, err)
 	th.CheckDeepEquals(t, expected, actual)
@@ -254,4 +257,22 @@ func TestBuildRequestBody(t *testing.T) {
 		_, err := golangsdk.BuildRequestBody(failCase.opts, "auth")
 		th.AssertDeepEquals(t, reflect.TypeOf(failCase.expected), reflect.TypeOf(err))
 	}
+
+	createdAt := time.Date(2018, 1, 4, 10, 00, 12, 0, time.UTC)
+	var complexFields = struct {
+		Username  string     `json:"username" required:"true"`
+		CreatedAt *time.Time `json:"-"`
+	}{
+		Username:  "jdoe",
+		CreatedAt: &createdAt,
+	}
+
+	expectedComplexFields := map[string]interface{}{
+		"username": "jdoe",
+	}
+
+	actual, err := golangsdk.BuildRequestBody(complexFields, "")
+	th.AssertNoErr(t, err)
+	th.AssertDeepEquals(t, expectedComplexFields, actual)
+
 }

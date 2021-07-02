@@ -62,36 +62,36 @@ type AddMetricDataOpts []AddMetricDataItem
 
 type GetEventDataOpts struct {
 	// 指标的维度，目前最大支持3个维度，维度编号从0开始；维度格式为dim.{i}=key,value参考弹性云服务器维度。例如dim.0=instance_id,i-12345
-	Dim0 string `q:"dim.0,required"`
+	Dim0 string `q:"dim.0" required:"true"`
 	Dim1 string `q:"dim.1"`
 	Dim2 string `q:"dim.2"`
 	// 查询数据起始时间，UNIX时间戳，单位毫秒。
-	From string `q:"from,required"`
+	From string `q:"from" required:"true"`
 	// 指标命名空间，例如弹性云服务器命名空间。
-	Namespace string `q:"namespace,required"`
+	Namespace string `q:"namespace" required:"true"`
 	// 查询数据截止时间UNIX时间戳，单位毫秒。from必须小于to。
-	To string `q:"to,required"`
+	To string `q:"to" required:"true"`
 	// 事件类型，只允许字母、下划线、中划线，字母开头，长度不超过64，如instance_host_info。
-	Type string `q:"type,required"`
+	Type string `q:"type" required:"true"`
 }
 
 type GetOpts struct {
 	// 指标的维度，目前最大支持3个维度，维度编号从0开始；维度格式为dim.{i}=key,value，最大值为256。  例如dim.0=instance_id,i-12345
-	Dim0 string `q:"dim.0,required"`
+	Dim0 string `q:"dim.0" required:"true"`
 	Dim1 string `q:"dim.1"`
 	Dim2 string `q:"dim.2"`
 	// 数据聚合方式。  支持的值为max, min, average, sum, variance。
-	Filter string `q:"filter,required"`
+	Filter string `q:"filter" required:"true"`
 	// 查询数据起始时间，UNIX时间戳，单位毫秒。建议from的值相对于当前时间向前偏移至少1个周期。由于聚合运算的过程是将一个聚合周期范围内的数据点聚合到周期起始边界上，如果将from和to的范围设置在聚合周期内，会因为聚合未完成而造成查询数据为空，所以建议from参数相对于当前时间向前偏移至少1个周期。以5分钟聚合周期为例：假设当前时间点为10:35，10:30~10:35之间的原始数据会被聚合到10:30这个点上，所以查询5分钟数据点时from参数应为10:30或之前。云监控会根据所选择的聚合粒度向前取整from参数。
-	From string `q:"from,required"`
+	From string `q:"from" required:"true"`
 	// 指标名称，例如弹性云服务器监控指标中的cpu_util。
-	MetricName string `q:"metric_name,required"`
+	MetricName string `q:"metric_name" required:"true"`
 	// 指标命名空间。
-	Namespace string `q:"namespace,required"`
+	Namespace string `q:"namespace" required:"true"`
 	// 监控数据粒度。  取值范围：  1，实时数据 300，5分钟粒度 1200，20分钟粒度 3600，1小时粒度 14400，4小时粒度 86400，1天粒度
-	Period string `q:"period,required"`
+	Period string `q:"period" required:"true"`
 	// 查询数据截止时间UNIX时间戳，单位毫秒。from必须小于to。
-	To string `q:"to,required"`
+	To string `q:"to" required:"true"`
 }
 
 type AddMetricDataItem struct {
