@@ -431,13 +431,12 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 			if f := client.RetryBackoffFunc; f != nil && state.retries < maxTries {
 				var e error
 
-				state.retries = state.retries + 1
 				e = f(client.Context, &respErr, err, state.retries)
-
 				if e != nil {
 					return resp, e
 				}
 
+				state.retries = state.retries + 1
 				return client.doRequest(method, url, options, state)
 			}
 		case http.StatusInternalServerError:

@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -219,24 +219,15 @@ func TestRequestConnectionClose(t *testing.T) {
 
 func retryTest(retryCounter *uint, t *testing.T) golangsdk.RetryFunc {
 	return func(ctx context.Context, respErr *golangsdk.ErrUnexpectedResponseCode, e error, retries uint) error {
-		retryAfter := respErr.ResponseHeader.Get("Retry-After")
-		if retryAfter == "" {
-			return e
+		seconds := math.Pow(2, float64(retries))
+		if seconds > 60 { // won't wait more than 60 seconds
+			seconds = 60
 		}
 
-		var sleep time.Duration
-
-		// Parse delay seconds or HTTP date
-		if v, err := strconv.ParseUint(retryAfter, 10, 32); err == nil {
-			sleep = time.Duration(v) * time.Second
-		} else if v, err := time.Parse(http.TimeFormat, retryAfter); err == nil {
-			sleep = time.Until(v)
-		} else {
-			return e
-		}
+		sleep := time.Duration(seconds) * time.Second
 
 		if ctx != nil {
-			t.Logf("Context sleeping for %d milliseconds", sleep.Milliseconds())
+			t.Logf("Context sleeping for %d seconds, retry number %d", int(seconds), retries)
 			select {
 			case <-time.After(sleep):
 				t.Log("sleep is over")
@@ -245,7 +236,7 @@ func retryTest(retryCounter *uint, t *testing.T) golangsdk.RetryFunc {
 				return e
 			}
 		} else {
-			t.Logf("Sleeping for %d milliseconds", sleep.Milliseconds())
+			t.Logf("Sleeping for %d seconds, retry number %d", int(seconds), retries)
 			time.Sleep(sleep)
 			t.Log("sleep is over")
 		}
@@ -270,8 +261,6 @@ func TestRequestRetry(t *testing.T) {
 	defer th.TeardownHTTP()
 
 	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Retry-After", "1")
-
 		//always reply 429
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
@@ -281,60 +270,6 @@ func TestRequestRetry(t *testing.T) {
 		t.Fatal("expecting error, got nil")
 	}
 	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries)
-}
-
-func TestRequestRetryHTTPDate(t *testing.T) {
-	var retryCounter uint
-
-	p := &golangsdk.ProviderClient{}
-	p.UseTokenLock()
-	p.SetToken(client.TokenID)
-	p.MaxBackoffRetries = 3
-
-	p.RetryBackoffFunc = retryTest(&retryCounter, t)
-
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-
-	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Retry-After", time.Now().Add(1*time.Second).UTC().Format(http.TimeFormat))
-
-		//always reply 429
-		http.Error(w, "retry later", http.StatusTooManyRequests)
-	})
-
-	_, err := p.Request("GET", th.Endpoint()+"/route", &golangsdk.RequestOpts{})
-	if err == nil {
-		t.Fatal("expecting error, got nil")
-	}
-	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries)
-}
-
-func TestRequestRetryError(t *testing.T) {
-	var retryCounter uint
-
-	p := &golangsdk.ProviderClient{}
-	p.UseTokenLock()
-	p.SetToken(client.TokenID)
-	p.MaxBackoffRetries = 3
-
-	p.RetryBackoffFunc = retryTest(&retryCounter, t)
-
-	th.SetupHTTP()
-	defer th.TeardownHTTP()
-
-	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Retry-After", "foo bar")
-
-		//always reply 429
-		http.Error(w, "retry later", http.StatusTooManyRequests)
-	})
-
-	_, err := p.Request("GET", th.Endpoint()+"/route", &golangsdk.RequestOpts{})
-	if err == nil {
-		t.Fatal("expecting error, got nil")
-	}
-	th.AssertEquals(t, retryCounter, uint(0))
 }
 
 func TestRequestRetrySuccess(t *testing.T) {
@@ -367,7 +302,7 @@ func TestRequestRetryContext(t *testing.T) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
-		sleep := 2.5 * 1000 * time.Millisecond
+		sleep := 5 * time.Second
 		time.Sleep(sleep)
 		cancel()
 	}()
@@ -385,8 +320,6 @@ func TestRequestRetryContext(t *testing.T) {
 	defer th.TeardownHTTP()
 
 	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Retry-After", "1")
-
 		//always reply 429
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
@@ -395,6 +328,6 @@ func TestRequestRetryContext(t *testing.T) {
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
-	t.Logf("retryCounter: %d, p.MaxBackoffRetries: %d", retryCounter, p.MaxBackoffRetries-1)
+	t.Logf("retryCounter: %d, p.MaxBackoffRetries: %d", retryCounter, p.MaxBackoffRetries)
 	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries-1)
 }
