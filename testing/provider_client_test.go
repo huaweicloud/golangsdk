@@ -269,6 +269,7 @@ func TestRequestRetry(t *testing.T) {
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
+	t.Logf("error message: %s", err)
 	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries)
 }
 
