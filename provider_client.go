@@ -15,7 +15,7 @@ import (
 // DefaultUserAgent is the default User-Agent string set in the request header.
 const (
 	DefaultUserAgent         = "golangsdk/2.0.0"
-	DefaultMaxBackoffRetries = 60
+	DefaultMaxBackoffRetries = 5
 )
 
 // UserAgent represents a User-Agent header.
