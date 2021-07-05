@@ -130,7 +130,7 @@ func (client *ServiceClient) DeleteWithBody(url string, JSONBody interface{}, op
 	return client.Request("DELETE", url, opts)
 }
 
-// Delete calls `Request` with the "DELETE" HTTP verb.
+// DeleteWithResponse calls `Request` with the "DELETE" HTTP verb.
 func (client *ServiceClient) DeleteWithResponse(url string, JSONResponse interface{}, opts *RequestOpts) (*http.Response, error) {
 	if opts == nil {
 		opts = new(RequestOpts)
