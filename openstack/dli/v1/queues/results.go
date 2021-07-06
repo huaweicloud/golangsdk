@@ -10,7 +10,8 @@ type Queue struct {
 
 	Message string `json:"message"`
 
-	// Name of a newly created resource queue. The name can contain only digits, letters, and underscores (_), but cannot contain only digits or start with an underscore (_). Length range: 1 to 128 characters.
+	// Name of a newly created resource queue. The name can contain only digits, letters, and underscores (_),
+	// but cannot contain only digits or start with an underscore (_). Length range: 1 to 128 characters.
 	QueueName string `json:"queueName" required:"true"`
 
 	// Description of a queue.
@@ -18,7 +19,7 @@ type Queue struct {
 
 	Owner string `json:"owner"`
 
-	Create_time int64 `json:"create_time"`
+	CreateTime int64 `json:"create_time"`
 
 	// Indicates the queue type. The options are as follows:
 	// sql
@@ -35,7 +36,7 @@ type Queue struct {
 	ChargingMode int `json:"chargingMode"`
 
 	//
-	Resource_id string `json:"resource_id"`
+	ResourceId string `json:"resource_id"`
 
 	// Queue resource mode. The options are as follows:
 	// 0: indicates the shared resource mode.
@@ -47,14 +48,15 @@ type Queue struct {
 	// Users who have enabled Enterprise Management can set this parameter to bind a specified project.
 	EnterpriseProjectId string `json:"enterprise_project_id"`
 
-	Resource_type string `json:"resource_type"`
+	ResourceType string `json:"resource_type"`
 
 	// CPU architecture of queue computing resources.
 	// x86_64 (default)
 	// aarch64
 	Platform string `json:"platform"`
 
-	// Specifies the tag information of the queue to be created, including the JSON character string indicating whether the queue is Dual-AZ. Currently, only the value 2 is supported, indicating that two queues are created.
+	// Specifies the tag information of the queue to be created, including the JSON character string indicating
+	//whether the queue is Dual-AZ. Currently, only the value 2 is supported, indicating that two queues are created.
 	Labels map[string]string `json:"labels"`
 
 	// Indicates the queue feature. The options are as follows:
@@ -62,10 +64,11 @@ type Queue struct {
 	// ai: AI-enhanced (Only the SQL x86_64 dedicated queue supports this option.)
 	// The default value is basic.
 	// NOTE:
-	// For an enhanced AI queue, an AI image is loaded in the background. The image integrates AI algorithm packages based on the basic image. For details, see the Data Lake Insight User Guide.
+	// For an enhanced AI queue, an AI image is loaded in the background.
+	// The image integrates AI algorithm packages based on the basic image.
 	Feature string `json:"feature"`
 
-	Tags []tags.ResourceTag `json:"tags,omitempty"`
+	Tags []tags.ResourceTag `json:"tags"`
 }
 
 // CreateResult contains the response body and error from a Create request.
