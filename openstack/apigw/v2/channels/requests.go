@@ -43,7 +43,7 @@ type MemberInfo struct {
 	// Backend server ID.
 	// This parameter is valid when the member type is instance.
 	// The value can contain 1 to 64 characters, including letters, digits, hyphens (-), and underscores (_).
-	EcsId string `json:"ecs_id,omitempty"`
+	EcsId string `json:"ecs_id,omitempty" xor:"Host"`
 	// Backend server name, which contains of 1 to 64 characters, including letters, digits, periods (.), hyphens (-)
 	// and underscores (_).
 	// This parameter is valid when the member type is instance.
@@ -113,7 +113,7 @@ func (opts ChannelOpts) ToInstanceCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-// Create is a method by which to create function that create a APIG vpc channel.
+// Create is a method by which to create an APIG vpc channel.
 func Create(client *golangsdk.ServiceClient, instanceId string, opts ChannelOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToInstanceCreateMap()
 	if err != nil {
@@ -124,7 +124,7 @@ func Create(client *golangsdk.ServiceClient, instanceId string, opts ChannelOpts
 	return
 }
 
-// Create is a method by which to create function that create a APIG vpc channel.
+// Update is a method by which to update an existing APIG vpc channel by request parameters.
 func Update(client *golangsdk.ServiceClient, instanceId, chanId string, opts ChannelOptsBuilder) (r UpdateResult) {
 	reqBody, err := opts.ToInstanceCreateMap()
 	if err != nil {
@@ -137,7 +137,7 @@ func Update(client *golangsdk.ServiceClient, instanceId, chanId string, opts Cha
 	return
 }
 
-// Create is a method by which to create function that create a APIG vpc channel.
+// Get is a method to obtain an existing APIG vpc channel by channel ID.
 func Get(client *golangsdk.ServiceClient, instanceId, chanId string) (r GetResult) {
 	_, r.Err = client.Get(resourceURL(client, instanceId, chanId), &r.Body, nil)
 	return
