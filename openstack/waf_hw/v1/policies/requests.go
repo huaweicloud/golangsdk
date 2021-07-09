@@ -16,7 +16,7 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains all the values needed to create a new policy.
 type CreateOpts struct {
-	//Policy name
+	// Policy name
 	Name string `json:"name" required:"true"`
 }
 
@@ -77,7 +77,7 @@ type UpdateHostsOptsBuilder interface {
 
 // UpdateHostsOpts contains all the values needed to update a policy hosts.
 type UpdateHostsOpts struct {
-	//Domain ID
+	// Domain ID
 	Hosts []string `q:"hosts" required:"true"`
 }
 
@@ -108,7 +108,11 @@ func UpdateHosts(c *golangsdk.ServiceClient, policyId string, opts UpdateHostsOp
 
 // Get retrieves a particular policy based on its unique ID.
 func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
-	_, r.Err = c.Get(resourceURL(c, id), &r.Body, &RequestOpts)
+	reqOpt := &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
+		MoreHeaders: RequestOpts.MoreHeaders,
+	}
+	_, r.Err = c.Get(resourceURL(c, id), &r.Body, reqOpt)
 	return
 }
 
