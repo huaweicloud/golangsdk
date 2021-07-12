@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net"
 	"net/http"
 	"net/http/httptest"
@@ -214,4 +215,120 @@ func TestRequestConnectionClose(t *testing.T) {
 	}
 
 	th.AssertEquals(t, int64(iter), connections)
+}
+
+func retryTest(retryCounter *uint, t *testing.T) golangsdk.RetryFunc {
+	return func(ctx context.Context, respErr *golangsdk.ErrUnexpectedResponseCode, e error, retries uint) error {
+		seconds := math.Pow(2, float64(retries))
+		if seconds > 60 { // won't wait more than 60 seconds
+			seconds = 60
+		}
+
+		sleep := time.Duration(seconds) * time.Second
+
+		if ctx != nil {
+			t.Logf("Context sleeping for %d seconds, retry number %d", int(seconds), retries)
+			select {
+			case <-time.After(sleep):
+				t.Log("sleep is over")
+			case <-ctx.Done():
+				t.Log(ctx.Err())
+				return e
+			}
+		} else {
+			t.Logf("Sleeping for %d seconds, retry number %d", int(seconds), retries)
+			time.Sleep(sleep)
+			t.Log("sleep is over")
+		}
+
+		*retryCounter = *retryCounter + 1
+
+		return nil
+	}
+}
+
+func TestRequestRetry(t *testing.T) {
+	var retryCounter uint
+
+	p := &golangsdk.ProviderClient{}
+	p.UseTokenLock()
+	p.SetToken(client.TokenID)
+	p.MaxBackoffRetries = 3
+
+	p.RetryBackoffFunc = retryTest(&retryCounter, t)
+
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
+		//always reply 429
+		http.Error(w, "retry later", http.StatusTooManyRequests)
+	})
+
+	_, err := p.Request("GET", th.Endpoint()+"/route", &golangsdk.RequestOpts{})
+	if err == nil {
+		t.Fatal("expecting error, got nil")
+	}
+	t.Logf("error message: %s", err)
+	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries)
+}
+
+func TestRequestRetrySuccess(t *testing.T) {
+	var retryCounter uint
+
+	p := &golangsdk.ProviderClient{}
+	p.UseTokenLock()
+	p.SetToken(client.TokenID)
+	p.MaxBackoffRetries = 3
+
+	p.RetryBackoffFunc = retryTest(&retryCounter, t)
+
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
+		//always reply 200
+		http.Error(w, "retry later", http.StatusOK)
+	})
+
+	_, err := p.Request("GET", th.Endpoint()+"/route", &golangsdk.RequestOpts{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	th.AssertEquals(t, retryCounter, uint(0))
+}
+
+func TestRequestRetryContext(t *testing.T) {
+	var retryCounter uint
+
+	ctx, cancel := context.WithCancel(context.Background())
+	go func() {
+		sleep := 5 * time.Second
+		time.Sleep(sleep)
+		cancel()
+	}()
+
+	p := &golangsdk.ProviderClient{
+		Context: ctx,
+	}
+	p.UseTokenLock()
+	p.SetToken(client.TokenID)
+	p.MaxBackoffRetries = 3
+
+	p.RetryBackoffFunc = retryTest(&retryCounter, t)
+
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	th.Mux.HandleFunc("/route", func(w http.ResponseWriter, r *http.Request) {
+		//always reply 429
+		http.Error(w, "retry later", http.StatusTooManyRequests)
+	})
+
+	_, err := p.Request("GET", th.Endpoint()+"/route", &golangsdk.RequestOpts{})
+	if err == nil {
+		t.Fatal("expecting error, got nil")
+	}
+	t.Logf("retryCounter: %d, p.MaxBackoffRetries: %d", retryCounter, p.MaxBackoffRetries)
+	th.AssertEquals(t, retryCounter, p.MaxBackoffRetries-1)
 }
