@@ -3,6 +3,7 @@ package queues
 import (
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/common/tags"
+	"github.com/huaweicloud/golangsdk/openstack/common/utils"
 )
 
 // CreateOpts contains the options for create a service. This object is passed to Create().
@@ -90,9 +91,27 @@ func Delete(c *golangsdk.ServiceClient, queueName string) (r DeleteResult) {
 }
 
 func Get(c *golangsdk.ServiceClient, queueName string) (r GetResult) {
-	result := new(Queue)
+	listResult := new(ListResult)
+
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
-	_, r.Err = c.Get(resourceURL(c, queueName), &result, reqOpt)
-	r.Body = result
+	_, r.Err = c.Get(queryAllURL(c), &listResult, reqOpt)
+
+	result := filterByQueueName(listResult.Queues, queueName)
+	if result != nil {
+		r.Body = result
+	}
+
 	return r
+}
+
+func filterByQueueName(queues []Queue4List, queueName string) (r *Queue) {
+	var rt Queue
+	for _, v := range queues {
+		if v.QueueName == queueName {
+			utils.CopyProperties(v, &rt)
+			return &rt
+		}
+	}
+	//log.Default().Printf("[debug]filterByQueueName:filter=%s,Queue= %+v", queueName, r)
+	return nil
 }

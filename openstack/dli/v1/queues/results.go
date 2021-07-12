@@ -6,13 +6,10 @@ import (
 )
 
 type Queue struct {
-	IsSuccess bool `json:"is_success"`
-
-	Message string `json:"message"`
 
 	// Name of a newly created resource queue. The name can contain only digits, letters, and underscores (_),
 	// but cannot contain only digits or start with an underscore (_). Length range: 1 to 128 characters.
-	QueueName string `json:"queueName" required:"true"`
+	QueueName string `json:"queue_name"`
 
 	// Description of a queue.
 	Description string `json:"description"`
@@ -27,33 +24,44 @@ type Queue struct {
 	// all
 	// NOTE:
 	// If the type is not specified, the default value sql is used.
-	QueueType string `json:"queueType"`
+	QueueType string `json:"queue_type"`
 
 	// Minimum number of CUs that are bound to a queue. Currently, the value can only be 16, 64, or 256.
-	CuCount int `json:"cuCount" required:"true"`
+	CuCount int `json:"cu_count"`
 
 	// Billing mode of a queue. This value can only be set to 1, indicating that the billing is based on the CUH used.
-	ChargingMode int `json:"chargingMode"`
+	ChargingMode int `json:"charging_mode"`
 
 	//
 	ResourceId string `json:"resource_id"`
-
-	// Queue resource mode. The options are as follows:
-	// 0: indicates the shared resource mode.
-	// 1: indicates the exclusive resource mode.
-	ResourceMode int `json:"resource_mode"`
 
 	// Enterprise project ID. The value 0 indicates the default enterprise project.
 	// NOTE:
 	// Users who have enabled Enterprise Management can set this parameter to bind a specified project.
 	EnterpriseProjectId string `json:"enterprise_project_id"`
 
-	ResourceType string `json:"resource_type"`
+	// The VPC CIDR block of the queue.
+	CidrInVpc string `json:"cidr_in_vpc"`
+	// CIDR block of the management subnet
+	CidrInMgntsubnet string `json:"cidr_in_mgntsubnet"`
+	// Subnet CIDR block
+	CidrInSubnet string `json:"cidr_in_subnet"`
+
+	// Queue resource mode. The options are as follows:
+	// 0: indicates the shared resource mode.
+	// 1: indicates the exclusive resource mode.
+	ResourceMode int `json:"resource_mode"`
 
 	// CPU architecture of queue computing resources.
 	// x86_64 (default)
 	// aarch64
 	Platform string `json:"platform"`
+
+	//list api don't exist this property
+	Tags []tags.ResourceTag `json:"tags"`
+
+	// Whether to restart the queue. The default value is false.
+	IsRestarting bool `json:"is_restarting"`
 
 	// Specifies the tag information of the queue to be created, including the JSON character string indicating
 	//whether the queue is Dual-AZ. Currently, only the value 2 is supported, indicating that two queues are created.
@@ -68,7 +76,53 @@ type Queue struct {
 	// The image integrates AI algorithm packages based on the basic image.
 	Feature string `json:"feature"`
 
-	Tags []tags.ResourceTag `json:"tags"`
+	/**
+	The resource type to which the queue belongs.
+	VM: ECF cluster
+	Container: containerized cluster (k8s)
+	**/
+	QueueResourceType string `json:"queue_resource_type"`
+}
+
+type Queue4Get struct {
+	QueueName           string `json:"queueName"`
+	Description         string `json:"description"`
+	Owner               string `json:"owner"`
+	CreateTime          int64  `json:"create_time"`
+	QueueType           string `json:"queueType"`
+	CuCount             int    `json:"cuCount"`
+	ChargingMode        int    `json:"chargingMode"`
+	ResourceId          string `json:"resource_id"`
+	ResourceMode        int    `json:"resource_mode"`
+	EnterpriseProjectId string `json:"enterprise_project_id"`
+	QueueResourceType   string `json:"resource_type"`
+}
+
+type ListResult struct {
+	IsSuccess bool         `json:"is_success"`
+	Message   string       `json:"message"`
+	Queues    []Queue4List `json:"queues"`
+}
+
+type Queue4List struct {
+	QueueName           string `json:"queue_name"`
+	Description         string `json:"description"`
+	Owner               string `json:"owner"`
+	CreateTime          int64  `json:"create_time"`
+	QueueType           string `json:"queue_type"`
+	CuCount             int64  `json:"cu_count"`
+	ChargingMode        int    `json:"charging_mode"`
+	ResourceId          string `json:"resource_id"`
+	EnterpriseProjectId string `json:"enterprise_project_id"`
+	CidrInVpc           string `json:"cidr_in_vpc"`
+	CidrInMgntsubnet    string `json:"cidr_in_mgntsubnet"`
+	CidrInSubnet        string `json:"cidr_in_subnet"`
+	ResourceMode        int    `json:"resource_mode"`
+	Platform            string `json:"platform"`
+	IsRestarting        bool   `json:"is_restarting"`
+	//Labels              map[string]string `json:"labels"`
+	Feature           string `json:"feature"`
+	QueueResourceType string `json:"queue_resource_type"`
 }
 
 // CreateResult contains the response body and error from a Create request.

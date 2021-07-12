@@ -13,3 +13,7 @@ func createURL(c *golangsdk.ServiceClient) string {
 func resourceURL(c *golangsdk.ServiceClient, queueName string) string {
 	return c.ServiceURL(resourcePath, queueName)
 }
+
+func queryAllURL(c *golangsdk.ServiceClient) string {
+	return c.ServiceURL(resourcePath)
+}
