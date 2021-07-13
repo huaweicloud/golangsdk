@@ -2,7 +2,7 @@ package loggroups
 
 import "github.com/huaweicloud/golangsdk"
 
-// Log group Create response
+// CreateResponse represents response in Create method
 type CreateResponse struct {
 	ID string `json:"log_group_id"`
 }
@@ -24,7 +24,7 @@ type DeleteResult struct {
 	golangsdk.ErrResult
 }
 
-// Log group response
+// LogGroup represents response in Get method
 type LogGroup struct {
 	ID           string `json:"log_group_id"`
 	Name         string `json:"log_group_name"`
