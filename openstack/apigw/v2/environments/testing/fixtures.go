@@ -67,9 +67,10 @@ const (
 )
 
 var (
+	createDesc = "Updated by script"
 	createOpts = &environments.EnvironmentOpts{
 		Name:        "terraform_test",
-		Description: "Created by script",
+		Description: &createDesc,
 	}
 
 	expectedCreateResponseData = &environments.Environment{
@@ -79,9 +80,10 @@ var (
 		CreateTime:  "2021-06-22T12:11:28.18948645Z",
 	}
 
+	updateDesc = "Updated by script"
 	updateOpts = &environments.EnvironmentOpts{
 		Name:        "terraform_test",
-		Description: "Created by script",
+		Description: &updateDesc,
 	}
 
 	expectedUpdateResponseData = &environments.Environment{
