@@ -74,8 +74,8 @@ func Update(c *golangsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r Up
 // Get retrieves a particular dr-drill based on its unique ID.
 func Get(c *golangsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, &golangsdk.RequestOpts{
-        MoreHeaders: requestOpts.MoreHeaders,
-    })
+		MoreHeaders: requestOpts.MoreHeaders,
+	})
 	return
 }
 
