@@ -39,7 +39,7 @@ func TestListV2VpcChannel(t *testing.T) {
 	pages, err := channels.List(client.ServiceClient(), "b510b8e8ef1442c0a94cdfc551af0ec3",
 		channels.ListOpts{}).AllPages()
 	th.AssertNoErr(t, err)
-	actual, err := channels.ExtractInstances(pages)
+	actual, err := channels.ExtractChannels(pages)
 	th.AssertNoErr(t, err)
 	th.AssertDeepEquals(t, expectedListResponseData, actual)
 }

@@ -2,7 +2,7 @@ package logtopics
 
 import "github.com/huaweicloud/golangsdk"
 
-// Log topic Create response
+// CreateResponse represents response in Create method
 type CreateResponse struct {
 	ID string `json:"log_topic_id"`
 }
@@ -24,7 +24,7 @@ type DeleteResult struct {
 	golangsdk.ErrResult
 }
 
-// Log topic response
+// LogTopic represents response in Get method
 type LogTopic struct {
 	ID           string `json:"log_topic_id,omitempty"`
 	Name         string `json:"log_topic_name"`

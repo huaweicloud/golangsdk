@@ -1,4 +1,8 @@
-package falsealarmmasking_rules
+/*
+ Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+*/
+
+package whiteblackip_rules
 
 import (
 	"github.com/huaweicloud/golangsdk"
@@ -11,23 +15,23 @@ var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
 type CreateOptsBuilder interface {
-	ToAlarmMaskingCreateMap() (map[string]interface{}, error)
+	ToWhiteBlackIPCreateMap() (map[string]interface{}, error)
 }
 
-// CreateOpts contains all the values needed to create a new falsealarmmasking rule.
+// CreateOpts contains all the values needed to create a new whiteblackip rule.
 type CreateOpts struct {
-	Path    string `json:"path" required:"true"`
-	EventID string `json:"event_id" required:"true"`
+	Addr  string `json:"addr" required:"true"`
+	White int    `json:"white,omitempty"`
 }
 
-// ToAlarmMaskingCreateMap builds a create request body from CreateOpts.
-func (opts CreateOpts) ToAlarmMaskingCreateMap() (map[string]interface{}, error) {
+// ToWhiteBlackIPCreateMap builds a create request body from CreateOpts.
+func (opts CreateOpts) ToWhiteBlackIPCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-// Create will create a new falsealarmmasking rule based on the values in CreateOpts.
+// Create will create a new whiteblackip rule based on the values in CreateOpts.
 func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAlarmMaskingCreateMap()
+	b, err := opts.ToWhiteBlackIPCreateMap()
 	if err != nil {
 		r.Err = err
 		return
@@ -40,23 +44,23 @@ func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder)
 // UpdateOptsBuilder allows extensions to add additional parameters to the
 // Update request.
 type UpdateOptsBuilder interface {
-	ToAlarmMaskingUpdateMap() (map[string]interface{}, error)
+	ToWhiteBlackIPUpdateMap() (map[string]interface{}, error)
 }
 
-// UpdateOpts contains all the values needed to update a falsealarmmasking rule.
+// UpdateOpts contains all the values needed to update a whiteblackip rule.
 type UpdateOpts struct {
-	Path    string `json:"path,omitempty"`
-	EventID string `json:"event_id,omitempty"`
+	Addr  string `json:"addr" required:"true"`
+	White *int   `json:"white" required:"true"`
 }
 
-// ToAlarmMaskingUpdateMap builds a update request body from UpdateOpts.
-func (opts UpdateOpts) ToAlarmMaskingUpdateMap() (map[string]interface{}, error) {
+// ToWhiteBlackIPUpdateMap builds a update request body from UpdateOpts.
+func (opts UpdateOpts) ToWhiteBlackIPUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update accepts a UpdateOpts struct and uses the values to update a rule.The response code from api is 200
 func Update(c *golangsdk.ServiceClient, policyID, ruleID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAlarmMaskingUpdateMap()
+	b, err := opts.ToWhiteBlackIPUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
@@ -66,30 +70,20 @@ func Update(c *golangsdk.ServiceClient, policyID, ruleID string, opts UpdateOpts
 	return
 }
 
-// Get retrieves a particular falsealarmmasking rule based on its unique ID.
+// Get retrieves a particular whiteblackip rule based on its unique ID.
 func Get(c *golangsdk.ServiceClient, policyID, ruleID string) (r GetResult) {
 	reqOpt := &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders,
 	}
-
 	_, r.Err = c.Get(resourceURL(c, policyID, ruleID), &r.Body, reqOpt)
 	return
 }
 
-// List retrieves falsealarmmasking rules.
-func List(c *golangsdk.ServiceClient, policyID string) (r ListResult) {
-	_, r.Err = c.Get(rootURL(c, policyID), &r.Body, &golangsdk.RequestOpts{
-		MoreHeaders: RequestOpts.MoreHeaders,
-	})
-	return
-}
-
-// Delete will permanently delete a particular falsealarmmasking rule based on its unique ID.
+// Delete will permanently delete a particular whiteblackip rule based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, policyID, ruleID string) (r DeleteResult) {
-	reqOpt := &golangsdk.RequestOpts{
-		MoreHeaders: RequestOpts.MoreHeaders,
-	}
-
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200},
+		MoreHeaders: RequestOpts.MoreHeaders}
 	_, r.Err = c.Delete(resourceURL(c, policyID, ruleID), reqOpt)
 	return
 }

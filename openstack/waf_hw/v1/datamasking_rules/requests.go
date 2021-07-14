@@ -1,4 +1,8 @@
-package falsealarmmasking_rules
+/*
+ Copyright (c) Huawei Technologies Co., Ltd. 2021. All rights reserved.
+*/
+
+package datamasking_rules
 
 import (
 	"github.com/huaweicloud/golangsdk"
@@ -11,23 +15,25 @@ var RequestOpts golangsdk.RequestOpts = golangsdk.RequestOpts{
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
 type CreateOptsBuilder interface {
-	ToAlarmMaskingCreateMap() (map[string]interface{}, error)
+	ToDataMaskingCreateMap() (map[string]interface{}, error)
 }
 
-// CreateOpts contains all the values needed to create a new falsealarmmasking rule.
+// CreateOpts contains all the values needed to create a new datamasking rule.
 type CreateOpts struct {
-	Path    string `json:"path" required:"true"`
-	EventID string `json:"event_id" required:"true"`
+	Path        string `json:"url" required:"true"`
+	Category    string `json:"category" required:"true"`
+	Index       string `json:"index" required:"true"`
+	Description string `json:"description,omitempty"`
 }
 
-// ToAlarmMaskingCreateMap builds a create request body from CreateOpts.
-func (opts CreateOpts) ToAlarmMaskingCreateMap() (map[string]interface{}, error) {
+// ToDataMaskingCreateMap builds a create request body from CreateOpts.
+func (opts CreateOpts) ToDataMaskingCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-// Create will create a new falsealarmmasking rule based on the values in CreateOpts.
+// Create will create a new datamasking rule based on the values in CreateOpts.
 func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder) (r CreateResult) {
-	b, err := opts.ToAlarmMaskingCreateMap()
+	b, err := opts.ToDataMaskingCreateMap()
 	if err != nil {
 		r.Err = err
 		return
@@ -40,23 +46,25 @@ func Create(c *golangsdk.ServiceClient, policyID string, opts CreateOptsBuilder)
 // UpdateOptsBuilder allows extensions to add additional parameters to the
 // Update request.
 type UpdateOptsBuilder interface {
-	ToAlarmMaskingUpdateMap() (map[string]interface{}, error)
+	ToDataMaskingUpdateMap() (map[string]interface{}, error)
 }
 
-// UpdateOpts contains all the values needed to update a falsealarmmasking rule.
+// UpdateOpts contains all the values needed to update a datamasking rule.
 type UpdateOpts struct {
-	Path    string `json:"path,omitempty"`
-	EventID string `json:"event_id,omitempty"`
+	Path        string `json:"url" required:"true"`
+	Category    string `json:"category" required:"true"`
+	Index       string `json:"index" required:"true"`
+	Description string `json:"description,omitempty"`
 }
 
-// ToAlarmMaskingUpdateMap builds a update request body from UpdateOpts.
-func (opts UpdateOpts) ToAlarmMaskingUpdateMap() (map[string]interface{}, error) {
+// ToDataMaskingUpdateMap builds a update request body from UpdateOpts.
+func (opts UpdateOpts) ToDataMaskingUpdateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
 // Update accepts a UpdateOpts struct and uses the values to update a rule.The response code from api is 200
 func Update(c *golangsdk.ServiceClient, policyID, ruleID string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToAlarmMaskingUpdateMap()
+	b, err := opts.ToDataMaskingUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
@@ -66,7 +74,7 @@ func Update(c *golangsdk.ServiceClient, policyID, ruleID string, opts UpdateOpts
 	return
 }
 
-// Get retrieves a particular falsealarmmasking rule based on its unique ID.
+// Get retrieves a particular datamasking rule based on its unique ID.
 func Get(c *golangsdk.ServiceClient, policyID, ruleID string) (r GetResult) {
 	reqOpt := &golangsdk.RequestOpts{
 		MoreHeaders: RequestOpts.MoreHeaders,
@@ -76,20 +84,12 @@ func Get(c *golangsdk.ServiceClient, policyID, ruleID string) (r GetResult) {
 	return
 }
 
-// List retrieves falsealarmmasking rules.
-func List(c *golangsdk.ServiceClient, policyID string) (r ListResult) {
-	_, r.Err = c.Get(rootURL(c, policyID), &r.Body, &golangsdk.RequestOpts{
-		MoreHeaders: RequestOpts.MoreHeaders,
-	})
-	return
-}
-
-// Delete will permanently delete a particular falsealarmmasking rule based on its unique ID.
+// Delete will permanently delete a particular datamasking rule based on its unique ID.
 func Delete(c *golangsdk.ServiceClient, policyID, ruleID string) (r DeleteResult) {
 	reqOpt := &golangsdk.RequestOpts{
+		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders,
 	}
-
 	_, r.Err = c.Delete(resourceURL(c, policyID, ruleID), reqOpt)
 	return
 }

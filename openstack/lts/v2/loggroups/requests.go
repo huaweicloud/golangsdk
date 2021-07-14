@@ -13,7 +13,7 @@ type CreateOpts struct {
 	LogGroupName string `json:"log_group_name" required:"true"`
 
 	// Specifies the log expiration time. The value is fixed to 7 days.
-	TTL int `json:"ttl_in_daysion,omitempty"`
+	TTL int `json:"ttl_in_days,omitempty"`
 }
 
 // ToLogGroupsCreateMap is used for type convert
