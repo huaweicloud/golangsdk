@@ -65,9 +65,10 @@ const (
 )
 
 var (
+	createDesc = "Created by script"
 	createOpts = &apigroups.GroupOpts{
 		Name:        "terraform_test",
-		Description: "Created by script",
+		Description: &createDesc,
 	}
 
 	expectedCreateResponseData = &apigroups.Group{
@@ -117,9 +118,10 @@ var (
 		},
 	}
 
+	updateDesc = "Updated by script"
 	updateOpts = apigroups.GroupOpts{
 		Name:        "terraform_test_update",
-		Description: "Updated by script",
+		Description: &updateDesc,
 	}
 )
 
