@@ -14,7 +14,7 @@ type GroupOpts struct {
 	// Description of the API group, which can contain a maximum of 255 characters,
 	// and the angle brackets (< and >) are not allowed.
 	// Chinese characters must be in UTF-8 or Unicode format.
-	Description string `json:"remark,omitempty"`
+	Description *string `json:"remark,omitempty"`
 }
 
 type CreateOptsBuilder interface {
