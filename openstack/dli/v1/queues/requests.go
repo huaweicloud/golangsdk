@@ -3,7 +3,6 @@ package queues
 import (
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack/common/tags"
-	"github.com/huaweicloud/golangsdk/openstack/common/utils"
 )
 
 // CreateOpts contains the options for create a service. This object is passed to Create().
@@ -61,6 +60,13 @@ type CreateOpts struct {
 	Tags []tags.ResourceTag `json:"tags,omitempty"`
 }
 
+type QueryAllOpts struct {
+	QueueType      string `q:"queue_type,omitempty"`
+	WithPriv       bool   `q:"with-priv,omitempty"`
+	WithChargeInfo bool   `q:"with-charge-info,omitempty"`
+	Tags           string `q:"tags,omitempty"`
+}
+
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
 type CreateOptsBuilder interface {
@@ -70,6 +76,15 @@ type CreateOptsBuilder interface {
 // ToDomainCreateMap builds a create request body from CreateOpts.
 func (opts CreateOpts) ToDomainCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
+}
+
+type QueryAllOptsBuilder interface {
+	ToQueryAllQuery() (string, error)
+}
+
+func (opts QueryAllOpts) ToQueryAllQuery() (string, error) {
+	q, err := golangsdk.BuildQueryString(opts)
+	return q.String(), err
 }
 
 /*
@@ -110,8 +125,7 @@ func Delete(c *golangsdk.ServiceClient, queueName string) (r DeleteResult) {
 }
 
 /*
-This API is used to query all Queue  list and then filter by queueName
-The information is more than Get function
+This API is used to query all Queue  list
 
 @cloudAPI-URL: GET /v1.0/{project_id}/queues
 @cloudAPI-ResourceType: dli
@@ -120,17 +134,22 @@ The information is more than Get function
 @since: 2021-07-07 12:12:12
 
 */
-func QueryAllAndFilterByName(c *golangsdk.ServiceClient, queueName string) (r GetResult) {
+func QueryAll(c *golangsdk.ServiceClient, listOpts QueryAllOptsBuilder) (r GetResult) {
 	listResult := new(ListResult)
+
+	url := queryAllURL(c)
+	if listOpts != nil {
+		query, err := listOpts.ToQueryAllQuery()
+		if err != nil {
+			r.Err = err
+			return
+		}
+		url += query
+	}
 
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Get(queryAllURL(c), &listResult, reqOpt)
-
-	result := filterByQueueName(listResult.Queues, queueName)
-	if result != nil {
-		r.Body = result
-	}
-
+	r.Body = listResult
 	return r
 }
 
@@ -155,16 +174,4 @@ func Get(c *golangsdk.ServiceClient, queueName string) (r GetResult) {
 	}
 
 	return r
-}
-
-func filterByQueueName(queues []Queue4List, queueName string) (r *Queue) {
-	var rt Queue
-	for _, v := range queues {
-		if v.QueueName == queueName {
-			utils.CopyProperties(v, &rt)
-			return &rt
-		}
-	}
-	//log.Default().Printf("[debug]filterByQueueName:filter=%s,Queue= %+v", queueName, r)
-	return nil
 }
