@@ -2,7 +2,6 @@ package queues
 
 import (
 	"github.com/huaweicloud/golangsdk"
-	"github.com/huaweicloud/golangsdk/openstack/common/tags"
 )
 
 type Queue struct {
@@ -57,15 +56,12 @@ type Queue struct {
 	// aarch64
 	Platform string `json:"platform"`
 
-	//list api don't exist this property
-	Tags []tags.ResourceTag `json:"tags"`
-
 	// Whether to restart the queue. The default value is false.
 	IsRestarting bool `json:"is_restarting"`
 
 	// Specifies the tag information of the queue to be created, including the JSON character string indicating
 	//whether the queue is Dual-AZ. Currently, only the value 2 is supported, indicating that two queues are created.
-	Labels map[string]string `json:"labels"`
+	Labels string `json:"labels"`
 
 	// Indicates the queue feature. The options are as follows:
 	// basic: basic type
@@ -99,30 +95,9 @@ type Queue4Get struct {
 }
 
 type ListResult struct {
-	IsSuccess bool         `json:"is_success"`
-	Message   string       `json:"message"`
-	Queues    []Queue4List `json:"queues"`
-}
-
-type Queue4List struct {
-	QueueName           string `json:"queue_name"`
-	Description         string `json:"description"`
-	Owner               string `json:"owner"`
-	CreateTime          int64  `json:"create_time"`
-	QueueType           string `json:"queue_type"`
-	CuCount             int64  `json:"cu_count"`
-	ChargingMode        int    `json:"charging_mode"`
-	ResourceId          string `json:"resource_id"`
-	EnterpriseProjectId string `json:"enterprise_project_id"`
-	CidrInVpc           string `json:"cidr_in_vpc"`
-	CidrInMgntsubnet    string `json:"cidr_in_mgntsubnet"`
-	CidrInSubnet        string `json:"cidr_in_subnet"`
-	ResourceMode        int    `json:"resource_mode"`
-	Platform            string `json:"platform"`
-	IsRestarting        bool   `json:"is_restarting"`
-	//Labels              map[string]string `json:"labels"`
-	Feature           string `json:"feature"`
-	QueueResourceType string `json:"queue_resource_type"`
+	IsSuccess bool    `json:"is_success"`
+	Message   string  `json:"message"`
+	Queues    []Queue `json:"queues"`
 }
 
 // CreateResult contains the response body and error from a Create request.

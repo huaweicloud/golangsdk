@@ -60,11 +60,11 @@ type CreateOpts struct {
 	Tags []tags.ResourceTag `json:"tags,omitempty"`
 }
 
-type QueryAllOpts struct {
-	QueueType      string `q:"queue_type,omitempty"`
-	WithPriv       bool   `q:"with-priv,omitempty"`
-	WithChargeInfo bool   `q:"with-charge-info,omitempty"`
-	Tags           string `q:"tags,omitempty"`
+type ListOpts struct {
+	QueueType      string `q:"queue_type"`
+	WithPriv       bool   `q:"with-priv"`
+	WithChargeInfo bool   `q:"with-charge-info"`
+	Tags           string `q:"tags"`
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -78,11 +78,11 @@ func (opts CreateOpts) ToDomainCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-type QueryAllOptsBuilder interface {
-	ToQueryAllQuery() (string, error)
+type ListOptsBuilder interface {
+	ToListQuery() (string, error)
 }
 
-func (opts QueryAllOpts) ToQueryAllQuery() (string, error) {
+func (opts ListOpts) ToListQuery() (string, error) {
 	q, err := golangsdk.BuildQueryString(opts)
 	return q.String(), err
 }
@@ -111,7 +111,7 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 /*
 This API is used to delete a queue.
 
-@cloudAPI-URL: Delete /v1.0/{project_id}/queues
+@cloudAPI-URL: Delete /v1.0/{project_id}/queues/{queueName}
 @cloudAPI-ResourceType: dli
 @cloudAPI-version: v1.0
 
@@ -134,12 +134,12 @@ This API is used to query all Queue  list
 @since: 2021-07-07 12:12:12
 
 */
-func QueryAll(c *golangsdk.ServiceClient, listOpts QueryAllOptsBuilder) (r GetResult) {
+func List(c *golangsdk.ServiceClient, listOpts ListOptsBuilder) (r GetResult) {
 	listResult := new(ListResult)
 
 	url := queryAllURL(c)
 	if listOpts != nil {
-		query, err := listOpts.ToQueryAllQuery()
+		query, err := listOpts.ToListQuery()
 		if err != nil {
 			r.Err = err
 			return
