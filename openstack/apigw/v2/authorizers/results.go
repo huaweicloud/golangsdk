@@ -24,6 +24,7 @@ type GetResult struct {
 	commonResult
 }
 
+// CustomAuthorizer is a struct that represents the result of Create, Update and Get methods.
 type CustomAuthorizer struct {
 	// Custom authorizer name., which can contain 3 to 64 characters, starting with a letter.
 	// Only letters, digits, and underscores (_) are allowed.
@@ -33,21 +34,22 @@ type CustomAuthorizer struct {
 	// Authorizer type, and the value is 'FUNC'.
 	AuthorizerType string `json:"authorizer_type"`
 	// Function URN.
-	AuthorizerUri string `json:"authorizer_uri"`
+	AuthorizerURI string `json:"authorizer_uri"`
 	// Identity source.
 	Identities []Identity `json:"identities"`
 	// Maximum cache age.
-	CacheAge int `json:"ttl"`
+	TTL int `json:"ttl"`
 	// User data.
 	UserData string `json:"user_data"`
 	// Indicates whether to send the body.
 	IsBodySend bool `json:"need_body"`
 	// Custom authorizer ID
-	Id string `json:"id"`
+	ID string `json:"id"`
 	// Creation time.
 	CreateTime string `json:"create_time"`
 }
 
+// Identity is an object struct that represents the elements of the Identities parameter.
 type Identity struct {
 	// Parameter name.
 	Name string `json:"name"`
@@ -69,6 +71,7 @@ type CustomAuthPage struct {
 	pagination.SinglePageBase
 }
 
+// ExtractCustomAuthorizers is a method which to extract the response to a custom authorizer list.
 func ExtractCustomAuthorizers(r pagination.Page) ([]CustomAuthorizer, error) {
 	var s []CustomAuthorizer
 	err := r.(CustomAuthPage).Result.ExtractIntoSlicePtr(&s, "authorizer_list")

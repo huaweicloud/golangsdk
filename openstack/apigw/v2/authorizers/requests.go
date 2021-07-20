@@ -5,6 +5,8 @@ import (
 	"github.com/huaweicloud/golangsdk/pagination"
 )
 
+// CustomAuthOpts is a struct which will be used to create a new custom authorizer or
+// update an existing custom authorizer.
 type CustomAuthOpts struct {
 	// Custom authorizer name, which can contain 3 to 64 characters, starting with a letter.
 	// Only letters, digits, and underscores (_) are allowed.
@@ -14,7 +16,7 @@ type CustomAuthOpts struct {
 	// Authorizer type, and the value is 'FUNC'.
 	AuthorizerType string `json:"authorizer_type" required:"true"`
 	// Function URN.
-	AuthorizerUri string `json:"authorizer_uri" required:"true"`
+	AuthorizerURI string `json:"authorizer_uri" required:"true"`
 	// Indicates whether to send the body.
 	IsBodySend *bool `json:"need_body,omitempty"`
 	// Identity source.
@@ -22,11 +24,12 @@ type CustomAuthOpts struct {
 	// Maximum cache age. The maximum value is 3,600.
 	// The maximum length of time that authentication results can be cached for.
 	// A value of 0 means that results are not cached.
-	CacheAge int `json:"ttl,omitempty"`
+	TTL *int `json:"ttl,omitempty"`
 	// User data.
 	UserData *string `json:"user_data,omitempty"`
 }
 
+// AuthCreateIdentitiesReq is an object which will be build up a indentities list.
 type AuthCreateIdentitiesReq struct {
 	// Parameter name.
 	Name string `json:"name" required:"true"`
@@ -36,10 +39,13 @@ type AuthCreateIdentitiesReq struct {
 	Validation *string `json:"validation,omitempty"`
 }
 
+// CustomAuthOptsBuilder is an interface which to support request body build of
+// the custom authorizer creation and updation.
 type CustomAuthOptsBuilder interface {
 	ToCustomAuthOptsMap() (map[string]interface{}, error)
 }
 
+// ToCustomAuthOptsMap is a method which to build a request body by the CustomAuthOpts.
 func (opts CustomAuthOpts) ToCustomAuthOptsMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
@@ -55,7 +61,7 @@ func Create(client *golangsdk.ServiceClient, instanceId string, opts CustomAuthO
 	return
 }
 
-// Update is a method to udpate an existing custom authorizer.
+// Update is a method to update an existing custom authorizer.
 func Update(client *golangsdk.ServiceClient, instanceId, authId string, opts CustomAuthOptsBuilder) (r UpdateResult) {
 	reqBody, err := opts.ToCustomAuthOptsMap()
 	if err != nil {
@@ -77,7 +83,7 @@ func Get(client *golangsdk.ServiceClient, instanceId, authId string) (r GetResul
 // ListOpts allows to filter list data using given parameters.
 type ListOpts struct {
 	// ID.
-	Id string `q:"id"`
+	ID string `q:"id"`
 	// Name.
 	Name string `q:"name"`
 	// Custom authorizer type.
@@ -89,10 +95,13 @@ type ListOpts struct {
 	Limit int `q:"limit"`
 }
 
+// ListOptsBuilder is an interface which to support request query build of
+// the custom authorizer search.
 type ListOptsBuilder interface {
 	ToListQuery() (string, error)
 }
 
+// ToListQuery is a method which to build a request query by the ListOpts.
 func (opts ListOpts) ToListQuery() (string, error) {
 	q, err := golangsdk.BuildQueryString(opts)
 	if err != nil {

@@ -51,9 +51,9 @@ var (
 		Name:           "terraform_test",
 		Type:           "BACKEND",
 		AuthorizerType: "FUNC",
-		AuthorizerUri:  "urn:fss:ae-ad-1\\:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
+		AuthorizerURI:  "urn:fss:ae-ad-1\\:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
 		IsBodySend:     golangsdk.Disabled,
-		CacheAge:       60,
+		TTL:            golangsdk.IntToPointer(60),
 		UserData:       golangsdk.MaybeString(""),
 	}
 
@@ -61,11 +61,11 @@ var (
 		Name:           "terraform_test",
 		Type:           "BACKEND",
 		AuthorizerType: "FUNC",
-		AuthorizerUri:  "urn:fss:ae-ad-1:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
+		AuthorizerURI:  "urn:fss:ae-ad-1:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
 		CreateTime:     "2021-07-17T08:33:35Z",
-		Id:             "3b9a3dda163f4ebb8fdcbbf786bffa20",
+		ID:             "3b9a3dda163f4ebb8fdcbbf786bffa20",
 		IsBodySend:     false,
-		CacheAge:       60,
+		TTL:            60,
 		UserData:       "",
 	}
 
@@ -78,11 +78,11 @@ var (
 			Name:           "terraform_test",
 			Type:           "BACKEND",
 			AuthorizerType: "FUNC",
-			AuthorizerUri:  "urn:fss:ae-ad-1:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
+			AuthorizerURI:  "urn:fss:ae-ad-1:0c22dd73f6005a032f3ec0061de74dbf:function:default:terraform_test",
 			CreateTime:     "2021-07-17T08:33:35Z",
-			Id:             "3b9a3dda163f4ebb8fdcbbf786bffa20",
+			ID:             "3b9a3dda163f4ebb8fdcbbf786bffa20",
 			IsBodySend:     false,
-			CacheAge:       60,
+			TTL:            60,
 			UserData:       "",
 		},
 	}
