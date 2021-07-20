@@ -60,6 +60,13 @@ type CreateOpts struct {
 	Tags []tags.ResourceTag `json:"tags,omitempty"`
 }
 
+type ListOpts struct {
+	QueueType      string `q:"queue_type"`
+	WithPriv       bool   `q:"with-priv"`
+	WithChargeInfo bool   `q:"with-charge-info"`
+	Tags           string `q:"tags"`
+}
+
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
 type CreateOptsBuilder interface {
@@ -71,7 +78,25 @@ func (opts CreateOpts) ToDomainCreateMap() (map[string]interface{}, error) {
 	return golangsdk.BuildRequestBody(opts, "")
 }
 
-// Create will create a new Domain based on the values in CreateOpts.
+type ListOptsBuilder interface {
+	ToListQuery() (string, error)
+}
+
+func (opts ListOpts) ToListQuery() (string, error) {
+	q, err := golangsdk.BuildQueryString(opts)
+	return q.String(), err
+}
+
+/*
+This API is used to create a queue.
+
+@cloudAPI-URL: POST /v1.0/{project_id}/queues
+@cloudAPI-ResourceType: dli
+@cloudAPI-version: v1.0
+
+@since: 2021-07-07 12:12:12
+
+*/
 func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	requstbody, err := opts.ToDomainCreateMap()
 	if err != nil {
@@ -83,16 +108,70 @@ func Create(c *golangsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult)
 	return
 }
 
+/*
+This API is used to delete a queue.
+
+@cloudAPI-URL: Delete /v1.0/{project_id}/queues/{queueName}
+@cloudAPI-ResourceType: dli
+@cloudAPI-version: v1.0
+
+@since: 2021-07-07 12:12:12
+
+*/
 func Delete(c *golangsdk.ServiceClient, queueName string) (r DeleteResult) {
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Delete(resourceURL(c, queueName), reqOpt)
 	return
 }
 
+/*
+This API is used to query all Queue  list
+
+@cloudAPI-URL: GET /v1.0/{project_id}/queues
+@cloudAPI-ResourceType: dli
+@cloudAPI-version: v1.0
+
+@since: 2021-07-07 12:12:12
+
+*/
+func List(c *golangsdk.ServiceClient, listOpts ListOptsBuilder) (r GetResult) {
+	listResult := new(ListResult)
+
+	url := queryAllURL(c)
+	if listOpts != nil {
+		query, err := listOpts.ToListQuery()
+		if err != nil {
+			r.Err = err
+			return
+		}
+		url += query
+	}
+
+	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
+	_, r.Err = c.Get(queryAllURL(c), &listResult, reqOpt)
+	r.Body = listResult
+	return r
+}
+
+/*
+This API is used to query the Details of a Queue
+
+@cloudAPI-URL: GET /v1.0/{project_id}/queues/{queueName}
+@cloudAPI-ResourceType: dli
+@cloudAPI-version: v1.0
+
+@since: 2021-07-07 12:12:12
+
+*/
 func Get(c *golangsdk.ServiceClient, queueName string) (r GetResult) {
-	result := new(Queue)
+	result := new(Queue4Get)
+
 	reqOpt := &golangsdk.RequestOpts{OkCodes: []int{200}}
 	_, r.Err = c.Get(resourceURL(c, queueName), &result, reqOpt)
-	r.Body = result
+
+	if result != nil {
+		r.Body = result
+	}
+
 	return r
 }
