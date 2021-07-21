@@ -52,7 +52,7 @@ func handleGetJobDetail(t *testing.T) {
 		})
 }
 
-func TestGetV2Group(t *testing.T) {
+func TestGetJobDetail(t *testing.T) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 	handleGetJobDetail(t)
