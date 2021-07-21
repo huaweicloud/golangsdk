@@ -134,3 +134,120 @@ func Delete(client *golangsdk.ServiceClient, instanceId, policyId string) (r Del
 	_, r.Err = client.Delete(resourceURL(client, instanceId, policyId), nil)
 	return
 }
+
+// SpecThrottleCreateOpts is a struct which will be used to create a new special throttling policy.
+type SpecThrottleCreateOpts struct {
+	// Maximum number of times the excluded object can access an API within the throttling period.
+	CallLimits int `json:"call_limits" required:"true"`
+	// Excluded app ID or excluded account ID.
+	ObjectId string `json:"object_id" required:"true"`
+	// Excluded object type, which supports APP and USER.
+	ObjectType string `json:"object_type" required:"true"`
+}
+
+// SpecThrottleCreateOptsBuilder is an interface which to support request body build of
+// the special throttling policy creation.
+type SpecThrottleCreateOptsBuilder interface {
+	ToSpecThrottleCreateOptsMap() (map[string]interface{}, error)
+}
+
+// ToSpecThrottleCreateOptsMap is a method which to build a request body by the SpecThrottleCreateOpts.
+func (opts SpecThrottleCreateOpts) ToSpecThrottleCreateOptsMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+// CreateSpecThrottle is a method by which to create a new special throttling policy.
+func CreateSpecThrottle(client *golangsdk.ServiceClient, instanceId, policyId string,
+	opts SpecThrottleCreateOptsBuilder) (r SpecThrottleResult) {
+	reqBody, err := opts.ToSpecThrottleCreateOptsMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = client.Post(specRootURL(client, instanceId, policyId), reqBody, &r.Body, nil)
+	return
+}
+
+// SpecThrottleUpdateOpts is a struct which will be used to update an existing special throttling policy.
+type SpecThrottleUpdateOpts struct {
+	// Maximum number of times the excluded object can access an API within the throttling period.
+	CallLimits int `json:"call_limits" required:"true"`
+}
+
+// SpecThrottleUpdateOptsBuilder is an interface which to support request body build of
+// the special throttling policy updation.
+type SpecThrottleUpdateOptsBuilder interface {
+	ToSpecThrottleUpdateOptsMap() (map[string]interface{}, error)
+}
+
+// ToSpecThrottleUpdateOptsMap is a method which to build a request body by the SpecThrottleUpdateOpts.
+func (opts SpecThrottleUpdateOpts) ToSpecThrottleUpdateOptsMap() (map[string]interface{}, error) {
+	return golangsdk.BuildRequestBody(opts, "")
+}
+
+// UpdateSpecThrottle is a method by which to update an existing special throttle policy.
+func UpdateSpecThrottle(client *golangsdk.ServiceClient, instanceId, policyId, strategyId string,
+	opts SpecThrottleUpdateOptsBuilder) (r SpecThrottleResult) {
+	reqBody, err := opts.ToSpecThrottleUpdateOptsMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	_, r.Err = client.Put(specResourceURL(client, instanceId, policyId, strategyId), reqBody, &r.Body,
+		&golangsdk.RequestOpts{
+			OkCodes: []int{200},
+		})
+	return
+}
+
+// SpecThrottlesListOpts allows to filter list data using given parameters.
+type SpecThrottlesListOpts struct {
+	// Object type, which can be APP or USER.
+	ObjectType string `q:"object_type"`
+	// Name of an excluded app.
+	AppName string `q:"app_name"`
+	// Offset from which the query starts.
+	// If the offset is less than 0, the value is automatically converted to 0. Default to 0.
+	Offset int `q:"offset"`
+	// Number of items displayed on each page. The valid values are range form 1 to 500, default to 20.
+	Limit int `q:"limit"`
+}
+
+// SpecThrottlesListOptsBuilder is an interface which to support request query build of
+// the special throttling policies search.
+type SpecThrottlesListOptsBuilder interface {
+	ToSpecThrottlesListQuery() (string, error)
+}
+
+// ToSpecThrottlesListQuery is a method which to build a request query by the SpecThrottlesListOpts.
+func (opts SpecThrottlesListOpts) ToSpecThrottlesListQuery() (string, error) {
+	q, err := golangsdk.BuildQueryString(opts)
+	if err != nil {
+		return "", err
+	}
+	return q.String(), err
+}
+
+// ListSpecThrottles is a method to obtain an array of one or more special throttling policies
+// according to the query parameters.
+func ListSpecThrottles(client *golangsdk.ServiceClient, instanceId, policyId string,
+	opts SpecThrottlesListOptsBuilder) pagination.Pager {
+	url := specRootURL(client, instanceId, policyId)
+	if opts != nil {
+		query, err := opts.ToSpecThrottlesListQuery()
+		if err != nil {
+			return pagination.Pager{Err: err}
+		}
+		url += query
+	}
+
+	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+		return SpecThrottlePage{pagination.SinglePageBase(r)}
+	})
+}
+
+// DeleteSpecThrottle is a method to delete an existing special throttling policy.
+func DeleteSpecThrottle(client *golangsdk.ServiceClient, instanceId, policyId, strategyId string) (r DeleteResult) {
+	_, r.Err = client.Delete(specResourceURL(client, instanceId, policyId, strategyId), nil)
+	return
+}

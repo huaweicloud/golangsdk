@@ -85,3 +85,60 @@ func ExtractPolicies(r pagination.Page) ([]ThrottlingPolicy, error) {
 type DeleteResult struct {
 	golangsdk.ErrResult
 }
+
+// SpecThrottle is a struct that represents the result of CreateSpecThrottle, UpdateSpecThrottle and
+// ListSpecThrottles methods.
+type SpecThrottle struct {
+	// Maximum number of times the excluded object can access an API within the throttling period.
+	CallLimits int `json:"call_limits"`
+	// Name of the app to which the excluded request throttling configuration applies.
+	AppName string `json:"app_name"`
+	// Name of an app or a tenant to which the excluded request throttling configuration applies.
+	ObjectName string `json:"object_name"`
+	// ID of an object specified in the excluded request throttling configuration.
+	ObjectId string `json:"object_id"`
+	// Request throttling policy ID.
+	ThrottleId string `json:"throttle_id"`
+	// Time when the excluded request throttling configuration is created.
+	ApplyTime string `json:"apply_time"`
+	// Excluded request throttling configuration ID.
+	ID string `json:"id"`
+	// ID of the app to which the excluded request throttling configuration applies.
+	AppId string `json:"app_id"`
+	// Excluded object type, which can be APP or USER.
+	ObjectType string `json:"object_type"`
+}
+
+// The SpecThrottleResult represents the base result of the each special throttling polciy methods.
+type SpecThrottleResult struct {
+	commonResult
+}
+
+// The CreateSpecThrottleResult represents the result of the CreateSpecThrottle method.
+type CreateSpecThrottleResult struct {
+	SpecThrottleResult
+}
+
+// The UpdateSpecThrottleResult represents the result of the UpdateSpecThrottle method.
+type UpdateSpecThrottleResult struct {
+	SpecThrottleResult
+}
+
+// Extract is a method which to extract the response to a special throttling policy.
+func (r SpecThrottleResult) Extract() (*SpecThrottle, error) {
+	var s SpecThrottle
+	err := r.ExtractInto(&s)
+	return &s, err
+}
+
+// The SpecThrottlePage represents the result of a List operation.
+type SpecThrottlePage struct {
+	pagination.SinglePageBase
+}
+
+// ExtractSpecThrottles its Extract method to interpret it as a special throttling policy array.
+func ExtractSpecThrottles(r pagination.Page) ([]SpecThrottle, error) {
+	var s []SpecThrottle
+	err := r.(SpecThrottlePage).Result.ExtractIntoSlicePtr(&s, "throttle_specials")
+	return s, err
+}

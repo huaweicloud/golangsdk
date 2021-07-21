@@ -46,6 +46,38 @@ const (
 		}
 	]
 }`
+
+	expectedSpecCreateResponse = `
+{
+	"app_id": "ba985f3d4fd347c3aee686fd749659fc",
+	"app_name": "terraform_app",
+	"apply_time": "2021-07-21T06:48:03.618383329Z",
+	"call_limits": 30,
+	"id": "aec8d27e3e034f4293bc766942ed60fd",
+	"object_id": "ba985f3d4fd347c3aee686fd749659fc",
+	"object_name": "terraform_app",
+	"object_type": "APP",
+	"throttle_id": "c481043838f64bcd82c7b0c38907d59d"
+}`
+
+	expectedSpecListResponse = `
+{
+	"throttle_specials": [
+		{
+			"app_id": "ba985f3d4fd347c3aee686fd749659fc",
+			"app_name": "terraform_app",
+			"apply_time": "2021-07-21T06:48:03.618383329Z",
+			"call_limits": 30,
+			"id": "aec8d27e3e034f4293bc766942ed60fd",
+			"object_id": "ba985f3d4fd347c3aee686fd749659fc",
+			"object_name": "terraform_app",
+			"object_type": "APP",
+			"throttle_id": "c481043838f64bcd82c7b0c38907d59d"
+		}
+	],
+	"size": 1,
+	"total": 1
+}`
 )
 
 var (
@@ -96,6 +128,46 @@ var (
 			Id:             "c481043838f64bcd82c7b0c38907d59d",
 		},
 	}
+
+	specThrottleCreateOpts = &throttles.SpecThrottleCreateOpts{
+		CallLimits: 30,
+		ObjectId:   "ba985f3d4fd347c3aee686fd749659fc",
+		ObjectType: "APP",
+	}
+
+	expectedSpecCreateResponseData = &throttles.SpecThrottle{
+		AppId:      "ba985f3d4fd347c3aee686fd749659fc",
+		AppName:    "terraform_app",
+		ApplyTime:  "2021-07-21T06:48:03.618383329Z",
+		CallLimits: 30,
+		ID:         "aec8d27e3e034f4293bc766942ed60fd",
+		ObjectId:   "ba985f3d4fd347c3aee686fd749659fc",
+		ObjectName: "terraform_app",
+		ObjectType: "APP",
+		ThrottleId: "c481043838f64bcd82c7b0c38907d59d",
+	}
+
+	specThrottleListOpts = &throttles.SpecThrottlesListOpts{
+		AppName: "terraform_app",
+	}
+
+	expectedSpecListResponseData = []throttles.SpecThrottle{
+		{
+			AppId:      "ba985f3d4fd347c3aee686fd749659fc",
+			AppName:    "terraform_app",
+			ApplyTime:  "2021-07-21T06:48:03.618383329Z",
+			CallLimits: 30,
+			ID:         "aec8d27e3e034f4293bc766942ed60fd",
+			ObjectId:   "ba985f3d4fd347c3aee686fd749659fc",
+			ObjectName: "terraform_app",
+			ObjectType: "APP",
+			ThrottleId: "c481043838f64bcd82c7b0c38907d59d",
+		},
+	}
+
+	specThrottleUpdateOpts = &throttles.SpecThrottleUpdateOpts{
+		CallLimits: 30,
+	}
 )
 
 func handleV2ThrottlingPolicyCreate(t *testing.T) {
@@ -143,6 +215,53 @@ func handleV2ThrottlingPolicyUpdate(t *testing.T) {
 
 func handleV2ThrottlingPolicyDelete(t *testing.T) {
 	th.Mux.HandleFunc("/instances/6da953fe33d44650a067e43a4593368b/throttles/c481043838f64bcd82c7b0c38907d59d",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "DELETE")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusNoContent)
+		})
+}
+
+func handleV2SpecThrottlingPolicyCreate(t *testing.T) {
+	th.Mux.HandleFunc("/instances/6da953fe33d44650a067e43a4593368b/throttles/c481043838f64bcd82c7b0c38907d59d/"+
+		"throttle-specials",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "POST")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			_, _ = fmt.Fprint(w, expectedSpecCreateResponse)
+		})
+}
+
+func handleV2SpecThrottlingPolicyList(t *testing.T) {
+	th.Mux.HandleFunc("/instances/6da953fe33d44650a067e43a4593368b/throttles/c481043838f64bcd82c7b0c38907d59d/"+
+		"throttle-specials",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "GET")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedSpecListResponse)
+		})
+}
+
+func handleV2SpecThrottlingPolicyUpdate(t *testing.T) {
+	th.Mux.HandleFunc("/instances/6da953fe33d44650a067e43a4593368b/throttles/c481043838f64bcd82c7b0c38907d59d/"+
+		"throttle-specials/aec8d27e3e034f4293bc766942ed60fd",
+		func(w http.ResponseWriter, r *http.Request) {
+			th.TestMethod(t, r, "PUT")
+			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+			w.Header().Add("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = fmt.Fprint(w, expectedSpecCreateResponse)
+		})
+}
+
+func handleV2SpecThrottlingPolicyDelete(t *testing.T) {
+	th.Mux.HandleFunc("/instances/6da953fe33d44650a067e43a4593368b/throttles/c481043838f64bcd82c7b0c38907d59d/"+
+		"throttle-specials/aec8d27e3e034f4293bc766942ed60fd",
 		func(w http.ResponseWriter, r *http.Request) {
 			th.TestMethod(t, r, "DELETE")
 			th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
