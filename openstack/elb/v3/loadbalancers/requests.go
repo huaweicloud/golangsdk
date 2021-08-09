@@ -70,6 +70,19 @@ type CreateOpts struct {
 
 	// Deletion Protection Enable.
 	DeletionProtectionEnable *bool `json:"deletion_protection_enable,omitempty"`
+
+	// Auto Scaling Options.
+	Autoscaling *AutoscalingRef `json:"autoscaling,omitempty"`
+}
+
+// AutoscalingRef
+type AutoscalingRef struct {
+	// Enable
+	Enable *bool `json:"enable" required:"true"`
+	// Min L4 Flavor
+	MinL4Flavor string `json:"min_l4_flavor_id,omitempty"`
+	// Min L7 Flavor
+	MinL7Flavor string `json:"min_l7_flavor_id,omitempty"`
 }
 
 // BandwidthRef
