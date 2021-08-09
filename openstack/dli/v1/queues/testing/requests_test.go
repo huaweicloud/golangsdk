@@ -18,3 +18,18 @@ func TestList(t *testing.T) {
 	rt := listResult.Body.(*queues.ListResult)
 	th.AssertDeepEquals(t, expectedListResponseData, rt.Queues[0])
 }
+
+func TestScale(t *testing.T) {
+	th.SetupHTTP()
+	defer th.TeardownHTTP()
+
+	handleScale(t)
+
+	result := queues.ScaleOrRestart(client.ServiceClient(), queues.ActionOpts{
+		Action:    "scale_out",
+		CuCount:   16,
+		QueueName: queueName1,
+	})
+
+	th.AssertNoErr(t, result.Err)
+}
