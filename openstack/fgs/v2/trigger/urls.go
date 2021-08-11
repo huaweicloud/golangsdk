@@ -20,9 +20,9 @@ func deleteAllURL(c *golangsdk.ServiceClient, functionUrn string) string {
 }
 
 func deleteURL(c *golangsdk.ServiceClient, functionUrn, triggerTypeCode, triggerId string) string {
-	return getURL(c, functionUrn, triggerTypeCode, triggerId)
+	return resourceURL(c, functionUrn, triggerTypeCode, triggerId)
 }
 
-func getURL(c *golangsdk.ServiceClient, functionUrn, triggerTypeCode, triggerId string) string {
+func resourceURL(c *golangsdk.ServiceClient, functionUrn, triggerTypeCode, triggerId string) string {
 	return c.ServiceURL(FGS, TRIGGER, functionUrn, triggerTypeCode, triggerId)
 }
