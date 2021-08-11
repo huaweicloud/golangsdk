@@ -62,12 +62,32 @@ var (
 	}
 )
 
+var (
+	mockScaleActionResponse = `
+	{
+		"queue_name": "tf_acc_test_dli_queue_h8yr3",
+		"result": true
+	}`
+)
+
+var queueName1 = "tf_acc_test_dli_queue_h8yr3"
+
 func handleList(t *testing.T) {
-	th.Mux.HandleFunc("/queues", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/queues/", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "GET")
 		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
 		w.Header().Add("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = fmt.Fprint(w, expectedListResponse)
+	})
+}
+
+func handleScale(t *testing.T) {
+	th.Mux.HandleFunc("/queues/"+queueName1+"/action", func(w http.ResponseWriter, r *http.Request) {
+		th.TestMethod(t, r, "PUT")
+		th.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = fmt.Fprint(w, mockScaleActionResponse)
 	})
 }
