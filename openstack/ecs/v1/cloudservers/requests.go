@@ -82,6 +82,8 @@ type Nic struct {
 	SubnetId string `json:"subnet_id" required:"true"`
 
 	IpAddress string `json:"ip_address,omitempty"`
+
+	Ipv6Enable *bool `json:"ipv6_enable,omitempty"`
 }
 
 type PublicIp struct {
