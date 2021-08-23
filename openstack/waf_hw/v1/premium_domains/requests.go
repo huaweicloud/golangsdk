@@ -165,7 +165,7 @@ func Delete(c *golangsdk.ServiceClient, hostId string, keepPolicy bool) (*Simple
 		KeepPolicy: keepPolicy,
 	}
 
-	url := rootURL(c)
+	url := resourceURL(c, hostId)
 	query, err := golangsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, err
