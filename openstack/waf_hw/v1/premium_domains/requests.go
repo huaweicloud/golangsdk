@@ -166,13 +166,14 @@ func Delete(c *golangsdk.ServiceClient, hostId string, keepPolicy bool) (*Simple
 	}
 
 	url := resourceURL(c, hostId)
-	b, err := golangsdk.BuildRequestBody(opts, "")
+	query, err := golangsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, err
 	}
+	url += query.String()
 
 	var rst golangsdk.Result
-	_, err = c.DeleteWithBodyResp(url, b, &rst.Body, &golangsdk.RequestOpts{
+	_, err = c.DeleteWithResponse(url, &rst.Body, &golangsdk.RequestOpts{
 		OkCodes:     []int{200},
 		MoreHeaders: RequestOpts.MoreHeaders,
 	})
