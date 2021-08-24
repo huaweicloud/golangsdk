@@ -58,6 +58,8 @@ type GeminiDBInstance struct {
 	Actions           []string       `json:"actions"`
 	Groups            []Groups       `json:"groups"`
 	BackupStrategy    BackupStrategy `json:"backup_strategy"`
+
+	DedicatedResourceId string `json:"dedicated_resource_id"`
 }
 
 type Groups struct {

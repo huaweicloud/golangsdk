@@ -36,6 +36,7 @@ type CreateGeminiDBOpts struct {
 	Mode                string             `json:"mode" required:"true"`
 	ConfigurationId     string             `json:"configuration_id,omitempty"`
 	EnterpriseProjectId string             `json:"enterprise_project_id,omitempty"`
+	DedicatedResourceId string             `json:"dedicated_resource_id,omitempty"`
 	Ssl                 string             `json:"ssl_option,omitempty"`
 	DataStore           DataStore          `json:"datastore" required:"true"`
 	Flavor              []FlavorOpt        `json:"flavor" required:"true"`
