@@ -389,3 +389,13 @@ func UpdateSg(client *golangsdk.ServiceClient, instanceId string, opts UpdateSgB
 	})
 	return
 }
+
+func ListDeh(client *golangsdk.ServiceClient) pagination.Pager {
+	pageList := pagination.NewPager(client, listDehURL(client), func(r pagination.PageResult) pagination.Page {
+		return DehResourcePage{pagination.SinglePageBase(r)}
+	})
+	// Headers supplies additional HTTP headers to populate on each paged request
+	pageList.Headers = map[string]string{"Content-Type": "application/json"}
+
+	return pageList
+}
