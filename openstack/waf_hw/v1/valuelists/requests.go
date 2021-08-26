@@ -42,7 +42,8 @@ func Create(c *golangsdk.ServiceClient, opts CreateOpts) (*WafValueList, error) 
 type UpdateValueListOpts struct {
 	Name        string   `json:"name" required:"true"`
 	Values      []string `json:"values,omitempty"`
-	Description string   `json:"description,omitempty"`
+	Type        string   `json:"type,omitempty"`
+	Description *string  `json:"description,omitempty"`
 }
 
 // Update reference table according options and id.
